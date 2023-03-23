@@ -1,14 +1,20 @@
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
-
+import { signIn, signOut, useSession } from "next-auth/react";
 export default function Navbar() {
+  const { data: session } = useSession();
   const router = useRouter();
-   
+
   return (
-    <nav className={`px-5 sm:px-4 text-[0.9rem] py-2.5 sticky w-full bg-white z-20 top-0 left-0 text-[#2E2E2E]  font-poppins `} >
+    <nav
+      className={`px-5 sm:px-4 text-[0.9rem] py-2.5 sticky w-full bg-white z-20 top-0 left-0 text-[#2E2E2E]  font-poppins `}
+    >
       <div className="container bg-white flex flex-wrap items-center justify-between mx-auto">
-        <a href="https://flowbite.com/docs/images/logo.svg" className="flex items-center">
+        <a
+          href="https://flowbite.com/docs/images/logo.svg"
+          className="flex items-center"
+        >
           <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="h-6 mr-3 sm:h-9"
@@ -21,9 +27,12 @@ export default function Navbar() {
         <div className="flex md:order-2">
           <button
             type="button"
+            onClick={() => {
+              session ? signOut() : signIn();
+            }}
             className="  text-white focus:ring-4 focus:outline-none  login  w-[8.6vw] h-[3.7vh] text-center mr-3 md:mr-0 rounded-full"
           >
-            Login
+            {session ? session?.user?.name || "Null" : "Login"}
           </button>
           <button
             data-collapse-toggle="navbar-sticky"
@@ -97,7 +106,9 @@ export default function Navbar() {
                     <Link
                       href="/habits"
                       className={`Link  block p-4  ${
-                        router.pathname == "/habits" ? "activelink font-bold" : ""
+                        router.pathname == "/habits"
+                          ? "activelink font-bold"
+                          : ""
                       }`}
                     >
                       Habits
@@ -107,7 +118,9 @@ export default function Navbar() {
                     <Link
                       href="/productivity"
                       className={`Link block p-4  ${
-                        router.pathname == "/productivity" ? "activelink font-bold" : ""
+                        router.pathname == "/productivity"
+                          ? "activelink font-bold"
+                          : ""
                       }`}
                     >
                       Productivity
@@ -117,7 +130,9 @@ export default function Navbar() {
                     <Link
                       href="/recovery"
                       className={`Link  block p-4  ${
-                        router.pathname == "/creators" ? "activelink font-bold" : ""
+                        router.pathname == "/creators"
+                          ? "activelink font-bold"
+                          : ""
                       }`}
                     >
                       Rehabiliation
@@ -127,18 +142,12 @@ export default function Navbar() {
               </div>
             </li>
             <li>
-              <a
-                href="#benefit"
-                className=" block py-2 Link pl-3 pr-4 md:p-0 "
-              > 
+              <a href="#benefit" className=" block py-2 Link pl-3 pr-4 md:p-0 ">
                 Benefit
               </a>
             </li>
             <li>
-              <a
-                href="#about"
-                className="Link  block py-2 pl-3 pr-4 md:p-0 "
-              >
+              <a href="#about" className="Link  block py-2 pl-3 pr-4 md:p-0 ">
                 About Us
               </a>
             </li>

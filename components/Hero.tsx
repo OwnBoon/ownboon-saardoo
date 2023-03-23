@@ -1,8 +1,11 @@
+import Spline from "@splinetool/react-spline";
+
 export default function Hero() {
   return (
     <>
       {/* gradients */}
-      <div className="hero-gradient-bg ">
+
+      <div className="hero-gradient-bg opacity-80 ">
         <div className="circle cyan"></div>
         <div className="circle purple"></div>
         <div className="circle cyan" id="cyan"></div>
@@ -10,7 +13,7 @@ export default function Hero() {
         <div className="circle cyan" id="cyan1"></div>
         <div className="circle purple" id="cyan2"></div>
       </div>
-      <div className="flex flex-col font-fontspring h-[75%] xs:p-5 z-100 my-0 mx-0 items-center  justify-center">
+      <div className="flex flex-col  font-fontspring h-[75%] xs:p-5 z-100 my-0 mx-0 items-center  justify-center">
         <div className="pt-[10vh] md:text-5xl lg:text-[5.3rem] text-2xl  justify-center text-center">
           <h1 className="py-[3.5vh]">
             Ignite your{" "}
