@@ -19,6 +19,8 @@ export default async function handler(
           _type: 'user',
           name: data.name,
           email: data.name,
+          focus: data.focus,
+          leaderboard: data.leaderboard
         },
       },
     ],

@@ -42,7 +42,7 @@ export default NextAuth({
             name: "SaarDOO ",
             email: "astrosaard@gmail.com",
             image:
-              "https://i.scdn.co/image/ab6775700000ee85617839eb4593623cc34f554e",
+              "https://cdn.discordapp.com/attachments/1018929979897163868/1084440633432875069/00099-573026695-nvinkpunk_potrait_of_a_handsome_teenage_boy_with_the_most_cutest_face.png",
           };
         }
         return null;

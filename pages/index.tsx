@@ -18,12 +18,12 @@ const Home = ({ users }: Props) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [isNewUser, setIsNewUser] = useState(false);
-
   const postUser = async () => {
     const userInfo: UserBody = {
       name: session?.user?.name || "",
-      email: session?.user?.name || "",
-      
+      email: session?.user?.email || "",
+      leaderboard: 0,
+      focus: 0,
     };
     const result = await fetch(`/api/addUser`, {
       body: JSON.stringify(userInfo),
@@ -34,40 +34,48 @@ const Home = ({ users }: Props) => {
     return json;
   };
 
-  // console.log(users.filter((user) => user.name === session?.user?.name));
+  console.log(users.filter((user) => user.name === session?.user?.name));
 
-  // useEffect(() => {
-  //   if (session) {
-  //     const match = users.find((user) => user.name === session?.user?.name);
-  //     if (!match) {
-  //       setIsNewUser(true);
-  //     }
-  //   }
-  // }, [session]);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (session) {
+        const match = users.find((user) => user.name === session?.user?.name);
+        if (!match) {
+          setIsNewUser(true);
+        }
+      }
+    }, 5000); // delay of 5 seconds
 
-  // useEffect(() => {
-  //   if (isNewUser) {
-  //     const createUser = async () => {
-  //       postUser();
-  //     };
-  //     createUser();
-  //   }
-  // }, [isNewUser]);
-  return (
-    <>
-      <Head>
-        <title>OwnBoon</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
-      <Navbar />
-      <div className="mx-auto my-auto">
-        <Hero />
-        <Body />
-        <Benefits />
-      </div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
-    </>
-  );
+    return () => clearTimeout(timeout);
+  }, [session]);
+
+  useEffect(() => {
+    if (isNewUser) {
+      const createUser = async () => {
+        postUser();
+      };
+      createUser();
+    }
+  }, [isNewUser]);
+
+  if (session) {
+    router.push("/dashboard");
+  } else
+    return (
+      <>
+        <Head>
+          <title>OwnBoon</title>
+          <link rel="icon" href="/logo.png" />
+        </Head>
+        <Navbar />
+        <div className="mx-auto my-auto">
+          <Hero />
+          <Body />
+          <Benefits />
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+      </>
+    );
 };
 
 export default Home;
