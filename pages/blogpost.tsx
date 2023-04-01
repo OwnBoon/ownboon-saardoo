@@ -14,11 +14,10 @@ import dynamic from "next/dynamic";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
-  posts: Posts[];
   users: User[];
 }
 
-const Home = ({ posts, users }: Props) => {
+const Home = ({ users }: Props) => {
   const { data: session } = useSession();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
@@ -122,12 +121,12 @@ const Home = ({ posts, users }: Props) => {
 };
 
 export default Home;
-export async function getStaticProps() {
-  const users: User[] = await fetchUsers();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const users = await fetchUsers();
 
   return {
     props: {
       users,
     },
   };
-}
+};

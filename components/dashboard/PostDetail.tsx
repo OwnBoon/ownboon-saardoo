@@ -13,7 +13,7 @@ const PostDetail = ({ post }: Props) => {
         <div className="relative overflow-hidden shadow-md mb-6">
           <img
             // @ts-ignore
-            src={post!.mainImage!}
+            src={post.mainImage}
             alt=""
             className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
           />
