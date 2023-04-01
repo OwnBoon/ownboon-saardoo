@@ -11,12 +11,14 @@ const PostDetail = ({ post }: Props) => {
     <>
       <div className="bg-white shadow-lg rounded-lg col-span-9 lg:p-8 pb-12 mb-8">
         <div className="relative overflow-hidden shadow-md mb-6">
-          <img
-            // @ts-ignore
-            src={post.mainImage}
-            alt=""
-            className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
-          />
+          {/* @ts-ignore */}
+          {post.mainImage ? (
+            <img
+              src={post!.mainImage}
+              alt=""
+              className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+            />
+          ) : null}
         </div>
         <div className="px-4 lg:px-0">
           <div className="flex items-center mb-8 w-full">
@@ -28,7 +30,7 @@ const PostDetail = ({ post }: Props) => {
                 src={post.author.map((author) => author.name) || ""}
               /> */}
               <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
-                {post!.author!.map((author) => author.name)}
+                {post!.author.map((author) => author.name)}
               </p>
             </div>
             <div className="font-medium text-gray-700">
@@ -51,10 +53,9 @@ const PostDetail = ({ post }: Props) => {
           </div>
           <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
 
-          {/* @ts-ignore */}
           <div
             className="blog"
-            dangerouslySetInnerHTML={{ __html: post!.body! }}
+            dangerouslySetInnerHTML={{ __html: post.body }}
           />
         </div>
       </div>
