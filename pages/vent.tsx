@@ -12,7 +12,9 @@ import { useRouter } from "next/router";
 const vent = () => {
   const router = useRouter();
   // @ts-ignore
-  const socket = socketIO.connect("http://localhost:4000");
+  const socket = socketIO.connect(
+    "https://socketio-ownboon-server.saard00vfx.repl.co"
+  );
   const { data: session } = useSession();
   const userName = session?.user?.name || "idk";
   const pfp = session?.user?.image || "";
