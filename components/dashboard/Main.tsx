@@ -78,7 +78,10 @@ const Main = () => {
                 Finished Goals
               </p>
             </div>
-            <div className="bg-black/5 px-3 rounded-lg py-5 w-fit">
+            <div
+              onClick={() => router.push("/vent")}
+              className="bg-black/5 px-3 rounded-lg py-5 w-fit"
+            >
               <h1>Vent Chat</h1>
               <p className="text-sm font-[450] text-black/40 mt-3 ">2 h</p>
             </div>

@@ -63,7 +63,7 @@ const Home = ({ posts, users }: Props, { slug }: Slug) => {
   return (
     <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />
-      <div className="container mx-auto col-span-9  py-8 ">
+      <div className="container mx-auto col-span-9  py-8 mt ">
         {/* <Header /> */}
         <div className="flex px-5  justify-between items-center">
           <div className="flex gap-4 font-bold text-lg">
@@ -84,7 +84,7 @@ const Home = ({ posts, users }: Props, { slug }: Slug) => {
           {/* Main */}
         </div>
         <div
-          className="flex flex-col
+          className="flex flex-col mt-16
           "
           onSubmit={handleSubmit}
         >

@@ -7,23 +7,40 @@ import {
   PlusCircleIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 const Sidebar = () => {
+  const router = useRouter();
+  const selected =
+    "bg-[#4b9afa] hover:bg-[#4b9afa]/70 transition-all duration-150 w-fit p-2 cursor-pointer rounded-full text-white";
+  const normal = "p-2 w-fit cursor-pointer";
   return (
     <div className="flex flex-col col-span-1   h-screen items-start  p-5 justify-between ">
       <div>
         <img src="https://flowbite.com/docs/images/logo.svg" />
       </div>
       <div className="flex flex-col gap-5">
-        <div className="bg-[#4b9afa] hover:bg-[#4b9afa]/70 transition-all duration-150 w-fit p-2 cursor-pointer rounded-full text-white">
+        <div
+          onClick={() => router.push("/dashboard")}
+          className={router.pathname == "/dashboard" ? selected : normal}
+        >
           <HomeIcon className="w-5 h-5" />
         </div>
-        <div className="p-2 w-fit cursor-pointer">
+        <div
+          onClick={() => router.push("/blogs")}
+          className={router.pathname == "/blogs" ? selected : normal}
+        >
           <RectangleStackIcon className="w-5 h-5" />
         </div>
-        <div className="p-2 w-fit cursor-pointer">
+        <div
+          onClick={() => router.push("/goals")}
+          className={router.pathname == "/goals" ? selected : normal}
+        >
           <ClockIcon className="h-5 w-5" />
         </div>
-        <div className="p-2 w-fit cursor-pointer">
+        <div
+          onClick={() => router.push("/vent")}
+          className={router.pathname == "/vent" ? selected : normal}
+        >
           <ChatBubbleBottomCenterIcon className="h-5 w-5" />
         </div>
       </div>
