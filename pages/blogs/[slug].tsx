@@ -35,7 +35,6 @@ function urlFor(source: any) {
 // };
 
 const Post = ({ post }: Props) => {
-  console.log(post);
   return (
     <>
       {/* <div className="container mx-auto px-10 mb-8">

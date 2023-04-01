@@ -14,8 +14,6 @@ const ChatBody = ({ messages, typingStatus, lastMessageRef }: Props) => {
     router.push("/");
   };
 
-  console.log(messages.map((message: any) => message));
-
   return (
     <>
       <header className="bg-black/5 rounded-xl   px-3 py-2">

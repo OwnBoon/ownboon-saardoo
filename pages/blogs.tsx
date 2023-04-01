@@ -16,7 +16,6 @@ const Index = ({ posts }: Props) => {
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
-  console.log(posts.map((post) => post));
   return (
     <div className="grid h-screen  grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />

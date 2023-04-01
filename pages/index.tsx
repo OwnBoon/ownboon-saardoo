@@ -34,8 +34,6 @@ const Home = ({ users }: Props) => {
     return json;
   };
 
-  console.log(users.filter((user) => user.name === session?.user?.name));
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (session) {
