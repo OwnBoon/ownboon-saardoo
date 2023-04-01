@@ -12,7 +12,7 @@ const PostDetail = ({ post }: Props) => {
       <div className="bg-white shadow-lg rounded-lg col-span-9 lg:p-8 pb-12 mb-8">
         <div className="relative overflow-hidden shadow-md mb-6">
           <img
-            src={post.mainImage}
+            src={post!.mainImage!}
             alt=""
             className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
           />
