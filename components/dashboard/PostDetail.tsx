@@ -27,7 +27,7 @@ const PostDetail = ({ post }: Props) => {
                 src={post.author.map((author) => author.name) || ""}
               /> */}
               <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
-                {post.author.map((author) => author.name)}
+                {post!.author!.map((author) => author.name)}
               </p>
             </div>
             <div className="font-medium text-gray-700">
@@ -53,7 +53,7 @@ const PostDetail = ({ post }: Props) => {
           {/* @ts-ignore */}
           <div
             className="blog"
-            dangerouslySetInnerHTML={{ __html: post.body }}
+            dangerouslySetInnerHTML={{ __html: post!.body! }}
           />
         </div>
       </div>

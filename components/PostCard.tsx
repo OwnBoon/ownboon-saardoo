@@ -8,7 +8,7 @@ interface Props {
 }
 
 const PostCard = ({ post }: Props) => {
-  const body = post.body.slice(0, 120);
+  const body = post!.body!.slice(0, 120);
   return (
     <div className="bg-white shadow-lg  rounded-lg p-0 lg:p-8 pb-12 mb-8">
       {/* <div className="relative shadow-md inline-block w-full h-60 lg:h-80 mb-6">
@@ -36,7 +36,7 @@ const PostCard = ({ post }: Props) => {
         <div className="flex items-center justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
           {/* <img className="align-middle rounded-full" src={post.author.map((?)} /> */}
           <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
-            {post.author.map((authors) => authors.name)}
+            {post!.author!.map((authors) => authors.name)}
           </p>
         </div>
         <div className="font-medium text-gray-700">
