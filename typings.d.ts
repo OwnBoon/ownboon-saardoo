@@ -31,14 +31,14 @@ export interface Habits {
 
 
 export interface Posts extends SanityBody {
-    title?: string
-    slug?: {
+    title: string
+    slug: {
         current: string
     }
-    author?: UserBody[]
-    mainImage?: string
-    categories?: Category[]
-    body?: string
+    author: UserBody[]
+    mainImage: string
+    categories: Category[]
+    body: string
 
 }
 
