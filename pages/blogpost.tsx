@@ -18,13 +18,7 @@ interface Props {
   users: User[];
 }
 
-interface Slug {
-  slug: {
-    current: string;
-  };
-}
-
-const Home = ({ posts, users }: Props, { slug }: Slug) => {
+const Home = ({ posts, users }: Props) => {
   const { data: session } = useSession();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
@@ -46,7 +40,6 @@ const Home = ({ posts, users }: Props, { slug }: Slug) => {
       mainImage: image,
       body: body,
     };
-    const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
 
     const result = await fetch(`/api/addBlog`, {
       body: JSON.stringify(mutations),
@@ -130,23 +123,10 @@ const Home = ({ posts, users }: Props, { slug }: Slug) => {
 
 export default Home;
 export async function getStaticProps() {
-  const posts = await sanityClient.fetch(groq`
-  *[_type == "post"] {
-    ...,
-    author[]->{
-      ...,
-    },      
-    category[]->{
-    ...,
-  }
-  }  | order(_createdAt asc)
-    `);
-
   const users: User[] = await fetchUsers();
 
   return {
     props: {
-      posts,
       users,
     },
   };
