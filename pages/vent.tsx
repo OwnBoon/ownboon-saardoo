@@ -13,7 +13,7 @@ const vent = () => {
   const router = useRouter();
   // @ts-ignore
   const socket = socketIO.connect(
-    "https://socketio-ownboon-server.saard00vfx.repl.co"
+    "https://socketio-ownboon-server.saard00vfx.repl.co/"
   );
   const { data: session } = useSession();
   const userName = session?.user?.name || "idk";

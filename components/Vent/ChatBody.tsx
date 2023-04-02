@@ -29,8 +29,7 @@ const ChatBody = ({ messages, typingStatus, lastMessageRef }: Props) => {
       <div className="bg-black/10 text-black h-96 overflow-y-scroll p-5 mt-16 rounded-lg">
         {/* @ts-ignore */}
         {messages.map((message) =>
-          message.name === localStorage.getItem("userName") ||
-          message.pfp === localStorage.getItem("pfp") ? (
+          message.name === localStorage.getItem("userName") ? (
             <div className="p-5" key={message.id}>
               <div className="flex">
                 <img src={message.pfp} />
@@ -41,10 +40,12 @@ const ChatBody = ({ messages, typingStatus, lastMessageRef }: Props) => {
               </div>
             </div>
           ) : (
-            <div className="message__chats" key={message.id}>
-              <p>{message.name}</p>
-              <div className="message__recipient">
-                <p>{message.text}</p>
+            <div className=" p-5" key={message.id}>
+              <div className="flex">
+                <div className="flex flex-col">
+                  <p className="font-semibold">{message.name}</p>
+                  <p>{message.text}</p>
+                </div>
               </div>
             </div>
           )
