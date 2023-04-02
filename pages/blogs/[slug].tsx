@@ -5,9 +5,9 @@ import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import { sanityClient } from "../../sanity";
 import { Category, Posts } from "../../typings";
-import PostDetail from "../../components/dashboard/PostDetail";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Progress from "../../components/dashboard/Progress";
+import dynamic from "next/dynamic";
 
 interface Props {
   post: Posts;
@@ -31,6 +31,12 @@ interface Props {
 // };
 
 const Post = ({ post }: Props) => {
+  const PostDetail = dynamic(
+    () => import("../../components/dashboard/PostDetail"),
+    {
+      ssr: false,
+    }
+  );
   return (
     <>
       {/* <div className="container mx-auto px-10 mb-8">
