@@ -10,10 +10,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-interface Props {
-  users: User[];
-}
-const Home = ({ users }: Props) => {
+const Home = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -36,12 +33,3 @@ const Home = ({ users }: Props) => {
 };
 
 export default Home;
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const users = await fetchUsers();
-
-  return {
-    props: {
-      users,
-    },
-  };
-};

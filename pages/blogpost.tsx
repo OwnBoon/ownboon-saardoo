@@ -120,7 +120,6 @@ const Home = ({ users }: Props) => {
   );
 };
 
-export default Home;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();
 
@@ -130,3 +129,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
+export default Home;

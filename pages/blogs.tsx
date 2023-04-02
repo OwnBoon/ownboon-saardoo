@@ -2,12 +2,12 @@ import Link from "next/link";
 import groq from "groq";
 import { sanityClient } from "../sanity";
 import { Posts } from "../typings";
-import PostCard from "../components/PostCard";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
 import { useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { fecthBlogs } from "../utils/fetchBlogs";
+import dynamic from "next/dynamic";
 interface Props {
   posts: Posts[];
 }
@@ -18,6 +18,9 @@ const Index = ({ posts }: Props) => {
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const PostCard = dynamic(() => import("../components/PostCard"), {
+    ssr: false,
+  });
   return (
     <div className="grid h-screen  grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />
@@ -64,7 +67,6 @@ const Index = ({ posts }: Props) => {
   );
 };
 
-export default Index;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await fecthBlogs();
 
@@ -74,3 +76,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
+export default Index;
