@@ -17,7 +17,7 @@ interface Props {
   users: User[];
 }
 
-const Home = ({ users }: Props) => {
+function Home({ users }: Props) {
   const { data: session } = useSession();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
@@ -118,7 +118,7 @@ const Home = ({ users }: Props) => {
       <Progress />
     </div>
   );
-};
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();

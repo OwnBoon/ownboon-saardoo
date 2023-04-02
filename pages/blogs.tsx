@@ -12,7 +12,7 @@ interface Props {
   posts: Posts[];
 }
 
-const Index = ({ posts }: Props) => {
+function Home({ posts }: Props) {
   const { data: session } = useSession();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
@@ -65,7 +65,7 @@ const Index = ({ posts }: Props) => {
       <Progress />
     </div>
   );
-};
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await fecthBlogs();
@@ -76,4 +76,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-export default Index;
+export default Home;
