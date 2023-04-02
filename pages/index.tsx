@@ -3,7 +3,6 @@ import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Body from "../components/Home/Body";
-import Benefits from "../components/Home/Benefits";
 import Spline from "@splinetool/react-spline";
 import { fetchUsers } from "../utils/fetchUsers";
 import { User, UserBody } from "../typings";
@@ -17,44 +16,6 @@ interface Props {
 const Home = ({ users }: Props) => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [isNewUser, setIsNewUser] = useState(false);
-  const postUser = async () => {
-    const userInfo: UserBody = {
-      name: session?.user?.name || "",
-      email: session?.user?.email || "",
-      leaderboard: 0,
-      focus: 0,
-    };
-    const result = await fetch(`/api/addUser`, {
-      body: JSON.stringify(userInfo),
-      method: "POST",
-    });
-
-    const json = await result.json();
-    return json;
-  };
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (session) {
-        const match = users.find((user) => user.name === session?.user?.name);
-        if (!match) {
-          setIsNewUser(true);
-        }
-      }
-    }, 5000); // delay of 5 seconds
-
-    return () => clearTimeout(timeout);
-  }, [session]);
-
-  useEffect(() => {
-    if (isNewUser) {
-      const createUser = async () => {
-        postUser();
-      };
-      createUser();
-    }
-  }, [isNewUser]);
 
   if (session) {
     router.push("/dashboard");
@@ -69,9 +30,7 @@ const Home = ({ users }: Props) => {
         <div className="mx-auto my-auto">
           <Hero />
           <Body />
-          <Benefits />
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
       </>
     );
 };

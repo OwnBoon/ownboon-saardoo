@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 export default function Body() {
-  
   useEffect(() => {
     function reveal() {
       var reveals = document.querySelectorAll(".showbody");
@@ -9,15 +8,15 @@ export default function Body() {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i]?.getBoundingClientRect().top;
         var elementVisible = 150;
-          
+
         if (elementTop < windowHeight - elementVisible) {
           reveals[i].classList.add("active");
-        }  
+        }
       }
     }
-  
+
     window.addEventListener("scroll", reveal);
-  }, [])
+  }, []);
   return (
     <div className="mt-[30vh]  flex flex-col font-poppins mx-auto my-auto items-center align-center justify-center">
       <div className="heading">
@@ -68,36 +67,36 @@ export default function Body() {
             </defs>
           </svg>
 
-          <img loading="lazy"
-            src="/bodyimage1.gif"
-            alt="Gif"
-          />
+          <img loading="lazy" src="/bodyimage1.gif" alt="Gif" />
         </div>
         <div className="flex flex-col showbody align-center justify-center">
-          <h className="text-[1.4rem] font-semibold py-3">Lorem ipsum dolor sit amet consectetur</h>
+          <h1 className="text-[1.4rem] font-semibold py-3">
+            Lorem ipsum dolor sit amet consectetur
+          </h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum et
-            incidunt facilis, corporis provident velit modi numquam magni <br />
+            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum
+            et incidunt facilis, corporis provident velit modi numquam magni{" "}
+            <br />
             assumenda odit cumque culpa similique.
           </p>
         </div>
       </div>
       <div className="my-auto mx-auto p-5 showbody justify-between flex flex-row">
-      <div className="flex flex-col  align-center justify-center">
-          <h className="text-[1.4rem] font-semibold py-3">Lorem ipsum dolor sit amet consectetur</h>
+        <div className="flex flex-col  align-center justify-center">
+          <h1 className="text-[1.4rem] font-semibold py-3">
+            Lorem ipsum dolor sit amet consectetur
+          </h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum et
-            incidunt facilis, corporis provident velit modi numquam magni <br />
+            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum
+            et incidunt facilis, corporis provident velit modi numquam magni{" "}
+            <br />
             assumenda odit cumque culpa similique.
           </p>
         </div>
         <div className="bodyimg2">
-          <img loading="lazy"
-            src="/bodyimage2.gif"
-            alt="Gif"
-          />
+          <img loading="lazy" src="/bodyimage2.gif" alt="Gif" />
         </div>
       </div>
       <div className="my-auto mx-auto p-5 showbody justify-between flex flex-row">
@@ -142,17 +141,17 @@ export default function Body() {
             </defs>
           </svg>
 
-          <img loading="lazy"
-            src="/bodyimage3.gif"
-            alt="Gif"
-          />
+          <img loading="lazy" src="/bodyimage3.gif" alt="Gif" />
         </div>
         <div className="flex flex-col  align-center justify-center">
-          <h className="text-[1.4rem] font-semibold py-3 ">Lorem ipsum dolor sit amet consectetur</h>
+          <h1 className="text-[1.4rem] font-semibold py-3 ">
+            Lorem ipsum dolor sit amet consectetur
+          </h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum et
-            incidunt facilis, corporis provident velit modi numquam magni <br />
+            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum
+            et incidunt facilis, corporis provident velit modi numquam magni{" "}
+            <br />
             assumenda odit cumque culpa similique.
           </p>
         </div>
