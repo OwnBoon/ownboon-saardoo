@@ -6,6 +6,8 @@ import PostCard from "../components/PostCard";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
 import { useSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+import { fecthBlogs } from "../utils/fetchBlogs";
 interface Props {
   posts: Posts[];
 }
@@ -49,9 +51,9 @@ const Index = ({ posts }: Props) => {
               {/* <PostWidget /> */}
               {/* <Categories /> */}
               <Link href={`/blogpost`}>
-                <button className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-8 py-3 cursor-pointer">
+                <p className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-8 py-3 cursor-pointer">
                   Post A Blog
-                </button>
+                </p>
               </Link>
             </div>
           </div>
@@ -62,23 +64,13 @@ const Index = ({ posts }: Props) => {
   );
 };
 
-export async function getStaticProps() {
-  const posts = await sanityClient.fetch(groq`
-  *[_type == "post"] {
-    ...,
-    author[]->{
-      ...,
-    },      
-    category[]->{
-    ...,
-  }
-  }  | order(_createdAt asc)
-    `);
+export default Index;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const posts = await fecthBlogs();
+
   return {
     props: {
       posts,
     },
   };
-}
-
-export default Index;
+};

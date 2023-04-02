@@ -8,23 +8,11 @@ interface Props {
 }
 
 const PostCard = ({ post }: Props) => {
-  const body = post.body.slice(0, 120);
   return (
     <div className="bg-white shadow-lg  rounded-lg p-0 lg:p-8 pb-12 mb-8">
-      {/* <div className="relative shadow-md inline-block w-full h-60 lg:h-80 mb-6">
-      <Image
-        unoptimized
-        loader={grpahCMSImageLoader}
-        alt={post.title}
-        className="shadow-lg rounded-t-lg lg:rounded-lg"
-        layout="fill"
-        src={post.featuredImage.url}
-      />
-    </div> */}
       <div className="relative overflow-hidden shadow-md pb-80 mb-6">
         <img
           src={post.mainImage}
-          alt=""
           className="object-top absolute h-80 w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
         />
       </div>
@@ -34,7 +22,6 @@ const PostCard = ({ post }: Props) => {
       </h1>
       <div className="block lg:flex text-center items-center justify-center mb-8 w-full">
         <div className="flex  justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
-          {/* <img className="align-middle rounded-full" src={post.author.map((?)} /> */}
           <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
             {post!.author!.map((authors) => authors.name)}
           </p>
@@ -57,9 +44,9 @@ const PostCard = ({ post }: Props) => {
           <span className="align-middle">{post._createdAt}</span>
         </div>
       </div>
-      <p className="text-center text-lg text-gray-700 font-normal px-4 lg:px-20 mb-8">
-        <div dangerouslySetInnerHTML={{ __html: body }} />
-      </p>
+      <div className="text-center text-lg text-gray-700 font-normal px-4 lg:px-20 mb-8">
+        <div dangerouslySetInnerHTML={{ __html: post.body.slice(0, 120) }} />
+      </div>
       <div className="text-center">
         <Link href={`/blogs/${post.slug!.current}`}>
           <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-8 py-3 cursor-pointer">

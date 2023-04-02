@@ -13,10 +13,6 @@ interface Props {
   post: Posts;
 }
 
-function urlFor(source: any) {
-  return imageUrlBuilder(sanityClient).image(source);
-}
-
 // const ptComponents = {
 //   types: {
 //     image: ({ value }) => {
