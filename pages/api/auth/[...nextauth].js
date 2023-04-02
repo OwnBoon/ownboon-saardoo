@@ -19,19 +19,27 @@ export default NextAuth({
         if (
           credentials?.username === "Test" &&
           credentials?.password === "test"
-        )
-          if (
-            credentials?.username === "Samayara Srivastava" &&
-            credentials?.password === "amongus6969"
-          ) {
-            return {
-              id: 2,
-              name: "Samayara Srivastava",
-              email: "srivastavasamayara30@gmail.com",
-              image:
-                "https://cdn.sanity.io/images/mrfd4see/production/5db389be209c96202064cddba475d2eed0a3f287-606x723.jpg",
-            };
-          }
+        ) {
+          return {
+            id: 1,
+            name: "kornesh",
+            email: "srivastavasamayara30@gmail.com",
+            image:
+              "https://cdn.sanity.io/images/mrfd4see/production/5db389be209c96202064cddba475d2eed0a3f287-606x723.jpg",
+          };
+        }
+        if (
+          credentials?.username === "Samayara Srivastava" &&
+          credentials?.password === "amongus6969"
+        ) {
+          return {
+            id: 2,
+            name: "Samayara Srivastava",
+            email: "srivastavasamayara30@gmail.com",
+            image:
+              "https://cdn.sanity.io/images/mrfd4see/production/5db389be209c96202064cddba475d2eed0a3f287-606x723.jpg",
+          };
+        }
 
         if (
           credentials?.username === "SaarDOO" &&
