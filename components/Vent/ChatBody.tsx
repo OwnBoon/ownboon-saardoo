@@ -13,7 +13,6 @@ const ChatBody = ({ messages, typingStatus, lastMessageRef }: Props) => {
     localStorage.removeItem("userName");
     router.push("/");
   };
-
   return (
     <>
       <header className="bg-black/5 rounded-xl   px-3 py-2">
@@ -28,28 +27,25 @@ const ChatBody = ({ messages, typingStatus, lastMessageRef }: Props) => {
 
       <div className="bg-black/10 text-black h-96 overflow-y-scroll p-5 mt-16 rounded-lg">
         {/* @ts-ignore */}
-        {messages.map((message) =>
-          message.name === localStorage.getItem("userName") ? (
-            <div className="p-5" key={message.id}>
-              <div className="flex">
-                <img src={message.pfp} />
-                <div className="flex flex-col">
-                  <p className="font-semibold">You</p>
-                  <p>{message.text}</p>
-                </div>
+        {messages.map((message) => (
+          <div className="p-5" key={message.id}>
+            <div className="flex ">
+              <img
+                className="w-10 object-cover  h-10  rounded-full"
+                src={message.pfp}
+              />
+              <div className="flex px-5 flex-col">
+                <p className="font-semibold">
+                  {message.name}{" "}
+                  <span className="font-semibold text-black/60 px-1 text-xs">
+                    {message.day} at {message.time}
+                  </span>
+                </p>
+                <p>{message.text}</p>
               </div>
             </div>
-          ) : (
-            <div className=" p-5" key={message.id}>
-              <div className="flex">
-                <div className="flex flex-col">
-                  <p className="font-semibold">{message.name}</p>
-                  <p>{message.text}</p>
-                </div>
-              </div>
-            </div>
-          )
-        )}
+          </div>
+        ))}
 
         <div className="mt-2 sticky bottom-0">
           <p>{typingStatus}</p>

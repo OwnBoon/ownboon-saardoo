@@ -5,6 +5,16 @@ interface Props {
 }
 
 const ChatFooter = ({ socket }: Props) => {
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const today = new Date();
   const [message, setMessage] = useState("");
   const handleTyping = () =>
     socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
@@ -17,6 +27,9 @@ const ChatFooter = ({ socket }: Props) => {
         name: localStorage.getItem("userName"),
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
+        pfp: localStorage.getItem("pfp"),
+        time: `${today.getHours()}` + `:${today.getMinutes()}`,
+        day: weekday[today.getDay()],
       });
     }
     setMessage("");
