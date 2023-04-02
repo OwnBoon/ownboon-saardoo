@@ -5,7 +5,7 @@ import { Posts } from "../typings";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
 import { useSession } from "next-auth/react";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { fecthBlogs } from "../utils/fetchBlogs";
 import dynamic from "next/dynamic";
 interface Props {
@@ -67,8 +67,8 @@ function Home({ posts }: Props) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const posts: Posts[] = await fecthBlogs();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const posts = await fecthBlogs();
 
   return {
     props: {
