@@ -7,6 +7,9 @@ import { User } from "../../typings";
 const query = groq`
 *[_type == "user"] {
   ...,
+  goals[]->{
+    ...,
+  }
 }  | order(_createdAt asc)
 `
 

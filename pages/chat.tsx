@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 const vent = () => {
   const router = useRouter();
   // @ts-ignore
-  const socket = socketIO.connect(process.env.NEXT_PUBLIC_SOCKET_URL);
+  const socket = socketIO.connect(process.env.NEXT_PUBLIC_SOCKETIO_URL_2);
   const { data: session } = useSession();
   const userName = session?.user?.name || "idk";
   const pfp =

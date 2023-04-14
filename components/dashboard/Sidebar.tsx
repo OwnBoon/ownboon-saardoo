@@ -38,7 +38,7 @@ const Sidebar = () => {
           <ClockIcon className="h-5 w-5" />
         </div>
         <div
-          onClick={() => router.push("/vent")}
+          onClick={() => router.push("/vent-choose")}
           className={router.pathname == "/vent" ? selected : normal}
         >
           <ChatBubbleBottomCenterIcon className="h-5 w-5" />

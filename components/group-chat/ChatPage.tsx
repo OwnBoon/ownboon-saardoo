@@ -12,15 +12,6 @@ const ChatPage = ({ socket }: Props) => {
   const [typingStatus, setTypingStatus] = useState("");
   const lastMessageRef = useRef(null);
   const [chatType, setChatType] = useState("normal");
-
-  const handleSwitchToGroupChat = () => {
-    setChatType("group");
-  };
-
-  const handleSwitchToNormalChat = () => {
-    setChatType("normal");
-  };
-
   useEffect(() => {
     // @ts-ignore
     socket.on("messageResponse", (data) => setMessages([...messages, data]));
