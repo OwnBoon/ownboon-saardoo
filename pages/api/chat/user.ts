@@ -1,10 +1,12 @@
-let users: any = [];
 interface Props {
     id: any
     name: string
     room: any
     pfp: any
 }
+
+
+let users: any = [];
 exports.addUser = ({ id, name, room, pfp }: Props) => {
   if (!name || !room) return { error: "Username and room are required." };
   const user = { id, name, room, pfp };
