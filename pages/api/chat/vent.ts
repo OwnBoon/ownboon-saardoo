@@ -7,7 +7,7 @@ const http = require("http").Server(app);
 const PORT = 4000;
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.NEXT_PUBLIC_BASE_URL,
   },
 });
 app.use(cors());
