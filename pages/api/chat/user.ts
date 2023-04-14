@@ -1,3 +1,5 @@
+import { NextApiHandler } from "next"
+
 interface Props {
     id: any
     name: string
@@ -7,7 +9,7 @@ interface Props {
 
 
 let users: any = [];
-exports.addUser = ({ id, name, room, pfp }: Props) => {
+export const addUser = ({ id, name, room, pfp }: Props) => {
   if (!name || !room) return { error: "Username and room are required." };
   const user = { id, name, room, pfp };
 
@@ -15,7 +17,9 @@ exports.addUser = ({ id, name, room, pfp }: Props) => {
 
   return { user };
 };
-exports.removeUser = (id: any) => {
+ export const removeUser = (id: any) => {
   const index = users.findIndex((user: any) => user.id === id);
   return users[index];
 };
+
+
