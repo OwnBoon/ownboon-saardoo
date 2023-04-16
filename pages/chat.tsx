@@ -28,6 +28,7 @@ const vent = () => {
     <div className="grid grid-cols-12 h-screen bg-[#f4f1eb]/50">
       <Sidebar />
       {/* <Main /> */}
+      {/* @ts-ignore */}
       <ChatPage socket={socket} />
       <Progress />
     </div>
