@@ -1,18 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
+import { Message } from "../../typings";
 // import ChatFooter from "./ChatFooter";
 
 interface Props {
   socket: any;
+  message: Message[];
 }
 
-const ChatPage = ({ socket }: Props) => {
+const ChatPage = ({ socket, message }: Props) => {
   const [messages, setMessages] = useState([]);
   const [typingStatus, setTypingStatus] = useState("");
   const lastMessageRef = useRef(null);
   const [chatType, setChatType] = useState("normal");
-
   const handleSwitchToGroupChat = () => {
     setChatType("group");
   };
@@ -41,11 +42,12 @@ const ChatPage = ({ socket }: Props) => {
     <div className="col-span-9 ">
       <div className="text-black   h-3/4">
         <ChatBody
+          message={message}
           messages={messages}
           typingStatus={typingStatus}
           lastMessageRef={lastMessageRef}
         />
-        <ChatFooter socket={socket} />
+        <ChatFooter message={message} socket={socket} />
       </div>
     </div>
   );

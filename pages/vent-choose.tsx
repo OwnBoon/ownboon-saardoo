@@ -22,7 +22,11 @@ const vent = () => {
         <p>Choose your Vent</p>
         <div className="flex p-5 gap-20">
           {/* First */}
-          <div onClick={() => router.push("/vent-group")} className="text-3xl">
+
+          <div
+            onClick={() => router.push("/vent-group")}
+            className="text-3xl  "
+          >
             Vent Group
           </div>
           {/* Second */}

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { Message } from "../../typings";
+import { useSession } from "next-auth/react";
 
 interface Props {
   socket: any;
+  message: Message[];
 }
 
 const ChatFooter = ({ socket }: Props) => {
@@ -16,10 +19,12 @@ const ChatFooter = ({ socket }: Props) => {
   ];
   const today = new Date();
   const [message, setMessage] = useState("");
+
+  const { data: session } = useSession();
   const handleTyping = () =>
     socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
 
-  const handleSendMessage = (e: Event) => {
+  const handleSendMessage = async (e: Event) => {
     e.preventDefault();
     if (message.trim() && localStorage.getItem("userName")) {
       socket.emit("message", {
@@ -31,9 +36,25 @@ const ChatFooter = ({ socket }: Props) => {
         time: `${today.getHours()}` + `:${today.getMinutes()}`,
         day: weekday[today.getDay()],
       });
+      const mutations = {
+        _type: "messages",
+        text: message,
+        username: localStorage.getItem("userName"),
+        socketId: socket.id,
+        pfp: localStorage.getItem("pfp"),
+        time: `${today.getHours()}` + `:${today.getMinutes()}`,
+        day: weekday[today.getDay()],
+      };
+      const result = await fetch(`/api/addMessage`, {
+        body: JSON.stringify(mutations),
+        method: "POST",
+      });
+      setMessage("");
+      const json = await result.json();
+      return json;
     }
-    setMessage("");
   };
+
   return (
     <div className="mt-5">
       {/* @ts-ignore */}
@@ -48,8 +69,9 @@ const ChatFooter = ({ socket }: Props) => {
             onKeyDown={handleTyping}
           />
           <button
-            // @ts-ignore
-            onClick={handleSendMessage}
+            onClick={() => {
+              handleSendMessage;
+            }}
             className="p-3 bg-black/20 rounded-xl"
           >
             SEND

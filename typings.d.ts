@@ -53,4 +53,11 @@ export interface Category extends SanityBody {
     title?: string
 }
 
-
+export interface Message extends SanityBody {
+    text: string
+    username: string
+    socketId: string
+    pfp: string
+    time: string
+    day: string
+}

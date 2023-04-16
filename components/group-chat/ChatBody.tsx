@@ -25,25 +25,25 @@ const ChatBody = ({ messages, typingStatus, lastMessageRef }: Props) => {
         </button>
       </header>
 
-      <div className="bg-black/10 text-black h-[30rem]  grid grid-cols-6   overflow-y-scroll p-5 mt-16 rounded-lg">
+      <div className="bg-black/10 text-black overflow-x-hidden h-[30rem]  grid grid-cols-6   overflow-y-scroll p-5 mt-16 rounded-lg">
         <div className="col-span-1 border-r h-full border-black "></div>
-        <div className="col-span-5 overflow-y-scroll">
+        <div className="col-span-5 overflow-x-hidden overflow-y-scroll">
           {/* @ts-ignore */}
           {messages.map((message) => (
-            <div className="p-5" key={message.id}>
+            <div className="p-5 overflow-x-hidden" key={message.id}>
               <div className="flex ">
                 <img
                   className="w-10 object-cover  h-10  rounded-full"
                   src={message.pfp}
                 />
-                <div className="flex px-5 flex-col">
+                <div className="flex px-5 flex-col w-fit ">
                   <p className="font-semibold">
                     {message.name}{" "}
                     <span className="font-semibold text-black/60 px-1 text-xs">
                       {message.day} at {message.time}
                     </span>
                   </p>
-                  <p>{message.text}</p>
+                  <p className="w-fit">{message.text}</p>
                 </div>
               </div>
             </div>
