@@ -36,6 +36,7 @@ const ChatFooter = ({ socket }: Props) => {
         time: `${today.getHours()}` + `:${today.getMinutes()}`,
         day: weekday[today.getDay()],
       });
+      setMessage("");
       const mutations = {
         _type: "messages",
         text: message,
@@ -49,7 +50,6 @@ const ChatFooter = ({ socket }: Props) => {
         body: JSON.stringify(mutations),
         method: "POST",
       });
-      setMessage("");
       const json = await result.json();
       return json;
     }
