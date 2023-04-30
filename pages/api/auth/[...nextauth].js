@@ -16,23 +16,11 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
 
-      callbacks: {
-        async signIn(user, account, profile) {
-          try {
-            console.log("creating user");
-            // Create a new document in your Sanity.js database
-            const res = await client.create({
-              _type: "user",
-              name: user.name,
-              email: user.email,
-            });
-            console.log(res);
-          } catch (err) {
-            console.error("Error creating user:", err.message);
-          }
-          // Return `true` to allow sign in to proceed
-        },
-      },
+     
+ 
+         
+            
+         
 
       async authorize(credentials, req) {
         if (
