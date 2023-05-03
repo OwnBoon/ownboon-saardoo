@@ -20,6 +20,7 @@ export interface User extends SanityBody {
 
 
 export interface UserBody {
+    id?: string
     name?: string
     email?: string
     focus?: number
@@ -32,7 +33,13 @@ export interface Habits {
     title?: string
 }
 
-export interface Goals {
+export interface Goals extends SanityBody {
+    _type?: 'goals'
+    title: string
+    progress: number
+}
+export interface GoalBody {
+    _type?: 'goals'
     title: string
     progress: number
 }

@@ -32,14 +32,14 @@ const Sidebar = () => {
           <RectangleStackIcon className="w-5 h-5" />
         </div>
         <div
-          onClick={() => router.push("/goals")}
-          className={router.pathname == "/goals" ? selected : normal}
+          onClick={() => router.push("/tracker")}
+          className={router.pathname == "/tracker" ? selected : normal}
         >
           <ClockIcon className="h-5 w-5" />
         </div>
         <div
           onClick={() => router.push("/vent-choose")}
-          className={router.pathname == "/vent" ? selected : normal}
+          className={router.pathname == "/vent-choose" ? selected : normal}
         >
           <ChatBubbleBottomCenterIcon className="h-5 w-5" />
         </div>
