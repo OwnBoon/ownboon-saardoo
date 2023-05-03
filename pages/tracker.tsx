@@ -9,7 +9,7 @@ import { fetchUsers } from "../utils/fetchUsers";
 import { User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-
+import Spline from "@splinetool/react-spline";
 interface Props {
   users: User[];
 }
@@ -20,7 +20,14 @@ const Home = ({ users }: Props) => {
   return (
     <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />
-      <Main users={users} />
+      {/*  */}
+      <div className="col-span-9 h-screen">
+        <p className="flex justify-center p-5">Track Your Progress</p>
+        <Spline
+          className="scale-75"
+          scene="https://prod.spline.design/sDtiNp5HMCCgVQRc/scene.splinecode"
+        />
+      </div>
       <Progress />
     </div>
   );
