@@ -8,31 +8,49 @@ import {
   HiOutlineUserGroup,
 } from "react-icons/hi";
 import { RiCloseLine } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetSongsByGenreQuery } from "../../redux/services/shazamCore";
+import Loader from "./components/Loader";
+import Error from "./components/Error";
+import { genres } from "../../assets/constants";
+import SongCard from "./components/SongCard";
 
 const links = [{ name: "Discover", to: "/focus/lofi", icon: HiOutlineHome }];
 
-const NavLinks = ({ handleClick }: any) => (
-  <div className="mt-10">
-    {links.map((item) => (
-      <Link
-        key={item.name}
-        href={item.to}
-        className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
-        onClick={() => handleClick && handleClick()}
-      >
-        <item.icon className="w-6 h-6 mr-2" />
-        {item.name}
-      </Link>
-    ))}
-  </div>
-);
+const NavLinks = ({ handleClick }: any) => {
+  const dispatch = useDispatch();
+  const { genreListId } = useSelector((state: any) => state.player);
+  const { activeSong, isPlaying } = useSelector((state: any) => state.player);
+  const { data, isFetching, error } = useGetSongsByGenreQuery(
+    genreListId || "544711374"
+  );
+
+  const genreTitle = genres.find(
+    ({ value }: any) => value === genreListId
+  )?.title;
+  return (
+    <div className="mt-10">
+      {links.map((item) => (
+        <Link
+          key={item.name}
+          href={item.to}
+          className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
+          onClick={() => handleClick && handleClick()}
+        >
+          <item.icon className="w-6 h-6 mr-2" />
+          {item.name}
+        </Link>
+      ))}
+    </div>
+  );
+};
 
 const Sidebar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <>
-      <div className="md:flex hidden flex-col  w-[240px] py-10 px-4 bg-gradient-to-b from-[#191624] to-[#85050c]">
+      <div className="md:flex hidden flex-col  w-[240px] py-10 px-4 ">
         <img
           src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=64&q=75"
           alt="logo"

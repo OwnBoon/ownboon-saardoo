@@ -44,6 +44,25 @@ body {
   }
 }
 
+.lofi{
+  &::before{
+    content:'';
+    content: "";
+    width: 100%;
+    height: 100vh;
+    // background: linear-gradient(to right bottom, #6d327c, #485DA6, #00a1ba, #01b18e, #32b37b);
+    background-image: url("https://cdn.sanity.io/images/mrfd4see/production/b7295ae50431a7650d6270d1597ea423cf7c8a49-4435x2951.jpg?w=2000&fit=max&auto=format");
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 100%;
+  }
+}
+
 .blog h1 {
   font-size: 1.7em; /* Change the size of text inside <strong> to 1.2 times the parent font size */
 }

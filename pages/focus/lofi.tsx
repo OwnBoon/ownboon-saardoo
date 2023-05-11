@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../../utils/fetchUsers";
 import { User } from "../../typings";
@@ -19,16 +19,59 @@ interface Props {
 
 const Home = ({ users }: Props) => {
   const { activeSong } = useSelector((state: any) => state.player);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [timeSpent, setTimeSpent] = useState(0);
+  const [points, setPoints] = useState(0);
+
+  useEffect(() => {
+    // @ts-ignore
+    setStartTime(new Date());
+
+    const handleRouteChange = () => {
+      // @ts-ignore
+      setEndTime(new Date());
+    };
+
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+      const timeSpentInSeconds = Math.floor((endTime! - startTime!) / 1000);
+      const pointsEarned = calculatePoints(timeSpentInSeconds);
+      console.log(
+        `User spent ${timeSpentInSeconds} seconds on this page and earned ${pointsEarned} points.`
+      );
+    };
+  }, []);
+
+  const calculatePoints = (timeSpentInSeconds: number) => {
+    const pointsPerSecond = 0.01; // change this value to adjust point earning rate
+    const earnedPoints = Math.floor(timeSpentInSeconds * pointsPerSecond);
+    setPoints(earnedPoints);
+    return earnedPoints;
+  };
+
+  useEffect(() => {
+    if (endTime) {
+      const timeSpentInSeconds = Math.floor((endTime - startTime!) / 1000);
+      setTimeSpent(timeSpentInSeconds);
+      const earnedPoints = calculatePoints(timeSpentInSeconds);
+      console.log(
+        `User earned ${earnedPoints} points for spending ${timeSpentInSeconds} seconds on this page.`
+      );
+    }
+  }, [endTime]);
 
   const router = useRouter();
   const { data: session } = useSession();
   return (
-    <div className="relative flex">
+    <div className="relative flex lofi">
       <div className="z-30 hidden md:inline-flex">
         <Sidebar />
       </div>
 
-      <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#E50914] ">
+      <div className="flex-1 flex flex-col \ ">
         <div className="sticky top-0 z-50 bg-black/20 ">
           <SearchBar />
           <div className="z-50 sm:inline md:hidden">

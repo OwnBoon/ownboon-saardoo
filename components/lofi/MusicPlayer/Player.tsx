@@ -12,6 +12,7 @@ const Player = ({
   repeat,
 }: any) => {
   const ref = useRef(null);
+  // eslint-disable-next-line no-unused-expressions
   if (ref.current) {
     if (isPlaying) {
       // @ts-ignore
@@ -24,12 +25,12 @@ const Player = ({
 
   useEffect(() => {
     // @ts-ignore
-    ref.current!.volume = volume;
+    ref.current.volume = volume;
   }, [volume]);
   // updates audio element only on seekTime change (and not on each rerender):
   useEffect(() => {
     // @ts-ignore
-    ref.current!.currentTime = seekTime;
+    ref.current.currentTime = seekTime;
   }, [seekTime]);
 
   return (

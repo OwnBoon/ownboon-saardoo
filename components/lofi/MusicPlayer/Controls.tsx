@@ -1,35 +1,68 @@
 import React from "react";
+import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import {
-  BsFillVolumeUpFill,
-  BsVolumeDownFill,
-  BsFillVolumeMuteFill,
+  BsArrowRepeat,
+  BsFillPauseFill,
+  BsFillPlayFill,
+  BsShuffle,
 } from "react-icons/bs";
 
-const VolumeBar = ({ value, min, max, onChange, setVolume }: any) => (
-  <div className="hidden lg:flex flex-1 items-center justify-end">
-    {value <= 1 && value > 0.5 && (
-      <BsFillVolumeUpFill size={25} color="#FFF" onClick={() => setVolume(0)} />
-    )}
-    {value <= 0.5 && value > 0 && (
-      <BsVolumeDownFill size={25} color="#FFF" onClick={() => setVolume(0)} />
-    )}
-    {value === 0 && (
-      <BsFillVolumeMuteFill
-        size={25}
+const Controls = ({
+  isPlaying,
+  repeat,
+  setRepeat,
+  shuffle,
+  setShuffle,
+  currentSongs,
+  handlePlayPause,
+  handlePrevSong,
+  handleNextSong,
+}: any) => (
+  <div className="flex items-center justify-around md:w-36 lg:w-52 2xl:w-80">
+    <BsArrowRepeat
+      size={20}
+      color={repeat ? "red" : "white"}
+      onClick={() => setRepeat((prev: any) => !prev)}
+      className="hidden sm:block cursor-pointer"
+    />
+    {currentSongs?.length && (
+      <MdSkipPrevious
+        size={30}
         color="#FFF"
-        onClick={() => setVolume(1)}
+        className="cursor-pointer"
+        onClick={handlePrevSong}
       />
     )}
-    <input
-      type="range"
-      step="any"
-      value={value}
-      min={min}
-      max={max}
-      onChange={onChange}
-      className="2xl:w-40 lg:w-32 md:w-32 h-1 ml-2"
+    {isPlaying ? (
+      <BsFillPauseFill
+        size={45}
+        color="#FFF"
+        onClick={handlePlayPause}
+        className="cursor-pointer"
+      />
+    ) : (
+      <BsFillPlayFill
+        size={45}
+        color="#FFF"
+        onClick={handlePlayPause}
+        className="cursor-pointer"
+      />
+    )}
+    {currentSongs?.length && (
+      <MdSkipNext
+        size={30}
+        color="#FFF"
+        className="cursor-pointer"
+        onClick={handleNextSong}
+      />
+    )}
+    <BsShuffle
+      size={20}
+      color={shuffle ? "red" : "white"}
+      onClick={() => setShuffle((prev: any) => !prev)}
+      className="hidden sm:block cursor-pointer"
     />
   </div>
 );
 
-export default VolumeBar;
+export default Controls;
