@@ -17,6 +17,7 @@
     "@opentelemetry/sdk-trace-node": "^1.10.1",
     "@opentelemetry/semantic-conventions": "^1.10.1",
     "@portabletext/react": "^2.0.2",
+    "@reduxjs/toolkit": "1.8.5",
     "@sanity/image-url": "^1.0.2",
     "@sindresorhus/slugify": "^2.2.0",
     "@splinetool/react-spline": "^2.2.6",
@@ -40,11 +41,13 @@
     "react-dom": "18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-quill": "^2.0.0",
+    "react-redux": "8.0.2",
     "sass": "^1.60.0",
     "slugify": "^1.6.6",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
     "string-similarity": "^4.0.4",
+    "swiper": "8.4.2",
     "tailwind-scrollbar": "^3.0.0"
   },
   "devDependencies": {

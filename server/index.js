@@ -3,16 +3,12 @@ const app = express();
 const cors = require("cors");
 const http = require("http").Server(app);
 const PORT = 4000;
-const { createServer } = require("http");
-const { Server } = require("socket.io")(http, {
+const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://ownboon-saardoo.vercel.app",
   },
 });
-const httpServer = createServer();
-const socketIO = new Server(httpServer, {
-  wsEngine: require("eiows").Server,
-});
+
 app.use(cors());
 let users = [];
 

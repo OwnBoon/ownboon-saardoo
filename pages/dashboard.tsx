@@ -9,12 +9,14 @@ import { fetchUsers } from "../utils/fetchUsers";
 import { User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-
+import { useSelector } from "react-redux";
 interface Props {
   users: User[];
 }
 
 const Home = ({ users }: Props) => {
+  const { activeSong } = useSelector((state: any) => state.player);
+
   const router = useRouter();
   const { data: session } = useSession();
   return (
@@ -22,6 +24,11 @@ const Home = ({ users }: Props) => {
       <Sidebar />
       <Main users={users} />
       <Progress />
+      {activeSong?.title && (
+        <div className="absolute z-50 h-28 bottom-0 left-0 right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl ">
+          {/* <MusicPlayer /> */}
+        </div>
+      )}
     </div>
   );
 };
