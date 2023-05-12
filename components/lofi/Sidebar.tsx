@@ -14,7 +14,19 @@ import Loader from "./components/Loader";
 import Error from "./components/Error";
 import { genres } from "../../assets/constants";
 import SongCard from "./components/SongCard";
+import { GetServerSideProps } from "next";
+import { fetchUsers } from "../../utils/fetchUsers";
+import { fetchGoals } from "../../utils/fetchGoals";
+import { Goals, User, UserBody } from "../../typings";
+import Draggable, { DraggableCore } from "react-draggable";
+import { useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 
+const ReactQuill = dynamic(import("react-quill"), { ssr: false });
+interface Props {
+  users: User[];
+  goals: Goals[];
+}
 const links = [{ name: "Discover", to: "/focus/lofi", icon: HiOutlineHome }];
 
 const NavLinks = ({ handleClick }: any) => {
@@ -45,9 +57,30 @@ const NavLinks = ({ handleClick }: any) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ users, goals }: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const [note, setNote] = useState(false);
+  const { data: session } = useSession();
+  const match = users.filter((user) => user.email === session?.user?.email);
+  const [notes, setNotes] = useState("");
+  const addUser = async () => {
+    try {
+      const postInfo: UserBody = {
+        id: users[0]._id,
+        // @ts-ignore
+        notes: notes,
+      };
+      const result = await fetch(`/api/addNotes`, {
+        body: JSON.stringify(postInfo),
+        method: "POST",
+      });
+      const json = await result.json();
+      console.log(json);
+      return json;
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <>
       <div className="md:flex hidden flex-col  w-[240px] py-10 px-4 ">
@@ -57,6 +90,49 @@ const Sidebar = () => {
           className="w-full h-14 object-contain rounded-full"
         />
         <NavLinks />
+        <div className="flex flex-col  justify-center space-y-5 items-start my-8 text-sm font-medium ">
+          {" "}
+          <div
+            onClick={() => {
+              note ? setNote(false) : setNote(true);
+            }}
+            className="flex text-gray-400 hover:text-cyan-400 cursor-pointer"
+          >
+            <HiOutlineHashtag className="w-6 h-6 mr-2" />
+            Notes
+          </div>
+          <div className="flex text-gray-400 hover:text-cyan-400 cursor-pointer">
+            <HiOutlineHashtag className="w-6 h-6 mr-2" />
+            Todos
+          </div>
+        </div>
+        {note ? (
+          <Draggable>
+            <div className="space-y-10 w-80  col-span-4 cursor-pointer bg-black/10 outline-none px-2  ">
+              <h1 className="text-white cursor-pointers">Notes For Today</h1>
+              <div className="     h-60">
+                {/* <textarea
+                  rows={8}
+                  onChange={(e) => setNotes(e.target.value)}
+                  value={notes || match[0].notes}
+                  className="w-full pr-5 text-sm bg-black text-white outline-none border-none rounded-lg "
+                /> */}
+                <div
+                  onClick={addUser}
+                  className="bg-black/10 text-white hover:scale-110 z-50 w-fit p-2 rounded-lg cursor-pointer text-sm "
+                >
+                  Save
+                </div>
+                <ReactQuill
+                  theme="snow"
+                  className="h-60 w-72 !bg-black/30 rounded-lg outline-none !border-none text-white"
+                  value={notes || match[0].notes}
+                  onChange={setNotes}
+                />
+              </div>
+            </div>
+          </Draggable>
+        ) : null}
       </div>
 
       {/* Mobile sidebar */}

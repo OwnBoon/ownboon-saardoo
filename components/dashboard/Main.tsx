@@ -1,20 +1,42 @@
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import LargeCard from "./LargeCard";
-import { User } from "../../typings";
+import { Goals, User, UserBody } from "../../typings";
 import { PlusIcon } from "@heroicons/react/24/outline";
-
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
+  goals: Goals[];
 }
-const Main = ({ users }: Props) => {
+const Main = ({ users, goals }: Props) => {
   const { data: session } = useSession();
   const router = useRouter();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const match = users.filter((user) => user.email === session?.user?.email);
+  const [notes, setNotes] = useState("");
+  const addUser = async () => {
+    try {
+      const postInfo: UserBody = {
+        id: users[0]._id,
+        // @ts-ignore
+        notes: notes,
+      };
+      const result = await fetch(`/api/addNotes`, {
+        body: JSON.stringify(postInfo),
+        method: "POST",
+      });
+      const json = await result.json();
+      console.log(json);
+      return json;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="col-span-9 py-8  space-y-16 bg-white/40 rounded-lg rounded-r-2xl">
@@ -39,38 +61,26 @@ const Main = ({ users }: Props) => {
       <div className="px-5 py-2 rounded-lg  bg-white">
         {session ? (
           <>
-            <LargeCard user={users} />
+            <LargeCard user={users} goals={goals} />
           </>
         ) : null}
       </div>
       {/* Taks for today */}
-      <div className="grid grid-cols-7 px-5 p-5 rounded-lg   bg-white/80 text-lg font-[500] ">
+      <div className="grid grid-cols-7 px-2 py-2 rounded-lg   bg-white/80 text-lg font-[500] ">
         <div className="space-y-10 col-span-4  ">
-          <h1>Goals For Today</h1>
-          <div className="space-y-10 overflow-y-scroll scrollbar !scrollbar-track-[#4b9afa]  !scrollbar-thumb-[#4b9afa] h-60">
-            <div className="font-normal bg-white   text-xs space-y-3 border-l-2 w-full border-orange-500 py-2 rounded-xl px-3  shadow-xl shadow-black/5">
-              <div className="space-y-2">
-                <h2 className="flex justify-between ">
-                  <span className="font-bold"> Mobile App</span> <span>()</span>
-                </h2>
-                <p className="text-black/60">prepare sugma balls</p>
-              </div>
-            </div>
-            <div className="font-normal bg-white  text-xs space-y-3 border-l-2 w-full border-orange-500 py-2 rounded-xl px-3  shadow-xl shadow-black/5">
-              <div className="space-y-2">
-                <h2 className="flex justify-between ">
-                  <span className="font-bold"> Mobile App</span> <span>()</span>
-                </h2>
-                <p className="text-black/60">prepare sugma balls</p>
-              </div>
-            </div>
-            <div className="font-normal bg-white  text-xs space-y-3 border-l-2 w-full border-orange-500 py-2 rounded-xl px-3  shadow-xl shadow-black/5">
-              <div className="space-y-2">
-                <h2 className="flex justify-between ">
-                  <span className="font-bold"> Mobile App</span> <span>()</span>
-                </h2>
-                <p className="text-black/60">prepare sugma balls</p>
-              </div>
+          <h1>Notes For Today</h1>
+          <div className=" overflow-y-scroll    h-60">
+            <ReactQuill
+              theme="snow"
+              className="h-36"
+              value={notes || match[0].notes}
+              onChange={setNotes}
+            />
+            <div
+              onClick={addUser}
+              className="bg-black/5 w-fit p-2 mt-16 rounded-lg cursor-pointer text-sm "
+            >
+              Save
             </div>
           </div>
         </div>

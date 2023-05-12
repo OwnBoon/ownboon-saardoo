@@ -20,7 +20,8 @@ export default async function handler(
           name: data.name,
           email: data.name,
           focus: data.focus,
-          leaderboard: data.leaderboard
+          leaderboard: data.leaderboard,
+          notes: data.notes
         },
       },
     ],

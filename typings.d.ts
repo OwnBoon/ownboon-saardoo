@@ -14,8 +14,7 @@ export interface User extends SanityBody {
     email?: string
     focus?: number
     leaderboard?: number
-    habits?: Habits[]
-    goals: Goals[]
+    notes?: string
 }
 
 
@@ -25,8 +24,7 @@ export interface UserBody {
     email?: string
     focus?: number
     leaderboard?: number
-    habits?: Habits[]
-    goals: Goals[]
+    notes: string
 }
 
 export interface Habits {
@@ -37,11 +35,13 @@ export interface Goals extends SanityBody {
     _type?: 'goals'
     title: string
     progress: number
+    username?: string
 }
 export interface GoalBody {
     _type?: 'goals'
     title: string
     progress: number
+    username?: string
 }
 
 export interface Posts extends SanityBody {

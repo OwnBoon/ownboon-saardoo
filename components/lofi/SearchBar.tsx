@@ -3,6 +3,8 @@ import React, { useState } from "react";
 
 import { FiSearch } from "react-icons/fi";
 
+
+
 const Searchbar = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
