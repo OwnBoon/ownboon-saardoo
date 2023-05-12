@@ -21,6 +21,7 @@ import { Goals, User, UserBody } from "../../typings";
 import Draggable, { DraggableCore } from "react-draggable";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
+import LargeCard from "../dashboard/LargeCard";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
@@ -60,6 +61,7 @@ const NavLinks = ({ handleClick }: any) => {
 const Sidebar = ({ users, goals }: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [note, setNote] = useState(false);
+  const [todo, setTodo] = useState(false);
   const { data: session } = useSession();
   const match = users.filter((user) => user.email === session?.user?.email);
   const [notes, setNotes] = useState("");
@@ -101,34 +103,50 @@ const Sidebar = ({ users, goals }: Props) => {
             <HiOutlineHashtag className="w-6 h-6 mr-2" />
             Notes
           </div>
-          <div className="flex text-gray-400 hover:text-cyan-400 cursor-pointer">
+          <div
+            onClick={() => {
+              todo ? setTodo(false) : setTodo(true);
+            }}
+            className="flex text-gray-400 hover:text-cyan-400 cursor-pointer"
+          >
             <HiOutlineHashtag className="w-6 h-6 mr-2" />
             Todos
           </div>
         </div>
         {note ? (
           <Draggable>
-            <div className="space-y-10 w-80  col-span-4 cursor-pointer bg-black/10 outline-none px-2  ">
-              <h1 className="text-white cursor-pointers">Notes For Today</h1>
-              <div className="     h-60">
-                {/* <textarea
+            <div className="relative">
+              <div className="space-y-10 w-80 absolute   col-span-4 cursor-pointer bg-black/10 outline-none px-2  ">
+                <h1 className="text-white cursor-pointers">Notes For Today</h1>
+                <div className="     h-60">
+                  {/* <textarea
                   rows={8}
                   onChange={(e) => setNotes(e.target.value)}
                   value={notes || match[0].notes}
                   className="w-full pr-5 text-sm bg-black text-white outline-none border-none rounded-lg "
                 /> */}
-                <div
-                  onClick={addUser}
-                  className="bg-black/10 text-white hover:scale-110 z-50 w-fit p-2 rounded-lg cursor-pointer text-sm "
-                >
-                  Save
+                  <div
+                    onClick={addUser}
+                    className="bg-black/10 text-white hover:scale-110 z-50 w-fit p-2 rounded-lg cursor-pointer text-sm "
+                  >
+                    Save
+                  </div>
+                  <ReactQuill
+                    theme="snow"
+                    className="h-60 w-72 !bg-black/30 rounded-lg outline-none !border-none text-white"
+                    value={notes || match[0].notes}
+                    onChange={setNotes}
+                  />
                 </div>
-                <ReactQuill
-                  theme="snow"
-                  className="h-60 w-72 !bg-black/30 rounded-lg outline-none !border-none text-white"
-                  value={notes || match[0].notes}
-                  onChange={setNotes}
-                />
+              </div>
+            </div>
+          </Draggable>
+        ) : null}
+        {todo ? (
+          <Draggable>
+            <div className="cursor-pointer relative   w-full">
+              <div className="absolute p-5">
+                <LargeCard user={users} goals={goals} />
               </div>
             </div>
           </Draggable>

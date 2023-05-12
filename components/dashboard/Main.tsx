@@ -67,21 +67,21 @@ const Main = ({ users, goals }: Props) => {
       </div>
       {/* Taks for today */}
       <div className="grid grid-cols-7 px-2 py-2 rounded-lg   bg-white/80 text-lg font-[500] ">
-        <div className="space-y-10 col-span-4  ">
+        <div className="space-y-5 col-span-4  ">
           <h1>Notes For Today</h1>
-          <div className=" overflow-y-scroll    h-60">
+          <div
+            onClick={addUser}
+            className="bg-black/5 w-fit p-2 mt-12 rounded-lg cursor-pointer text-sm "
+          >
+            Save
+          </div>
+          <div className=" overflow-y-hidden    h-60">
             <ReactQuill
               theme="snow"
-              className="h-36"
+              className="h-full"
               value={notes || match[0].notes}
               onChange={setNotes}
             />
-            <div
-              onClick={addUser}
-              className="bg-black/5 w-fit p-2 mt-16 rounded-lg cursor-pointer text-sm "
-            >
-              Save
-            </div>
           </div>
         </div>
         <div className="flex flex-col space-y-8 justify-start col-span-3 w-full px-10">
