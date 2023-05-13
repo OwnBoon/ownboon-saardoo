@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../../../utils/fetchUsers";
-import { User } from "../../../typings";
+import { Goals, User } from "../../../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -13,11 +13,13 @@ import ArtistDetails from "../../../components/lofi/ArtistDetails";
 import SongDetails from "../../../components/lofi/SongDetails";
 import Search from "../../../components/lofi/Search";
 import MusicPlayer from "../../../components/lofi/MusicPlayer";
+import { fetchGoals } from "../../../utils/fetchGoals";
 interface Props {
   users: User[];
+  goals: Goals[];
 }
 
-const Home = ({ users }: Props) => {
+const Home = ({ users, goals }: Props) => {
   const { activeSong } = useSelector((state: any) => state.player);
 
   const router = useRouter();
@@ -25,14 +27,14 @@ const Home = ({ users }: Props) => {
   return (
     <div className="relative flex">
       <div className="z-30 hidden md:inline-flex">
-        <Sidebar />
+        <Sidebar goals={goals} users={users} />
       </div>
 
-      <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#E50914] ">
+      <div className="flex-1 flex flex-col lofi ">
         <div className="sticky top-0 z-50 bg-black/20 ">
           <SearchBar />
           <div className="z-50 sm:inline md:hidden">
-            <Sidebar />
+            <Sidebar goals={goals} users={users} />
           </div>
         </div>
 
@@ -57,10 +59,12 @@ const Home = ({ users }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();
+  const goals = await fetchGoals();
 
   return {
     props: {
       users,
+      goals,
     },
   };
 };
