@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { DOMAttributes, MouseEventHandler, useState } from "react";
 import {
   HiOutlineHashtag,
   HiOutlineHome,
@@ -28,7 +28,44 @@ interface Props {
   users: User[];
   goals: Goals[];
 }
+
+interface Types {
+  addUser: MouseEventHandler<HTMLDivElement>;
+  notes: string;
+  match: User[];
+  setNotes: React.Dispatch<React.SetStateAction<string>>;
+}
 const links = [{ name: "Discover", to: "/focus/lofi", icon: HiOutlineHome }];
+
+const Notemenu = ({ addUser, notes, match, setNotes }: Types) => {
+  return (
+    <div className="relative">
+      <div className="space-y-10 w-80 absolute   col-span-4 cursor-pointer bg-black/10 outline-none px-2  ">
+        <h1 className="text-white cursor-pointers">Notes For Today</h1>
+        <div className="     h-60">
+          {/* <textarea
+      rows={8}
+      onChange={(e) => setNotes(e.target.value)}
+      value={notes || match[0].notes}
+      className="w-full pr-5 text-sm bg-black text-white outline-none border-none rounded-lg "
+    /> */}
+          <div
+            onClick={addUser}
+            className="bg-black/10 text-white hover:scale-110 z-50 w-fit p-2 rounded-lg cursor-pointer text-sm "
+          >
+            Save
+          </div>
+          <ReactQuill
+            theme="snow"
+            className="h-60 w-72 !bg-black/30 rounded-lg outline-none !border-none text-white"
+            value={notes || match[0].notes}
+            onChange={setNotes}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const NavLinks = ({ handleClick }: any) => {
   const dispatch = useDispatch();
@@ -98,10 +135,15 @@ const Sidebar = ({ users, goals }: Props) => {
             onClick={() => {
               note ? setNote(false) : setNote(true);
             }}
-            className="flex text-gray-400 hover:text-cyan-400 cursor-pointer"
+            className="flex text-gray-400 hover:text-cyan-400 items-center  w-full cursor-pointer"
           >
             <HiOutlineHashtag className="w-6 h-6 mr-2" />
-            Notes
+            <p className="flex justify-between w-full items-center">
+              Notes
+              <span className="text-gray-600 text-3xl hover:text-black/50 hover:scale-125 z-50">
+                +
+              </span>
+            </p>
           </div>
           <div
             onClick={() => {
@@ -115,37 +157,23 @@ const Sidebar = ({ users, goals }: Props) => {
         </div>
         {note ? (
           <Draggable>
-            <div className="relative">
-              <div className="space-y-10 w-80 absolute   col-span-4 cursor-pointer bg-black/10 outline-none px-2  ">
-                <h1 className="text-white cursor-pointers">Notes For Today</h1>
-                <div className="     h-60">
-                  {/* <textarea
-                  rows={8}
-                  onChange={(e) => setNotes(e.target.value)}
-                  value={notes || match[0].notes}
-                  className="w-full pr-5 text-sm bg-black text-white outline-none border-none rounded-lg "
-                /> */}
-                  <div
-                    onClick={addUser}
-                    className="bg-black/10 text-white hover:scale-110 z-50 w-fit p-2 rounded-lg cursor-pointer text-sm "
-                  >
-                    Save
-                  </div>
-                  <ReactQuill
-                    theme="snow"
-                    className="h-60 w-72 !bg-black/30 rounded-lg outline-none !border-none text-white"
-                    value={notes || match[0].notes}
-                    onChange={setNotes}
-                  />
-                </div>
-              </div>
+            <div>
+              <Notemenu
+                addUser={addUser}
+                match={match}
+                notes={notes}
+                setNotes={setNotes}
+              />
             </div>
           </Draggable>
         ) : null}
         {todo ? (
           <Draggable>
-            <div className="cursor-pointer relative   w-full">
-              <div className="absolute p-5">
+            <div className=" relative    w-full">
+              <div className="absolute p-5 col z-50  bg-black/30 rounded-lg">
+                <p className="text-2xl text-white">
+                  Today's <span className="font-semibold">Todos</span>
+                </p>
                 <LargeCard user={users} goals={goals} />
               </div>
             </div>

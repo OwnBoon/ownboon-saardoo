@@ -75,10 +75,10 @@ const Main = ({ users, goals }: Props) => {
           >
             Save
           </div>
-          <div className=" overflow-y-hidden    h-60">
+          <div className=" overflow-y-scroll    h-fit ">
             <ReactQuill
               theme="snow"
-              className="h-full"
+              className="h-full scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
               value={notes || match[0].notes}
               onChange={setNotes}
             />

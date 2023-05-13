@@ -15,6 +15,10 @@ export interface User extends SanityBody {
     focus?: number
     leaderboard?: number
     notes?: string
+    notes1?: string
+    notes2?: string
+    notes3?: string
+    notes4?: string
 }
 
 
@@ -25,6 +29,10 @@ export interface UserBody {
     focus?: number
     leaderboard?: number
     notes: string
+    notes1?: string
+    notes2?: string
+    notes3?: string
+    notes4?: string
 }
 
 export interface Habits {
