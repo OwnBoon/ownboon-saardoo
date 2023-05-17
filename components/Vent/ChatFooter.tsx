@@ -20,7 +20,6 @@ const ChatFooter = ({ socket }: Props) => {
   const today = new Date();
   const [message, setMessage] = useState("");
 
-  const { data: session } = useSession();
   const handleTyping = () =>
     socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
 

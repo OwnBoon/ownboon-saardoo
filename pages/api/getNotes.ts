@@ -1,18 +1,19 @@
 import type {NextApiRequest, NextApiResponse} from "next"
 import {groq } from "next-sanity"; 
 import {sanityClient } from "../../sanity";
-import { Posts, User } from "../../typings";
+import { Goals, Notes, User } from "../../typings";
 
 
 const query = groq`
-*[_type == "post"] {
+*[_type == "notes"] {
     ...,
-  }  | order(_createdAt asc)
+  
+  }  | order(_createdAt desc)
     
 `
 
 type Data = {
-   posts: Posts[]
+   notes: Notes[]
 }
 
 
@@ -21,7 +22,7 @@ export default async function handler(
    res: NextApiResponse<Data>
  ) {
 
-   const posts: Posts[] = await sanityClient.fetch(query)
-   res.status(200).json({ posts})
+   const notes: Notes[] = await sanityClient.fetch(query)
+   res.status(200).json({ notes})
  }
  

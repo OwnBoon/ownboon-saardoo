@@ -59,10 +59,7 @@ const Post = ({ post }: Props) => {
 };
 
 const query = groq`*[_type == "post" && slug.current == $slug][0]{
-    ...,
-    author[]->{
-      ...,
-    },      
+    ...,   
     category[]->{
     ...,
   }

@@ -9,27 +9,28 @@ import { User, UserBody } from "../typings";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-
+import { currentUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 const Home = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { isLoaded, isSignedIn, user } = useUser();
 
-  if (session) {
-    router.push("/dashboard");
-  } else
-    return (
-      <>
-        <Head>
-          <title>OwnBoon</title>
-          <link rel="icon" href="/logo.png" />
-        </Head>
-        <Navbar />
-        <div className="mx-auto my-auto">
-          <Hero />
-          <Body />
-        </div>
-      </>
-    );
+  // if (session) {
+  //   router.push("/dashboard");
+  // } else
+  return (
+    <>
+      <Head>
+        <title>OwnBoon</title>
+        <link rel="icon" href="/logo.png" />
+      </Head>
+      <Navbar />
+      <div className="mx-auto my-auto">
+        <Hero />
+        <Body />
+      </div>
+    </>
+  );
 };
 
 export default Home;

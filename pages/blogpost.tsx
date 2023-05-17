@@ -11,6 +11,7 @@ import { GetServerSideProps, GetStaticProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
 import createSlug from "@sindresorhus/slugify";
 import dynamic from "next/dynamic";
+import { UserButton, auth, useUser } from "@clerk/nextjs";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
 }
 
 function Home({ users }: Props) {
-  const { data: session } = useSession();
+  const { isLoaded, isSignedIn, user } = useUser();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
@@ -30,12 +31,11 @@ function Home({ users }: Props) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const match = users.find((user) => user.name === session?.user?.name);
-    const author = [{ _type: "reference", _ref: match!._id }];
     const mutations = {
       _type: "post",
       title: title,
-      author: author,
+      author: user?.username,
+      profileImage: user?.profileImageUrl,
       mainImage: image,
       body: body,
     };
@@ -59,11 +59,8 @@ function Home({ users }: Props) {
         {/* <Header /> */}
         <div className="flex px-5  justify-between items-center">
           <div className="flex gap-4 font-bold text-lg">
-            <img
-              className="h-8 w-8 object-cover  rounded-full"
-              src={session?.user?.image || ""}
-            />
-            <p>Hi {session?.user?.name}, welcome Back!</p>
+            <UserButton />
+            <p>Hi {user?.firstName || user?.username}, welcome Back!</p>
           </div>
           <div className="items-center flex gap-5">
             <p className="text-sm font-semibold text-black/50">

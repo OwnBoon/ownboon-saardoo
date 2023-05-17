@@ -8,12 +8,13 @@ import { useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { fecthBlogs } from "../utils/fetchBlogs";
 import dynamic from "next/dynamic";
+import { UserButton, useUser } from "@clerk/nextjs";
 interface Props {
   posts: Posts[];
 }
 
 function Home({ posts }: Props) {
-  const { data: session } = useSession();
+  const { isLoaded, isSignedIn, user } = useUser();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
@@ -28,11 +29,8 @@ function Home({ posts }: Props) {
         {/* <FeaturedPosts /> */}
         <div className="flex px-5  justify-between items-center">
           <div className="flex gap-4 font-bold text-lg">
-            <img
-              className="h-8 w-8 object-cover  rounded-full"
-              src={session?.user?.image || ""}
-            />
-            <p>Hi {session?.user?.name}, welcome Back!</p>
+            <UserButton />
+            <p>Hi {user?.firstName || user?.username}, welcome Back!</p>
           </div>
           <div className="items-center flex gap-5">
             <p className="text-sm font-semibold text-black/50">

@@ -21,6 +21,7 @@ export default async function handler(
           slug: data.slug,
           author: data.author,
           mainImage: data.mainImage,
+          profileImage: data.profileImage,
           body: data.body,
           categories: data.categories
 

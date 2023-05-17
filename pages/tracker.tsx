@@ -10,23 +10,36 @@ import { User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Spline from "@splinetool/react-spline";
+import { useUser } from "@clerk/nextjs";
 interface Props {
   users: User[];
 }
 
+const level1 = "https://prod.spline.design/G2HOyymUf9aYWnL3/scene.splinecode";
+
 const Home = ({ users }: Props) => {
+  const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
-  const { data: session } = useSession();
+
+  // const match = users.filter((user) => user.email == session?.user?.email);
+  // const level: number = match[0].focus!;
   return (
     <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />
       {/*  */}
       <div className="col-span-9 h-screen">
-        <p className="flex justify-center p-5">Track Your Progress</p>
-        <Spline
-          className="scale-75"
-          scene="https://prod.spline.design/sDtiNp5HMCCgVQRc/scene.splinecode"
-        />
+        <p className="flex justify-center items-center p-5">
+          Track Your Progress
+        </p>
+        {/* {level < 5 ? (
+          <div className="border h-full w-full scale-75">
+            <p>Level {level}: unlanded farmer</p>
+            <Spline
+              className=""
+              scene="https://prod.spline.design/G2HOyymUf9aYWnL3/scene.splinecode"
+            />
+          </div>
+        ) : null} */}
       </div>
       <Progress />
     </div>

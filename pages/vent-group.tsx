@@ -9,12 +9,13 @@ import socketIO from "socket.io-client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
 const vent = () => {
   const router = useRouter();
   const [room, setRoom] = useState("");
+  const { isLoaded, isSignedIn, user } = useUser();
   // @ts-ignore
-  const { data: session } = useSession();
 
   return (
     <div className="grid grid-cols-12 h-screen bg-[#f4f1eb]/50">
@@ -33,7 +34,7 @@ const vent = () => {
         </div>
         <Link
           onClick={(e) => (!room ? e.preventDefault() : null)}
-          href={`/chat?name=${session?.user?.name}&room=${room}`}
+          href={`/chat?name=${user?.username || user?.firstName}&room=${room}`}
         >
           <button type="submit">Enter room</button>
         </Link>

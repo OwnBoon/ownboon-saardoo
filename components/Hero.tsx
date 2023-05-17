@@ -1,6 +1,8 @@
 import Spline from "@splinetool/react-spline";
+import { useRouter } from "next/router";
 
 export default function Hero() {
+  const router = useRouter();
   return (
     <>
       {/* gradients */}
@@ -439,7 +441,10 @@ export default function Hero() {
             </svg>
           </div>
         </div>
-        <div className="py-[6vh] md:text-[1.5rem]  text-md  justify-center text-center">
+        <div
+          onClick={() => router.push("/dashboard")}
+          className="py-[6vh] md:text-[1.5rem]  text-md  justify-center text-center"
+        >
           <h2>revolutionizing your productivity and health</h2>
         </div>
       </div>

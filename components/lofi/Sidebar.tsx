@@ -17,27 +17,29 @@ import SongCard from "./components/SongCard";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../../utils/fetchUsers";
 import { fetchGoals } from "../../utils/fetchGoals";
-import { Goals, User, UserBody } from "../../typings";
+import { Goals, Notes, User, UserBody } from "../../typings";
 import Draggable, { DraggableCore } from "react-draggable";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import LargeCard from "../dashboard/LargeCard";
+import { useUser } from "@clerk/nextjs";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
   goals: Goals[];
+  notes: Notes[];
 }
 
 interface Types {
-  addUser: MouseEventHandler<HTMLDivElement>;
-  notes: string;
-  match: User[];
-  setNotes: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: MouseEventHandler<HTMLDivElement>;
+  text: string;
+  match: Notes[];
+  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 const links = [{ name: "Discover", to: "/focus/lofi", icon: HiOutlineHome }];
 
-const Notemenu = ({ addUser, notes, match, setNotes }: Types) => {
+const Notemenu = ({ handleSubmit, text, match, setText }: Types) => {
   return (
     <div className="relative">
       <div className="space-y-10 w-80 absolute   col-span-4 cursor-pointer bg-black/10 outline-none px-2  ">
@@ -50,7 +52,7 @@ const Notemenu = ({ addUser, notes, match, setNotes }: Types) => {
       className="w-full pr-5 text-sm bg-black text-white outline-none border-none rounded-lg "
     /> */}
           <div
-            onClick={addUser}
+            onClick={handleSubmit}
             className="bg-black/10 text-white hover:scale-110 z-50 w-fit p-2 rounded-lg cursor-pointer text-sm "
           >
             Save
@@ -58,8 +60,8 @@ const Notemenu = ({ addUser, notes, match, setNotes }: Types) => {
           <ReactQuill
             theme="snow"
             className="h-60 w-72 !bg-black/30 rounded-lg outline-none !border-none text-white"
-            value={notes || match[0].notes}
-            onChange={setNotes}
+            value={text || match[0].note}
+            onChange={setText}
           />
         </div>
       </div>
@@ -95,30 +97,30 @@ const NavLinks = ({ handleClick }: any) => {
   );
 };
 
-const Sidebar = ({ users, goals }: Props) => {
+const Sidebar = ({ users, goals, notes }: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isLoaded, isSignedIn, user } = useUser();
   const [note, setNote] = useState(false);
   const [todo, setTodo] = useState(false);
-  const { data: session } = useSession();
-  const match = users.filter((user) => user.email === session?.user?.email);
-  const [notes, setNotes] = useState("");
-  const addUser = async () => {
-    try {
-      const postInfo: UserBody = {
-        id: users[0]._id,
-        // @ts-ignore
-        notes: notes,
-      };
-      const result = await fetch(`/api/addNotes`, {
-        body: JSON.stringify(postInfo),
-        method: "POST",
-      });
-      const json = await result.json();
-      console.log(json);
-      return json;
-    } catch (err) {
-      console.error(err);
-    }
+  const [text, SetText] = useState("");
+  const match = notes.filter(
+    (note) => note.email === user?.emailAddresses[0].emailAddress
+  );
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const mutations: Notes = {
+      _type: "notes",
+      note: text,
+      email: user?.emailAddresses[0].emailAddress!,
+    };
+
+    const result = await fetch(`/api/addNotes`, {
+      body: JSON.stringify(mutations),
+      method: "POST",
+    });
+
+    const json = await result.json();
+    return json;
   };
   return (
     <>
@@ -159,10 +161,10 @@ const Sidebar = ({ users, goals }: Props) => {
           <Draggable>
             <div>
               <Notemenu
-                addUser={addUser}
+                handleSubmit={handleSubmit}
                 match={match}
-                notes={notes}
-                setNotes={setNotes}
+                text={text}
+                setText={SetText}
               />
             </div>
           </Draggable>
@@ -174,6 +176,7 @@ const Sidebar = ({ users, goals }: Props) => {
                 <p className="text-2xl text-white">
                   Today's <span className="font-semibold">Todos</span>
                 </p>
+                {/* @ts-ignore */}
                 <LargeCard user={users} goals={goals} />
               </div>
             </div>

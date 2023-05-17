@@ -28,9 +28,13 @@ const PostDetail = ({ post }: Props) => {
                 className="align-middle rounded-full"
                 src={post.author.map((author) => author.name) || ""}
               /> */}
-            <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
-              {post!.author.map((author) => author.name)}
+            <p className=" align-middle flex items-center gap-5 text-gray-700 ml-2 font-medium text-lg">
+              <img
+                className="h-10 w-10 object-cover rounded-full"
+                src={post.profileImage}
+              />
             </p>
+            <span className="ml-2">{post.author}</span>{" "}
           </div>
           <div className="font-medium text-gray-700">
             <svg

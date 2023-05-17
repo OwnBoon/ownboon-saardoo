@@ -23,7 +23,7 @@ const PostCard = ({ post }: Props) => {
       <div className="block lg:flex text-center items-center justify-center mb-8 w-full">
         <div className="flex  justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
           <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
-            {post!.author!.map((authors) => authors.name)}
+        {post.author}
           </p>
         </div>
         <div className="font-medium text-gray-700">

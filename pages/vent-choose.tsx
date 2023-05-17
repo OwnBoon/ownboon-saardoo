@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 const vent = () => {
   const router = useRouter();
   // @ts-ignore
-  const { data: session } = useSession();
 
   return (
     <div className="grid grid-cols-12 h-screen bg-[#f4f1eb]/50">

@@ -6,31 +6,27 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Navbar from "../components/Navbar";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
-import { Goals, User } from "../typings";
+import { Goals, Notes, User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { fetchGoals } from "../utils/fetchGoals";
+import { fetchNotes } from "../utils/fetchNotes";
 interface Props {
   users: User[];
   goals: Goals[];
+  notes: Notes[];
 }
 
-const Home = ({ users, goals }: Props) => {
+const Home = ({ users, goals, notes }: Props) => {
   const { activeSong } = useSelector((state: any) => state.player);
 
   const router = useRouter();
-  const { data: session } = useSession();
   return (
     <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />
-      <Main users={users} goals={goals} />
+      <Main users={users} notes={notes} goals={goals} />
       <Progress />
-      {activeSong?.title && (
-        <div className="absolute z-50 h-28 bottom-0 left-0 right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl ">
-          {/* <MusicPlayer /> */}
-        </div>
-      )}
     </div>
   );
 };
@@ -38,11 +34,13 @@ const Home = ({ users, goals }: Props) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();
   const goals = await fetchGoals();
+  const notes = await fetchNotes();
 
   return {
     props: {
       users,
       goals,
+      notes,
     },
   };
 };

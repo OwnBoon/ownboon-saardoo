@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import {  UserBody } from "../../typings";
+import {Notes, Posts } from "../../typings";
 
 type Data = {
   message: string;
@@ -10,16 +10,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const data: UserBody = JSON.parse(req.body);
+  const data: Notes = JSON.parse(req.body);
 
-  const mutations = {
+  const info = {
     mutations: [
       {
-        patch: {
-            id: data.id!,
-            set: {
-                notes: data.notes,
-            }
+        create: {
+          _type: "notes",
+          note: data.note,
+          email: data.email
+
         },
       },
     ],
@@ -32,10 +32,10 @@ export default async function handler(
       "content-type": "application/json",
       Authorization: `Bearer ${process.env.SANITY_API_TOKEN}`,
     },
-    body: JSON.stringify(mutations),
+    body: JSON.stringify(info),
     method: "POST",
   });
   const json = await result.json();
 
-  res.status(200).json({ message: json });
+  res.status(200).json({ message: "Added!" });
 }

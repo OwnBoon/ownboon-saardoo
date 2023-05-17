@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { fetchMessage } from "../utils/fetchMessage";
 import { Message } from "../typings";
+import { useUser } from "@clerk/nextjs";
 
 interface Props {
   messages: Message[];
@@ -18,13 +19,11 @@ interface Props {
 
 const vent = ({ messages }: Props) => {
   const router = useRouter();
+  const { isLoaded, isSignedIn, user } = useUser();
   // @ts-ignore
   const socket = socketIO.connect(process.env.NEXT_PUBLIC_SOCKET_URL);
-  const { data: session } = useSession();
-  const userName = session?.user?.name || "idk";
-  const pfp =
-    session?.user?.image ||
-    "https://cdn.discordapp.com/attachments/1018929979897163868/1084440633432875069/00099-573026695-nvinkpunk_potrait_of_a_handsome_teenage_boy_with_the_most_cutest_face.png";
+  const userName = user?.username || user?.firstName || "random_user";
+  const pfp = user?.profileImageUrl!;
 
   useEffect(() => {
     localStorage.setItem("userName", userName);

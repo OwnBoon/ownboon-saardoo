@@ -2,10 +2,11 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { currentUser, useUser } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 export default function Navbar() {
-  const { data: session } = useSession();
   const router = useRouter();
-
+  const { isLoaded, isSignedIn, user } = useUser();
   return (
     <nav
       className={`px-5 sm:px-4 text-[0.9rem] py-2.5 sticky w-full bg-white z-20 top-0 left-0 text-[#2E2E2E]  font-poppins `}
@@ -25,15 +26,20 @@ export default function Navbar() {
           </span>
         </a>
         <div className="flex md:order-2">
-          <button
-            type="button"
-            onClick={() => {
-              session ? signOut() : signIn();
-            }}
-            className="  text-white focus:ring-4 focus:outline-none  login  w-[8.6vw] h-[3.7vh] text-center mr-3 md:mr-0 rounded-full"
-          >
-            {session ? session?.user?.name || "Null" : "Login"}
-          </button>
+          {user ? (
+            <UserButton />
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                router.push("/sign-in");
+              }}
+              className="  text-white focus:ring-4 focus:outline-none  login  w-[8.6vw] h-[3.7vh] text-center mr-3 md:mr-0 rounded-full"
+            >
+              Login
+            </button>
+          )}
+
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"

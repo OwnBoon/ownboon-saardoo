@@ -2,20 +2,18 @@ import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { GoalBody, Goals, User, UserBody } from "../../typings";
 import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 
 interface Props {
-  user: User[];
+  users: User[];
   goals: Goals[];
 }
-const LargeCard = ({ user, goals }: Props) => {
-  const { data: session } = useSession();
+const LargeCard = ({ users, goals }: Props) => {
+  const { isLoaded, isSignedIn, user } = useUser();
   const [Selected, SetSelected] = useState(false);
   const [title, setTitle] = useState("");
   const progress = 0;
-  const userGoals = goals.filter(
-    (goal) => goal.username === session?.user?.name
-  );
-  console.log(session?.user?.name);
+  const userGoals = goals.filter((goal) => goal.username === user?.username);
   console.log(userGoals);
   const addGoalData = async () => {
     try {
@@ -24,7 +22,7 @@ const LargeCard = ({ user, goals }: Props) => {
         _type: "goals",
         title: title,
         progress: progress,
-        username: session?.user?.name!,
+        username: user?.username!,
       };
       const result = await fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
