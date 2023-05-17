@@ -28,6 +28,10 @@ function Home({ users }: Props) {
   const [image, setImage] = useState("");
   const [body, setBody] = useState("");
   const [category, setCategory] = useState("");
+  const slugtype = {
+    type: "slug",
+    current: "random-shit",
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -38,6 +42,7 @@ function Home({ users }: Props) {
       profileImage: user?.profileImageUrl,
       mainImage: image,
       body: body,
+      slug: slugtype
     };
 
     const result = await fetch(`/api/addBlog`, {
