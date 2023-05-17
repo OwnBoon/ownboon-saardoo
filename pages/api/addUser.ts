@@ -18,7 +18,7 @@ export default async function handler(
         create: {
           _type: 'user',
           name: data.name,
-          email: data.name,
+          email: data.email,
           focus: data.focus,
           leaderboard: data.leaderboard,
         },
