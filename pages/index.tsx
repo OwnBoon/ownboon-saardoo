@@ -18,8 +18,8 @@ interface Props {
 const Home = ({ users }: Props) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
+
   const [isNewUser, setIsNewUser] = useState(false);
-  console.log(user?.emailAddresses[0].emailAddress);
   const postUser = async () => {
     const userInfo: UserBody = {
       name: user?.firstName || user?.username!,

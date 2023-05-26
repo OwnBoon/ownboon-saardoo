@@ -19,27 +19,64 @@ const level1 = "https://prod.spline.design/G2HOyymUf9aYWnL3/scene.splinecode";
 
 const Home = ({ users }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
+  const match = users.filter(
+    (usere) => usere.email === user?.emailAddresses[0].emailAddress
+  );
   const router = useRouter();
 
   // const match = users.filter((user) => user.email == session?.user?.email);
-  // const level: number = match[0].focus!;
+  const focus = match[0]?.focus;
+  const factor = 0.02;
+  const level = Math.floor(focus! * factor);
+  const barlevel = level * 10;
+  console.log(level);
   return (
-    <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
+    <div className="grid grid-cols-12 bg-[#f4f1eb]/50 overflow-hidden">
       <Sidebar />
       {/*  */}
       <div className="col-span-9 h-screen">
-        <p className="flex justify-center items-center p-5">
+        <p className="flex justify-center items-center p-3">
           Track Your Progress
         </p>
-        {/* {level < 5 ? (
-          <div className="border h-full w-full scale-75">
-            <p>Level {level}: unlanded farmer</p>
-            <Spline
-              className=""
-              scene="https://prod.spline.design/G2HOyymUf9aYWnL3/scene.splinecode"
-            />
+        <div className="">
+          <div className="flex gap-5">
+            <p>
+              <span className="font-semibold">{focus}</span> Points
+            </p>{" "}
+            | <p>{level} Boons</p>
           </div>
-        ) : null} */}
+          <div className="w-full bg-black/30 h-2  mt-1 rounded-md">
+            <div
+              className="bg-cyan-500 rounded-md h-2"
+              style={{ width: `${barlevel}% ` }}
+            ></div>
+          </div>
+          <div className="flex justify-between">
+            {level < 5 && (
+              <>
+                <div>
+                  <p> 1 boon</p>
+                </div>
+                <div>
+                  <p> 10 boons</p>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+        {user ? (
+          <>
+            {level < 5 ? (
+              <div className="border h-full w-full scale-75">
+                <p>Townhall Level {level}: unlanded farmer</p>
+                <Spline
+                  className=""
+                  scene="https://prod.spline.design/G2HOyymUf9aYWnL3/scene.splinecode"
+                />
+              </div>
+            ) : null}
+          </>
+        ) : null}
       </div>
       <Progress />
     </div>

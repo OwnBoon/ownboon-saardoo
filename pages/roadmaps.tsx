@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Main from "../components/dashboard/Main";
 import Header from "../components/dashboard/Main";
 import Progress from "../components/dashboard/Progress";
@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { fetchGoals } from "../utils/fetchGoals";
 import { fetchNotes } from "../utils/fetchNotes";
 import { useUser } from "@clerk/nextjs";
+import axios from "axios";
 interface Props {
   users: User[];
   goals: Goals[];
@@ -22,6 +23,7 @@ interface Props {
 const Home = ({ users, goals, notes }: Props) => {
   const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
+
   const router = useRouter();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
@@ -33,11 +35,44 @@ const Home = ({ users, goals, notes }: Props) => {
       null;
     }
   }, []);
+  const [desc, setDesc] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const result = axios.get(
+      "https://ai-roadmap.com/api/roadmap/generate?title=%22math%20exam%20preparation%20%22?token=%22h2759%22"
+    );
+
+    const json = await result;
+    console.log(json);
+    return json;
+  };
 
   return (
     <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />
-      <Main users={users} notes={notes} goals={goals} />
+      <div className="col-span-9">
+        {" "}
+        <div>
+          <div className="card">
+            <p>Enter description for your roadmap in details</p>
+            <div className="formContainer">
+              <textarea
+                value={desc}
+                onChange={(e) => setDesc(e.target.value)}
+                rows={6}
+                cols={40}
+                placeholder="BRUH"
+              />
+            </div>
+            <button onClick={handleSubmit} className="" type="submit">
+              Submit
+            </button>
+            <div></div>
+          </div>
+        </div>
+      </div>{" "}
       <Progress />
     </div>
   );

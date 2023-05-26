@@ -14,6 +14,7 @@ export interface User extends SanityBody {
     email?: string
     focus?: number
     leaderboard?: number
+    categories?: string
  
 }
 
@@ -24,6 +25,7 @@ export interface UserBody {
     email?: string
     focus?: number
     leaderboard?: number
+    categories?: string
 
 }
 
@@ -58,7 +60,7 @@ export interface Posts extends SanityBody {
     author: string
     profileImage: string
     mainImage: string
-    categories: Category[]
+    categories: string
     body: string
 
 }

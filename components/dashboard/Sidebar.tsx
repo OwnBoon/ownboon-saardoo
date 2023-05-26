@@ -26,8 +26,8 @@ const Sidebar = () => {
           <HomeIcon className="w-5 h-5" />
         </div>
         <div
-          onClick={() => router.push("/blogs")}
-          className={router.pathname == "/blogs" ? selected : normal}
+          onClick={() => router.push("/socials")}
+          className={router.pathname == "/socials" ? selected : normal}
         >
           <RectangleStackIcon className="w-5 h-5" />
         </div>

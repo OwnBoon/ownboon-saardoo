@@ -2,9 +2,11 @@ import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import "react-quill/dist/quill.snow.css";
+import "../styles/prism.css";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { ClerkProvider } from "@clerk/nextjs";
+import Script from "next/script";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
     <Provider store={store}>
@@ -13,6 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
       >
         <Component {...pageProps} />
       </ClerkProvider>
+      ;
     </Provider>
   );
 }

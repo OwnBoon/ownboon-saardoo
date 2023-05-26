@@ -1,7 +1,8 @@
 import { PortableText } from "@portabletext/react";
 import React from "react";
 import { Posts } from "../../typings";
-
+import Script from "next/script";
+import { Editor } from "@tinymce/tinymce-react";
 interface Props {
   post: Posts;
 }
@@ -9,14 +10,14 @@ interface Props {
 const PostDetail = ({ post }: Props) => {
   console.log(post.mainImage);
   return (
-    <div className="bg-white shadow-lg rounded-lg col-span-9 lg:p-8 pb-12 mb-8">
-      <div className="relative overflow-hidden shadow-md mb-6">
+    <div className="bg-white shadow-lg rounded-lg col-span-9 h-screen  overflow-y-scroll lg:p-8 pb-12 mb-8">
+      <div className="flex overflow-hidden justify-center items-center   mb-6">
         <img
           src={
             post.mainImage ||
             "https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXw4NjU4Mzk3fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
           }
-          className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+          className="object-top w-1/2 h-1/2 object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
         />
       </div>
       <div className="px-4 lg:px-0">
@@ -56,9 +57,23 @@ const PostDetail = ({ post }: Props) => {
         </div>
         <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
         <div>
-          <div
+          {/* <div
             className="blog"
             dangerouslySetInnerHTML={{ __html: post.body }}
+          /> */}
+          <Editor
+            id="Editor"
+            disabled
+            init={{
+              height: 500,
+              menubar: false,
+              toolbar: false,
+              statusbar: false,
+              plugins:
+                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+            }}
+            apiKey={process.env.NEXT_PUBLIC_TINY}
+            value={post.body}
           />
         </div>
       </div>
