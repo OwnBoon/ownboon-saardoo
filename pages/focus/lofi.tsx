@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../../utils/fetchUsers";
-import { Goals, Notes, User } from "../../typings";
+import { Goals, Notes, User, UserBody } from "../../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -15,6 +15,7 @@ import Search from "../../components/lofi/Search";
 import MusicPlayer from "../../components/lofi/MusicPlayer";
 import { fetchGoals } from "../../utils/fetchGoals";
 import { fetchNotes } from "../../utils/fetchNotes";
+import { useUser } from "@clerk/nextjs";
 
 interface Props {
   users: User[];
@@ -24,9 +25,14 @@ interface Props {
 const Home = ({ users, goals, notes }: Props) => {
   const { activeSong } = useSelector((state: any) => state.player);
   const [startTime, setStartTime] = useState(null);
+  const { isLoaded, isSignedIn, user } = useUser();
   const [endTime, setEndTime] = useState(null);
   const [timeSpent, setTimeSpent] = useState(0);
   const [points, setPoints] = useState(0);
+
+  const match = users.filter(
+    (userss) => userss.email === user?.emailAddresses[0].emailAddress
+  );
 
   useEffect(() => {
     // @ts-ignore
@@ -56,14 +62,26 @@ const Home = ({ users, goals, notes }: Props) => {
     return earnedPoints;
   };
 
+  const postUser = async (points: number) => {
+    const userInfo: User = {
+      _id: match[0]._id,
+      focus: match[0].focus! + points,
+    };
+    const result = await fetch(`/api/addPoints`, {
+      body: JSON.stringify(userInfo),
+      method: "POST",
+    });
+
+    const json = await result.json();
+    return json;
+  };
+
   useEffect(() => {
     if (endTime) {
       const timeSpentInSeconds = Math.floor((endTime - startTime!) / 1000);
       setTimeSpent(timeSpentInSeconds);
       const earnedPoints = calculatePoints(timeSpentInSeconds);
-      console.log(
-        `User earned ${earnedPoints} points for spending ${timeSpentInSeconds} seconds on this page.`
-      );
+      postUser(earnedPoints);
     }
   }, [endTime]);
 
