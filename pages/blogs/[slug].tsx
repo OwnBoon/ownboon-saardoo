@@ -8,6 +8,7 @@ import { Category, Posts } from "../../typings";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Progress from "../../components/dashboard/Progress";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 
 interface Props {
   post: Posts;
@@ -38,11 +39,17 @@ const Post = ({ post }: Props) => {
     }
   );
   return (
-    <div className="grid grid-cols-12 h-screen overflow-hidden !scrollbar !scrollbar-none bg-[#f4f1eb]/50">
-      <Sidebar />
-      <PostDetail post={post} />
-      <Progress />
-    </div>
+    <>
+      <Head>
+        <title>{post.title}</title>
+        <link rel="icon" href="/logo.png" />
+      </Head>
+      <div className="grid grid-cols-12 h-screen overflow-hidden !scrollbar !scrollbar-none bg-[#f4f1eb]/50">
+        <Sidebar />
+        <PostDetail post={post} />
+        <Progress />
+      </div>
+    </>
   );
 };
 

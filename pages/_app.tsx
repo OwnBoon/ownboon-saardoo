@@ -6,16 +6,17 @@ import "../styles/prism.css";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { ClerkProvider } from "@clerk/nextjs";
-import Script from "next/script";
+import { RecoilRoot } from "recoil";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
     <Provider store={store}>
-      <ClerkProvider
-        publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-      >
-        <Component {...pageProps} />
-      </ClerkProvider>
-      ;
+      <RecoilRoot>
+        <ClerkProvider
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+        >
+          <Component {...pageProps} />
+        </ClerkProvider>
+      </RecoilRoot>
     </Provider>
   );
 }

@@ -12,7 +12,7 @@ const Discover = () => {
   const { genreListId } = useSelector((state: any) => state.player);
   const { activeSong, isPlaying } = useSelector((state: any) => state.player);
   const { data, isFetching, error } = useGetSongsByGenreQuery(
-    genreListId || "544711374"
+    genreListId || "556054389"
   );
 
   if (isFetching) return <Loader title="Loading songs..." />;
@@ -23,9 +23,9 @@ const Discover = () => {
     ({ value }: any) => value === genreListId
   )?.title;
 
-  console.log(genreTitle);
+  // console.log(genreTitle);
 
-  console.log(genreListId);
+  const newdata = data.tracks;
   const play = "opacity-100 transition-all duration-300";
   return (
     <div className="flex flex-col">
@@ -48,7 +48,7 @@ const Discover = () => {
       </div>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song: any, i: any) => (
+        {newdata?.map((song: any, i: any) => (
           <div
             className={
               isPlaying ? "opacity-0 transition-all duration-300" : play

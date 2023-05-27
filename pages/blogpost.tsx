@@ -16,6 +16,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { FaSearchengin } from "react-icons/fa";
 import { set } from "lodash";
 import { BsImage } from "react-icons/bs";
+import Head from "next/head";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -37,7 +38,8 @@ function Home({ users }: Props) {
     return result;
   }
 
-  const random = generateString(20);
+  const random = generateString(8);
+
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
   const [title, setTitle] = useState("");
@@ -45,6 +47,7 @@ function Home({ users }: Props) {
   const [imageSrc, setImageSrc] = useState("");
   const [uploadData, setUploadData] = useState();
 
+  const seoslug = title.toLocaleLowerCase() + random.toString();
   function handleOnChange(changeEvent: any) {
     const reader = new FileReader();
 
@@ -94,8 +97,9 @@ function Home({ users }: Props) {
   const [category, setCategory] = useState("");
   const slugtype = {
     type: "slug",
-    current: `${random}`,
+    current: `${seoslug.replace(/\s+/g, "-")}`,
   };
+  console.log(slugtype.current);
   const editorRef = useRef(null);
 
   // @ts-ignore
@@ -128,6 +132,10 @@ function Home({ users }: Props) {
   };
   return (
     <div className="grid grid-cols-12 overflow-hidden bg-[#f4f1eb]/50">
+      <Head>
+        <title>Blog @ {user?.firstName || user?.username}</title>
+        <link rel="icon" href="/logo.png" />
+      </Head>
       <Sidebar />
       <div className="container mx-auto col-span-9  py-8 mt ">
         {/* <Header /> */}

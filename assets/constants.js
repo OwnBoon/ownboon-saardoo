@@ -6,7 +6,7 @@ import {
 } from "react-icons/hi";
 
 export const genres = [
-  { title: "Lofi Music ", value: "544711374" },
+  { title: "Lofi Music ", value: "556054389" },
   { title: " Lofi Study Beats", value: "314028736" },
   { title: "Hip-Hop", value: "HIP_HOP_RAP" },
   { title: "Dance", value: "DANCE" },

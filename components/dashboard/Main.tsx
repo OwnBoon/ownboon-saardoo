@@ -49,12 +49,15 @@ const Main = ({ users, goals, notes }: Props) => {
       <div className="flex px-5  justify-between items-center">
         <div className="flex gap-4 font-bold text-lg">
           <UserButton />
-          <p>Hi {user?.firstName || user?.username}, welcome Back!</p>
+          <h1>Hi {user?.firstName || user?.username}, welcome Back!</h1>
         </div>
         <div className="items-center flex gap-5">
           <p className="text-sm font-semibold text-black/50">{formattedDate}</p>
-          <div className="bg-black/5 p-2 text-black/80 cursor-pointer hover:text-black hover:bg-black/30 transition-all duration-150  rounded-lg">
-            <p>Add New Goal</p>
+          <div
+            onClick={() => router.push("/focus/lofi/")}
+            className="bg-black/5 p-2 text-black/80 cursor-pointer hover:text-black hover:bg-black/30 transition-all duration-150  rounded-lg"
+          >
+            <h2>Lofi App</h2>
           </div>
         </div>
       </div>

@@ -74,7 +74,7 @@ const Home = ({ users }: Props) => {
   return (
     <>
       <Head>
-        <title>OwnBoon</title>
+        <title>Categories @ {user?.username || user?.firstName}</title>
         <link rel="icon" href="/logo.png" />
       </Head>
       <Navbar />

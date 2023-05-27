@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { GoalBody, Goals, User, UserBody } from "../../typings";
 import { useSession } from "next-auth/react";
 import { useUser } from "@clerk/nextjs";
+import { MdCancel } from "react-icons/md";
 
 interface Props {
   users: User[];
@@ -23,6 +24,7 @@ const LargeCard = ({ users, goals }: Props) => {
         title: title,
         progress: progress,
         username: user?.username!,
+        completed: false,
       };
       const result = await fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
@@ -42,13 +44,35 @@ const LargeCard = ({ users, goals }: Props) => {
     setTitle("");
   };
 
+  const addCompleted = async (id: string | undefined) => {
+    try {
+      const postInfo: Goals = {
+        // @ts-ignore
+        _id: id,
+        completed: true,
+      };
+      const result = await fetch(`/api/setGoals`, {
+        body: JSON.stringify(postInfo),
+        method: "POST",
+      });
+      const json = await result.json();
+      console.log(json);
+      return json;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="flex gap-10 pl-3 items-center h-full w-full">
       {userGoals.map((goals) => (
         <div className="bg-[#71357c]  w-1/5 pr-10 py-8 h-full pl-3 rounded-lg text-white justify-start">
           <div className="flex justify-between items-center w-full">
             <p className="font-semibold">{goals.title}</p>
-            <EllipsisVerticalIcon className="h-5 w-5" />
+            <MdCancel
+              onClick={() => addCompleted(goals._id)}
+              className="h-5 w-5"
+            />
           </div>
           <div className="mt-5 text-sm space-y-1 text-white/60 pb-5 px-1">
             {goals.progress}%

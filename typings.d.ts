@@ -41,15 +41,17 @@ export interface Notes extends SanityBody {
 
 export interface Goals extends SanityBody {
     _type?: 'goals'
-    title: string
-    progress: number
-    username: string
+    title?: string
+    progress?: number
+    username?: string
+    completed: boolean
 }
 export interface GoalBody {
     _type?: 'goals'
     title: string
     progress: number
     username?: string
+    completed?: boolean
 }
 
 export interface Posts extends SanityBody {

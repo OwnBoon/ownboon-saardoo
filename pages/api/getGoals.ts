@@ -5,7 +5,7 @@ import { Goals, User } from "../../typings";
 
 
 const query = groq`
-*[_type == "goals"] {
+*[_type == "goals"  && !completed] {
     ...,
   
   }  | order(_createdAt asc)

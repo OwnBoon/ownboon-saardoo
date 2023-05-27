@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { fetchGoals } from "../utils/fetchGoals";
 import { fetchNotes } from "../utils/fetchNotes";
 import { useUser } from "@clerk/nextjs";
+import Head from "next/head";
 interface Props {
   users: User[];
   goals: Goals[];
@@ -36,6 +37,10 @@ const Home = ({ users, goals, notes }: Props) => {
 
   return (
     <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
+      <Head>
+        <title> Dashboard @ {user?.firstName || user?.username} </title>
+        <link rel="icon" href="/logo.png" />
+      </Head>
       <Sidebar />
       <Main users={users} notes={notes} goals={goals} />
       <Progress />
