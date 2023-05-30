@@ -55,7 +55,7 @@ export interface GoalBody {
 }
 
 export interface Posts extends SanityBody {
-    title: string
+    title?: string
     slug: {
         current: string
     }
