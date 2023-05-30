@@ -78,7 +78,6 @@ const Home = ({ users, goals, notes }: Props) => {
   }, []);
   const [desc, setDesc] = useState("");
   const [data, setData] = useState<datatype>();
-  console.log(data);
 
   const sampledata = {
     category: "ui/ux",
@@ -132,11 +131,8 @@ const Home = ({ users, goals, notes }: Props) => {
     return json;
   };
 
-  console.log(stuff);
-
   const closeHandler = () => {
     setVisible(false);
-    console.log("closed");
   };
   const fetchRoadmap = async (e: any) => {
     // e.preventDefault();
@@ -240,8 +236,6 @@ const Home = ({ users, goals, notes }: Props) => {
     const fine = roadmapdata.replace("@finish", "");
     const sus = JSON.parse(fine);
     // console.log(roadmapdata);
-
-    console.log(modaldata);
 
     return (
       <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
