@@ -12,9 +12,9 @@ export default async function handler(
 
     const title = req.query.title
 
-    const maxItems = 30
-    const minItems = 15
-    const minLevels = 5
+    const maxItems = 25
+    const minItems = 10
+    const minLevels = 4
 
     const basePrompt = `based on my prompt , make up to date roadmap
     important response rules :
