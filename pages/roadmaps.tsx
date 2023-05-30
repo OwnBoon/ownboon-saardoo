@@ -6,7 +6,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Navbar from "../components/Navbar";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
-import { Goals, Notes, User } from "../typings";
+import { Goals, Notes, User, UserBody } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -34,6 +34,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { MdPassword } from "react-icons/md";
 import ReactPlayer from "react-player";
+import Head from "next/head";
+import { categories } from "../utils/constants";
 interface datatype {
   message: {
     choices: [
@@ -107,9 +109,17 @@ const Home = ({ users, goals, notes }: Props) => {
   const [visible, setVisible] = useState(false);
   const [text, setText] = useState("");
   const [stuff, setStuff] = useState("");
+
+  const match = users.filter(
+    (userss) => userss.email === user?.emailAddresses[0].emailAddress
+  );
   const handler = async (texts: string) => {
     setText(texts);
-    const result = await fetch(`/api/roadmap/normalchat?title=${text}`);
+    const result = await fetch(
+      `/api/roadmap/normalchat?title=${text}?categories=${categories.map(
+        (cateogr) => cateogr.name
+      )}`
+    );
     const json = await result.json();
     // @ts-ignore
     // const deez = stuff.message.choices[0].message.content;
@@ -131,6 +141,7 @@ const Home = ({ users, goals, notes }: Props) => {
 
     const json = await result.json();
     setData(json);
+    setShow(false);
     return json;
   };
   const [modaldata, setModaldata] = useState<Info>();
@@ -148,6 +159,10 @@ const Home = ({ users, goals, notes }: Props) => {
   if (!data) {
     return (
       <div>
+        <Head>
+          <title>Self Help Hub</title>
+          <link rel="icon" href="/logo.png" />
+        </Head>
         <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
           <Sidebar />
           <div className="col-span-10">
@@ -223,10 +238,34 @@ const Home = ({ users, goals, notes }: Props) => {
     const roadmapdata = data?.message.choices[0].message.content;
     const fine = roadmapdata.replace("@finish", "");
     const sus = JSON.parse(fine);
+    console.log(sus);
     // console.log(roadmapdata);
+
+    const addCategory = async (name: string) => {
+      try {
+        const postInfo: UserBody = {
+          id: match[0]._id,
+          categories: match[0].categories + "," + name,
+        };
+        const result = await fetch(`/api/addCategory`, {
+          body: JSON.stringify(postInfo),
+          method: "POST",
+        });
+        const json = await result.json();
+        return json;
+      } catch (err) {
+        console.error(err);
+      } finally {
+        window.location.reload();
+      }
+    };
 
     return (
       <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
+        <Head>
+          <title>Self Help Hub - {text}</title>
+          <link rel="icon" href="/logo.png" />
+        </Head>
         <Sidebar />
         <div className="col-span-10">
           {" "}
@@ -242,7 +281,7 @@ const Home = ({ users, goals, notes }: Props) => {
               >
                 Welcome to Self Help Hub
               </Text>
-              <Grid>
+              <Grid className="flex justify-between gap-10">
                 <Textarea
                   size="xl"
                   cols={50}
@@ -254,13 +293,40 @@ const Home = ({ users, goals, notes }: Props) => {
                   value={desc}
                   labelPlaceholder="Issue description"
                 />
+                <Tooltip content={"click to follow this category"}>
+                  <Button
+                    onPress={() => addCategory(sus.category)}
+                    color="secondary"
+                    shadow
+                    auto
+                  >
+                    {sus.category}
+                  </Button>
+                </Tooltip>
               </Grid>
               <Grid className="">
-                <Button onPress={(e) => fetchRoadmap(e)} color="gradient" auto>
+                <Button
+                  shadow
+                  onPress={(e) => fetchRoadmap(e)}
+                  color="gradient"
+                  auto
+                >
                   Submit
                 </Button>
               </Grid>
-              <div></div>
+              {show ? (
+                <Grid className="flex flex-col items-center">
+                  <Progress
+                    indeterminated
+                    value={50}
+                    color="secondary"
+                    status="secondary"
+                  />
+                  <Text color="gray" h2 size={15}>
+                    takes around a minute
+                  </Text>
+                </Grid>
+              ) : null}
             </div>
           </div>
           {/* <DraggableRoadmap data={sampleData} /> */}

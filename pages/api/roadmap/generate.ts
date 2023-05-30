@@ -11,6 +11,7 @@ export default async function handler(
 ) {
 
     const title = req.query.title
+    const cat = req.query.categories
 
     const maxItems = 30
     const minItems = 15
@@ -32,7 +33,7 @@ export default async function handler(
     - response json should be single layer not nested items in items
     
     - choose most related / similar category from here ( based on prompt ):
-    ui/ux
+    ${cat}
     - choose Other Category if you not found right category
     
     - sample response:

@@ -18,11 +18,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
         <ClerkProvider
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
-          {isBrowser && (
-            <NextUIProvider>
-              <Component {...pageProps} />
-            </NextUIProvider>
-          )}
+          {isBrowser && <Component {...pageProps} />}
         </ClerkProvider>
       </RecoilRoot>
     </Provider>
