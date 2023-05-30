@@ -9,16 +9,20 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { RecoilRoot } from "recoil";
 import "reactflow/dist/style.css";
 import { NextUIProvider } from "@nextui-org/react";
+import { useSSR } from "@nextui-org/react";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
+  const { isBrowser } = useSSR();
   return (
     <Provider store={store}>
       <RecoilRoot>
         <ClerkProvider
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
-          <NextUIProvider>
-            <Component {...pageProps} />
-          </NextUIProvider>
+          {isBrowser && (
+            <NextUIProvider>
+              <Component {...pageProps} />
+            </NextUIProvider>
+          )}
         </ClerkProvider>
       </RecoilRoot>
     </Provider>
