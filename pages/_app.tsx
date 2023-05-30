@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { ClerkProvider } from "@clerk/nextjs";
 import { RecoilRoot } from "recoil";
+import "reactflow/dist/style.css";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
     <Provider store={store}>
