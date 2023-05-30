@@ -8,6 +8,7 @@ import { store } from "../redux/store";
 import { ClerkProvider } from "@clerk/nextjs";
 import { RecoilRoot } from "recoil";
 import "reactflow/dist/style.css";
+import { NextUIProvider } from "@nextui-org/react";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
     <Provider store={store}>
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
         <ClerkProvider
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
-          <Component {...pageProps} />
+          <NextUIProvider>
+            <Component {...pageProps} />
+          </NextUIProvider>
         </ClerkProvider>
       </RecoilRoot>
     </Provider>

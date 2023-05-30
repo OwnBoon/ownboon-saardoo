@@ -62,20 +62,9 @@ interface RoadmapItem {
   title: string;
 }
 const Home = ({ users, goals, notes }: Props) => {
-  const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
   const [show, setShow] = useState(false);
   const router = useRouter();
-  const match = users.filter(
-    (userss) => userss.email == user?.emailAddresses[0].emailAddress
-  );
-  useEffect(() => {
-    if (user && !match[0].categories) {
-      router.push("/categories");
-    } else {
-      null;
-    }
-  }, []);
   const [desc, setDesc] = useState("");
   const [data, setData] = useState<datatype>();
 
@@ -117,7 +106,6 @@ const Home = ({ users, goals, notes }: Props) => {
 
   const [visible, setVisible] = useState(false);
   const [text, setText] = useState("");
-  const [video, setVideo] = useState("");
   const [stuff, setStuff] = useState("");
   const handler = async (texts: string) => {
     setText(texts);
