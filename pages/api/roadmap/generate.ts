@@ -1,21 +1,17 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { OpenAIStream, OpenAIStreamPayload } from "../../../utils/CattoStream";
 
 type Data = {
-  message: any;
+  message: string;
 };
-export const config = {
-  runtime: 'edge',
-};
+
 export default async function handler(
-  req: Response,
+  req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
 
-    const title = (await req.json()) as {
-      title?: string
-    }
+    const title = req.query.title
+    const cat = req.query.categories
 
     const maxItems = 30
     const minItems = 15
@@ -37,7 +33,7 @@ export default async function handler(
     - response json should be single layer not nested items in items
     
     - choose most related / similar category from here ( based on prompt ):
-    peeing
+    ${cat}
     - choose Other Category if you not found right category
     
     - sample response:
@@ -55,13 +51,23 @@ export default async function handler(
     prompt: 
     ${title}`
 
-        const  data: OpenAIStreamPayload = {
+        const  data = {
             "model": "gpt-3.5-turbo",
             "messages": [{"role": "user", "content": basePrompt}],
         }
 
 
+  const apiEndpoint = `https://api.cattto.repl.co/v1/chat/completions`;
 
-        const stream = await OpenAIStream(data);
-  res.status(200).json({ message: stream });
+  const result = await fetch(apiEndpoint, {
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_CATTO_KEY}`,
+    },
+    body: JSON.stringify(data),
+    method: "POST",
+  });
+  const json = await result.json();
+
+  res.status(200).json({ message: json });
 }
