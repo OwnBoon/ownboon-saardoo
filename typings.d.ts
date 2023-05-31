@@ -12,7 +12,7 @@ export interface User extends SanityBody {
     _type?: 'user'
     name?: string
     email?: string
-    focus?: number
+    focus: string
     leaderboard?: number
     categories?: string
  
@@ -23,7 +23,7 @@ export interface UserBody {
     id?: string
     name?: string
     email?: string
-    focus?: number
+    focus?: string
     leaderboard?: number
     categories?: string
 

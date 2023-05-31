@@ -56,16 +56,16 @@ const Home = ({ users, goals, notes }: Props) => {
   }, []);
 
   const calculatePoints = (timeSpentInSeconds: number) => {
-    const pointsPerSecond = 0.02; // change this value to adjust point earning rate
+    const pointsPerSecond = 2; // change this value to adjust point earning rate
     const earnedPoints = Math.floor(timeSpentInSeconds * pointsPerSecond);
     setPoints(earnedPoints);
     return earnedPoints;
   };
 
-  const postUser = async (points: number) => {
+  const postUser = async () => {
     const userInfo: User = {
       _id: match[0]._id,
-      focus: match[0].focus! + points,
+      focus: "200",
     };
     const result = await fetch(`/api/addPoints`, {
       body: JSON.stringify(userInfo),
@@ -81,7 +81,7 @@ const Home = ({ users, goals, notes }: Props) => {
       const timeSpentInSeconds = Math.floor((endTime - startTime!) / 1000);
       setTimeSpent(timeSpentInSeconds);
       const earnedPoints = calculatePoints(timeSpentInSeconds);
-      postUser(earnedPoints);
+      console.log(earnedPoints);
     }
   }, [endTime]);
 
@@ -94,7 +94,7 @@ const Home = ({ users, goals, notes }: Props) => {
 
       <div className="flex-1 flex flex-col \ ">
         <div className="sticky top-0 z-50 bg-black/20 ">
-          <SearchBar />
+          <SearchBar postUser={postUser} />
           <div className="z-50 sm:inline md:hidden">
             <Sidebar notes={notes} goals={goals} users={users} />
           </div>

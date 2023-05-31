@@ -17,7 +17,7 @@ interface Props {
 
 const level1 = "https://prod.spline.design/G2HOyymUf9aYWnL3/scene.splinecode";
 
-const Home = ({ users }: Props) => {
+const Planet = ({ users }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const match = users.filter(
     (usere) => usere.email === user?.emailAddresses[0].emailAddress
@@ -27,14 +27,14 @@ const Home = ({ users }: Props) => {
   // const match = users.filter((user) => user.email == session?.user?.email);
   const focus = match[0]?.focus;
   const factor = 0.02;
-  const level = Math.floor(focus! * factor);
+  const focus_no = Number(focus);
+  const level = Math.floor(focus_no! * factor);
   const barlevel = level * 10;
   console.log(level);
   return (
-    <div className="grid grid-cols-12 bg-[#f4f1eb]/50 overflow-hidden">
-      <Sidebar />
+    <div className=" p-5 bg-[#f4f1eb]/50 overflow-hidden">
       {/*  */}
-      <div className="col-span-9 h-screen">
+      <div className="h-screen">
         <p className="flex justify-center items-center p-3">
           Track Your Progress
         </p>
@@ -78,7 +78,6 @@ const Home = ({ users }: Props) => {
           </>
         ) : null}
       </div>
-      <Progress />
     </div>
   );
 };
@@ -92,4 +91,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-export default Home;
+export default Planet;

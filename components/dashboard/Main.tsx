@@ -24,6 +24,10 @@ const Main = ({ users, goals, notes }: Props) => {
   const match = notes.filter(
     (note) => note.email === user?.emailAddresses[0].emailAddress
   );
+
+  const usermatch = users.filter(
+    (userss) => userss.email === user?.emailAddresses[0].emailAddress
+  );
   console.log(notes);
   console.log(match);
   const handleSubmit = async (e: any) => {
@@ -95,18 +99,12 @@ const Main = ({ users, goals, notes }: Props) => {
           <p className="font-semibold">Statistics</p>
           <div className="flex gap-10 ">
             <div
-              onClick={() => router.push("/focus/lofi")}
+              onClick={() => router.push("")}
               className="bg-black/5 px-3 rounded-lg py-5 w-fit"
             >
-              <h1>28 h</h1>
+              <h1>{usermatch[0].focus} P</h1>
               <p className="text-sm font-[450] text-black/40 mt-3 ">
-                Focus Time
-              </p>
-            </div>
-            <div className="bg-black/5 px-3 rounded-lg py-5 w-fit">
-              <h1>69</h1>
-              <p className="text-sm font-[450] text-black/40 mt-3 ">
-                Finished Goals
+                Focus Points
               </p>
             </div>
             <div

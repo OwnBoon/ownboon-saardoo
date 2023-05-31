@@ -23,21 +23,7 @@ const Home = ({ users }: Props) => {
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
   const [isNewUser, setIsNewUser] = useState(false);
-  const postUser = async () => {
-    const userInfo: UserBody = {
-      name: user?.firstName || user?.username!,
-      email: user?.emailAddresses[0].emailAddress,
-      focus: 0,
-      leaderboard: users.length + 1,
-    };
-    const result = await fetch(`/api/addUser`, {
-      body: JSON.stringify(userInfo),
-      method: "POST",
-    });
 
-    const json = await result.json();
-    return json;
-  };
   const [searchInput, setSearchInput] = useState("");
   const filteredCategories = categories.filter((category) =>
     category.name.toLowerCase().includes(searchInput.toLowerCase())
