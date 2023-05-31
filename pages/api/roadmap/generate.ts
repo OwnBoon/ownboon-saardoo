@@ -4,14 +4,17 @@ import type { NextApiRequest, NextApiResponse } from "next";
 type Data = {
   message: string;
 };
-
+export const config = {
+  runtime: 'edge',
+};
 export default async function handler(
-  req: NextApiRequest,
+  req: Response,
   res: NextApiResponse<Data>
 ) {
 
-    const title = req.query.title
-    const cat = req.query.categories
+    const title = (await req.json()) as {
+      title?: string
+    }
 
     const maxItems = 30
     const minItems = 15
@@ -33,7 +36,7 @@ export default async function handler(
     - response json should be single layer not nested items in items
     
     - choose most related / similar category from here ( based on prompt ):
-    ${cat}
+    peeing
     - choose Other Category if you not found right category
     
     - sample response:

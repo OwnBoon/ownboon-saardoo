@@ -137,12 +137,22 @@ const Home = ({ users, goals, notes }: Props) => {
 
     setShow(true);
 
-    const result = await fetch(`/api/roadmap/generate?title=${desc}`);
+    const result = await fetch("/api/roadmap/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        desc,
+      }),
+    });
+
+    console.log(result);
 
     const json = await result.json();
     setData(json);
     setShow(false);
-    return json;
+    // return json;
   };
   const [modaldata, setModaldata] = useState<Info>();
   useEffect(() => {
