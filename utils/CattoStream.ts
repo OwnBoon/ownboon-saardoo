@@ -15,26 +15,21 @@ import {
     model: string;
     messages: ChatGPTMessage[];
   }
-
-
-    
   
   export async function OpenAIStream(payload: OpenAIStreamPayload) {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
   
     let counter = 0;
-
-    const apiEndpoint = `https://api.cattto.repl.co/v1/chat/completions`;
   
-    const res = await fetch(apiEndpoint, {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_CATTO_KEY}`,
-        },
-        body: JSON.stringify(payload),
-        method: "POST",
-      });
+    const res = await fetch("https://api.cattto.repl.co/v1/chat/completions", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_CATTO_KEY}`,
+      },
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
   
     const stream = new ReadableStream({
       async start(controller) {

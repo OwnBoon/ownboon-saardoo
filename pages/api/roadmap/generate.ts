@@ -1,8 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { OpenAIStream, OpenAIStreamPayload } from "../../../utils/CattoStream";
 
 type Data = {
-  message: string;
+  message: any;
 };
 export const config = {
   runtime: 'edge',
@@ -54,23 +55,13 @@ export default async function handler(
     prompt: 
     ${title}`
 
-        const  data = {
+        const  data: OpenAIStreamPayload = {
             "model": "gpt-3.5-turbo",
             "messages": [{"role": "user", "content": basePrompt}],
         }
 
 
-  const apiEndpoint = `https://api.cattto.repl.co/v1/chat/completions`;
 
-  const result = await fetch(apiEndpoint, {
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_CATTO_KEY}`,
-    },
-    body: JSON.stringify(data),
-    method: "POST",
-  });
-  const json = await result.json();
-
-  res.status(200).json({ message: json });
+        const stream = await OpenAIStream(data);
+  res.status(200).json({ message: stream });
 }

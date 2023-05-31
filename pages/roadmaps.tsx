@@ -149,9 +149,9 @@ const Home = ({ users, goals, notes }: Props) => {
 
     console.log(result);
 
-    const json = await result.json();
-    setData(json);
-    setShow(false);
+    // const json = await result.json();
+    // setData(json);
+    // setShow(false);
     // return json;
   };
   const [modaldata, setModaldata] = useState<Info>();
