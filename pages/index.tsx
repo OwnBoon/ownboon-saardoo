@@ -24,7 +24,7 @@ const Home = ({ users }: Props) => {
     const userInfo: UserBody = {
       name: user?.firstName || user?.username!,
       email: user?.emailAddresses[0].emailAddress,
-      focus: 0,
+      focus: "0",
       leaderboard: users.length + 1,
     };
     const result = await fetch(`/api/addUser`, {
