@@ -66,6 +66,17 @@ export interface Posts extends SanityBody {
     body: string
 
 }
+export interface Videos extends SanityBody {
+    title?: string
+
+    author: string
+    profileImage: string
+    image: string
+    video: string
+    categories: string
+    desc: string
+
+}
 
 export interface Category extends SanityBody {
     title?: string

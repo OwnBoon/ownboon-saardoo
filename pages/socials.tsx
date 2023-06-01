@@ -1,7 +1,7 @@
 import Link from "next/link";
 import groq from "groq";
 import { sanityClient } from "../sanity";
-import { Posts, User } from "../typings";
+import { Posts, User, Videos } from "../typings";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
 import { useSession } from "next-auth/react";
@@ -14,6 +14,9 @@ import { useEffect, useState } from "react";
 import { fetchUsers } from "../utils/fetchUsers";
 import { fetchFromAPI } from "../utils/fetchVideo";
 import ReactPlayer from "react-player";
+import { Button, Grid, Text, Tooltip, User as Users } from "@nextui-org/react";
+import { fetchVideos } from "../utils/fetchPosts";
+import TimeAgo from "react-timeago";
 interface Video {
   id: {
     videoId: string;
@@ -33,9 +36,10 @@ interface Props {
   posts: Posts[];
   users: User[];
   videoData: Video[];
+  feed: Videos[];
 }
 
-function Home({ posts, users, videoData }: Props) {
+function Home({ posts, users, videoData, feed }: Props) {
   const { isLoaded, isSignedIn, user } = useUser();
   const today = new Date();
   const match = users.filter(
@@ -43,6 +47,7 @@ function Home({ posts, users, videoData }: Props) {
   );
   const [showVideo, setShowVideo] = useState(false);
   const [videos, setVideos] = useState<Video[]>();
+  const [showpost, setShowPost] = useState(false);
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -86,26 +91,63 @@ function Home({ posts, users, videoData }: Props) {
           </div>
         </div>
         <div className="grid grid-cols-1 mt-10 lg:grid-cols-12 overflow-y-scroll h-screen bg-white/70 rounded-lg p-5 gap-12">
-          <div className="lg:col-span-8  col-span-1">
-            <div className="flex gap-10">
-              <div
-                onClick={() => setShowVideo(false)}
-                className="text-black cursor-pointer bg-black/5 w-fit rounded-lg  px-2 py-1 mb-3 "
-              >
-                Blogs
-              </div>
-              <div
-                onClick={() => setShowVideo(true)}
-                className="text-black bg-black/5 w-fit  cursor-pointer rounded-lg  px-2 py-1 mb-3 "
-              >
-                Videos
-              </div>
-              <div>
-                <Link href={`/blogpost`}>
+          <div className="lg:col-span-8  col-span-1 ">
+            <div className="flex  gap-10 justify-between w-full items-center">
+              <div className="flex gap-10 items-center">
+                <div
+                  onClick={() => {
+                    setShowPost(false);
+                    setShowVideo(false);
+                  }}
+                  className="text-black cursor-pointer bg-black/5 w-fit rounded-lg  px-2 py-1 mb-3 "
+                >
+                  Blogs
+                </div>
+                <div
+                  onClick={() => setShowVideo(true)}
+                  className="text-black bg-black/5 w-fit  cursor-pointer rounded-lg  px-2 py-1 mb-3 "
+                >
+                  Videos
+                </div>
+                <div
+                  onClick={() => {
+                    setShowVideo(false);
+                    setShowPost(true);
+                  }}
+                >
                   <p className="transition duration-200 ease transform  inline-block hover:bg-pink-600 hover:text-white text-black bg-black/5 w-fit  cursor-pointer rounded-lg  px-2 py-1 mb-3 ">
-                    Post
+                    Posts
                   </p>
-                </Link>
+                </div>
+                {showpost ? (
+                  <Link href={`/publishpost`}>
+                    <Tooltip content="publish a post">
+                      <Button
+                        shadow
+                        bordered
+                        borderWeight={"bold"}
+                        size={"md"}
+                        color="gradient"
+                      >
+                        Create
+                      </Button>
+                    </Tooltip>
+                  </Link>
+                ) : (
+                  <Link href={`/blogpost`}>
+                    <Tooltip content="publish a blog">
+                      <Button
+                        shadow
+                        bordered
+                        borderWeight={"bold"}
+                        size={"md"}
+                        color="gradient"
+                      >
+                        Create
+                      </Button>
+                    </Tooltip>
+                  </Link>
+                )}
               </div>
             </div>
             <div className="lg:col-span-8 transition-all duration-500 flex flex-col-reverse col-span-1">
@@ -145,10 +187,62 @@ function Home({ posts, users, videoData }: Props) {
                 </>
               ) : (
                 <>
-                  {" "}
-                  {posts.map((post, index) => (
-                    <PostCard key={index} post={post} />
-                  ))}
+                  {showpost ? (
+                    <div className="p-5  space-y-5">
+                      {feed.map((feeds) => (
+                        <>
+                          {feeds.video ? (
+                            <>
+                              <div className="flex flex-col items-center justify-center p-5 ">
+                                <div className="flex items-center justify-between w-full  gap-10">
+                                  <div className="flex items-center ">
+                                    <Users
+                                      src={feeds.profileImage}
+                                      name={feeds.author}
+                                    />
+
+                                    <Text>
+                                      {/* @ts-ignore */}
+                                      - <TimeAgo date={feeds._createdAt} /> ago
+                                    </Text>
+                                  </div>
+                                  <Text h1 size={20} className="font-semibold">
+                                    {feeds.title}
+                                  </Text>
+                                </div>
+                                <div className="flex rounded-lg justify-center p-5">
+                                  <ReactPlayer controls url={feeds.video} />
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="flex flex-col items-center justify-center p-5 ">
+                                <div className="flex items-center justify-between w-full  gap-10">
+                                  <Users
+                                    src={feeds.profileImage}
+                                    name={feeds.author}
+                                  />
+                                  <Text h1 size={20} className="font-semibold">
+                                    {feeds.title}
+                                  </Text>
+                                </div>
+                                <div className="flex rounded-lg justify-center p-5">
+                                  <img src={feeds.image} />
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </>
+                      ))}
+                    </div>
+                  ) : (
+                    <>
+                      {posts.map((post, index) => (
+                        <PostCard key={index} post={post} />
+                      ))}
+                    </>
+                  )}
                 </>
               )}
             </div>
@@ -156,6 +250,7 @@ function Home({ posts, users, videoData }: Props) {
           <div className="lg:col-span-4 col-span-1">
             <div className="lg:sticky relative top-8">
               {/* <PostWidget /> */}
+
               {/* <Categories /> */}
             </div>
           </div>
@@ -169,11 +264,13 @@ function Home({ posts, users, videoData }: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await fecthBlogs();
   const users = await fetchUsers();
+  const feed = await fetchVideos();
 
   return {
     props: {
       posts,
       users,
+      feed,
     },
   };
 };
