@@ -14,7 +14,7 @@ const Sidebar = () => {
     "bg-[#4b9afa] hover:bg-[#4b9afa]/70 transition-all duration-150 w-fit p-2 cursor-pointer rounded-full text-white";
   const normal = "p-2 w-fit cursor-pointer";
   return (
-    <div className="flex flex-col col-span-1   h-screen items-start  p-5 justify-between ">
+    <div className="flex flex-col col-span-1    h-screen items-start  p-5 justify-between ">
       <div>
         <img src="https://flowbite.com/docs/images/logo.svg" />
       </div>
