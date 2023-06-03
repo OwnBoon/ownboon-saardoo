@@ -21,7 +21,7 @@ interface Props {
 }
 
 const Home = ({ users, goals, notes }: Props) => {
-  const { activeSong } = useSelector((state: any) => state.player);
+  // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
   const match = users.filter(

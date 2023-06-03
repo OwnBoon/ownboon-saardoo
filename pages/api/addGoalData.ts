@@ -20,7 +20,8 @@ export default async function handler(
           title: data.title,
           progress: data.progress,
           username: data.username,
-          completed: data.completed
+          completed: data.completed,
+          delete: data.delete
 
         },
       },

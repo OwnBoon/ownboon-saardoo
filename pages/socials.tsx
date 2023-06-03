@@ -1,7 +1,7 @@
 import Link from "next/link";
 import groq from "groq";
 import { sanityClient } from "../sanity";
-import { Posts, User, Videos } from "../typings";
+import { Comment, CommentBody, Posts, User, Videos } from "../typings";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
 import { useSession } from "next-auth/react";
@@ -14,9 +14,19 @@ import { useEffect, useState } from "react";
 import { fetchUsers } from "../utils/fetchUsers";
 import { fetchFromAPI } from "../utils/fetchVideo";
 import ReactPlayer from "react-player";
-import { Button, Grid, Text, Tooltip, User as Users } from "@nextui-org/react";
+import {
+  Button,
+  Container,
+  Grid,
+  Input,
+  Spacer,
+  Text,
+  Tooltip,
+  User as Users,
+} from "@nextui-org/react";
 import { fetchVideos } from "../utils/fetchPosts";
 import TimeAgo from "react-timeago";
+import { fetchComments } from "../utils/fetchComments";
 interface Video {
   id: {
     videoId: string;
@@ -45,6 +55,20 @@ function Home({ posts, users, videoData, feed }: Props) {
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
+  const id = posts.map((post) => post._id);
+  const [comments, setComments] = useState<Comment[]>([]);
+  console.log(comments);
+
+  const refreshComments = async () => {
+    // @ts-ignore
+
+    const comments: Comment[] = await fetchComments(id);
+    setComments(comments);
+  };
+
+  useEffect(() => {
+    refreshComments();
+  }, []);
   const [showVideo, setShowVideo] = useState(false);
   const [videos, setVideos] = useState<Video[]>();
   const [showpost, setShowPost] = useState(false);
@@ -54,6 +78,27 @@ function Home({ posts, users, videoData, feed }: Props) {
   const PostCard = dynamic(() => import("../components/PostCard"), {
     ssr: false,
   });
+
+  const [input, setInput] = useState("");
+
+  const handleSubmit = async (id: string) => {
+    // Comment logic
+    const comment: CommentBody = {
+      _type: "comment",
+      comment: input,
+      tweetId: id,
+      username: user?.username || "unknown user",
+      profileImg: user?.profileImageUrl || "https://links.papareact.com/gll",
+    };
+
+    const result = await fetch(`/api/addComments`, {
+      body: JSON.stringify(comment),
+      method: "POST",
+    });
+
+    setInput("");
+    refreshComments();
+  };
 
   useEffect(() => {
     const categoriesArray = match[0].categories
@@ -66,7 +111,7 @@ function Home({ posts, users, videoData, feed }: Props) {
   return (
     <div className="grid h-screen  grid-cols-12 bg-[#f4f1eb]/50">
       <Sidebar />
-      <div className="container overflow-y-hidden mx-auto col-span-9  py-5 ">
+      <div className="container overflow-y-hidden mx-auto col-span-11 w-full  py-5 ">
         {/* <FeaturedPosts /> */}
         <div className="flex px-5  justify-between items-center">
           {/* <div className="flex gap-4 font-bold text-lg">
@@ -90,7 +135,7 @@ function Home({ posts, users, videoData, feed }: Props) {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 mt-10 lg:grid-cols-12 overflow-y-scroll h-screen bg-white/70 rounded-lg p-5 gap-12">
+        <div className="grid grid-cols-1 w-full mt-10 lg:grid-cols-12 overflow-y-scroll h-screen bg-white/70 rounded-lg p-5 gap-12">
           <div className="lg:col-span-8  col-span-1 ">
             <div className="flex  gap-10 justify-between w-full items-center">
               <div className="flex gap-10 items-center">
@@ -150,7 +195,7 @@ function Home({ posts, users, videoData, feed }: Props) {
                 )}
               </div>
             </div>
-            <div className="lg:col-span-8 transition-all duration-500 flex flex-col-reverse col-span-1">
+            <div className="lg:col-span-8 transition-all w-full duration-500 flex flex-col-reverse col-span-1">
               {showVideo ? (
                 <>
                   <div className="justify-center flex flex-col items-center gap-5 ">
@@ -237,11 +282,17 @@ function Home({ posts, users, videoData, feed }: Props) {
                       ))}
                     </div>
                   ) : (
-                    <>
+                    <div className="">
                       {posts.map((post, index) => (
-                        <PostCard key={index} post={post} />
+                        <div className="">
+                          <PostCard
+                            
+                            key={index}
+                            post={post}
+                          />
+                        </div>
                       ))}
-                    </>
+                    </div>
                   )}
                 </>
               )}
@@ -256,7 +307,6 @@ function Home({ posts, users, videoData, feed }: Props) {
           </div>
         </div>
       </div>
-      <Progress />
     </div>
   );
 }

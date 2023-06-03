@@ -28,12 +28,9 @@ export default async function handler(
     
     - response json should be single layer not nested items in items
     
-    - choose most related / similar category from here ( based on prompt ):
-    ${cat}
-    - choose Other Category if you not found right category
     
     - sample response:
-    { "category":"...","roadmap:[{"id": 1,"title":"..."}] }
+    {"roadmap:[{"id": 1,"title":"..."}] }
     
     important items and levels rules:
     - minimum ${minItems} items

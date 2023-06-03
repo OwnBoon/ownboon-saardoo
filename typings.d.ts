@@ -45,6 +45,7 @@ export interface Goals extends SanityBody {
     progress?: number
     username?: string
     completed: boolean
+    delete?: boolean
 }
 export interface GoalBody {
     _type?: 'goals'
@@ -52,7 +53,28 @@ export interface GoalBody {
     progress: number
     username?: string
     completed?: boolean
+    delete?: boolean
 }
+
+export interface Comment extends SanityBody {
+    _type: "comment"
+    comment: string
+    tweetId: string
+    username: string
+    profileImg: string
+    tweet: {
+        _ref: string
+        _type: 'reference'
+      }
+}
+
+export interface CommentBody  {
+    _type: "comment"
+    comment: string
+    tweetId: string
+    username: string
+    profileImg: string
+  }
 
 export interface Posts extends SanityBody {
     title?: string

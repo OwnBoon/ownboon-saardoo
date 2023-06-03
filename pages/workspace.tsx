@@ -16,6 +16,7 @@ import Head from "next/head";
 import {
   Button,
   Checkbox,
+  Collapse,
   Grid,
   Input,
   Progress,
@@ -49,7 +50,7 @@ interface datatype {
 }
 
 const Home = ({ users, goals, notes }: Props) => {
-  const { activeSong } = useSelector((state: any) => state.player);
+  // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
   const match = users.filter(
@@ -75,6 +76,7 @@ const Home = ({ users, goals, notes }: Props) => {
         progress: 0,
         username: user?.username!,
         completed: false,
+        delete: false,
       };
       const result = await fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
@@ -96,6 +98,7 @@ const Home = ({ users, goals, notes }: Props) => {
         progress: 0,
         username: user?.username!,
         completed: false,
+        delete: false,
       };
       const result = await fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
@@ -123,6 +126,25 @@ const Home = ({ users, goals, notes }: Props) => {
         // @ts-ignore
         _id: id,
         completed: true,
+      };
+      const result = await fetch(`/api/setGoals`, {
+        body: JSON.stringify(postInfo),
+        method: "POST",
+      });
+      const json = await result.json();
+      console.log(json);
+      return json;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const addDeleted = async (id: string | undefined) => {
+    try {
+      const postInfo: Goals = {
+        // @ts-ignore
+        _id: id,
+        completed: true,
+        delete: true,
       };
       const result = await fetch(`/api/setGoals`, {
         body: JSON.stringify(postInfo),
@@ -207,12 +229,28 @@ const Home = ({ users, goals, notes }: Props) => {
                 <div className="flex px-2 py-1 gap-5 rounded-lg">
                   {/* @ts-ignore */}
                   <Tooltip content="complete todos">
-                    <Checkbox
-                      onChange={() => addCompleted(todo._id)}
-                      color="primary"
-                    />
+                    {todo.completed ? (
+                      <Checkbox isSelected={true} color="primary" />
+                    ) : (
+                      <Checkbox
+                        onChange={() => addCompleted(todo._id)}
+                        color="primary"
+                      />
+                    )}
                   </Tooltip>
-                  <p>{todo.title}</p>
+                  <Collapse
+                    className="w-full flex flex-col items-end"
+                    title={todo.title}
+                  >
+                    <Button
+                      onPress={() => addDeleted(todo._id)}
+                      bordered
+                      shadow
+                      size={"sm"}
+                    >
+                      Delete Todo
+                    </Button>
+                  </Collapse>
                 </div>
               ))}
               <button

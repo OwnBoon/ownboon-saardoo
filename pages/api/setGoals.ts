@@ -18,7 +18,8 @@ export default async function handler(
         patch: {
             id: data._id,
             set: {
-                completed: data.completed
+                completed: data.completed,
+                delete: data.delete
             }
         },
       },
