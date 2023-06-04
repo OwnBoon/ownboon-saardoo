@@ -1,9 +1,15 @@
-import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  EllipsisVerticalIcon,
+  MinusCircleIcon,
+  MinusIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { GoalBody, Goals, User, UserBody } from "../../typings";
 import { useSession } from "next-auth/react";
 import { useUser } from "@clerk/nextjs";
 import { MdCancel } from "react-icons/md";
+import { Button, Checkbox, Collapse, Input, Tooltip } from "@nextui-org/react";
 
 interface Props {
   users: User[];
@@ -12,19 +18,44 @@ interface Props {
 const LargeCard = ({ users, goals }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const [Selected, SetSelected] = useState(false);
-  const [title, setTitle] = useState("");
   const progress = 0;
   const userGoals = goals.filter((goal) => goal.username === user?.username);
-  console.log(userGoals);
+
+  const [showtask, setShowTask] = useState(false);
+  const [title, setTitle] = useState("");
+
   const addGoalData = async () => {
     try {
       const postInfo: GoalBody = {
         // @ts-ignore
         _type: "goals",
         title: title,
-        progress: progress,
+        progress: 0,
         username: user?.username!,
         completed: false,
+        delete: false,
+      };
+      const result = await fetch(`/api/addGoalData`, {
+        body: JSON.stringify(postInfo),
+        method: "POST",
+      });
+      const json = await result.json();
+      console.log(json);
+      return json;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const addGoalDataSchedule = async (title: string) => {
+    try {
+      const postInfo: GoalBody = {
+        // @ts-ignore
+        _type: "goals",
+        title: title,
+        progress: 0,
+        username: user?.username!,
+        completed: false,
+        delete: false,
       };
       const result = await fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
@@ -39,10 +70,16 @@ const LargeCard = ({ users, goals }: Props) => {
   };
 
   const handlesubmit = (e: any) => {
-    e.preventDefault();
-    addGoalData();
-    setTitle("");
+    if (!title) {
+      setShowTask(false);
+    } else {
+      e.preventDefault();
+      addGoalData();
+      setShowTask(false);
+      setTitle("");
+    }
   };
+  const [text, setText] = useState("");
 
   const addCompleted = async (id: string | undefined) => {
     try {
@@ -62,65 +99,89 @@ const LargeCard = ({ users, goals }: Props) => {
       console.error(err);
     }
   };
+  const addDeleted = async (id: string | undefined) => {
+    try {
+      const postInfo: Goals = {
+        // @ts-ignore
+        _id: id,
+        completed: true,
+        delete: true,
+      };
+      const result = await fetch(`/api/setGoals`, {
+        body: JSON.stringify(postInfo),
+        method: "POST",
+      });
+      const json = await result.json();
+      console.log(json);
+      return json;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="flex gap-10 pl-3 items-center h-full w-full">
-      {userGoals.map((goals) => (
-        <div className="bg-[#71357c]  w-1/5 pr-10 py-8 h-full pl-3 rounded-lg text-white justify-start">
-          <div className="flex justify-between items-center w-full">
-            <p className="font-semibold">{goals.title}</p>
-            <MdCancel
-              onClick={() => addCompleted(goals._id)}
-              className="h-5 w-5"
-            />
-          </div>
-          <div className="mt-5 text-sm space-y-1 text-white/60 pb-5 px-1">
-            {goals.progress}%
-            <div className="w-full bg-black/80 mt-1 rounded-md">
-              <div
-                className="bg-white rounded-md h-1"
-                style={{ width: `${goals.progress}% ` }}
-              ></div>
+      <div className="border rounded-lg space-y-5 bg-white/70  h-full    w-full px-10 py-2">
+        <h1 className="border-b sticky top-0 bg-white z-20 font-semibold ">
+          Todo List
+        </h1>
+        <div className="flex overflow-x-scroll items-center justify-start">
+          {userGoals.map((todo) => (
+            <div className="flex px-2 bg-white  items-center space-x-5 rounded-lg">
+              {/* @ts-ignore */}
+              <Tooltip content="complete todos">
+                {todo.completed ? (
+                  <Checkbox isSelected={true} color="primary" />
+                ) : (
+                  <Checkbox
+                    onChange={() => addCompleted(todo._id)}
+                    color="primary"
+                  />
+                )}
+              </Tooltip>
+              <Collapse
+                className="w-full flex flex-col items-end"
+                title={todo.title}
+              >
+                <Button
+                  onPress={() => addDeleted(todo._id)}
+                  bordered
+                  shadow
+                  auto
+                  size={"md"}
+                >
+                  Delete Todo
+                </Button>
+              </Collapse>
             </div>
-          </div>
-          {/* Main */}
-        </div>
-      ))}
-      <div className="flex items-center h-full  gap-10">
-        <div className="">
-          <PlusIcon
-            onClick={() => SetSelected(true)}
-            className="h-6 cursor-pointer w-6 bg-black/5 text-black/60 rounded-full"
-          />
-        </div>
-        {Selected && (
-          <form
-            onSubmit={handlesubmit}
-            className="bg-[#71357c]/80  w-64  pr-10 py-6 h-full pl-3 rounded-lg text-white justify-start"
+          ))}
+          <button
+            className="border  p-2  inline ml-5   rounded-full  "
+            onClick={(e) => {
+              showtask ? handlesubmit(e) : setShowTask(true);
+            }}
           >
-            <div className="flex justify-between items-center w-full">
-              <input
-                placeholder="Enter your goal"
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
+            {showtask ? (
+              <MinusIcon className="w-5 h-5 rounded-full  flex items-center justify-center " />
+            ) : (
+              <PlusIcon className="w-5 h-5 rounded-full  flex items-center justify-center " />
+            )}
+          </button>
+          {showtask ? (
+            <div className="px-5">
+              <Input
+                clearable
                 value={title}
-                className="font-semibold bg-transparent placeholder-white/90 outline-none border-b-2 py-1 border-pink-200/20"
+                size="xl"
+                underlined
+                onChange={(e) => setTitle(e.target.value)}
+                labelPlaceholder="Title"
+                className="!outline-none !border-none"
+                initialValue="eg. Add hydration state error handling"
               />
-              <EllipsisVerticalIcon className="h-5 w-5" />
             </div>
-            <div className="mt-5 text-sm space-y-1 text-white/60 pb-5 px-1">
-              {progress}
-              <div className="w-full bg-black/80 mt-1 rounded-md">
-                <div
-                  className="bg-white rounded-md h-1"
-                  style={{ width: `${progress}% ` }}
-                ></div>
-              </div>
-            </div>
-            {/* Main */}
-          </form>
-        )}
+          ) : null}
+        </div>
       </div>
     </div>
   );

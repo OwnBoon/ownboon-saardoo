@@ -25,6 +25,7 @@ import {
   Row,
   Input,
   Modal,
+  Loading,
 } from "@nextui-org/react";
 import { Text } from "@nextui-org/react";
 import {
@@ -38,13 +39,7 @@ import Head from "next/head";
 import { categories } from "../utils/constants";
 interface datatype {
   message: {
-    choices: [
-      {
-        message: {
-          content: string;
-        };
-      }
-    ];
+    response: string;
   };
 }
 interface Info {
@@ -109,12 +104,14 @@ const Home = ({ users, goals, notes }: Props) => {
   const [visible, setVisible] = useState(false);
   const [text, setText] = useState("");
   const [stuff, setStuff] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const match = users.filter(
     (userss) => userss.email === user?.emailAddresses[0].emailAddress
   );
   const handler = async (texts: string) => {
     setText(texts);
+    setLoading(true);
     const result = await fetch(
       `/api/roadmap/normalchat?title=${text}?categories=${categories.map(
         (cateogr) => cateogr.name
@@ -126,6 +123,7 @@ const Home = ({ users, goals, notes }: Props) => {
     // const json1 = JSON.parse(deez);
     setStuff(json);
     setVisible(true);
+    setLoading(false);
     return json;
   };
 
@@ -141,9 +139,20 @@ const Home = ({ users, goals, notes }: Props) => {
 
     const json = await result.json();
     setData(json);
+    console.log(json);
     setShow(false);
     return json;
   };
+
+  if (data) {
+    const index = data.message.response.indexOf("[");
+
+    // Extract the substring starting from the third line
+    const result = data.message.response.substring(index);
+
+    console.log(result);
+  }
+
   const [modaldata, setModaldata] = useState<Info>();
   useEffect(() => {
     if (stuff) {
@@ -235,10 +244,10 @@ const Home = ({ users, goals, notes }: Props) => {
   // const roadmap = dataObject.roadmap;
   if (data) {
     // @ts-ignore
-    const roadmapdata = data?.message.choices[0].message.content;
-    const fine = roadmapdata.replace("@finish", "");
-    const sus = JSON.parse(fine);
-    console.log(sus);
+    const roadmapdata = data?.message.response.roadmap;
+    // const fine = roadmapdata.replace("@finish", "");
+    // const sus = JSON.parse(fine);
+    // console.log(sus);
     // console.log(roadmapdata);
 
     const addCategory = async (name: string) => {
@@ -293,7 +302,7 @@ const Home = ({ users, goals, notes }: Props) => {
                   value={desc}
                   labelPlaceholder="Issue description"
                 />
-                <Tooltip content={"click to follow this category"}>
+                {/* <Tooltip content={"click to follow this category"}>
                   <Button
                     onPress={() => addCategory(sus.category)}
                     color="secondary"
@@ -302,7 +311,7 @@ const Home = ({ users, goals, notes }: Props) => {
                   >
                     {sus.category}
                   </Button>
-                </Tooltip>
+                </Tooltip> */}
               </Grid>
               <Grid className="">
                 <Button
@@ -331,7 +340,14 @@ const Home = ({ users, goals, notes }: Props) => {
           </div>
           {/* <DraggableRoadmap data={sampleData} /> */}
           <div className="flex border gap-2 w-full overflow-x-scroll scrollbar scrollbar-none mt-20 ">
-            {sus.roadmap.map((roadmaps: RoadmapItem) => (
+            <div>
+              {loading ? (
+                <Grid>
+                  <Loading type="points" />
+                </Grid>
+              ) : null}
+            </div>
+            {/* {sus.roadmap.map((roadmaps: RoadmapItem) => (
               <div className="flex items-center w-full justify-center">
                 <ArrowRightIcon className="h-5 w-5 " />
                 <Card
@@ -369,7 +385,7 @@ const Home = ({ users, goals, notes }: Props) => {
                   </Modal>
                 </Card>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>{" "}
       </div>

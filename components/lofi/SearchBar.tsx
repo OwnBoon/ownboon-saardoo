@@ -5,11 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { UserBody } from "../../typings";
 import { Button, PressEvent } from "@nextui-org/react";
 
-interface Props {
-  postUser: MouseEventHandler<HTMLDivElement>;
-}
-
-const Searchbar = ({ postUser }: Props) => {
+const Searchbar = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -28,11 +24,7 @@ const Searchbar = ({ postUser }: Props) => {
       <label htmlFor="search-field" className="sr-only">
         Search all files
       </label>
-      <div className="flex flex-row justify-end items-center">
-        <div className="cursor-pointer" onClick={postUser}>
-          Stop Session
-        </div>
-      </div>
+      <div className="flex flex-row justify-end items-center"></div>
     </form>
   );
 };

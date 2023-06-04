@@ -56,24 +56,10 @@ const Home = ({ users, goals, notes }: Props) => {
   }, []);
 
   const calculatePoints = (timeSpentInSeconds: number) => {
-    const pointsPerSecond = 2; // change this value to adjust point earning rate
+    const pointsPerSecond = 0.03; // change this value to adjust point earning rate
     const earnedPoints = Math.floor(timeSpentInSeconds * pointsPerSecond);
     setPoints(earnedPoints);
     return earnedPoints;
-  };
-
-  const postUser = async () => {
-    const userInfo: User = {
-      _id: match[0]._id,
-      focus: "200",
-    };
-    const result = await fetch(`/api/addPoints`, {
-      body: JSON.stringify(userInfo),
-      method: "POST",
-    });
-
-    const json = await result.json();
-    return json;
   };
 
   useEffect(() => {
@@ -81,6 +67,23 @@ const Home = ({ users, goals, notes }: Props) => {
       const timeSpentInSeconds = Math.floor((endTime - startTime!) / 1000);
       setTimeSpent(timeSpentInSeconds);
       const earnedPoints = calculatePoints(timeSpentInSeconds);
+      const points = Number(match[0].focus) + earnedPoints;
+
+      const postUser = async () => {
+        console.log("posting to user");
+        const userInfo: User = {
+          _id: match[0]._id,
+          focus: points.toString(),
+        };
+        const result = await fetch(`/api/addPoints`, {
+          body: JSON.stringify(userInfo),
+          method: "POST",
+        });
+
+        const json = await result.json();
+        return json;
+      };
+      postUser();
       console.log(earnedPoints);
     }
   }, [endTime]);
@@ -94,7 +97,7 @@ const Home = ({ users, goals, notes }: Props) => {
 
       <div className="flex-1 flex flex-col \ ">
         <div className="sticky top-0 z-50 bg-black/20 ">
-          <SearchBar postUser={postUser} />
+          <SearchBar />
           <div className="z-50 sm:inline md:hidden">
             <Sidebar notes={notes} goals={goals} users={users} />
           </div>

@@ -47,7 +47,7 @@ const PostCard = ({ post }: Props) => {
     refreshComments();
   };
   return (
-    <div className="grid bg-white shadow-lg rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+    <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
       <div className=" col-span-4  rounded-lg ">
         <div className="relative overflow-hidden shadow-md pb-80 mb-6">
           <img
@@ -112,7 +112,7 @@ const PostCard = ({ post }: Props) => {
             {post.author}: <Text className="font-medium">{post.title}</Text>
           </Text>
         </div>
-        <div className="space-y-4 mt-5 shadow-lg rounded-lg p-2">
+        <div className="space-y-4 mt-5 overflow-y-scroll h-72  shadow-lg rounded-lg p-2">
           {comments.map((comment) => (
             <Grid className="flex items-center ">
               <User

@@ -41,7 +41,9 @@ const Home = ({ users, goals, notes }: Props) => {
         <title> Dashboard @ {user?.firstName || user?.username} </title>
         <link rel="icon" href="/logo.png" />
       </Head>
+
       <Sidebar />
+      {/* @ts-ignore */}
       <Main users={users} notes={notes} goals={goals} />
       <Progress />
     </div>
