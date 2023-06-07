@@ -26,11 +26,11 @@ const vent = () => {
             onClick={() => router.push("/vent-group")}
             className="text-3xl  "
           >
-            Vent Group
+            Group Chat
           </div>
           {/* Second */}
-          <div onClick={() => router.push("/vent")} className="text-3xl">
-            Vent Chat
+          <div onClick={() => router.push("/buddies")} className="text-3xl">
+            Buddies
           </div>
         </div>
       </div>

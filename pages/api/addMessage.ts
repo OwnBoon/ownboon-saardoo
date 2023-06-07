@@ -23,6 +23,9 @@ export default async function handler(
           time: data.time,
           socketId: data.socketId,
           day: data.day,
+          replyuser: data.replyuser,
+          replymessage: data.replymessage,
+          image: data.image
         },
       },
     ],

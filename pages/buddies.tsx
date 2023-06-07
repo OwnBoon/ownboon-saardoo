@@ -31,11 +31,10 @@ const vent = ({ messages }: Props) => {
     socket.emit("newUser", { userName, socketID: socket.id, pfp });
   }, []);
   return (
-    <div className="grid grid-cols-12 h-screen bg-[#f4f1eb]/50">
+    <div className="grid grid-cols-12 screen overflow-y-hidden bg-[#1F1F1F]">
       <Sidebar />
       {/* <Main /> */}
       <ChatPage message={messages} socket={socket} />
-      <Progress />
     </div>
   );
 };

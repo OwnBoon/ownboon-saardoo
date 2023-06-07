@@ -105,10 +105,14 @@ export interface Category extends SanityBody {
 }
 
 export interface Message extends SanityBody {
+    _type: "messages"
     text: string
     username: string
     socketId: string
     pfp: string
     time: string
     day: string
+    image?: string
+    replyuser?: string
+    replymessage?: string
 }
