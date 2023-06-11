@@ -221,14 +221,14 @@ const Home = ({ users, goals, notes }: Props) => {
             <p>{user?.username || user?.firstName}</p>
           </div>
         </div>
-        <div className="flex px-24 py-5 border-b border-black items-start justify-between ">
-          <div className="justify-start   space-y-7 ">
-            <div className="border rounded-lg space-y-5 bg-white/70 overflow-y-scroll h-56   w-full px-10 py-2">
+        <div className="gap-20 px-16 py-5 border-b border-black items-start grid grid-cols-12 ">
+          <div className="justify-start col-span-5   space-y-7 ">
+            <div className="border rounded-lg space-y-5 bg-white/70 overflow-y-scroll h-72   w-full px-10 py-2">
               <h1 className="border-b sticky top-0 bg-white z-20 font-semibold ">
                 Todo List
               </h1>
               {todos.map((todo) => (
-                <div className="flex px-2 bg-white  py-1 gap-5 rounded-lg">
+                <div className="flex px-2 bg-white   gap-3 rounded-lg">
                   {/* @ts-ignore */}
                   <Tooltip content="complete todos">
                     {todo.completed ? (
@@ -241,7 +241,7 @@ const Home = ({ users, goals, notes }: Props) => {
                     )}
                   </Tooltip>
                   <Collapse
-                    className="w-full flex flex-col items-end"
+                    className="w-full flex flex-col text-xs font-semibold items-end"
                     title={todo.title}
                   >
                     <Button
@@ -279,13 +279,13 @@ const Home = ({ users, goals, notes }: Props) => {
             </div>
             <div>
               {" "}
-              <div className="border rounded-lg  bg-white space-y-5 overflow-y-scroll h-fit  w-full px-10 py-2">
+              <div className="border   bg-white space-y-5 overflow-y-scroll h-fit  w-full px-2 rounded-xl py-2">
                 <p className="border-b flex justify-center">Notes</p>
-                <div className="space-y-16 flex   flex-col items-center">
+                <div className="space-y-20 flex   flex-col items-center">
                   {user ? (
                     <ReactQuill
                       theme="snow"
-                      className="h-44 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                      className="h-36 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
                       value={text || notess[0]?.note}
                       onChange={setText}
                     />
@@ -297,7 +297,7 @@ const Home = ({ users, goals, notes }: Props) => {
               </div>
             </div>
           </div>
-          <div className=" scale-x-100 -my-20  scale-y-75 flex items-start">
+          <div className=" scale-x-100 col-span-7 w-full -my-20  scale-y-75 flex items-start">
             <Planet users={users} />
           </div>
         </div>
