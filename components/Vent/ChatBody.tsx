@@ -186,6 +186,7 @@ const ChatBody = ({
                               {/* @ts-ignore */}
                               <Dropdown.Button
                                 size={"xs"}
+                                // @ts-ignore
                                 color={""}
                                 light
                                 flat
