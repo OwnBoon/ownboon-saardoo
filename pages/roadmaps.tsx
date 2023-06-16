@@ -6,7 +6,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Navbar from "../components/Navbar";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
-import { Goals, Notes, User, UserBody } from "../typings";
+import { Goals, Notes, User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -25,7 +25,6 @@ import {
   Row,
   Input,
   Modal,
-  Loading,
 } from "@nextui-org/react";
 import { Text } from "@nextui-org/react";
 import {
@@ -35,11 +34,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { MdPassword } from "react-icons/md";
 import ReactPlayer from "react-player";
-import Head from "next/head";
-import { categories } from "../utils/constants";
 interface datatype {
   message: {
-    response: string;
+    choices: [
+      {
+        message: {
+          content: string;
+        };
+      }
+    ];
   };
 }
 interface Info {
@@ -104,26 +107,15 @@ const Home = ({ users, goals, notes }: Props) => {
   const [visible, setVisible] = useState(false);
   const [text, setText] = useState("");
   const [stuff, setStuff] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const match = users.filter(
-    (userss) => userss.email === user?.emailAddresses[0].emailAddress
-  );
   const handler = async (texts: string) => {
     setText(texts);
-    setLoading(true);
-    const result = await fetch(
-      `/api/roadmap/normalchat?title=${text}?categories=${categories.map(
-        (cateogr) => cateogr.name
-      )}`
-    );
+    const result = await fetch(`/api/roadmap/normalchat?title=${text}`);
     const json = await result.json();
     // @ts-ignore
     // const deez = stuff.message.choices[0].message.content;
     // const json1 = JSON.parse(deez);
     setStuff(json);
     setVisible(true);
-    setLoading(false);
     return json;
   };
 
@@ -135,24 +127,14 @@ const Home = ({ users, goals, notes }: Props) => {
 
     setShow(true);
 
-    const result = await fetch(`/api/roadmap/generate?title=${desc}`);
+    const result = await fetch(
+      `https://nodejs-sms.saard00vfx.repl.co/api/handler?title=${desc}`
+    );
 
     const json = await result.json();
     setData(json);
-    console.log(json);
-    setShow(false);
     return json;
   };
-
-  if (data) {
-    const index = data.message.response.indexOf("[");
-
-    // Extract the substring starting from the third line
-    const result = data.message.response.substring(index);
-
-    console.log(result);
-  }
-
   const [modaldata, setModaldata] = useState<Info>();
   useEffect(() => {
     if (stuff) {
@@ -168,10 +150,6 @@ const Home = ({ users, goals, notes }: Props) => {
   if (!data) {
     return (
       <div>
-        <Head>
-          <title>Self Help Hub</title>
-          <link rel="icon" href="/logo.png" />
-        </Head>
         <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
           <Sidebar />
           <div className="col-span-10">
@@ -244,37 +222,13 @@ const Home = ({ users, goals, notes }: Props) => {
   // const roadmap = dataObject.roadmap;
   if (data) {
     // @ts-ignore
-    const roadmapdata = data?.message.response.roadmap;
-    // const fine = roadmapdata.replace("@finish", "");
-    // const sus = JSON.parse(fine);
-    // console.log(sus);
+    const roadmapdata = data?.message.choices[0].message.content;
+    const fine = roadmapdata.replace("@finish", "");
+    const sus = JSON.parse(fine);
     // console.log(roadmapdata);
-
-    const addCategory = async (name: string) => {
-      try {
-        const postInfo: UserBody = {
-          id: match[0]._id,
-          categories: match[0].categories + "," + name,
-        };
-        const result = await fetch(`/api/addCategory`, {
-          body: JSON.stringify(postInfo),
-          method: "POST",
-        });
-        const json = await result.json();
-        return json;
-      } catch (err) {
-        console.error(err);
-      } finally {
-        window.location.reload();
-      }
-    };
 
     return (
       <div className="grid grid-cols-12 bg-[#f4f1eb]/50">
-        <Head>
-          <title>Self Help Hub - {text}</title>
-          <link rel="icon" href="/logo.png" />
-        </Head>
         <Sidebar />
         <div className="col-span-10">
           {" "}
@@ -290,7 +244,7 @@ const Home = ({ users, goals, notes }: Props) => {
               >
                 Welcome to Self Help Hub
               </Text>
-              <Grid className="flex justify-between gap-10">
+              <Grid>
                 <Textarea
                   size="xl"
                   cols={50}
@@ -302,52 +256,18 @@ const Home = ({ users, goals, notes }: Props) => {
                   value={desc}
                   labelPlaceholder="Issue description"
                 />
-                {/* <Tooltip content={"click to follow this category"}>
-                  <Button
-                    onPress={() => addCategory(sus.category)}
-                    color="secondary"
-                    shadow
-                    auto
-                  >
-                    {sus.category}
-                  </Button>
-                </Tooltip> */}
               </Grid>
               <Grid className="">
-                <Button
-                  shadow
-                  onPress={(e) => fetchRoadmap(e)}
-                  color="gradient"
-                  auto
-                >
+                <Button onPress={(e) => fetchRoadmap(e)} color="gradient" auto>
                   Submit
                 </Button>
               </Grid>
-              {show ? (
-                <Grid className="flex flex-col items-center">
-                  <Progress
-                    indeterminated
-                    value={50}
-                    color="secondary"
-                    status="secondary"
-                  />
-                  <Text color="gray" h2 size={15}>
-                    takes around a minute
-                  </Text>
-                </Grid>
-              ) : null}
+              <div></div>
             </div>
           </div>
           {/* <DraggableRoadmap data={sampleData} /> */}
           <div className="flex border gap-2 w-full overflow-x-scroll scrollbar scrollbar-none mt-20 ">
-            <div>
-              {loading ? (
-                <Grid>
-                  <Loading type="points" />
-                </Grid>
-              ) : null}
-            </div>
-            {/* {sus.roadmap.map((roadmaps: RoadmapItem) => (
+            {sus.roadmap.map((roadmaps: RoadmapItem) => (
               <div className="flex items-center w-full justify-center">
                 <ArrowRightIcon className="h-5 w-5 " />
                 <Card
@@ -385,7 +305,7 @@ const Home = ({ users, goals, notes }: Props) => {
                   </Modal>
                 </Card>
               </div>
-            ))} */}
+            ))}
           </div>
         </div>{" "}
       </div>

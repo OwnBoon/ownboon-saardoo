@@ -31,9 +31,23 @@ const ChatBody = ({
   console.log(replymessage, replyuser);
 
   const { isLoaded, isSignedIn, user } = useUser();
+
+  const handleDelete = async (id: string) => {
+    const mutations = {
+      _id: id,
+    };
+    const result = await fetch(`/api/deleteMessage`, {
+      body: JSON.stringify(mutations),
+      method: "POST",
+    });
+    const json = await result.json();
+    return json;
+  };
+
+  const [state, setState] = useState("");
   return (
     <div className="">
-      <header className="sticky bg-[#1F1F1F] top-0 bg-">
+      <header className="sticky  top-0 bg-">
         <div className="flex justify-between p-3 border-b">
           <div>Workspace</div>
           <div className="flex items-center gap-2 px-5">
@@ -42,7 +56,7 @@ const ChatBody = ({
           </div>
         </div>
       </header>
-      <div className=" text-white h-screen  grid grid-cols-10   overflow-y-scroll p-5  rounded-lg">
+      <div className="  h-screen  grid grid-cols-10   overflow-y-scroll p-5  rounded-lg">
         <div className="col-span-1 border-r h-full border-black "></div>
         <div className="col-span-9 overflow-y-scroll bg-[#151515] rounded-lg">
           {message.map((message) =>
@@ -141,6 +155,7 @@ const ChatBody = ({
                               onAction={() => {
                                 setReplyuser(message.username);
                                 setReplyMessage(message.text);
+                                handleDelete(message._id!);
                               }}
                               aria-label="Static Actions"
                             >

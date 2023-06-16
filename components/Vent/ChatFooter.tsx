@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { BsImage, BsSend } from "react-icons/bs";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button, Input, Modal, Text } from "@nextui-org/react";
-
+import Picker from "emoji-picker-react";
 interface Props {
   socket: any;
   message: Message[];
@@ -65,6 +65,8 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
     }
   };
 
+  const [emojimenu, setEmojiMenu] = useState(false);
+
   const [imageSrc, setImageSrc] = useState("");
   const [uploadData, setUploadData] = useState();
 
@@ -121,14 +123,33 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
   };
 
   return (
-    <div className="w-full flex justify-center sticky bottom-0 py-2 h-full bg-[#1F1F1F]">
+    <div className="w-full flex justify-center sticky bottom-0 py-2 h-full  bg-[#1F1F1F]">
       <div
         // @ts-ignore
-        className=" justify-between flex w-3/4  "
+        className=" justify-between flex w-full px-5  "
       >
-        <div className="w-full flex px-2 items-center justify-between border border-white/10 rounded-lg bg-[#1F1F1F]">
-          <div className="border px-1 py-1 border-white/20 rounded-full">
-            <PlusIcon onClick={handler} className="h-5 w-5" />
+        <div className="w-full flex px-2 items-center justify-between border border-white/10 rounded-2xl bg-[#1F1F1F]">
+          <div className="mx-2">
+            {/* <PlusIcon onClick={handler} className="h-5 w-5" /> */}
+            <button
+              onClick={handler}
+              className="flex items-center justify-center text-gray-400 hover:text-gray-600"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                ></path>
+              </svg>
+            </button>
           </div>
           <Modal
             closeButton
@@ -191,26 +212,88 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
               replying to {replyuser}
             </div>
           ) : null}
-          <input
-            type="text"
-            placeholder="Write message"
-            className=" rounded-lg border-none ` bg-[#1F1F1F]  w-3/4  outline-none"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyUp={handleTyping}
-          />
-          <p>
-            {/* @ts-ignore */}
-            <button onClick={handleSendMessage}>
+          <div className="flex-grow flex  gap-10 items-center ml-4">
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="Write message"
+                className=" rounded-lg !focus:border-b !focus:border !focus:border-white border-none transition-all duration-150 ` bg-[#1F1F1F]  w-full focus:outline-none focus:ring-0  outline-none"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyUp={handleTyping}
+              />
+
+              <button
+                onClick={() =>
+                  emojimenu ? setEmojiMenu(false) : setEmojiMenu(true)
+                }
+                className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+
+            <Modal
+              closeButton
+              blur
+              aria-labelledby="modal-title"
+              open={emojimenu}
+              onClose={() => setEmojiMenu(false)}
+            >
+              <Picker
+                // onEmojiClick={onEmojiClick}
+                // @ts-ignore
+                disableAutoFocus={true}
+                native
+              />
+            </Modal>
+
+            {/* <button onClick={handleSendMessage}>
               <BsSend />
-            </button>
-          </p>
-        </div>
-        {imageSrc ? (
-          <div>
-            <img src={imageSrc} />
+            </button> */}
+
+            <div className="ml-5 ">
+              <button
+                // @ts-ignore
+                onClick={handleSendMessage}
+                className="flex p-2 items-center  justify-center transition-all duration-200  hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+              >
+                <svg
+                  className="w-5  h-5 transform rotate-45 -mt-px"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  ></path>
+                </svg>
+              </button>
+            </div>
           </div>
-        ) : null}
+          {imageSrc ? (
+            <div>
+              <img src={imageSrc} />
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );

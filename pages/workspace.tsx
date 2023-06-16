@@ -140,13 +140,11 @@ const Home = ({ users, goals, notes }: Props) => {
   };
   const addDeleted = async (id: string | undefined) => {
     try {
-      const postInfo: Goals = {
+      const postInfo = {
         // @ts-ignore
         _id: id,
-        completed: true,
-        delete: true,
       };
-      const result = await fetch(`/api/setGoals`, {
+      const result = await fetch(`/api/deleteGoals`, {
         body: JSON.stringify(postInfo),
         method: "POST",
       });
@@ -183,6 +181,11 @@ const Home = ({ users, goals, notes }: Props) => {
   const [desc, setDesc] = useState("");
   const [data, setData] = useState<datatype>();
   const [show, setShow] = useState(false);
+
+  const refreshTodo = async () => {
+    const todo = await fetchGoals();
+    todo;
+  };
   const fetchRoadmap = async (e: any) => {
     // e.preventDefault();
 
