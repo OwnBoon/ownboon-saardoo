@@ -11,38 +11,30 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { currentUser } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
-import CryptoJS from "crypto-js";
-import axios from "axios";
+import dynamic from "next/dynamic";
+const ChatEngine = dynamic(() =>
+  // @ts-ignore
+  import("react-chat-engine").then((module) => module.ChatEngine)
+);
+const MessageFormSocial = dynamic(() =>
+  // @ts-ignore
+  import("react-chat-engine").then((module) => module.MessageFormSocial)
+);
+
 interface Props {
   users: User[];
 }
 const Home = ({ users }: Props) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
-  const [encrypt, setEnCrpyt] = useState("");
-
-  const secret =
-    user?.username! +
-    user?.firstName! +
-    user?.lastName +
-    user?.emailAddresses[0].emailAddress;
-  const secretPass = "XkhZG4fW2t2W";
-  const pass = CryptoJS.AES.encrypt(
-    JSON.stringify(secret),
-    secretPass
-  ).toString();
-
-  // console.log(pass);
 
   const [isNewUser, setIsNewUser] = useState(false);
-  console.log(isNewUser);
   const postUser = async () => {
     const userInfo: UserBody = {
       name: user?.firstName || user?.username!,
       email: user?.emailAddresses[0].emailAddress,
       focus: "0",
       leaderboard: users.length + 1,
-      secret: secret,
     };
     const result = await fetch(`/api/addUser`, {
       body: JSON.stringify(userInfo),
@@ -53,44 +45,34 @@ const Home = ({ users }: Props) => {
     return json;
   };
 
-  useEffect(() => {
-    if (user) {
-      const match = users.find(
-        (userss) => userss.email === user.emailAddresses[0].emailAddress
-      );
-      if (!match) {
-        setIsNewUser(true);
-      }
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      if (isNewUser) {
-        const createUser = async () => {
-          console.log("posting user");
-          postUser();
-        };
-        createUser();
-      }
-    } else null;
-  }, [isNewUser]);
+  const match = users.filter(
+    (userss) => userss.email === user?.emailAddresses[0].emailAddress
+  );
 
   // if (session) {
   //   router.push("/dashboard");
   // } else
   return (
-    <>
+    <div className="background">
       <Head>
-        <title>OwnBoon</title>
+        <title>Buddies</title>
         <link rel="icon" href="/logo.png" />
       </Head>
-      <Navbar />
-      <div className="mx-auto my-auto">
-        <Hero />
-        <Body />
+      <div className="shadow">
+        {isLoaded ? (
+          <ChatEngine
+            // @ts-ignore
+            height="99vh"
+            projectID="fac12ef2-5467-4203-ac68-33cea25d76a2"
+            userName={match[0].name}
+            userSecret={match[0].secret}
+            renderNewMessageForm={() => <MessageFormSocial />}
+          />
+        ) : (
+          <div>hello</div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {

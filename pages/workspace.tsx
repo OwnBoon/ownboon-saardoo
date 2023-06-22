@@ -52,6 +52,8 @@ interface datatype {
 const Home = ({ users, goals, notes }: Props) => {
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
+
+  const [goal, setGoal] = useState<Goals[]>(goals);
   const router = useRouter();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
@@ -66,6 +68,11 @@ const Home = ({ users, goals, notes }: Props) => {
   }, []);
   const [showtask, setShowTask] = useState(false);
   const [title, setTitle] = useState("");
+
+  const refreshGoals = async () => {
+    const goals: Goals[] = await fetchGoals();
+    setGoal(goals);
+  };
 
   const addGoalData = async () => {
     try {
@@ -83,6 +90,8 @@ const Home = ({ users, goals, notes }: Props) => {
         method: "POST",
       });
       const json = await result.json();
+      refreshGoals();
+
       console.log(json);
       return json;
     } catch (err) {
@@ -115,6 +124,7 @@ const Home = ({ users, goals, notes }: Props) => {
   const handlesubmit = (e: any) => {
     e.preventDefault();
     addGoalData();
+    refreshGoals();
     setShowTask(false);
     setTitle("");
   };
@@ -132,6 +142,29 @@ const Home = ({ users, goals, notes }: Props) => {
         method: "POST",
       });
       const json = await result.json();
+
+      console.log(json);
+      refreshGoals();
+
+      return json;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const addUnCompleted = async (id: string | undefined) => {
+    try {
+      const postInfo: Goals = {
+        // @ts-ignore
+        _id: id,
+        completed: false,
+      };
+      const result = await fetch(`/api/setGoals`, {
+        body: JSON.stringify(postInfo),
+        method: "POST",
+      });
+      const json = await result.json();
+      refreshGoals();
+
       console.log(json);
       return json;
     } catch (err) {
@@ -150,6 +183,7 @@ const Home = ({ users, goals, notes }: Props) => {
       });
       const json = await result.json();
       console.log(json);
+      refreshGoals();
       return json;
     } catch (err) {
       console.error(err);
@@ -235,10 +269,20 @@ const Home = ({ users, goals, notes }: Props) => {
                   {/* @ts-ignore */}
                   <Tooltip content="complete todos">
                     {todo.completed ? (
-                      <Checkbox isSelected={true} color="primary" />
+                      <Checkbox
+                        isSelected={true}
+                        onChange={() => {
+                          addUnCompleted(todo._id);
+                          refreshGoals();
+                        }}
+                        color="primary"
+                      />
                     ) : (
                       <Checkbox
-                        onChange={() => addCompleted(todo._id)}
+                        onChange={() => {
+                          addCompleted(todo._id);
+                          refreshGoals();
+                        }}
                         color="primary"
                       />
                     )}
@@ -248,7 +292,10 @@ const Home = ({ users, goals, notes }: Props) => {
                     title={todo.title}
                   >
                     <Button
-                      onPress={() => addDeleted(todo._id)}
+                      onPress={() => {
+                        addDeleted(todo._id);
+                        refreshGoals();
+                      }}
                       bordered
                       shadow
                       size={"sm"}

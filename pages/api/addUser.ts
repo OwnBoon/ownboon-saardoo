@@ -21,6 +21,7 @@ export default async function handler(
           email: data.email,
           focus: data.focus,
           leaderboard: data.leaderboard,
+          secret: data.secret
         },
       },
     ],
