@@ -41,6 +41,7 @@ const ChatBody = ({
       method: "POST",
     });
     const json = await result.json();
+    router.replace(router.asPath);
     return json;
   };
 

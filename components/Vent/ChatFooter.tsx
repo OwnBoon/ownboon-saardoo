@@ -5,6 +5,7 @@ import { BsImage, BsSend } from "react-icons/bs";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button, Input, Modal, Text } from "@nextui-org/react";
 import Picker from "emoji-picker-react";
+import { useRouter } from "next/router";
 interface Props {
   socket: any;
   message: Message[];
@@ -24,6 +25,7 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
   ];
   const today = new Date();
   const [message, setMessage] = useState("");
+  const router = useRouter();
 
   const handleTyping = () =>
     socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
@@ -61,6 +63,7 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
         method: "POST",
       });
       const json = await result.json();
+      router.replace(router.asPath);
       return json;
     }
   };
