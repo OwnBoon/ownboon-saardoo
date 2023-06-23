@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { fetchGoals } from "../utils/fetchGoals";
 import { fetchNotes } from "../utils/fetchNotes";
+import toast from "react-hot-toast";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import {
@@ -26,6 +27,7 @@ import {
 } from "@nextui-org/react";
 import Planet from "./tracker";
 import dynamic from "next/dynamic";
+import { Toaster } from "react-hot-toast";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -90,6 +92,41 @@ const Home = ({ users, goals, notes }: Props) => {
         method: "POST",
       });
       const json = await result.json();
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+          <div className="flex-1 w-0 p-4">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 pt-0.5">
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+                  alt=""
+                />
+              </div>
+              <div className="ml-3 flex-1">
+                <p className="text-sm font-medium text-gray-900">
+                  Todos Updated
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Try refreshing the page to see it!
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex border-l border-gray-200">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
       refreshGoals();
 
       console.log(json);
@@ -163,6 +200,41 @@ const Home = ({ users, goals, notes }: Props) => {
         method: "POST",
       });
       const json = await result.json();
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+          <div className="flex-1 w-0 p-4">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 pt-0.5">
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+                  alt=""
+                />
+              </div>
+              <div className="ml-3 flex-1">
+                <p className="text-sm font-medium text-gray-900">
+                  U set ur todo to not completed
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Try refreshing the page to see it!
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex border-l border-gray-200">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
       refreshGoals();
 
       console.log(json);
@@ -183,6 +255,41 @@ const Home = ({ users, goals, notes }: Props) => {
       });
       const json = await result.json();
       console.log(json);
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+          <div className="flex-1 w-0 p-4">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 pt-0.5">
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+                  alt=""
+                />
+              </div>
+              <div className="ml-3 flex-1">
+                <p className="text-sm font-medium text-gray-900">
+                  U Deleted a todos
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Try refreshing the page to see it!
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex border-l border-gray-200">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
       refreshGoals();
       return json;
     } catch (err) {
@@ -249,6 +356,7 @@ const Home = ({ users, goals, notes }: Props) => {
         <title> Dashboard @ {user?.firstName || user?.username} </title>
         <link rel="icon" href="/logo.png" />
       </Head>
+      <Toaster position="top-right" reverseOrder={false} />
       <Sidebar />
       <div className="col-span-10">
         <div className="flex justify-between p-3 border-b">
