@@ -20,6 +20,7 @@ import {
   Collapse,
   Grid,
   Input,
+  Loading,
   Progress,
   Text,
   Textarea,
@@ -127,9 +128,9 @@ const Home = ({ users, goals, notes }: Props) => {
           </div>
         </div>
       ));
-      refreshGoals();
 
       console.log(json);
+
       return json;
     } catch (err) {
       console.error(err);
@@ -161,9 +162,9 @@ const Home = ({ users, goals, notes }: Props) => {
   const handlesubmit = (e: any) => {
     e.preventDefault();
     addGoalData();
-    refreshGoals();
     setShowTask(false);
     setTitle("");
+    router.replace(router.asPath);
   };
   const [text, setText] = useState("");
 
@@ -181,7 +182,7 @@ const Home = ({ users, goals, notes }: Props) => {
       const json = await result.json();
 
       console.log(json);
-      refreshGoals();
+      router.replace(router.asPath);
 
       return json;
     } catch (err) {
@@ -189,6 +190,11 @@ const Home = ({ users, goals, notes }: Props) => {
     }
   };
   const addUnCompleted = async (id: string | undefined) => {
+    toast.custom((t) => (
+      <div>
+        <Loading type="default" />
+      </div>
+    ));
     try {
       const postInfo: Goals = {
         // @ts-ignore
@@ -235,7 +241,7 @@ const Home = ({ users, goals, notes }: Props) => {
           </div>
         </div>
       ));
-      refreshGoals();
+      router.replace(router.asPath);
 
       console.log(json);
       return json;
@@ -290,7 +296,7 @@ const Home = ({ users, goals, notes }: Props) => {
           </div>
         </div>
       ));
-      refreshGoals();
+      router.replace(router.asPath);
       return json;
     } catch (err) {
       console.error(err);
@@ -381,7 +387,7 @@ const Home = ({ users, goals, notes }: Props) => {
                         isSelected={true}
                         onChange={() => {
                           addUnCompleted(todo._id);
-                          refreshGoals();
+                          router.replace(router.asPath);
                         }}
                         color="primary"
                       />
@@ -389,7 +395,7 @@ const Home = ({ users, goals, notes }: Props) => {
                       <Checkbox
                         onChange={() => {
                           addCompleted(todo._id);
-                          refreshGoals();
+                          router.replace(router.asPath);
                         }}
                         color="primary"
                       />
@@ -402,7 +408,6 @@ const Home = ({ users, goals, notes }: Props) => {
                     <Button
                       onPress={() => {
                         addDeleted(todo._id);
-                        refreshGoals();
                       }}
                       bordered
                       shadow
@@ -422,7 +427,7 @@ const Home = ({ users, goals, notes }: Props) => {
                 + Add Task
               </button>
               {showtask ? (
-                <div className="mt-10 py-10">
+                <div className="mt-10 py-3">
                   <Input
                     clearable
                     value={title}
