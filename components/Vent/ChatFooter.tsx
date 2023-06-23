@@ -63,7 +63,7 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
         method: "POST",
       });
       const json = await result.json();
-      router.replace(router.asPath);
+      // router.replace(router.asPath);
       return json;
     }
   };
