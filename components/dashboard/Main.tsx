@@ -2,16 +2,17 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import LargeCard from "./LargeCard";
-import { Goals, Notes, User, UserBody } from "../../typings";
+import { Goals, Notes as Note, User, UserBody } from "../../typings";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import dynamic from "next/dynamic";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { Loading } from "@nextui-org/react";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
+const Notes = dynamic(import("../Notes/Notes"), { ssr: false });
 interface Props {
   users: User[];
   goals: Goals[];
-  notes: Notes[];
+  notes: Note[];
 }
 const Main = ({ users, goals, notes }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -29,12 +30,15 @@ const Main = ({ users, goals, notes }: Props) => {
   const usermatch = users.filter(
     (userss) => userss.email === user?.emailAddresses[0].emailAddress
   );
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const mutations: Notes = {
+  const handleSubmit = async (id: string) => {
+    // e.preventDefault();
+    const mutations: Note = {
       _type: "notes",
       note: text,
       email: user?.emailAddresses[0].emailAddress!,
+    };
+    const mutation = {
+      _id: id,
     };
 
     const result = await fetch(`/api/addNotes`, {
@@ -42,7 +46,13 @@ const Main = ({ users, goals, notes }: Props) => {
       method: "POST",
     });
 
+    const result2 = await fetch(`/api/deleteNote`, {
+      body: JSON.stringify(mutation),
+      method: "POST",
+    });
+
     const json = await result.json();
+    const json2 = await result2.json();
     return json;
   };
 
@@ -84,25 +94,18 @@ const Main = ({ users, goals, notes }: Props) => {
           ) : null}
         </div>
         {/* Taks for today */}
-        <div className="grid grid-cols-7 px-2 py-2 rounded-lg   bg-white/80 text-lg h-screen overflow-y-hidden font-[500] ">
-          <div className="space-y-5 col-span-4  ">
-            <h1>Notes For Today</h1>
-            <div
-              onClick={handleSubmit}
-              className="bg-black/5 w-fit p-2 mt-12 rounded-lg cursor-pointer text-sm "
-            >
-              Save
+        <div className="grid grid-cols-7 px-2 py-2 rounded-lg    bg-white/80 text-lg h-screen  font-[500] ">
+          <div className=" col-span-4  ">
+            <div className="flex items-center justify-center">
+              <h1>Notes For Today</h1>
+              <PlusIcon className="h-5 w-5 cursor-pointer" />
             </div>
-            <div className=" overflow-y-scroll    h-full bg-white/80 ">
-              {user ? (
-                <ReactQuill
-                  theme="snow"
-                  className="h-56   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                  value={text || match[0]?.note}
-                  onChange={setText}
-                />
-              ) : null}
-            </div>
+            <Notes
+              handleSubmit={() => handleSubmit(match[0]._id!)}
+              match={match}
+              setText={setText}
+              text={text}
+            />
           </div>
           <div className="flex flex-col space-y-8 justify-start col-span-3 w-full px-10">
             <p className="font-semibold">Statistics</p>
