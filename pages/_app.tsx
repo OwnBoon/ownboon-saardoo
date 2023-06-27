@@ -8,9 +8,9 @@ import { store } from "../redux/store";
 import { ClerkProvider } from "@clerk/nextjs";
 import { RecoilRoot } from "recoil";
 import "reactflow/dist/style.css";
-import { NextUIProvider } from "@nextui-org/react";
 import { useSSR } from "@nextui-org/react";
 import "../styles/chats.scss";
+import { createTheme, NextUIProvider, Text } from "@nextui-org/react";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const { isBrowser } = useSSR();
   return (

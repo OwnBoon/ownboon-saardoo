@@ -77,6 +77,25 @@ export interface CommentBody  {
     username: string
     profileImg: string
   }
+export interface FeedComment extends SanityBody {
+    _type: "feedcomment"
+    comment: string
+    tweetId: string
+    username: string
+    profileImg: string
+    tweet: {
+        _ref: string
+        _type: 'reference'
+      }
+}
+
+export interface FeedCommentBody  {
+    _type: "feedcomment"
+    comment: string
+    tweetId: string
+    username: string
+    profileImg: string
+  }
 
 export interface Posts extends SanityBody {
     title?: string

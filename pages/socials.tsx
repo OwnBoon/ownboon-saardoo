@@ -28,6 +28,7 @@ import {
 import { fetchVideos } from "../utils/fetchPosts";
 import TimeAgo from "react-timeago";
 import { fetchComments } from "../utils/fetchComments";
+import FeedCard from "../components/FeedCard";
 interface Video {
   id: {
     videoId: string;
@@ -250,62 +251,42 @@ function Home({ posts, users, videoData, feed }: Props) {
                   <>
                     {showpost ? (
                       <div className="p-5  space-y-5">
-                        {feed.map((feeds) => (
+                        {feed.map((feeds, index) => (
                           <>
-                            {feeds.video ? (
-                              <>
-                                <div className="flex flex-col items-center justify-center p-5 ">
-                                  <div className="flex items-center justify-between w-full  gap-10">
-                                    <div className="flex items-center ">
-                                      <Users
-                                        src={feeds.profileImage}
-                                        name={feeds.author}
-                                      />
-
-                                      <Text>
-                                        -{" "}
-                                        <TimeAgo
-                                          // @ts-ignore
-                                          date={feeds._createdAt}
-                                        />{" "}
-                                        ago
-                                      </Text>
-                                    </div>
-                                    <Text
-                                      h1
-                                      size={20}
-                                      className="font-semibold"
-                                    >
-                                      {feeds.title}
-                                    </Text>
-                                  </div>
-                                  <div className="flex rounded-lg justify-center p-5">
-                                    <ReactPlayer controls url={feeds.video} />
-                                  </div>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="flex flex-col items-center justify-center p-5 ">
-                                  <div className="flex items-center justify-between w-full  gap-10">
+                            {/* <>
+                              <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+                                <div className="flex items-center justify-between w-full  gap-10">
+                                  <div className="flex items-center ">
                                     <Users
                                       src={feeds.profileImage}
                                       name={feeds.author}
                                     />
-                                    <Text
-                                      h1
-                                      size={20}
-                                      className="font-semibold"
-                                    >
-                                      {feeds.title}
+
+                                    <Text>
+                                      -{" "}
+                                      <TimeAgo
+                                        // @ts-ignore
+                                        date={feeds._createdAt}
+                                      />{" "}
+                                      ago
                                     </Text>
                                   </div>
-                                  <div className="flex rounded-lg justify-center p-5">
-                                    <img src={feeds.image} />
-                                  </div>
+                                  <Text h1 size={20} className="font-semibold">
+                                    {feeds.title}
+                                  </Text>
                                 </div>
-                              </>
-                            )}
+                                <div className="flex rounded-lg justify-center p-5">
+                                  {feeds.video ? (
+                                    <ReactPlayer controls url={feeds.video} />
+                                  ) : (
+                                    <>
+                                      <img src={feeds.image} />
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            </> */}
+                            <FeedCard feeds={feeds} key={index} />
                           </>
                         ))}
                       </div>

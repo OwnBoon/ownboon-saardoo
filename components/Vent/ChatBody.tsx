@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Message } from "../../typings";
 import { UserButton, useUser } from "@clerk/nextjs";
 import ChatFooter from "./ChatFooter";
@@ -28,6 +28,12 @@ const ChatBody = ({
   };
   const [replyuser, setReplyuser] = useState("");
   const [replymessage, setReplyMessage] = useState("");
+  const [selected, setSelected] = useState(new Set(["text"]));
+
+  const selectedValue = useMemo(
+    () => Array.from(selected).join(", ").replaceAll("_", " "),
+    [selected]
+  );
   console.log(replymessage, replyuser);
 
   const { isLoaded, isSignedIn, user } = useUser();
@@ -84,12 +90,20 @@ const ChatBody = ({
                             </Dropdown.Button>
                             <Dropdown.Menu
                               onAction={() => {
-                                setReplyuser(message.username);
-                                setReplyMessage(message.text);
+                                if (selectedValue === "Reply") {
+                                  setReplyuser(message.username);
+                                  setReplyMessage(message.text);
+                                } else {
+                                  // @ts-ignore
+                                  handleDelete(message._id);
+                                }
                               }}
+                              selectedKeys={selected}
+                              // @ts-ignore
+                              onSelectionChange={setSelected}
                               aria-label="Static Actions"
                             >
-                              <Dropdown.Item key="new">Reply</Dropdown.Item>
+                              <Dropdown.Item key="reply">Reply</Dropdown.Item>
                               <Dropdown.Item key="delete" color="error">
                                 Delete
                               </Dropdown.Item>
@@ -154,22 +168,28 @@ const ChatBody = ({
                             </Dropdown.Button>
                             <Dropdown.Menu
                               onAction={() => {
-                                setReplyuser(message.username);
-                                setReplyMessage(message.text);
-                                handleDelete(message._id!);
+                                if (selectedValue === "Reply") {
+                                  setReplyuser(message.username);
+                                  setReplyMessage(message.text);
+                                } else {
+                                  // @ts-ignore
+                                  handleDelete(message._id);
+                                }
                               }}
+                              selectedKeys={selected}
+                              // @ts-ignore
+                              onSelectionChange={setSelected}
                               aria-label="Static Actions"
                             >
-                              <Dropdown.Item key="new">Reply</Dropdown.Item>
-                              <Dropdown.Item key="delete" color="error">
-                                Delete
-                              </Dropdown.Item>
+                              <Dropdown.Item key="reply">Reply</Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
                         </Grid>
                       </div>
-                      <p className="text-sm">{message.text}</p>
-                      <img src={message.image} />
+                      <div>
+                        <p className="text-sm">{message.text}</p>
+                        <img src={message.image} />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -212,12 +232,20 @@ const ChatBody = ({
                               </Dropdown.Button>
                               <Dropdown.Menu
                                 onAction={() => {
-                                  setReplyuser(message.username);
-                                  setReplyMessage(message.text);
+                                  if (selectedValue === "Reply") {
+                                    setReplyuser(message.username);
+                                    setReplyMessage(message.text);
+                                  } else {
+                                    // @ts-ignore
+                                    handleDelete(message._id);
+                                  }
                                 }}
+                                selectedKeys={selected}
+                                // @ts-ignore
+                                onSelectionChange={setSelected}
                                 aria-label="Static Actions"
                               >
-                                <Dropdown.Item key="new">Reply</Dropdown.Item>
+                                <Dropdown.Item key="reply">Reply</Dropdown.Item>
                                 <Dropdown.Item key="delete" color="error">
                                   Delete
                                 </Dropdown.Item>
@@ -287,15 +315,20 @@ const ChatBody = ({
                               </Dropdown.Button>
                               <Dropdown.Menu
                                 onAction={() => {
-                                  setReplyuser(message.username);
-                                  setReplyMessage(message.text);
+                                  if (selectedValue === "Reply") {
+                                    setReplyuser(message.username);
+                                    setReplyMessage(message.text);
+                                  } else {
+                                    // @ts-ignore
+                                    handleDelete(message._id);
+                                  }
                                 }}
+                                selectedKeys={selected}
+                                // @ts-ignore
+                                onSelectionChange={setSelected}
                                 aria-label="Static Actions"
                               >
-                                <Dropdown.Item key="new">Reply</Dropdown.Item>
-                                <Dropdown.Item key="delete" color="error">
-                                  Delete
-                                </Dropdown.Item>
+                                <Dropdown.Item key="reply">Reply</Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
                           </Grid>
