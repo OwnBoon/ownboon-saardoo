@@ -2532,6 +2532,11 @@
   resolved "https://registry.yarnpkg.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz#b6725d5f4af24ace33b36fafd295136e75509f43"
   integrity sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==
 
+"@vercel/analytics@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@vercel/analytics/-/analytics-1.0.1.tgz#38308a626c91866cb00a249c08bf65251e9b9d81"
+  integrity sha512-Ux0c9qUfkcPqng3vrR0GTrlQdqNJ2JREn/2ydrVuKwM3RtMfF2mWX31Ijqo1opSjNAq6rK76PwtANw6kl6TAow==
+
 "@vercel/build-utils@6.7.3":
   version "6.7.3"
   resolved "https://registry.yarnpkg.com/@vercel/build-utils/-/build-utils-6.7.3.tgz#136c05962d43379aa2dc773a832ce08f9d823a67"

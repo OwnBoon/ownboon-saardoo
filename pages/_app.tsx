@@ -11,6 +11,7 @@ import "reactflow/dist/style.css";
 import { useSSR } from "@nextui-org/react";
 import "../styles/chats.scss";
 import { createTheme, NextUIProvider, Text } from "@nextui-org/react";
+import { Analytics } from '@vercel/analytics/react'
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const { isBrowser } = useSSR();
   return (
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
           {isBrowser && <Component {...pageProps} />}
+          <Analytics />
         </ClerkProvider>
       </RecoilRoot>
     </Provider>

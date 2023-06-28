@@ -28,7 +28,7 @@ const ChatBody = ({
   };
   const [replyuser, setReplyuser] = useState("");
   const [replymessage, setReplyMessage] = useState("");
-  const [selected, setSelected] = useState(new Set(["text"]));
+  const [selected, setSelected] = useState(new Set(["Reply"]));
 
   const selectedValue = useMemo(
     () => Array.from(selected).join(", ").replaceAll("_", " "),
@@ -51,6 +51,7 @@ const ChatBody = ({
     return json;
   };
 
+  console.log(selectedValue);
   const [state, setState] = useState("");
   return (
     <div className="">
