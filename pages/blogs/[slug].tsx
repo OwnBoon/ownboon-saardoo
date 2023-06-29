@@ -45,8 +45,7 @@ const Post = ({ post }: Props) => {
           {" "}
           {post.title} | {post.author}{" "}
         </title>
-        <meta property="og:description" content={post.body} />
-        <meta property="og:image" content={post.mainImage} />
+        <meta name="description" content={post.body} />
         <link rel="icon" href="/logo.png" />
       </Head>
       <Sidebar />
