@@ -18,6 +18,10 @@ export interface User extends SanityBody {
     categories?: string
     verified?: boolean
     about?: string
+    profileImage?: string
+    slug?: {
+        current: string
+    }
  
 }
 
@@ -28,9 +32,13 @@ export interface UserBody {
     email?: string
     focus?: string
     secret?: string
+    profileImage? : string
     leaderboard?: number
     categories?: string
     about?: string
+    slug?: {
+        current: string
+    }
     verified?: boolean
 
 }

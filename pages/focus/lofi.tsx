@@ -56,7 +56,7 @@ const Home = ({ users, goals, notes }: Props) => {
   }, []);
 
   const calculatePoints = (timeSpentInSeconds: number) => {
-    const pointsPerSecond = 0.03; // change this value to adjust point earning rate
+    const pointsPerSecond = 0.1; // change this value to adjust point earning rate
     const earnedPoints = Math.floor(timeSpentInSeconds * pointsPerSecond);
     setPoints(earnedPoints);
     return earnedPoints;

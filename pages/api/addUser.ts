@@ -22,7 +22,8 @@ export default async function handler(
           focus: data.focus,
           leaderboard: data.leaderboard,
           secret: data.secret,
-          verified: data.verified
+          verified: data.verified,
+          slug: data.slug
         },
       },
     ],

@@ -36,7 +36,7 @@ const Home = ({ users }: Props) => {
 
   const [isNewUser, setIsNewUser] = useState(false);
   console.log(isNewUser);
-  const postUser = async () => {
+  const postUser = async (slug: { type: string; current: string }) => {
     const userInfo: UserBody = {
       name: user?.firstName || user?.username!,
       email: user?.emailAddresses[0].emailAddress,
@@ -44,6 +44,8 @@ const Home = ({ users }: Props) => {
       leaderboard: users.length + 1,
       secret: secret,
       verified: false,
+      profileImage: user?.profileImageUrl,
+      slug: slug,
     };
     const result = await fetch(`/api/addUser`, {
       body: JSON.stringify(userInfo),
@@ -68,9 +70,14 @@ const Home = ({ users }: Props) => {
   useEffect(() => {
     if (user) {
       if (isNewUser) {
+        const seoslug = user?.username!.toLocaleLowerCase();
+        const slugtype = {
+          type: "slug",
+          current: `${seoslug!.replace(/\s+/g, "-")}`,
+        };
         const createUser = async () => {
           console.log("posting user");
-          postUser();
+          postUser(slugtype);
         };
         createUser();
       }
