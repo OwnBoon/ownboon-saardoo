@@ -105,7 +105,7 @@ function Home({ posts, users, videoData, feed }: Props) {
   useEffect(() => {
     if (isLoaded) {
       console.log("feetched");
-      const categoriesArray = match[0].categories
+      const categoriesArray = match[0].about
         ?.split(",")
         .map((category) => category.trim());
       fetchFromAPI(`search?part=snippet&q=${categoriesArray}`).then((data) =>

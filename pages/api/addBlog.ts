@@ -23,7 +23,8 @@ export default async function handler(
           mainImage: data.mainImage,
           profileImage: data.profileImage,
           body: data.body,
-          categories: data.categories
+          categories: data.categories,
+          email: data.email
 
         },
       },

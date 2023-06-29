@@ -18,7 +18,8 @@ export default async function handler(
         patch: {
             id: data.id!,
             set: {
-                categories: data.categories
+                categories: data.categories,
+                about: data.about
             }
         },
       },

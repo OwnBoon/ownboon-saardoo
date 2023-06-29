@@ -16,6 +16,7 @@ import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import { fecthBlogs } from "../utils/fetchBlogs";
 import PostCard from "../components/PostCard";
+import Link from "next/link";
 interface Props {
   users: User[];
   goals: Goals[];
@@ -101,12 +102,14 @@ const Home = ({ users, goals, notes, posts }: Props) => {
                     </div>
                     <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                       <div className="py-6 px-3 mt-32 sm:mt-0">
-                        <button
-                          className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                        >
-                          Follow
-                        </button>
+                        {match[0].verified ? (
+                          <button
+                            className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                          >
+                            Add Buddies
+                          </button>
+                        ) : null}
                       </div>
                     </div>
                     <div className="w-full lg:w-4/12 px-4 lg:order-1">
@@ -148,11 +151,22 @@ const Home = ({ users, goals, notes, posts }: Props) => {
                     <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-600 font-bold uppercase">
                       {match[0].focus} Points . Rank {match[0].leaderboard}
                     </div>
+                    <div className="flex flex-col">
+                      <h2>
+                        <Link href="/categories" className="underline">
+                          Categories
+                        </Link>{" "}
+                        followed:
+                      </h2>
+                      <div className="">
+                        <p>{match[0].categories}</p>
+                      </div>
+                    </div>
                   </div>
                   <div className="mt-10 py-10 border-t border-blueGray-200 overflow-y-scroll h-[30rem] text-center">
                     <div className="max-w-5xl mx-auto w-full flex   justify-start">
                       <div className="flex flex-col">
-                        {posts.map((post, index) => (
+                        {blogs.map((post, index) => (
                           <div className="">
                             <PostCard key={index} post={post} />
                           </div>

@@ -116,6 +116,7 @@ function Home({ users }: Props) {
       // @ts-ignore
       body: editorRef.current.getContent() || "null",
       slug: slugtype,
+      email: user?.emailAddresses[0].emailAddress,
     };
 
     const result = await fetch(`/api/addBlog`, {

@@ -13,6 +13,7 @@ import { currentUser } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import { categories } from "../utils/constants";
 import useSWR, { mutate } from "swr";
+import { Toaster, toast } from "react-hot-toast";
 interface Props {
   users: User[];
 }
@@ -35,16 +36,53 @@ const Home = ({ users }: Props) => {
 
   const fiveCate = categories.slice(0, 7);
 
-  const addCategory = async (name: string) => {
+  const addCategory = async (name: string, value: string) => {
     try {
       const postInfo: UserBody = {
         id: match[0]._id,
         categories: match[0].categories + "," + name,
+        about: match[0].about + "," + value,
       };
       const result = await fetch(`/api/addCategory`, {
         body: JSON.stringify(postInfo),
         method: "POST",
       });
+
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+          <div className="flex-1 w-0 p-4">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 pt-0.5">
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+                  alt=""
+                />
+              </div>
+              <div className="ml-3 flex-1">
+                <p className="text-sm font-medium text-gray-900">
+                  {name} added to your categories
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Your feed will have a new life now {":)"}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex border-l border-gray-200">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
       const json = await result.json();
       return json;
     } catch (err) {
@@ -63,6 +101,7 @@ const Home = ({ users }: Props) => {
         <title>Categories @ {user?.username || user?.firstName}</title>
         <link rel="icon" href="/logo.png" />
       </Head>
+      <Toaster position="top-right" reverseOrder={false} />
       <Navbar />
       <div className="mx-auto my-auto">
         <div className="  flex flex-col items-center gap-6   justify-center max-w-5xl mx-auto">
@@ -88,7 +127,9 @@ const Home = ({ users }: Props) => {
                 <>
                   {filteredCategories.map((cateogry) => (
                     <div
-                      onClick={() => addCategory(cateogry.name)}
+                      onClick={() =>
+                        addCategory(cateogry.name, cateogry.value!)
+                      }
                       className="bg-blue-200/20  cursor-pointer px-1 rounded-lg "
                     >
                       <p className="text-xl">{cateogry.name}</p>
@@ -103,7 +144,7 @@ const Home = ({ users }: Props) => {
               <div className="flex  w-full  space-x-5">
                 {fiveCate.map((cateogry) => (
                   <div
-                    onClick={() => addCategory(cateogry.value!)}
+                    onClick={() => addCategory(cateogry.name, cateogry.value!)}
                     className="bg-blue-200/20  cursor-pointer px-1 rounded-lg "
                   >
                     <p className="text-xl">{cateogry.name}</p>

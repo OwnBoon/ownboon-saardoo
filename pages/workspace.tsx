@@ -61,7 +61,9 @@ const Home = ({ users, goals, notes }: Props) => {
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
-  const todos = goals.filter((goal) => goal.username == user?.username);
+  const todos = goals.filter(
+    (goal) => goal.username == user?.emailAddresses[0].emailAddress
+  );
   useEffect(() => {
     if (user && !match[0].categories) {
       router.push("/categories");
@@ -84,7 +86,7 @@ const Home = ({ users, goals, notes }: Props) => {
         _type: "goals",
         title: title,
         progress: 0,
-        username: user?.username!,
+        username: user?.emailAddresses[0].emailAddress,
         completed: false,
         delete: false,
       };
@@ -143,7 +145,7 @@ const Home = ({ users, goals, notes }: Props) => {
         _type: "goals",
         title: title,
         progress: 0,
-        username: user?.username!,
+        username: user?.emailAddresses[0].emailAddress!,
         completed: false,
         delete: false,
       };

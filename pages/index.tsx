@@ -43,6 +43,7 @@ const Home = ({ users }: Props) => {
       focus: "0",
       leaderboard: users.length + 1,
       secret: secret,
+      verified: false,
     };
     const result = await fetch(`/api/addUser`, {
       body: JSON.stringify(userInfo),

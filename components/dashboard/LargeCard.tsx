@@ -19,7 +19,9 @@ const LargeCard = ({ users, goals }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const [Selected, SetSelected] = useState(false);
   const progress = 0;
-  const userGoals = goals.filter((goal) => goal.username === user?.username);
+  const userGoals = goals.filter(
+    (goal) => goal.username === user?.emailAddresses[0].emailAddress
+  );
 
   const [showtask, setShowTask] = useState(false);
   const [title, setTitle] = useState("");
@@ -31,7 +33,7 @@ const LargeCard = ({ users, goals }: Props) => {
         _type: "goals",
         title: title,
         progress: 0,
-        username: user?.username!,
+        username: user?.emailAddresses[0].emailAddress,
         completed: false,
         delete: false,
       };
@@ -53,7 +55,7 @@ const LargeCard = ({ users, goals }: Props) => {
         _type: "goals",
         title: title,
         progress: 0,
-        username: user?.username!,
+        username: user?.emailAddresses[0].emailAddress,
         completed: false,
         delete: false,
       };

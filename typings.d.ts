@@ -16,6 +16,8 @@ export interface User extends SanityBody {
     focus: string
     leaderboard?: number
     categories?: string
+    verified?: boolean
+    about?: string
  
 }
 
@@ -28,6 +30,8 @@ export interface UserBody {
     secret?: string
     leaderboard?: number
     categories?: string
+    about?: string
+    verified?: boolean
 
 }
 
@@ -106,6 +110,7 @@ export interface Posts extends SanityBody {
     profileImage: string
     mainImage: string
     categories: string
+    email: string
     body: string
 
 }

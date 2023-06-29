@@ -103,6 +103,7 @@ const PostCard = ({ post }: Props) => {
       <div className="col-span-2 border-l px-2">
         <div className="flex items-center border-b py-1">
           <User name={post.author} src={post.profileImage} />
+
           <Button size={"xs"} bordered shadow auto>
             Follow
           </Button>
