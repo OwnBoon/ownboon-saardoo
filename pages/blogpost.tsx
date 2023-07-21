@@ -17,6 +17,7 @@ import { FaSearchengin } from "react-icons/fa";
 import { set } from "lodash";
 import { BsImage } from "react-icons/bs";
 import Head from "next/head";
+import { categories } from "../utils/constants";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -131,6 +132,42 @@ function Home({ users }: Props) {
     setCategory("");
     return json;
   };
+  const [filteredCategories, setFilteredCategories] = useState<
+    { name: string; value?: string }[]
+  >([]);
+
+  const handleInputChange = (input: any) => {
+    const userInput = input;
+    setCategory(userInput);
+
+    // Filter the categories based on the user input
+    const words = userInput.split(" ");
+    const filtered = [];
+
+    // Filter the categories for each word and concatenate with commas
+    for (let word of words) {
+      const filteredForWord = categories
+        .filter(
+          (category) =>
+            category.name.toLowerCase().indexOf(word.toLowerCase()) !== -1
+        )
+        .slice(0, 5);
+      filtered.push(...filteredForWord);
+    }
+
+    // Set the filtered categories to be displayed in autocomplete suggestions
+    setFilteredCategories(filtered);
+  };
+
+  const handleSuggestionClick = (suggestion: any) => {
+    // Set the clicked suggestion as the value of the input field
+    setCategory((prevCategory) =>
+      prevCategory ? prevCategory + ", " + suggestion.name : suggestion.name
+    );
+    // Clear the suggestions list after selecting a suggestion
+    setFilteredCategories([]);
+  };
+
   return (
     <div className="grid grid-cols-12 overflow-hidden bg-[#f4f1eb]/50">
       <Head>
@@ -187,8 +224,19 @@ function Home({ users }: Props) {
                 className="  text font-light  placeholder:text-gray-400 outline-none"
                 placeholder="Write up to 4 tags"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => handleInputChange(e.target.value)}
               />
+              <div className="space-y-2 mt-1 px-5">
+                {filteredCategories.map((item) => (
+                  <h1
+                    key={item.name}
+                    className="cursor-pointer"
+                    onClick={() => handleSuggestionClick(item)}
+                  >
+                    {item.name}
+                  </h1>
+                ))}
+              </div>
             </div>
             <div className="mt-5">
               <img

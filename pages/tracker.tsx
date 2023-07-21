@@ -74,6 +74,13 @@ const Planet = ({ users }: Props) => {
                   scene="https://prod.spline.design/G2HOyymUf9aYWnL3/scene.splinecode"
                 />
               </div>
+            ) : level < 10 ? (
+              <div></div>
+            ) : level > 30 ? (
+              <Spline
+                className=""
+                scene="https://prod.spline.design/NK3aT6hTvsLAsxSD/scene.splinecode"
+              />
             ) : null}
           </>
         ) : null}

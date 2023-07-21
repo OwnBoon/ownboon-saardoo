@@ -168,7 +168,13 @@ const Home = ({ users, goals, notes, posts }: Props) => {
                       <div className="flex flex-col">
                         {blogs.map((post, index) => (
                           <div className="">
-                            <PostCard key={index} post={post} />
+                            {/* @ts-ignore */}
+                            <PostCard
+                              match={match}
+                              users={users}
+                              key={index}
+                              post={post}
+                            />
                           </div>
                         ))}
                       </div>

@@ -13,6 +13,7 @@ import { currentUser } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import CryptoJS from "crypto-js";
 import axios from "axios";
+
 interface Props {
   users: User[];
 }
@@ -31,6 +32,20 @@ const Home = ({ users }: Props) => {
     JSON.stringify(secret),
     secretPass
   ).toString();
+
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  function generateString(length: number) {
+    let result = " ";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+  }
+
+  const random = generateString(8);
 
   // console.log(pass);
 

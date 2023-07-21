@@ -17,6 +17,7 @@ export interface User extends SanityBody {
     leaderboard?: number
     categories?: string
     verified?: boolean
+    follow?: User[]
     about?: string
     profileImage?: string
     slug?: {
@@ -35,6 +36,7 @@ export interface UserBody {
     profileImage? : string
     leaderboard?: number
     categories?: string
+    follow?: any
     about?: string
     slug?: {
         current: string
@@ -115,6 +117,7 @@ export interface Posts extends SanityBody {
         current: string
     }
     author: string
+    rating?: string
     profileImage: string
     mainImage: string
     categories: string

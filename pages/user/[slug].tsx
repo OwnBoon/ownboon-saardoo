@@ -14,10 +14,13 @@ import Link from "next/link";
 import { fecthBlogs } from "../../utils/fetchBlogs";
 import { GetServerSideProps } from "next";
 import PostCard from "../../components/PostCard";
+import { useUser } from "@clerk/nextjs";
+import { fetchUsers } from "../../utils/fetchUsers";
 
 interface Props {
   user: User;
   posts: Posts[];
+  users: User[];
 }
 
 // const ptComponents = {
@@ -37,8 +40,13 @@ interface Props {
 //   },
 // };
 
-const User = ({ user, posts }: Props) => {
+const User = ({ user, posts, users }: Props) => {
   const blog = posts.filter((post) => post.email === user.email);
+  const userss = useUser();
+  const matchuser = userss.user;
+  const match = users.filter(
+    (userssss) => userssss.email === matchuser?.emailAddresses[0].emailAddress
+  );
   return (
     <div className="">
       <div className="">
@@ -112,10 +120,10 @@ const User = ({ user, posts }: Props) => {
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
                         <div className="mr-4 p-3 text-center">
                           <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                            22
+                            {user.follow?.length}
                           </span>
                           <span className="text-sm text-blueGray-400">
-                            Friends
+                            Following
                           </span>
                         </div>
                         <div className="mr-4 p-3 text-center">
@@ -161,7 +169,13 @@ const User = ({ user, posts }: Props) => {
                       <div className="flex flex-col">
                         {blog.map((post, index) => (
                           <div className="">
-                            <PostCard key={index} post={post} />
+                            {/* @ts-ignore */}
+                            <PostCard
+                              match={match}
+                              users={users}
+                              key={index}
+                              post={post}
+                            />
                           </div>
                         ))}
                       </div>
@@ -189,7 +203,7 @@ const User = ({ user, posts }: Props) => {
 };
 
 const query = groq`*[_type == "user" && slug.current == $slug][0]{
-    ...,   
+  ...,    
 
 
 }`;
@@ -208,10 +222,12 @@ export async function getStaticProps(context: any) {
   // It's important to default the slug so that it doesn't return "undefined"
   const { slug = "" } = context.params;
   const user = await sanityClient.fetch(query, { slug });
+  const users = await fetchUsers();
   const posts = await fecthBlogs();
   return {
     props: {
       user,
+      users,
       posts,
     },
   };

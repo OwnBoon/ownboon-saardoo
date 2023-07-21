@@ -23,6 +23,8 @@ export default async function handler(
           leaderboard: data.leaderboard,
           secret: data.secret,
           verified: data.verified,
+          profileImage: data.profileImage,
+          follow: data.follow,
           slug: data.slug
         },
       },

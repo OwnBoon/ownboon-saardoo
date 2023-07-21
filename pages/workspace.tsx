@@ -29,6 +29,8 @@ import {
 import Planet from "./tracker";
 import dynamic from "next/dynamic";
 import { Toaster } from "react-hot-toast";
+import Spline from "@splinetool/react-spline";
+import Island from "../components/BoonIsland/Island";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -462,8 +464,9 @@ const Home = ({ users, goals, notes }: Props) => {
               </div>
             </div>
           </div>
-          <div className=" scale-x-100 col-span-7 w-full -my-20  scale-y-75 flex items-start">
-            <Planet users={users} />
+          <div className=" col-span-7 w-full h-full py-5 px-2 border items-center  flex flex-col  ">
+            <div className=" text-lg font-sans text-black ">Boon Island</div>
+            {/* <Island users={users} /> */}
           </div>
         </div>
         <div>

@@ -68,6 +68,44 @@ function Home({ posts, users, videoData, feed }: Props) {
     setComments(comments);
   };
 
+  const logic = () => {
+    const dynamicCategoriesArray = match[0]
+      .categories!.split(",")
+      .map((category) => category.trim().toLowerCase());
+
+    const filteredPosts = posts.filter((post) => {
+      if (!post.categories) return false; // Skip posts with no categories
+
+      const postCategories = post.categories
+        .split(",")
+        .map((category) => category.trim().toLowerCase());
+      return dynamicCategoriesArray.some((category) =>
+        postCategories.includes(category)
+      );
+    });
+
+    filteredPosts.sort((a, b) => {
+      const dateA = a._createdAt ? new Date(a._createdAt) : null;
+      const dateB = b._createdAt ? new Date(b._createdAt) : null;
+
+      if (dateA && dateB) {
+        // @ts-ignore
+        return dateB - dateA; // Sort in descending order
+      } else if (dateA) {
+        return -1; // DateB is undefined or invalid, so dateA should come first
+      } else if (dateB) {
+        return 1; // DateA is undefined or invalid, so dateB should come first
+      } else {
+        return 0; // Both dates are undefined or invalid, no change in order
+      }
+    });
+
+    return filteredPosts;
+  };
+
+  const filteredPosts = logic();
+  console.log(filteredPosts);
+
   useEffect(() => {
     refreshComments();
   }, []);
@@ -77,6 +115,7 @@ function Home({ posts, users, videoData, feed }: Props) {
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
+  // @ts-ignore
   const PostCard = dynamic(() => import("../components/PostCard"), {
     ssr: false,
   });
@@ -292,9 +331,14 @@ function Home({ posts, users, videoData, feed }: Props) {
                       </div>
                     ) : (
                       <div className="">
-                        {posts.map((post, index) => (
+                        {filteredPosts.map((post, index) => (
                           <div className="">
-                            <PostCard key={index} post={post} />
+                            <PostCard
+                              match={match}
+                              users={users}
+                              key={index}
+                              post={post}
+                            />
                           </div>
                         ))}
                       </div>

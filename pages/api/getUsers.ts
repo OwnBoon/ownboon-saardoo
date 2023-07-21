@@ -7,10 +7,10 @@ import { User } from "../../typings";
 const query = groq`
 *[_type == "user"] {
   ...,
-  goals[]->{
+  follow[]->{
     ...,
-  }
-}  | order(_createdAt asc)
+  } 
+}    | order(_createdAt asc)
 `
 
 type Data = {
