@@ -125,11 +125,13 @@ const Sidebar = ({ users, goals, notes }: Props) => {
   return (
     <>
       <div className="md:flex hidden flex-col  w-[240px] py-10 px-4 ">
-        <img
-          src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=64&q=75"
-          alt="logo"
-          className="w-full h-14 object-contain rounded-full"
-        />
+        <div className="flex justify-center ">
+          <img
+            src={user?.profileImageUrl}
+            alt="logo"
+            className="w-20 h-20 rounded-full ring "
+          />
+        </div>
         <NavLinks />
         <div className="flex flex-col  justify-center space-y-5 items-start my-8 text-sm font-medium ">
           {" "}

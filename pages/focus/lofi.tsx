@@ -17,18 +17,25 @@ import { fetchGoals } from "../../utils/fetchGoals";
 import { fetchNotes } from "../../utils/fetchNotes";
 import { useUser } from "@clerk/nextjs";
 
+import socketIO from "socket.io-client";
+
 interface Props {
   users: User[];
   goals: Goals[];
   notes: Notes[];
 }
 const Home = ({ users, goals, notes }: Props) => {
+  const socket = socketIO("http://localhost:8000/");
   const { activeSong } = useSelector((state: any) => state.player);
   const [startTime, setStartTime] = useState(null);
   const { isLoaded, isSignedIn, user } = useUser();
   const [endTime, setEndTime] = useState(null);
   const [timeSpent, setTimeSpent] = useState(0);
   const [points, setPoints] = useState(0);
+  const [room, setRoom] = useState("");
+  const [activeSongData, setActiveSongData] = useState(null);
+
+  console.log(activeSong);
 
   const match = users.filter(
     (userss) => userss.email === user?.emailAddresses[0].emailAddress
@@ -105,7 +112,7 @@ const Home = ({ users, goals, notes }: Props) => {
 
         <div className="px-6 h-[calc(100vh-72px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
           <div className="flex-1 h-fit pb-40">
-            <Discover />
+            <Discover socket={socket} />
           </div>
           <div className="xl:sticky relative top-0 h-fit">
             <TopPlay />
