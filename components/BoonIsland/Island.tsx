@@ -57,7 +57,7 @@ const Island = ({ users }: Props) => {
           ) : level > 51 ? (
             <Spline
               className=""
-              scene="https://prod.spline.design/ZdxcUVSwQSHNZHtO/scene.splinecode"
+              scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
             />
           ) : null}
         </>

@@ -79,7 +79,7 @@ const Planet = ({ users }: Props) => {
             ) : level > 30 ? (
               <Spline
                 className=""
-                scene="https://prod.spline.design/NK3aT6hTvsLAsxSD/scene.splinecode"
+                scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
               />
             ) : null}
           </>

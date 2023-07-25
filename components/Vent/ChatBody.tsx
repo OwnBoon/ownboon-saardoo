@@ -8,9 +8,9 @@ import { Container, Dropdown, Grid } from "@nextui-org/react";
 
 interface Props {
   messages: any;
-  typingStatus: any;
-  lastMessageRef: any;
-  message: Message[];
+  typingStatus?: any;
+  lastMessageRef?: any;
+  message?: Message[];
   socket: any;
 }
 
@@ -67,7 +67,7 @@ const ChatBody = ({
       <div className="  h-screen  grid grid-cols-10   overflow-y-scroll p-5  rounded-lg">
         <div className="col-span-1 border-r h-full border-black "></div>
         <div className="col-span-9 overflow-y-scroll bg-[#151515] rounded-lg">
-          {message.map((message) =>
+          {message!.map((message) =>
             message.username === localStorage.getItem("userName") ? (
               <div className="p-5 " key={message._id}>
                 <div className=" ">

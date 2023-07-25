@@ -6,9 +6,9 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button, Input, Modal, Text } from "@nextui-org/react";
 import Picker from "emoji-picker-react";
 import { useRouter } from "next/router";
+import { useUser } from "@clerk/nextjs";
 interface Props {
   socket: any;
-  message?: Message[];
   replyuser: string;
   replymessage: string;
 }
@@ -26,19 +26,20 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
   const today = new Date();
   const [message, setMessage] = useState("");
   const router = useRouter();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const handleTyping = () =>
     socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
 
   const handleSendMessage = async (e: Event) => {
     e.preventDefault();
-    if (message.trim() && localStorage.getItem("userName")) {
+    if (message.trim() && isLoaded) {
       socket.emit("message", {
         text: message,
-        name: localStorage.getItem("userName"),
+        name: user?.username,
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
-        pfp: localStorage.getItem("pfp"),
+        pfp: user?.profileImageUrl,
         time: `${today.getHours()}` + `:${today.getMinutes()}`,
         day: weekday[today.getDay()],
         replymessage: replymessage,
@@ -46,25 +47,6 @@ const ChatFooter = ({ socket, replyuser, replymessage }: Props) => {
         image: imageSrc,
       });
       setMessage("");
-      const mutations: Message = {
-        _type: "messages",
-        text: message,
-        username: localStorage.getItem("userName") || "random user",
-        socketId: socket.id,
-        pfp: localStorage.getItem("pfp") || "idkk",
-        time: `${today.getHours()}` + `:${today.getMinutes()}`,
-        day: weekday[today.getDay()],
-        replyuser: replyuser,
-        replymessage: replymessage,
-        image: imageSrc,
-      };
-      const result = await fetch(`/api/addMessage`, {
-        body: JSON.stringify(mutations),
-        method: "POST",
-      });
-      const json = await result.json();
-      // router.replace(router.asPath);
-      return json;
     }
   };
 

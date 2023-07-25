@@ -466,7 +466,7 @@ const Home = ({ users, goals, notes }: Props) => {
           </div>
           <div className=" col-span-7 w-full h-full py-5 px-2 border items-center  flex flex-col  ">
             <div className=" text-lg font-sans text-black ">Boon Island</div>
-            {/* <Island users={users} /> */}
+            <Island users={users} />
           </div>
         </div>
         <div>

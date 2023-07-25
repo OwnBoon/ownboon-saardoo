@@ -15,15 +15,15 @@ const io = require("socket.io")(server, {
 const rooms = new Map();
 
 io.on("connection", (socket) => {
-  socket.on("sendMessage", (message) => {
+  socket.on("message", (data) => {
     const room = getRoomBySocketId(socket.id);
     if (room) {
-      io.to(room).emit("receiveMessage", {
-        user: socket.handshake.auth.user.name,
-        message,
+      io.to(room).emit("messageResponse", {
+        data,
       });
     }
   });
+
   // Handle room creation
   socket.on("createRoom", (roomName, song) => {
     if (rooms.has(roomName)) {
@@ -37,12 +37,6 @@ io.on("connection", (socket) => {
     console.log("user has joined", roomName);
   });
 
-  socket.on("songStuff", (song) => {
-    const activeSongData = song; // Replace this with your own function to get the active song data
-    console.log("a user is playing", activeSongData);
-    socket.emit("activeSongData", activeSongData);
-  });
-
   // Handle joining a room
   socket.on("joinRoom", (roomName) => {
     console.log("user has joined", roomName);
@@ -53,11 +47,17 @@ io.on("connection", (socket) => {
       socket.leave(currentRoom);
     }
 
+    if (!rooms.has(roomName)) {
+      socket.emit("roomNotFound", roomName);
+      return;
+    }
+
     const roomMembers = rooms.get(roomName);
     roomMembers.add(socket.id);
     socket.join(roomName);
     socket.emit("roomStatus", true);
   });
+
   // Handle play/pause events
   socket.on("togglePlayback", (playbackStatus) => {
     const room = getRoomBySocketId(socket.id);

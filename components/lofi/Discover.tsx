@@ -15,6 +15,7 @@ import SongCard from "./components/SongCard";
 import { Button, Container, Input, Modal, Row, Text } from "@nextui-org/react";
 import copy from "copy-to-clipboard";
 import { useUser } from "@clerk/nextjs";
+import ChatBody from "./ChatBody";
 interface Props {
   socket: any;
 }
@@ -40,6 +41,8 @@ const Discover = ({ socket }: Props) => {
   const [visible2, setVisible2] = useState(false);
   const [copyText, setCopyText] = useState("");
   const [roomId, setRoomId] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [messageInput, setMessageInput] = useState("");
   console.log(room);
 
   const createRoom = () => {
@@ -64,6 +67,11 @@ const Discover = ({ socket }: Props) => {
     copy(room);
     alert(`You have copied "${room}"`);
   };
+
+  useEffect(() => {
+    // @ts-ignore
+    socket.on("messageResponse", (data) => setMessages([...messages, data]));
+  }, [socket, messages]);
 
   const handler = () => setVisible(true);
 
@@ -110,8 +118,8 @@ const Discover = ({ socket }: Props) => {
   const play = "opacity-100 transition-all duration-300";
 
   return (
-    <div className="flex flex-col">
-      <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
+    <div className="flex flex-col overflow-hidden overflow-x-hidden">
+      <div className="w-full   flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
         <h2 className="font-bold text-3xl text-white text-left">
           Discover {genreTitle}
         </h2>
@@ -208,23 +216,29 @@ const Discover = ({ socket }: Props) => {
         </select>
       </div>
 
-      <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {newdata?.map((song: any, i: any) => (
-          <div
-            className={
-              isPlaying ? "opacity-0 transition-all duration-300" : play
-            }
-          >
-            <SongCard
-              key={song.key}
-              song={song}
-              isPlaying={isPlaying}
-              activeSong={currentSong}
-              data={data}
-              i={i}
-            />
-          </div>
-        ))}
+      <div className="flex flex-wrap sm:justify-start  overflow-x-hidden justify-center gap-8">
+        <div className="flex  w-screen overflow-y-hidden">
+          {newdata?.map((song: any, i: any) => (
+            <div
+              className={
+                isPlaying ? "opacity-0 transition-all duration-300" : play
+              }
+            >
+              <SongCard
+                key={song.key}
+                song={song}
+                isPlaying={isPlaying}
+                activeSong={currentSong}
+                data={data}
+                i={i}
+              />
+            </div>
+          ))}
+        </div>
+        <div className=" text-white flex w-full">
+          {/* {messages[0].data.text} */}
+          <ChatBody messages={messages} socket={socket} />
+        </div>
       </div>
     </div>
   );
