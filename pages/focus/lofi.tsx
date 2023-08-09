@@ -102,7 +102,7 @@ const Home = ({ users, goals, notes }: Props) => {
         <Sidebar goals={goals} notes={notes} users={users} />
       </div>
 
-      <div className="flex-1 flex flex-col \ ">
+      <div className="flex-1 flex flex-col">
         <div className="sticky top-0 z-50 bg-black/20 ">
           <SearchBar />
           <div className="z-50 sm:inline md:hidden">

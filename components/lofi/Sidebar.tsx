@@ -60,7 +60,7 @@ const Notemenu = ({ handleSubmit, text, match, setText }: Types) => {
           <ReactQuill
             theme="snow"
             className="h-60 w-72 !bg-black/30 rounded-lg outline-none !border-none text-white"
-            value={text || match[0].note}
+            value={text || match[0]?.note}
             onChange={setText}
           />
         </div>
@@ -112,6 +112,7 @@ const Sidebar = ({ users, goals, notes }: Props) => {
       _type: "notes",
       note: text,
       email: user?.emailAddresses[0].emailAddress!,
+      topic: ""
     };
 
     const result = await fetch(`/api/addNotes`, {

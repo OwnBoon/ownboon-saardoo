@@ -32,7 +32,7 @@ const ChatBody = ({
     if (messages.map((message: any) => message.data)) {
       setMessage(messages.map((message: any) => message.data));
     }
-  }, [message]);
+  }, [messages]);
   const selectedValue = useMemo(
     () => Array.from(selected).join(", ").replaceAll("_", " "),
     [selected]

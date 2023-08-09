@@ -45,6 +45,7 @@ body {
 }
 
 .lofi{
+  overflow: hidden;
   &::before{
     content:'';
     content: "";

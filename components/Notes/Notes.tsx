@@ -58,13 +58,13 @@ const Notes = ({ notess, text, setText }: Props) => {
       {" "}
       <div className="border   bg-white space-y-5 overflow-y-scroll h-fit  w-full px-2 rounded-xl py-2">
         <div className="flex justify-center items-center">
-          {notess.length == 0 ? (
+          {notess?.length == 0 ? (
             <div onClick={() => setShow(true)} className="cursor-pointer">
               Add Topic
             </div>
           ) : (
             <select className="outline-none ring-0  border-none  flex justify-center">
-              {notess.map((note) => (
+              {notess?.map((note) => (
                 <option value={note.topic}>{note.topic}</option>
               ))}
             </select>
@@ -94,7 +94,7 @@ const Notes = ({ notess, text, setText }: Props) => {
         <div className="space-y-20 flex   flex-col items-center">
           {user ? (
             <div>
-              {notess.map((notes) => (
+              {notess?.map((notes) => (
                 <div>
                   <ReactQuill
                     theme="snow"
@@ -104,7 +104,7 @@ const Notes = ({ notess, text, setText }: Props) => {
                   />
                   <Button
                     onPress={() => {
-                      notess.length < 1
+                      notess?.length < 1
                         ? handleSubmit
                         : handleSet(notes._id!, notes.topic);
                     }}

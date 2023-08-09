@@ -118,8 +118,8 @@ const Discover = ({ socket }: Props) => {
   const play = "opacity-100 transition-all duration-300";
 
   return (
-    <div className="flex flex-col overflow-hidden overflow-x-hidden">
-      <div className="w-full   flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
+    <div className="w-full flex flex-col overflow-hidden overflow-x-hidden">
+      <div className="w-3/4 flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
         <h2 className="font-bold text-3xl text-white text-left">
           Discover {genreTitle}
         </h2>
@@ -216,13 +216,14 @@ const Discover = ({ socket }: Props) => {
         </select>
       </div>
 
-      <div className="flex flex-wrap sm:justify-start  overflow-x-hidden justify-center gap-8">
-        <div className="flex  w-screen overflow-y-hidden">
+      <div className="flex w-3/4 flex-wrap sm:justify-start  overflow-x-hidden justify-center gap-8">
+        <div className="flex w-screen  overflow-y-hidden">
           {newdata?.map((song: any, i: any) => (
             <div
               className={
                 isPlaying ? "opacity-0 transition-all duration-300" : play
               }
+              key={i}
             >
               <SongCard
                 key={song.key}
