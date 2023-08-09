@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import {Notes, Posts } from "../../typings";
+import { Notes, Posts } from "../../typings";
 
 type Data = {
   message: string;
@@ -18,7 +18,8 @@ export default async function handler(
         create: {
           _type: "notes",
           note: data.note,
-          email: data.email
+          email: data.email,
+          topic: data.topic
 
         },
       },

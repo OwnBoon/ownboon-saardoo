@@ -23,7 +23,7 @@ export interface User extends SanityBody {
     slug?: {
         current: string
     }
- 
+
 }
 
 
@@ -33,7 +33,7 @@ export interface UserBody {
     email?: string
     focus?: string
     secret?: string
-    profileImage? : string
+    profileImage?: string
     leaderboard?: number
     categories?: string
     follow?: any
@@ -53,6 +53,7 @@ export interface Notes extends SanityBody {
     _type?: 'notes'
     note: string
     email: string
+    topic: string
 }
 
 export interface Goals extends SanityBody {
@@ -81,16 +82,16 @@ export interface Comment extends SanityBody {
     tweet: {
         _ref: string
         _type: 'reference'
-      }
+    }
 }
 
-export interface CommentBody  {
+export interface CommentBody {
     _type: "comment"
     comment: string
     tweetId: string
     username: string
     profileImg: string
-  }
+}
 export interface FeedComment extends SanityBody {
     _type: "feedcomment"
     comment: string
@@ -100,16 +101,16 @@ export interface FeedComment extends SanityBody {
     tweet: {
         _ref: string
         _type: 'reference'
-      }
+    }
 }
 
-export interface FeedCommentBody  {
+export interface FeedCommentBody {
     _type: "feedcomment"
     comment: string
     tweetId: string
     username: string
     profileImg: string
-  }
+}
 
 export interface Posts extends SanityBody {
     title?: string
@@ -152,4 +153,10 @@ export interface Message extends SanityBody {
     image?: string
     replyuser?: string
     replymessage?: string
+}
+
+interface Roadmaps {
+    _type: "roadmap"
+    content: string
+    email: string
 }
