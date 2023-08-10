@@ -70,7 +70,7 @@ function Home({ posts, users, videoData, feed }: Props) {
 
   const logic = () => {
     const dynamicCategoriesArray = match[0]
-      .categories!.split(",")
+      ?.categories!.split(",")
       .map((category) => category.trim().toLowerCase());
 
     const filteredPosts = posts.filter((post) => {
@@ -79,7 +79,7 @@ function Home({ posts, users, videoData, feed }: Props) {
       const postCategories = post.categories
         .split(",")
         .map((category) => category.trim().toLowerCase());
-      return dynamicCategoriesArray.some((category) =>
+      return dynamicCategoriesArray?.some((category) =>
         postCategories.includes(category)
       );
     });
@@ -144,7 +144,7 @@ function Home({ posts, users, videoData, feed }: Props) {
   useEffect(() => {
     if (isLoaded) {
       console.log("feetched");
-      const categoriesArray = match[0].about
+      const categoriesArray = match[0]?.about
         ?.split(",")
         .map((category) => category.trim());
       fetchFromAPI(`search?part=snippet&q=${categoriesArray}`).then((data) =>
