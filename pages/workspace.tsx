@@ -32,6 +32,7 @@ import { Toaster } from "react-hot-toast";
 import Spline from "@splinetool/react-spline";
 import Island from "../components/BoonIsland/Island";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
+const Notes = dynamic(import("../components/Notes/Notes"), { ssr: false });
 interface Props {
   users: User[];
   goals: Goals[];
@@ -315,6 +316,7 @@ const Home = ({ users, goals, notes }: Props) => {
     const mutations: Notes = {
       _type: "notes",
       note: text,
+      topic: "",
       email: user?.emailAddresses[0].emailAddress!,
     };
 
@@ -361,7 +363,11 @@ const Home = ({ users, goals, notes }: Props) => {
     }
   }, [data]);
   return (
-    <div className="grid grid-cols-12  overflow-y-scroll bg-[#f4f1eb]/50">
+    <div
+      className="grid grid-cols-12  overflow-y-scroll
+     bg-[#f4f1eb]/50
+     "
+    >
       <Head>
         <title> Dashboard @ {user?.firstName || user?.username} </title>
         <link rel="icon" href="/logo.png" />
@@ -444,25 +450,11 @@ const Home = ({ users, goals, notes }: Props) => {
                 </div>
               ) : null}
             </div>
-            <div>
-              {" "}
-              <div className="border   bg-white space-y-5 overflow-y-scroll h-fit  w-full px-2 rounded-xl py-2">
-                <p className="border-b flex justify-center">Notes</p>
-                <div className="space-y-20 flex   flex-col items-center">
-                  {user ? (
-                    <ReactQuill
-                      theme="snow"
-                      className="h-36 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                      value={text || notess[0]?.note}
-                      onChange={setText}
-                    />
-                  ) : null}
-                  <Button onPress={handleSubmit} bordered className="mt-5">
-                    Save
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <Notes
+              notess={notess}
+              setText={setText}
+              text={text}
+            />
           </div>
           <div className=" col-span-7 w-full h-full py-5 px-2 border items-center  flex flex-col  ">
             <div className=" text-lg font-sans text-black ">Boon Island</div>

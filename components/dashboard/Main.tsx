@@ -30,31 +30,7 @@ const Main = ({ users, goals, notes }: Props) => {
   const usermatch = users.filter(
     (userss) => userss.email === user?.emailAddresses[0].emailAddress
   );
-  const handleSubmit = async (id: string) => {
-    // e.preventDefault();
-    const mutations: Note = {
-      _type: "notes",
-      note: text,
-      email: user?.emailAddresses[0].emailAddress!,
-    };
-    const mutation = {
-      _id: id,
-    };
-
-    const result = await fetch(`/api/addNotes`, {
-      body: JSON.stringify(mutations),
-      method: "POST",
-    });
-
-    const result2 = await fetch(`/api/deleteNote`, {
-      body: JSON.stringify(mutation),
-      method: "POST",
-    });
-
-    const json = await result.json();
-    const json2 = await result2.json();
-    return json;
-  };
+  
 
   if (!isSignedIn) {
     return (
@@ -101,8 +77,7 @@ const Main = ({ users, goals, notes }: Props) => {
               <PlusIcon className="h-5 w-5 cursor-pointer" />
             </div>
             <Notes
-              handleSubmit={() => handleSubmit(match[0]._id!)}
-              match={match}
+              notess={match}
               setText={setText}
               text={text}
             />
