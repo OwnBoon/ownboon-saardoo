@@ -312,6 +312,7 @@ const Home = ({ users, goals, notes }: Props) => {
       _type: "notes",
       note: text,
       email: user?.emailAddresses[0].emailAddress!,
+      topic: ""
     };
 
     const result = await fetch(`/api/addNotes`, {
