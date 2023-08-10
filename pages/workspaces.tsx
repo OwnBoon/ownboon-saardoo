@@ -95,9 +95,8 @@ const Home = ({ users, goals, notes }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -208,9 +207,8 @@ const Home = ({ users, goals, notes }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -263,9 +261,8 @@ const Home = ({ users, goals, notes }: Props) => {
       console.log(json);
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -306,22 +303,23 @@ const Home = ({ users, goals, notes }: Props) => {
     (note) => note.email === user?.emailAddresses[0].emailAddress
   );
 
-  const handleSubmit = async (e: any) => {
-    // e.preventDefault();
-    const mutations: Notes = {
-      _type: "notes",
-      note: text,
-      email: user?.emailAddresses[0].emailAddress!,
-    };
+  // const handleSubmit = async (e: any) => {
+  //   // e.preventDefault();
+  //   const mutations: Notes = {
+  //     _type: "notes",
+  //     topic: '',
+  //     note: text,
+  //     email: user?.emailAddresses[0].emailAddress!,
+  //   };
 
-    const result = await fetch(`/api/addNotes`, {
-      body: JSON.stringify(mutations),
-      method: "POST",
-    });
+  //   const result = await fetch(`/api/addNotes`, {
+  //     body: JSON.stringify(mutations),
+  //     method: "POST",
+  //   });
 
-    const json = await result.json();
-    return json;
-  };
+  //   const json = await result.json();
+  //   return json;
+  // };
   const [visible, setVisible] = useState(false);
   const [texts, setTexts] = useState("");
   const [stuff, setStuff] = useState("");
