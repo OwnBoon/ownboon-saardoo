@@ -450,11 +450,13 @@ const Home = ({ users, goals, notes }: Props) => {
                 </div>
               ) : null}
             </div>
+            {notess.map((note) => (
+
             <Notes
-              notess={notess}
-              setText={setText}
-              text={text}
+              notess={note}
+             
             />
+            ))}
           </div>
           <div className=" col-span-7 w-full h-full py-5 px-2 border items-center  flex flex-col  ">
             <div className=" text-lg font-sans text-black ">Boon Island</div>
