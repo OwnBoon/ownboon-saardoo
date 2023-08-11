@@ -10,7 +10,7 @@ const Sidebar = () => {
 
     return (
         <div
-            className={`w-1/5 h-screen text-[#DDDDDD] flex flex-col items-start justify-between p-5 border-r-2 border-[#1B1F3A]`}
+            className={`w-1/5 h-screen text-[#DDDDDD] flex flex-col items-start justify-between p-5 border-r-2 border-[#1B1F3A] fixed`}
         >
             <div className="logo flex justify-between items-center gap-8" >
                 <img src="ownboon.svg" />
@@ -26,7 +26,7 @@ const Sidebar = () => {
                         alt={""}
                         width={35}
                         height={35}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#1B1F3A]"
+                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
                     />
                     <span>Socials</span>
                 </div>

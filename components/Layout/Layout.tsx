@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 
 interface Props {
     children?: ReactNode;
-    bgColor: any;
+    bgColor: string;
     icon: string;
     text: string;
 }
@@ -13,12 +13,12 @@ interface Props {
 const Layout = ({ children, bgColor, icon, text }: Props) => {
     return (
         <div
-            className={`absolute w-full h-full flex bg-[#${bgColor}]`}
+            className={`w-full flex bg-[#${bgColor}]`}
         >
             <Sidebar />
-            <div className="w-4/5">
-                <Navbar icon={icon} text={text} />
-                <div className="content">
+            <div className="w-4/5 ml-auto">
+                <Navbar icon={icon} text={text} bgColor={bgColor} />
+                <div className="text-[#DDDDDD] p-8 mt-10">
                     {children}
                 </div>
             </div>
