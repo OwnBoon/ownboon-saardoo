@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { Notes } from "../../typings";
 import { useUser } from "@clerk/nextjs";
-const TextArea = dynamic(import("./TextArea"), {ssr: false})
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
 interface Props {
@@ -59,7 +58,7 @@ const Notes = ({ notess }: Props) => {
       {" "}
       <div className="border   bg-white space-y-5 overflow-y-scroll h-fit  w-full px-2 rounded-xl py-2">
         <div className="flex justify-center items-center">
-          {notess?.length == 0 ? (
+          {notess?.topic.length == 0 ? (
             <div onClick={() => setShow(true)} className="cursor-pointer">
               Add Topic
             </div>
@@ -91,50 +90,50 @@ const Notes = ({ notess }: Props) => {
         <div className="space-y-20 flex   flex-col items-center">
           {user ? (
             <div>
-             
-                <div>
-                  <div className="flex space-x-5 items-center justify-center">
-                <p >{notess.topic}</p>
-                <p onClick={() => setShow2(true)} className="text-2xl cursor-pointer font-semibold"> +</p>
-                {show2 ? (
-                  <div>
-                  <Input
-                    onChange={(e) => setTopic(e.target.value)}
-                    label="Topic"
-                    placeholder="Enter your topic"
-                  />
-                  <div>
-                    <Button
-                      onPress={(e) => {
-                        handleSubmit(e);
-                      }}
-                      className="mt-5"
-                    >
-                      Save
-                    </Button>
-                  </div>
-                </div>
-                ) : null}
+
+              <div>
+                <div className="flex space-x-5 items-center justify-center">
+                  <p >{notess.topic}</p>
+                  <p onClick={() => setShow2(true)} className="text-2xl cursor-pointer font-semibold"> +</p>
+                  {show2 ? (
+                    <div>
+                      <Input
+                        onChange={(e) => setTopic(e.target.value)}
+                        label="Topic"
+                        placeholder="Enter your topic"
+                      />
+                      <div>
+                        <Button
+                          onPress={(e) => {
+                            handleSubmit(e);
+                          }}
+                          className="mt-5"
+                        >
+                          Save
+                        </Button>
+                      </div>
                     </div>
-                  <ReactQuill
-                    theme="snow"
-                    className="h-36 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                    value={text || notess.note}
-                    onChange={setText}
-                  />
-                  {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
-                  <Button
-                    onPress={() => {
-                      notess?.length < 1
-                        ? handleSubmit
-                        : handleSet(notess._id!, notess.topic);
-                    }}
-                    className="mt-5"
-                  >
-                    Save
-                  </Button>
+                  ) : null}
                 </div>
-          
+                <ReactQuill
+                  theme="snow"
+                  className="h-36 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                  value={text || notess.note}
+                  onChange={setText}
+                />
+                {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
+                <Button
+                  onPress={() => {
+                    notess?.topic.length < 1
+                      ? handleSubmit
+                      : handleSet(notess._id!, notess.topic);
+                  }}
+                  className="mt-5"
+                >
+                  Save
+                </Button>
+              </div>
+
             </div>
           ) : null}
         </div>

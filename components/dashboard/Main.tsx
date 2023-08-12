@@ -30,7 +30,7 @@ const Main = ({ users, goals, notes }: Props) => {
   const usermatch = users.filter(
     (userss) => userss.email === user?.emailAddresses[0].emailAddress
   );
-  
+
 
   if (!isSignedIn) {
     return (
@@ -77,9 +77,7 @@ const Main = ({ users, goals, notes }: Props) => {
               <PlusIcon className="h-5 w-5 cursor-pointer" />
             </div>
             <Notes
-              notess={match}
-              setText={setText}
-              text={text}
+              notess={match[0]}
             />
           </div>
           <div className="flex flex-col space-y-8 justify-start col-span-3 w-full px-10">
