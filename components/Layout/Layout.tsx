@@ -13,7 +13,7 @@ interface Props {
 const Layout = ({ children, bgColor, icon, text }: Props) => {
     return (
         <div
-            className={`w-full flex`} style={{ backgroundColor: bgColor }}
+            className={`w-full flex h-screen`} style={{ backgroundColor: bgColor }}
         >
             <Sidebar />
             <div className="w-4/5 ml-auto">
