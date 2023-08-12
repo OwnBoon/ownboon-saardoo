@@ -11,8 +11,6 @@ const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
 interface Props {
   notess: Notes;
-  setText: any;
-  text: any;
 }
 
 const Notes = ({ notess }: Props) => {

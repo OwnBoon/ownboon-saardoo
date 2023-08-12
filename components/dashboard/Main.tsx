@@ -78,8 +78,6 @@ const Main = ({ users, goals, notes }: Props) => {
             </div>
             <Notes
               notess={match[0]}
-              setText={setText}
-              text={text}
             />
           </div>
           <div className="flex flex-col space-y-8 justify-start col-span-3 w-full px-10">
