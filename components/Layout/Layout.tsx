@@ -8,17 +8,18 @@ interface Props {
     bgColor: string;
     icon: string;
     text: string;
+    border: string;
 }
 
-const Layout = ({ children, bgColor, icon, text }: Props) => {
+const Layout = ({ children, bgColor, icon, text, border }: Props) => {
     return (
         <div
             className={`w-full flex h-screen`} style={{ backgroundColor: bgColor }}
         >
-            <Sidebar />
+            <Sidebar border={border} />
             <div className="w-4/5 ml-auto">
-                <Navbar icon={icon} text={text} bgColor={bgColor} />
-                <div className="text-[#DDDDDD] p-8 mt-10">
+                <Navbar icon={icon} text={text} bgColor={bgColor} border={border} />
+                <div className="text-[#DDDDDD] py-20 px-10 max-h-full overflow-y-scroll">
                     {children}
                 </div>
             </div>

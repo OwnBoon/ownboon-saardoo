@@ -7,15 +7,19 @@ interface Props {
   icon: string,
   text: string;
   bgColor: string;
+  border: string;
 }
 
-const Navbar = ({ icon, text, bgColor }: Props) => {
+const Navbar = ({ icon, text, bgColor, border }: Props) => {
 
   const { user } = useUser();
 
   return (
     <div
-      className={`w-4/5 border-b-2 border-[#1B1F3A] flex items-center justify-between px-6 py-2 fixed bg-[#${bgColor}]`}
+      className={`w-4/5 border-b-2 border-[#${border}] flex items-center justify-between px-6 py-2 fixed`}
+      style={{
+        backgroundColor: bgColor,
+      }}
     >
       <div className="flex items-center gap-2 text-white">
         <Image
