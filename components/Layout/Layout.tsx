@@ -19,7 +19,7 @@ const Layout = ({ children, bgColor, icon, text, border }: Props) => {
             <Sidebar border={border} />
             <div className="w-4/5 ml-auto">
                 <Navbar icon={icon} text={text} bgColor={bgColor} border={border} />
-                <div className="text-[#DDDDDD] py-20 px-10 max-h-full overflow-y-scroll">
+                <div className="text-[#DDDDDD] py-20 px-8 max-h-full overflow-y-scroll">
                     {children}
                 </div>
             </div>

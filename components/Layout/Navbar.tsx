@@ -1,7 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { useUser, UserButton } from '@clerk/nextjs';
-
+import {
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 
 interface Props {
   icon: string,
@@ -13,10 +15,11 @@ interface Props {
 const Navbar = ({ icon, text, bgColor, border }: Props) => {
 
   const { user } = useUser();
+  console.log(user)
 
   return (
     <div
-      className={`w-4/5 border-b-2 border-[#${border}] flex items-center justify-between px-6 py-2 fixed`}
+      className={`w-4/5 border-b-2 border-[#${border}] flex items-center justify-between px-8 py-2 fixed`}
       style={{
         backgroundColor: bgColor,
       }}
@@ -46,7 +49,11 @@ const Navbar = ({ icon, text, bgColor, border }: Props) => {
           src='notification.svg'
           alt={'notification'}
         />
-        {user && <UserButton />}
+        <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
+          {user && <UserButton />} 
+          <span>{user?.username}</span>
+          <ChevronDownIcon className="h-3 w-3" />
+        </div>
       </div>
     </div>
   );
