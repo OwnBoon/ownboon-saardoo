@@ -5,16 +5,7 @@ import { Goals, Notes, User } from "../typings";
 import { useRouter } from "next/router";
 import { fetchGoals } from "../utils/fetchGoals";
 import { fetchNotes } from "../utils/fetchNotes";
-import { useUser } from "@clerk/nextjs";
-import {
-    Button,
-    Textarea,
-    Progress,
-    Card,
-    Modal,
-    Grid,
-    Text
-} from "@nextui-org/react";
+
 import {
     ArrowRightIcon,
 } from "@heroicons/react/24/outline";
@@ -49,10 +40,7 @@ interface RoadmapItem {
     title: string;
 }
 const Home = ({ users, goals, notes }: Props) => {
-    const { isLoaded, isSignedIn, user } = useUser();
-    const [show, setShow] = useState(false);
-    const router = useRouter();
-    const [desc, setDesc] = useState("");
+
     const [data, setData] = useState<datatype>();
 
     const sampleData = [{
@@ -94,55 +82,30 @@ const Home = ({ users, goals, notes }: Props) => {
     const completed = lastCompleted();
     const remaining = firstRemaining();
 
-    const [visible, setVisible] = useState(false);
-    const [text, setText] = useState("");
-    const [stuff, setStuff] = useState("");
-    const handler = async (texts: string) => {
-        setText(texts);
-        const result = await fetch(`/api/roadmap/normalchat?title=${text}`);
-        const json = await result.json();
-        // @ts-ignore
-        setStuff(json);
-        setVisible(true);
-        return json;
-    };
+    const above = () => {
+        let above = [];
 
-    const closeHandler = () => {
-        setVisible(false);
-    };
-    const fetchRoadmap = async (e: any) => {
-        // e.preventDefault();
-
-        setShow(true);
-
-        const result = await fetch(
-            `https://nodejs-sms.saard00vfx.repl.co/api/handler?title=${desc}`
-        );
-
-        const json = await result.json();
-        setData(json);
-        return json;
-    };
-    const [modaldata, setModaldata] = useState<Info>();
-    useEffect(() => {
-        if (stuff) {
-            // @ts-ignore
-            const deez = stuff.message.choices[0].message.content;
-            const bnruh = JSON.parse(deez);
-            setModaldata(bnruh);
+        for (let i = 0; i < completed.length; i++) {
+            if (i % 2 === 0) { above.push(completed[i].description); }
+            else { above.push(completed[i].title); }
         }
-    }, [stuff]);
-    // console.log(video);
-    // const roadmapdata = data?.message.choices[0].content.roadmap;
 
-    const odd = "flex flex-col";
-    const even = "flex flex-col-reverse -translate-y-6";
-    
-    const _odd = "mt-10";
-    const _even = "mb-10";
+        return above;
+    };
+    const below = () => {
+        let below = [];
 
-    const oddT = "-mb-4 font-semibold"
-    const evenT = "-mt-4 font-semibold"
+        for (let i = 0; i < completed.length; i++) {
+            if (i % 2 === 0) below.push(completed[i].title);
+            else below.push(completed[i].description);
+        }
+
+        return below;
+    };
+
+
+    const aboveItems = above();
+    const belowItems = below();
 
     return (
         <Layout
@@ -204,39 +167,201 @@ const Home = ({ users, goals, notes }: Props) => {
                         <span>Haven't yet generated any -- plz chose category and continue!</span>
                     </div>)}
                     {!data && (
-                        <div className="w-full mt-12">
+                        <div className="w-full mt-8 flex flex-col gap-8">
                             <div
                                 className="flex"
                             >
-                                <div className="completed bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#DDDDDD] w-1/2 flex items-center p-6 rounded ">
-                                    {completed?.map((item, i) => (
-                                        <div
-                                            key={i}
-                                            className={`${i % 2 === 0 ? even : odd}`}
+                                <div className="completed relative bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#dddddd54] w-1/2 flex flex-col py-6 rounded-l-lg">
+                                    <div className="flex justify-between px-6">
+                                        {aboveItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex justify-center flex-col text-center ${i % 2 !== 0 ? '' : 'after:content-["|"] after:width-[1px] after:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'end'
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="h-4 px-6 bg-gradient-to-l from-[#cccccc] to-[#47474722] my-2 flex justify-evenly rounded-l-lg">
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-6">
+                                        {belowItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex justify-center flex-col text-center ${i % 2 === 0 ? '' : 'before:content-["|"] before:width-[1px] before:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'start'
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="content absolute top-0 left-0 w-full h-full flex flex-col py-8 pl-8 text-white">
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Total Progress  <ArrowRightIcon width={'12px'} /> 70% </p>
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Current Goal <ArrowRightIcon width={'12px'} /> Django Web</p>
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Days Spent <ArrowRightIcon width={'12px'} /> 7 </p>
+                                        <button
+                                            className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
+                                            style={{
+                                                border: "none",
+                                                outline: "none",
+                                                color: '#585858'
+                                            }}
                                         >
-                                            <p className={`${i % 2 === 0 ? evenT : oddT}`}>{item.title}</p>
-                                            <span
-                                                className={`${i % 2 === 0 ? _even : _odd}`}
-                                            >{item.description}</span>
-                                        </div>
-                                    ))}
+                                            Explore More
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="remaining text-[#DDDDDD] w-1/2 flex items-center p-6 rounded ">
-                                    {remaining?.map((item, i) => (
-                                        <div key={i}
-                                            className={`${i % 2 === 0 ? even : odd}`}
+
+                                <div className="remaining text-[#585858] w-1/2 flex flex-col py-6 rounded">
+                                    <div className="flex justify-between px-6">
+                                        {aboveItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex  ${i === 0 ? 'text-[#fff]' : 'text-[#585858]'} justify-center flex-col text-center ${i % 2 !== 0 ? '' : 'after:content-["|"] after:width-[1px] after:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'end'
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="h-4 my-2 px-6 bg-gradient-to-r from-[#cccccc] to-[#cccccc6e] rounded-r-lg flex justify-between">
+                                        <span className="w-1/3 flex text-center justify-center">
+                                            <span className="h-4 w-4 bg-[#fff] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-6">
+                                        {belowItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex ${i === 0 ? 'text-[#fff]' : 'text-[#585858]'} justify-center flex-col text-center ${i % 2 === 0 ? '' : 'before:content-["|"] before:width-[1px] before:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'start',
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div
+                                className="flex"
+                            >
+                                <div className="completed relative bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#dddddd54] w-1/2 flex flex-col py-6 rounded-l-lg">
+                                    <div className="flex justify-between px-6">
+                                        {aboveItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex justify-center flex-col text-center ${i % 2 !== 0 ? '' : 'after:content-["|"] after:width-[1px] after:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'end'
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="h-4 px-6 bg-gradient-to-l from-[#cccccc] to-[#47474722] my-2 flex justify-evenly rounded-l-lg">
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-6">
+                                        {belowItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex justify-center flex-col text-center ${i % 2 === 0 ? '' : 'before:content-["|"] before:width-[1px] before:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'start'
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="content absolute top-0 left-0 w-full h-full flex flex-col py-8 pl-8 text-white">
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Total Progress  <ArrowRightIcon width={'12px'} /> 70% </p>
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Current Goal <ArrowRightIcon width={'12px'} /> Django Web</p>
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Days Spent <ArrowRightIcon width={'12px'} /> 7 </p>
+                                        <button
+                                            className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
+                                            style={{
+                                                border: "none",
+                                                outline: "none",
+                                                color: '#585858'
+                                            }}
                                         >
-                                            <p className="font-bold">{item.title}</p>
-                                            <span>{item.description}</span>
-                                        </div>
-                                    ))}
+                                            Explore More
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="remaining text-[#585858] w-1/2 flex flex-col py-6 rounded">
+                                    <div className="flex justify-between px-6">
+                                        {aboveItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex  ${i === 0 ? 'text-[#fff]' : 'text-[#585858]'} justify-center flex-col text-center ${i % 2 !== 0 ? '' : 'after:content-["|"] after:width-[1px] after:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'end'
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="h-4 my-2 px-6 bg-gradient-to-r from-[#cccccc] to-[#cccccc6e] rounded-r-lg flex justify-between">
+                                        <span className="w-1/3 flex text-center justify-center">
+                                            <span className="h-4 w-4 bg-[#fff] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                        <span className="w-1/3 flex justify-center">
+                                            <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-6">
+                                        {belowItems?.map((item, i) => (
+                                            <div key={i}
+                                                className={`w-1/3 flex ${i === 0 ? 'text-[#fff]' : 'text-[#585858]'} justify-center flex-col text-center ${i % 2 === 0 ? '' : 'before:content-["|"] before:width-[1px] before:height-[1px]'}`}
+                                                style={{
+                                                    alignSelf: 'start',
+                                                }}
+                                            >
+                                                <p>{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
                     )}
 
-                </div>)
+                </div >)
             }
         />
     );
