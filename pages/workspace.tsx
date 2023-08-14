@@ -31,6 +31,7 @@ import dynamic from "next/dynamic";
 import { Toaster } from "react-hot-toast";
 import Spline from "@splinetool/react-spline";
 import Island from "../components/BoonIsland/Island";
+import Layout from "../components/Layout/Layout";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 const Notes = dynamic(import("../components/Notes/Notes"), { ssr: false });
 interface Props {
@@ -362,31 +363,18 @@ const Home = ({ users, goals, notes }: Props) => {
   return (
     <div
       className="grid grid-cols-12  overflow-y-scroll
-     bg-[#f4f1eb]/50
      "
     >
-      <Head>
-        <title> Dashboard @ {user?.firstName || user?.username} </title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
       <Toaster position="top-right" reverseOrder={false} />
-      <Sidebar />
       <div className="col-span-10">
-        <div className="flex justify-between p-3 border-b">
-          <div>Workspace</div>
-          <div className="flex gap-10">
-            <UserButton />
-            <p>{user?.username || user?.firstName}</p>
-          </div>
-        </div>
         <div className="gap-20 px-16 py-5 border-b border-black items-start grid grid-cols-12 ">
           <div className="justify-start col-span-5   space-y-7 ">
-            <div className="border rounded-lg space-y-5 bg-white/70 overflow-y-scroll h-72   w-full px-10 py-2">
-              <h1 className="border-b sticky top-0 bg-white z-20 font-semibold ">
+            <div className="border rounded-lg space-y-5 overflow-y-scroll h-72   w-full px-10 py-2">
+              <h1 className="border-b sticky top-0 z-20 font-semibold ">
                 Todo List
               </h1>
               {todos.map((todo) => (
-                <div className="flex px-2 bg-white   gap-3 rounded-lg">
+                <div className="flex px-2   gap-3 rounded-lg">
                   {/* @ts-ignore */}
                   <Tooltip content="complete todos">
                     {todo.completed ? (
@@ -566,4 +554,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-export default Home;
+
+const HomePage = () => {
+  return (
+    <Layout
+      bgColor={'#121212'}
+      icon='workspace.svg'
+      text='Workspace'
+      border='gray-500'
+      children={<Home users={[]} goals={[]} notes={[]} />} />
+  )
+}
+
+export default HomePage;
