@@ -169,7 +169,7 @@ const Home = ({ users, goals, notes }: Props) => {
                     {!data && (
                         <div className="w-full mt-8 flex flex-col gap-8">
                             <div
-                                className="flex"
+                                className="flex relative"
                             >
                                 <div className="completed relative bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#dddddd54] w-1/2 flex flex-col py-6 rounded-l-lg">
                                     <div className="flex justify-between px-6">
@@ -206,21 +206,6 @@ const Home = ({ users, goals, notes }: Props) => {
                                                 <p>{item}</p>
                                             </div>
                                         ))}
-                                    </div>
-                                    <div className="content absolute top-0 left-0 w-full h-full flex flex-col py-8 pl-8 text-white">
-                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Total Progress  <ArrowRightIcon width={'12px'} /> 70% </p>
-                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Current Goal <ArrowRightIcon width={'12px'} /> Django Web</p>
-                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Days Spent <ArrowRightIcon width={'12px'} /> 7 </p>
-                                        <button
-                                            className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
-                                            style={{
-                                                border: "none",
-                                                outline: "none",
-                                                color: '#585858'
-                                            }}
-                                        >
-                                            Explore More
-                                        </button>
                                     </div>
                                 </div>
 
@@ -261,10 +246,24 @@ const Home = ({ users, goals, notes }: Props) => {
                                         ))}
                                     </div>
                                 </div>
-
+                                <div className="content absolute top-0 left-0 w-1/2 h-full flex flex-col py-8 pl-8 text-white">
+                                    <p className="flex items-center gap-6 my-1 bold text-sm" >Total Progress  <ArrowRightIcon width={'12px'} /> 70% </p>
+                                    <p className="flex items-center gap-6 my-1 bold text-sm" >Current Goal <ArrowRightIcon width={'12px'} /> Django Web</p>
+                                    <p className="flex items-center gap-6 my-1 bold text-sm" >Days Spent <ArrowRightIcon width={'12px'} /> 7 </p>
+                                    <button
+                                        className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
+                                        style={{
+                                            border: "none",
+                                            outline: "none",
+                                            color: '#585858'
+                                        }}
+                                    >
+                                        Explore More
+                                    </button>
+                                </div>
                             </div>
                             <div
-                                className="flex"
+                                className="flex relative"
                             >
                                 <div className="completed relative bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#dddddd54] w-1/2 flex flex-col py-6 rounded-l-lg">
                                     <div className="flex justify-between px-6">
@@ -301,21 +300,6 @@ const Home = ({ users, goals, notes }: Props) => {
                                                 <p>{item}</p>
                                             </div>
                                         ))}
-                                    </div>
-                                    <div className="content absolute top-0 left-0 w-full h-full flex flex-col py-8 pl-8 text-white">
-                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Total Progress  <ArrowRightIcon width={'12px'} /> 70% </p>
-                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Current Goal <ArrowRightIcon width={'12px'} /> Django Web</p>
-                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Days Spent <ArrowRightIcon width={'12px'} /> 7 </p>
-                                        <button
-                                            className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
-                                            style={{
-                                                border: "none",
-                                                outline: "none",
-                                                color: '#585858'
-                                            }}
-                                        >
-                                            Explore More
-                                        </button>
                                     </div>
                                 </div>
 
@@ -354,6 +338,22 @@ const Home = ({ users, goals, notes }: Props) => {
                                                 <p>{item}</p>
                                             </div>
                                         ))}
+                                    </div>
+
+                                    <div className="content absolute top-0 left-0 w-1/2 h-full flex flex-col py-8 pl-8 text-white">
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Total Progress  <ArrowRightIcon width={'12px'} /> 70% </p>
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Current Goal <ArrowRightIcon width={'12px'} /> Django Web</p>
+                                        <p className="flex items-center gap-6 my-1 bold text-sm" >Days Spent <ArrowRightIcon width={'12px'} /> 7 </p>
+                                        <button
+                                            className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
+                                            style={{
+                                                border: "none",
+                                                outline: "none",
+                                                color: '#585858'
+                                            }}
+                                        >
+                                            Explore More
+                                        </button>
                                     </div>
                                 </div>
 
