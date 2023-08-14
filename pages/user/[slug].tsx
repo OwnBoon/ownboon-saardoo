@@ -9,7 +9,6 @@ import Sidebar from "../../components/dashboard/Sidebar";
 import Progress from "../../components/dashboard/Progress";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { use } from "react";
 import Link from "next/link";
 import { fecthBlogs } from "../../utils/fetchBlogs";
 import { GetServerSideProps } from "next";

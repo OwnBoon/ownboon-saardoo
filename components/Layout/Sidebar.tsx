@@ -2,7 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-const Sidebar = () => {
+interface Props {
+    border: string
+}
+
+const Sidebar = ({border}:Props) => {
 
     const router = useRouter();
     const selected = "transition-all duration-150 w-fit cursor-pointer flex items-center gap-8 text-[#2CD3E1]";
@@ -10,7 +14,7 @@ const Sidebar = () => {
 
     return (
         <div
-            className={`w-1/5 h-screen text-[#DDDDDD] flex flex-col items-start justify-between p-5 border-r-2 border-[#1B1F3A] fixed`}
+            className={`w-1/5 h-screen text-[#DDDDDD] flex flex-col items-start justify-between p-5 border-r-2 border-[#${border}] fixed`}
         >
             <div className="logo flex justify-between items-center gap-8" >
                 <img src="ownboon.svg" />
