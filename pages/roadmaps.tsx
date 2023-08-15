@@ -6,7 +6,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Navbar from "../components/Navbar";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
-import { Goals, Notes, Roadmaps, User } from "../typings";
+import { Goals, Notes, User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -69,7 +69,6 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   const router = useRouter();
   const [desc, setDesc] = useState("");
   const [data, setData] = useState<datatype>();
-  const [passedsanity, setSanitydata] = useState();
 
   const sampledata = {
     category: "ui/ux",
@@ -122,15 +121,6 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     return json;
   };
 
-  const matchroadmap = roadmaps.filter(
-    (roadmap) => roadmap.email == user?.emailAddresses[0].emailAddress
-  );
-
-  if (isLoaded) {
-    const parseddatasanity = JSON.parse(matchroadmap[0].content);
-    setSanitydata(parseddatasanity);
-  }
-
   const closeHandler = () => {
     setVisible(false);
   };
@@ -145,17 +135,6 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
 
     const json = await result.json();
     setData(json);
-    const mutations = {
-      _type: "roadmap",
-      content: data?.message.choices[0].message.content,
-      email: user?.emailAddresses[0].emailAddress,
-    };
-
-    const result2 = await fetch(`/api/addRoadmaps`, {
-      body: JSON.stringify(mutations),
-      method: "POST",
-    });
-    const json2 = await result2.json();
     return json;
   };
   const [modaldata, setModaldata] = useState<Info>();
@@ -167,7 +146,6 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       setModaldata(bnruh);
     }
   }, [stuff]);
-
   // console.log(video);
   // const roadmapdata = data?.message.choices[0].content.roadmap;
 
@@ -235,48 +213,6 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 </Text>
               </Grid>
             )}
-            <div>
-              {/* @ts-ignore */}
-              {passedsanity.map((roadmaps: RoadmapItem) => (
-                <div className="flex items-center w-full justify-center">
-                  <ArrowRightIcon className="h-5 w-5 " />
-                  <Card
-                    isPressable
-                    isHoverable
-                    onPress={() => handler(roadmaps.title)}
-                    variant="bordered"
-                    css={{ mw: "400px" }}
-                  >
-                    <Card.Body>
-                      <Text>{roadmaps.title}</Text>
-                    </Card.Body>
-                    <Modal
-                      closeButton
-                      aria-labelledby="modal-title"
-                      open={visible}
-                      onClose={closeHandler}
-                    >
-                      <Modal.Header>
-                        <Text size={18}>{text}</Text>
-                      </Modal.Header>
-                      {stuff ? (
-                        <>
-                          <Modal.Body>
-                            <Grid className="flex flex-col items-center">
-                              <Text>{modaldata?.description}</Text>
-                              <div className="scale-[0.6] rounded-lg">
-                                <ReactPlayer controls url={modaldata?.link} />
-                              </div>
-                            </Grid>
-                          </Modal.Body>
-                        </>
-                      ) : null}
-                      <Modal.Footer></Modal.Footer>
-                    </Modal>
-                  </Card>
-                </div>
-              ))}
-            </div>
           </div>{" "}
         </div>
       </div>
