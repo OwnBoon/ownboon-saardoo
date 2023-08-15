@@ -1,9 +1,4 @@
-import React, {
-    DOMAttributes,
-    MouseEventHandler,
-    useEffect,
-    useState,
-} from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Error from "./../components/Error";
@@ -12,90 +7,14 @@ import { useGetSongsByGenreQuery } from "../../../redux/services/shazamCore";
 import { genres } from "../../../assets/constants";
 import Loader from "./../components/Loader";
 import SongCard from "./../components/SongCard";
-import { Button, Container, Input, Modal, Row, Text } from "@nextui-org/react";
-import copy from "copy-to-clipboard";
-import { useUser } from "@clerk/nextjs";
-interface Props {
-    socket: any;
-}
-const Discover = ({ socket }: Props) => {
-    const [room, setRoom] = useState("");
-    const [roomCreated, setRoomCreated] = useState(false);
-    const [roomUsers, setRoomUsers] = useState("");
-    const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    function generateString(length: number) {
-        let result = " ";
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
 
-        return result;
-    }
-
-    const random = generateString(13);
-    const { isLoaded, isSignedIn, user } = useUser();
-    const [visible, setVisible] = useState(false);
-    const [visible2, setVisible2] = useState(false);
-    const [copyText, setCopyText] = useState("");
-    const [roomId, setRoomId] = useState("");
-    const [messages, setMessages] = useState([]);
-    const [messageInput, setMessageInput] = useState("");
-
-    const createRoom = () => {
-        setRoom(random);
-        socket.emit("createRoom", random);
-        setRoomCreated(true);
-    };
-
-    useEffect(() => {
-        // Event listener to check if the room was successfully created or joined
-        socket.on("roomStatus", (status: any) => {
-            setRoomCreated(status);
-        });
-
-        // Clean up the event listener when the component unmounts
-        return () => {
-            socket.off("roomStatus");
-        };
-    }, []);
-
-    const copyToClipboard = (room: string) => {
-        copy(room);
-        alert(`You have copied "${room}"`);
-    };
-
-    useEffect(() => {
-        // @ts-ignore
-        socket.on("messageResponse", (data) => setMessages([...messages, data]));
-    }, [socket, messages]);
-
-    const handler = () => setVisible(true);
-
-    const closeHandler = () => {
-        setVisible(false);
-    };
-    const closeHandler2 = () => {
-        setVisible2(false);
-    };
-    const joinRoom = () => {
-        socket.emit("joinRoom", roomId);
-        setRoom(roomId);
-        setRoomCreated(true);
-        // Joining the room will automatically hide the "Create Session" section
-    };
+const Discover = () => {
 
     const dispatch = useDispatch();
     const { genreListId } = useSelector((state: any) => state.player);
-    const { activeSong, isPlaying } = useSelector((state: any) => state.player);
-    const [currentSong, setCurrentSong] = useState();
-    useEffect(() => {
-        socket.emit("songStuff", activeSong);
-        socket.on("activeSongData", (songData: any) => {
-            setCurrentSong(songData);
-        });
-    }, [activeSong]);
+    const { isPlaying } = useSelector((state: any) => state.player);
+
+
     const { data, isFetching, error } = useGetSongsByGenreQuery(
         genreListId || "556054389"
     );
@@ -104,101 +23,15 @@ const Discover = ({ socket }: Props) => {
 
     if (error) return <Error />;
 
-    const genreTitle = genres.find(
-        ({ value }: any) => value === genreListId
-    )?.title;
 
-    // console.log(genreTitle);
+    const _data = data.tracks;
+    const filteredSongs = _data?.filter((song: any) => song.hub?.actions && song.hub?.actions?.length === 2);
 
-    const newdata = data.tracks;
-    const filteredSongs = newdata?.filter((song: any) => song.hub?.actions && song.hub?.actions?.length === 2);
-    console.log(filteredSongs)
-    
-    const play = "opacity-100 transition-all duration-300 ease-in-out mr-4";
+    const play = "opacity-100 transition-all duration-2000 ease-in-out mr-4";
 
     return (
         <div className="w-full flex flex-col overflow-hidden overflow-x-hidden">
             <div className="flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
-                <div>
-                    <button
-                        onClick={!roomCreated ? createRoom : handler}
-                        className="px-4 py-2 ml-2 bg-blue-500 rounded-lg text-white font-semibold hover:bg-blue-600"
-                    >
-                        {roomCreated ? <div>Invite People</div> : <p>Create Session</p>}
-                    </button>
-                    <Modal
-                        closeButton
-                        aria-labelledby="modal-title"
-                        open={visible}
-                        onClose={closeHandler}
-                    >
-                        <Modal.Header>
-                            <Text id="modal-title" size={18}>
-                                Invite Others using this{" "}
-                                <Text b size={18}>
-                                    Link
-                                </Text>
-                            </Text>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Input
-                                bordered
-                                fullWidth
-                                color="primary"
-                                size="lg"
-                                value={room}
-                            />
-                            <Button onPress={() => copyToClipboard(room)}>
-                                Copy to Clipboard
-                            </Button>
-                            <Container></Container>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button auto flat color="error" onPress={closeHandler}>
-                                Close
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
-                <div>
-                    <button
-                        onClick={() => setVisible2(true)}
-                        className="px-4 py-2 ml-2 bg-blue-500 rounded-lg text-white font-semibold hover:bg-blue-600"
-                    >
-                        <p>Join a Session</p>
-                    </button>
-                    <Modal
-                        closeButton
-                        aria-labelledby="modal-title"
-                        open={visible2}
-                        onClose={closeHandler2}
-                    >
-                        <Modal.Header>
-                            <Text id="modal-title" size={18}>
-                                Enter{" "}
-                                <Text b size={18}>
-                                    Room Id
-                                </Text>
-                            </Text>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Input
-                                bordered
-                                fullWidth
-                                color="primary"
-                                size="lg"
-                                placeholder="For example SWUYHpe3uRLz9"
-                                onChange={(e) => setRoomId(e.target.value)}
-                                value={roomId}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button auto flat color="error" onPress={joinRoom}>
-                                Submit
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
                 <select
                     onChange={(e) => dispatch(selectGenreListId(e.target.value))}
                     value={genreListId || "544711374"}
@@ -213,33 +46,28 @@ const Discover = ({ socket }: Props) => {
             </div>
 
             <div className="flex flex-wrap sm:justify-start  overflow-x-hidden justify-center gap-8">
-                {roomCreated ? (
-                    <div className="flex w-screen  overflow-y-hidden">
-                        {filteredSongs?.map((song: any, i: any) => (
-                            <div
-                                className={
-                                    isPlaying ? "opacity-0 transition-all duration-300 mr-4" : play
-                                }
-                                key={i}
-                            >
-                                <SongCard
-                                    key={song.key}
-                                    song={song}
-                                    isPlaying={isPlaying}
-                                    activeSong={currentSong}
-                                    data={data}
-                                    i={i}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                ): (
-                    <div>
-                        <p>
-                            Please create or join a session
-                        </p>
-                    </div>
-                )}
+                <div className="flex w-screen  overflow-y-hidden">
+                    {filteredSongs?.map((song: any, i: any) => (
+                        <div
+                            className={
+                                isPlaying ? "opacity-0 transition-all duration-2000 mr-4 ease " : play
+                            }
+                            key={i}
+                            style={{
+                                display: isPlaying ? 'none' : 'flex'
+                            }}
+                        >
+                            <SongCard
+                                key={song.key}
+                                song={song}
+                                isPlaying={isPlaying}
+                                activeSong={null}
+                                data={data}
+                                i={i}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
