@@ -86,6 +86,19 @@ const Sidebar = ({ border }: Props) => {
                     />
                     <span>Roadmap</span>
                 </div>
+                <div
+                    onClick={() => router.push("/lofi")}
+                    className={router.pathname == "/lofi" ? selected : normal}
+                >
+                    <Image
+                        src="workspace.svg"
+                        width={35}
+                        height={35}
+                        alt={""}
+                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                    />
+                    <span>Lofi</span>
+                </div>
             </div>
             <div className="p-2 flex gap-4 items-center text-[#2CD3E1]">
                 <Image

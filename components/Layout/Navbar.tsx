@@ -15,11 +15,10 @@ interface Props {
 const Navbar = ({ icon, text, bgColor, border }: Props) => {
 
   const { user } = useUser();
-  console.log(user)
 
   return (
     <div
-      className={`w-4/5 border-b-2 border-[#${border}] flex items-center justify-between px-8 py-2 fixed z-20`}
+      className={`w-4/5 border-b-2 border-[#${border}] flex items-center justify-between px-8 py-2 fixed z-50`}
       style={{
         backgroundColor: bgColor,
       }}
