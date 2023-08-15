@@ -75,7 +75,7 @@ const lofi = ({ users, goals, notes }: Props) => {
 
             const postUser = async () => {
                 const userInfo: User = {
-                    _id: match[0]._id,
+                    _id: match[0]?._id,
                     focus: points.toString(),
                 };
                 const result = await fetch(`/api/addPoints`, {
