@@ -49,7 +49,7 @@ const Navbar = ({ icon, text, bgColor, border }: Props) => {
           alt={'notification'}
         />
         <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
-          {user && <UserButton />} 
+          {user && <UserButton />}
           <span>{user?.username}</span>
           <ChevronDownIcon className="h-3 w-3" />
         </div>

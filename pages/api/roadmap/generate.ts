@@ -49,14 +49,14 @@ export default async function handler(
     ${title}`
 
         const  data = {
-            "model": "gpt-3.5-turbo-16k-0613",
+            "model": "gpt-3.5-turbo",
             "messages": [{"role": "user", "content": basePrompt}],
             "temperature": 0,
             "max_tokens": 1000
         }
 
 
-  const apiEndpoint = `https://api.cattto.repl.co/v1/chat/completions`;
+  const apiEndpoint = `https://api.openai.com/v1/chat/completions`;
 
   const result = await fetch(apiEndpoint, {
     headers: {

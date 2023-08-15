@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
+import { useUser } from '@clerk/nextjs';
 
 interface Props {
     children?: ReactNode;

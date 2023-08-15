@@ -81,11 +81,11 @@ const lofi = ({ users }: Props) => {
         if (endTime && startTime) {
             const timeSpentInSeconds = Math.floor((endTime - startTime) / 1000);
             const earnedPoints = calculatePoints(timeSpentInSeconds);
-            const points = Number(match[0].focus) + earnedPoints;
+            const points = Number(match[0]?.focus) + earnedPoints;
 
             const postUser = async () => {
                 const userInfo: User = {
-                    _id: match[0]._id,
+                    _id: match[0]?._id,
                     focus: points.toString(),
                 };
                 const result = await fetch(`/api/addPoints`, {

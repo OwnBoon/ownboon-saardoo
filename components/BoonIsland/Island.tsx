@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Spline from "@splinetool/react-spline";
 import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 interface Props {
   users: User[];
 }
@@ -24,7 +25,7 @@ const Island = ({ users }: Props) => {
   const barlevel = level * 10;
   console.log(level);
   return (
-    <div className="h-full w-full flex">
+    <div className="h-full w-full flex relative">
       {user ? (
         <>
           {level < 5 ? (
@@ -59,9 +60,10 @@ const Island = ({ users }: Props) => {
               className=""
               scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
             />
-          ) : null}
+          ) :
+            <Image src={'/boonisland.png'} fill alt={""} />}
         </>
-      ) : null}
+      ) : <Image src={'/boonisland.png'} fill alt={""} />}
     </div>
   );
 };
