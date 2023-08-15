@@ -362,16 +362,16 @@ const Home = ({ users, goals, notes }: Props) => {
   }, [data]);
   return (
     <div
-      className="grid grid-cols-12  overflow-y-scroll
+      className="flex flex-col  overflow-y-scroll
      "
     >
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="col-span-10">
-        <div className="gap-20 px-16 py-5 border-b border-black items-start grid grid-cols-12 ">
-          <div className="justify-start col-span-5   space-y-7 ">
-            <div className="border rounded-lg space-y-5 overflow-y-scroll h-72   w-full px-10 py-2">
-              <h1 className="border-b sticky top-0 z-20 font-semibold ">
-                Todo List
+      <div className="w-full h-fit flex items-stretch">
+        <div className="flex flex-col gap-5 mb-5 border-b border-black items-start">
+          <div className="justify-start col-span-5 space-y-7 ">
+            <div className="w-fit h-fit min-h-[300px] min-w-[337px] p-5 flex flex-col items-center rounded-[10px] border border-slate-800">
+              <h1 className="border-b border-[#646464] font-semibold w-fit pl-10 pr-10">
+                To Do List
               </h1>
               {todos.map((todo) => (
                 <div className="flex px-2   gap-3 rounded-lg">
@@ -414,7 +414,7 @@ const Home = ({ users, goals, notes }: Props) => {
                 </div>
               ))}
               <button
-                className="border mt-10 px-2 py-1 rounded-lg w-full"
+                className="border mt-10 px-2 py-1 rounded-lg w-full ml-10 mr-10"
                 onClick={(e) => {
                   showtask ? handlesubmit(e) : setShowTask(true);
                 }}
@@ -436,21 +436,13 @@ const Home = ({ users, goals, notes }: Props) => {
               ) : null}
             </div>
             {notess.map((note) => (
-
               <Notes
                 notess={note}
               />
             ))}
           </div>
-          <div className=" col-span-7 w-full h-full py-5 px-2 border items-center  flex flex-col  ">
-            <div className=" text-lg font-sans text-black ">Boon Island</div>
-            <Island users={users} />
-          </div>
-        </div>
-        <div>
+
           <div>
-
-
             <div className="flex flex-col p-5 items-center space-y-7 justify-center w-fit h-fit bg-slate-700 bg-opacity-10 rounded-[10px] border border-slate-800">
               <div className="text-white text-lg font-semibold">AI Schedule Generator </div>
 
@@ -521,7 +513,16 @@ const Home = ({ users, goals, notes }: Props) => {
             ) : null}
           </div>
         </div>
+
+        <div className="grow flex flex-col justify-center p-5">
+          <div className=" text-lg font-sans text-white text-center">Boon Island</div>
+          <div className="grow p-20">
+            <Island users={users} />
+          </div>
+        </div>
       </div>
+      <div className="w-full h-[327px] bg-slate-700 bg-opacity-10 rounded-[10px] border border-slate-800" />
+
     </div>
   );
 };
