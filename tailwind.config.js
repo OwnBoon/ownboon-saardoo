@@ -9,6 +9,11 @@ module.exports = {
   ],
   plugins: [require("flowbite/plugin"), require("tailwind-scrollbar")],
   theme: {
-    extend: {},
+    extend: {
+      gradientColorStopPositions: {
+        1: '%',
+        99: '99%',
+      }
+    },
   },
 };

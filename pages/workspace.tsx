@@ -31,6 +31,7 @@ import dynamic from "next/dynamic";
 import { Toaster } from "react-hot-toast";
 import Spline from "@splinetool/react-spline";
 import Island from "../components/BoonIsland/Island";
+import Layout from "../components/Layout/Layout";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 const Notes = dynamic(import("../components/Notes/Notes"), { ssr: false });
 interface Props {
@@ -361,32 +362,19 @@ const Home = ({ users, goals, notes }: Props) => {
   }, [data]);
   return (
     <div
-      className="grid grid-cols-12  overflow-y-scroll
-     bg-[#f4f1eb]/50
+      className="flex flex-col  overflow-y-scroll
      "
     >
-      <Head>
-        <title> Dashboard @ {user?.firstName || user?.username} </title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
       <Toaster position="top-right" reverseOrder={false} />
-      <Sidebar />
-      <div className="col-span-10">
-        <div className="flex justify-between p-3 border-b">
-          <div>Workspace</div>
-          <div className="flex gap-10">
-            <UserButton />
-            <p>{user?.username || user?.firstName}</p>
-          </div>
-        </div>
-        <div className="gap-20 px-16 py-5 border-b border-black items-start grid grid-cols-12 ">
-          <div className="justify-start col-span-5   space-y-7 ">
-            <div className="border rounded-lg space-y-5 bg-white/70 overflow-y-scroll h-72   w-full px-10 py-2">
-              <h1 className="border-b sticky top-0 bg-white z-20 font-semibold ">
-                Todo List
+      <div className="w-full h-fit flex items-stretch">
+        <div className="flex flex-col gap-5 mb-5 border-b border-black items-start">
+          <div className="justify-start col-span-5 space-y-7 ">
+            <div className="w-fit h-fit min-h-[300px] min-w-[337px] p-5 flex flex-col items-center rounded-[10px] border border-slate-800">
+              <h1 className="border-b border-[#646464] font-semibold w-fit pl-10 pr-10">
+                To Do List
               </h1>
               {todos.map((todo) => (
-                <div className="flex px-2 bg-white   gap-3 rounded-lg">
+                <div className="flex px-2   gap-3 rounded-lg">
                   {/* @ts-ignore */}
                   <Tooltip content="complete todos">
                     {todo.completed ? (
@@ -426,7 +414,7 @@ const Home = ({ users, goals, notes }: Props) => {
                 </div>
               ))}
               <button
-                className="border mt-10 px-2 py-1 rounded-lg w-full"
+                className="border mt-10 px-2 py-1 rounded-lg w-full ml-10 mr-10"
                 onClick={(e) => {
                   showtask ? handlesubmit(e) : setShowTask(true);
                 }}
@@ -448,57 +436,34 @@ const Home = ({ users, goals, notes }: Props) => {
               ) : null}
             </div>
             {notess.map((note) => (
-
               <Notes
                 notess={note}
               />
             ))}
           </div>
-          <div className=" col-span-7 w-full h-full py-5 px-2 border items-center  flex flex-col  ">
-            <div className=" text-lg font-sans text-black ">Boon Island</div>
-            <Island users={users} />
-          </div>
-        </div>
-        <div>
+
           <div>
-            {" "}
-            <div>
-              <div className="flex flex-col p-5 w-full items-center space-y-7 justify-center">
-                <Text
-                  h1
-                  size={52}
-                  css={{
-                    textGradient: "45deg, $blue600 -20%, $pink600 50%",
-                  }}
-                  weight="bold"
-                >
-                  AI Schedule Generator
-                </Text>
-                <Grid>
-                  <Textarea
-                    size="xl"
-                    cols={50}
-                    rows={5}
-                    bordered
-                    helperText="please enter a issue"
-                    color="secondary"
+            <div className="flex flex-col p-5 items-center space-y-7 justify-center w-fit h-fit bg-slate-700 bg-opacity-10 rounded-[10px] border border-slate-800">
+              <div className="text-white text-lg font-semibold">AI Schedule Generator </div>
+
+              <Grid>
+                <div className="w-[297px] text-center text-white text-[15px] font-normal">The AI schedule generator analyzes preferences, constraints, and resources to create optimized schedules, maximizing efficiency and productivity.</div>
+                {/* <textarea
+                    id="message"
+                    rows={4}
+                    aria-label="Issue description"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="please enter a issue"
                     onChange={(e) => setDesc(e.target.value)}
-                    value={desc}
-                    labelPlaceholder="Issue description"
-                  />
-                </Grid>
-                <Grid className="">
-                  <Button
-                    onPress={(e) => fetchRoadmap(e)}
-                    color="gradient"
-                    auto
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-                <div></div>
-              </div>
+                    value={desc} /> */}
+              </Grid>
+              <Grid className="">
+                <div onClick={(e) => fetchRoadmap(e)} className="w-[297px] flex justify-center items-center h-10 bg-gradient-to-r from-[#1e4447] via-gray-900 to-black rounded-[5px] border border-cyan-400 border-opacity-50" >
+                  <div className="text-neutral-200 text-sm font-semibold">Generate Now</div>
+                </div>
+              </Grid>
             </div>
+
             {/* <DraggableRoadmap data={sampleData} /> */}
             {show ? (
               <Grid className="flex flex-col items-center">
@@ -548,7 +513,16 @@ const Home = ({ users, goals, notes }: Props) => {
             ) : null}
           </div>
         </div>
+
+        <div className="grow flex flex-col justify-center p-5">
+          <div className=" text-lg font-sans text-white text-center">Boon Island</div>
+          <div className="grow p-20">
+            <Island users={users} />
+          </div>
+        </div>
       </div>
+      <div className="w-full h-[327px] bg-slate-700 bg-opacity-10 rounded-[10px] border border-slate-800" />
+
     </div>
   );
 };
@@ -566,4 +540,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-export default Home;
+
+const HomePage = () => {
+  return (
+    <Layout
+      bgColor={'#121212'}
+      icon='workspace.svg'
+      text='Workspace'
+      border='gray-500'
+      children={<Home users={[]} goals={[]} notes={[]} />} />
+  )
+}
+
+export default HomePage;

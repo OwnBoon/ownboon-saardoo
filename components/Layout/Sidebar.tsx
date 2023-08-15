@@ -6,7 +6,7 @@ interface Props {
     border: string
 }
 
-const Sidebar = ({border}:Props) => {
+const Sidebar = ({ border }: Props) => {
 
     const router = useRouter();
     const selected = "transition-all duration-150 w-fit cursor-pointer flex items-center gap-8 text-[#2CD3E1]";
@@ -22,8 +22,8 @@ const Sidebar = ({border}:Props) => {
             </div>
             <div className="flex flex-col gap-8">
                 <div
-                    onClick={() => router.push("/home")}
-                    className={router.pathname == "/home" ? selected : normal}
+                    onClick={() => router.push("/socials")}
+                    className={router.pathname == "/socials" ? selected : normal}
                 >
                     <Image
                         src="socials.svg"
@@ -35,8 +35,8 @@ const Sidebar = ({border}:Props) => {
                     <span>Socials</span>
                 </div>
                 <div
-                    onClick={() => router.push("/socials")}
-                    className={router.pathname == "/socials" ? selected : normal}
+                    onClick={() => router.push("/chats")}
+                    className={router.pathname == "/chats" ? selected : normal}
                 >
                     <Image
                         src="chat.svg"
@@ -48,8 +48,8 @@ const Sidebar = ({border}:Props) => {
                     <span>Chats</span>
                 </div>
                 <div
-                    onClick={() => router.push("/workspace")}
-                    className={router.pathname == "/workspace" ? selected : normal}
+                    onClick={() => router.push("/buddies")}
+                    className={router.pathname == "/buddies" ? selected : normal}
                 >
                     <Image
                         src="buddies.svg"
@@ -61,8 +61,8 @@ const Sidebar = ({border}:Props) => {
                     <span>Buddies</span>
                 </div>
                 <div
-                    onClick={() => router.push("/vent-choose")}
-                    className={router.pathname == "/vent-choose" ? selected : normal}
+                    onClick={() => router.push("/workspace")}
+                    className={router.pathname == "/workspace" ? selected : normal}
                 >
                     <Image
                         src="workspace.svg"
