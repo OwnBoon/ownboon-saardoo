@@ -449,44 +449,29 @@ const Home = ({ users, goals, notes }: Props) => {
         </div>
         <div>
           <div>
-            {" "}
-            <div>
-              <div className="flex flex-col p-5 w-full items-center space-y-7 justify-center">
-                <Text
-                  h1
-                  size={52}
-                  css={{
-                    textGradient: "45deg, $blue600 -20%, $pink600 50%",
-                  }}
-                  weight="bold"
-                >
-                  AI Schedule Generator
-                </Text>
-                <Grid>
-                  <Textarea
-                    size="xl"
-                    cols={50}
-                    rows={5}
-                    bordered
-                    helperText="please enter a issue"
-                    color="secondary"
+
+
+            <div className="flex flex-col p-5 items-center space-y-7 justify-center w-fit h-fit bg-slate-700 bg-opacity-10 rounded-[10px] border border-slate-800">
+              <div className="text-white text-lg font-semibold">AI Schedule Generator </div>
+
+              <Grid>
+                <div className="w-[297px] text-center text-white text-[15px] font-normal">The AI schedule generator analyzes preferences, constraints, and resources to create optimized schedules, maximizing efficiency and productivity.</div>
+                {/* <textarea
+                    id="message"
+                    rows={4}
+                    aria-label="Issue description"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="please enter a issue"
                     onChange={(e) => setDesc(e.target.value)}
-                    value={desc}
-                    labelPlaceholder="Issue description"
-                  />
-                </Grid>
-                <Grid className="">
-                  <Button
-                    onPress={(e) => fetchRoadmap(e)}
-                    color="gradient"
-                    auto
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-                <div></div>
-              </div>
+                    value={desc} /> */}
+              </Grid>
+              <Grid className="">
+                <div onClick={(e) => fetchRoadmap(e)} className="w-[297px] flex justify-center items-center h-10 bg-gradient-to-r from-[#1e4447] via-gray-900 to-black rounded-[5px] border border-cyan-400 border-opacity-50" >
+                  <div className="text-neutral-200 text-sm font-semibold">Generate Now</div>
+                </div>
+              </Grid>
             </div>
+
             {/* <DraggableRoadmap data={sampleData} /> */}
             {show ? (
               <Grid className="flex flex-col items-center">
