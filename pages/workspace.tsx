@@ -30,6 +30,7 @@ import Planet from "./tracker";
 import dynamic from "next/dynamic";
 import { Toaster } from "react-hot-toast";
 import Layout from "../components/Layout/Layout";
+import Island from "../components/BoonIsland/Island";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -421,9 +422,12 @@ const Home = ({ users, goals, notes }: Props) => {
               </div>
             </div>
           </div>
-          <div className="border-solid border-[#1b1f3a] bg-[rgba(51,_56,_88,_0.13)] flex flex-col justify-start relative w-2/3 h-[542px] items-center py-3 border rounded-lg">
-            <div className="whitespace-nowrap text-lg font-sans text-white relative">
+          <div className="border-solid border-[#1b1f3a] bg-[rgba(51,_56,_88,_0.13)] flex flex-col items-stretch justify-start relative w-2/3 h-[542px] py-3 border rounded-lg">
+            <div className="whitespace-nowrap text-lg text-center font-sans text-white relative">
               Boon Island
+            </div>
+            <div className="grow p-20">
+              <Island users={users} />
             </div>
           </div>
         </div>
