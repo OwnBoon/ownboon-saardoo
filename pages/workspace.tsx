@@ -31,6 +31,7 @@ import dynamic from "next/dynamic";
 import { Toaster } from "react-hot-toast";
 import Layout from "../components/Layout/Layout";
 import Island from "../components/BoonIsland/Island";
+import Dialog from "../components/ChapterPopup/ChapterPopup";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -347,6 +348,9 @@ const Home = ({ users, goals, notes }: Props) => {
   };
   const [susdata, setSusData] = useState();
 
+  const [showModal, setShowModal] = React.useState(false);
+
+
   useEffect(() => {
     if (data) {
       // @ts-ignore
@@ -437,7 +441,7 @@ const Home = ({ users, goals, notes }: Props) => {
               Chapter 1
             </div>
             <div className="border-solid border-[#1b1f3a] relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-            <div className="text-sm  text-[#dddddd] self-center relative w-full">
+            <div onClick={() => setShowModal(true)} className="text-sm  text-[#dddddd] self-center relative w-full">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -459,7 +463,7 @@ const Home = ({ users, goals, notes }: Props) => {
                 Chapter 1
               </div>
               <div className="border-solid border-[#1b1f3a] relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-              <div className="text-sm  text-[#dddddd] self-center relative w-full">
+              <div onClick={() => setShowModal(true)} className="text-sm  text-[#dddddd] self-center relative w-full">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -473,7 +477,7 @@ const Home = ({ users, goals, notes }: Props) => {
               Chapter 1
             </div>
             <div className="border-solid border-[#1b1f3a] relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-            <div className="text-sm  text-[#dddddd] self-center relative w-full">
+            <div onClick={() => setShowModal(true)} data-modal-target="defaultModal" data-modal-toggle="defaultModal" className="text-sm  text-[#dddddd] self-center relative w-full">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -481,6 +485,13 @@ const Home = ({ users, goals, notes }: Props) => {
               reprehenderit in...
             </div>
           </div>
+
+          <Dialog isOpen={showModal} onClose={setShowModal}>
+            <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">Chapter 1</div>
+            <div className="w-44 h-[0px] border border-neutral-400"></div>
+            <div className="w-full h-[579px] text-neutral-200 text-base font-medium mt-3">Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Ch<br />apter 1Chapter 1Chapter 1Chapter </div>
+          </Dialog>
+
         </div>
       </div>
     </div>
