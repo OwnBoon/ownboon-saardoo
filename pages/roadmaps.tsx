@@ -135,7 +135,7 @@ const Home = ({ users, goals, notes }: Props) => {
 
     setShow(true);
 
-    const result = await fetch(`/api/roadmap/generate?title=${desc}`);
+    const result = await fetch(`https://nodejs-sms.saard00vfx.repl.co/api/handler?title=${desc}`);
 
     const json = await result.json();
     setData(json);
