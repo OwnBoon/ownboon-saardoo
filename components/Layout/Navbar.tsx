@@ -19,7 +19,7 @@ const Navbar = ({ icon, text, bgColor, border }: Props) => {
 
   return (
     <div
-      className={`w-4/5 border-b-2 border-[#${border}] flex items-center justify-between px-8 py-2 fixed`}
+      className={`w-4/5 border-b-2 border-[#${border}] flex items-center justify-between px-8 py-2 fixed z-20`}
       style={{
         backgroundColor: bgColor,
       }}
@@ -50,7 +50,7 @@ const Navbar = ({ icon, text, bgColor, border }: Props) => {
           alt={'notification'}
         />
         <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
-          {user && <UserButton />} 
+          {user && <UserButton />}
           <span>{user?.username}</span>
           <ChevronDownIcon className="h-3 w-3" />
         </div>
