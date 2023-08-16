@@ -361,6 +361,66 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       setSusData(sus);
     }
   }, [data]);
+  const [temptodos, setTemptodos] = useState(todos);
+
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(temptodos);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setTemptodos(items);
+  };
+
+  // sample way to add dragable functionality todo list
+//   import React, { useState } from 'react';
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+// const TodoList = () => {
+//   const [todos, setTodos] = useState([
+//     { id: '1', text: 'Task 1' },
+//     { id: '2', text: 'Task 2' },
+//     { id: '3', text: 'Task 3' },
+//   ]);
+
+//   const handleDragEnd = (result) => {
+//     if (!result.destination) return;
+
+//     const items = Array.from(todos);
+//     const [reorderedItem] = items.splice(result.source.index, 1);
+//     items.splice(result.destination.index, 0, reorderedItem);
+
+//     setTodos(items);
+//   };
+
+//   return (
+//     <DragDropContext onDragEnd={handleDragEnd}>
+//       <Droppable droppableId="todos">
+//         {(provided) => (
+//           <ul {...provided.droppableProps} ref={provided.innerRef}>
+//             {todos.map((todo, index) => (
+//               <Draggable key={todo.id} draggableId={todo.id} index={index}>
+//                 {(provided) => (
+//                   <li
+//                     {...provided.draggableProps}
+//                     {...provided.dragHandleProps}
+//                     ref={provided.innerRef}
+//                   >
+//                     {todo.text}
+//                   </li>
+//                 )}
+//               </Draggable>
+//             ))}
+//             {provided.placeholder}
+//           </ul>
+//         )}
+//       </Droppable>
+//     </DragDropContext>
+//   );
+// };
+
+// export default TodoList;
   return (
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[30px] flex-row justify-end relative font-sans w-full items-start">
       <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-3 relative w-full  items-end">
