@@ -4,7 +4,7 @@ import Roadmap from '../components/pages/Roadmap';
 
 const home = () => {
     return (
-        <Layout bgColor={'#131626'} children={<Roadmap />} icon='socials.svg' text='Home' border='1B1F3A' />
+        <Layout bgColor={'#131626'} children={<Roadmap />} icon='socials.svg' text='Home' border='1B1F3A' hasBg={true} />
     );
 };
 

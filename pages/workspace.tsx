@@ -14,7 +14,6 @@ import { fetchNotes } from "../utils/fetchNotes";
 import toast from "react-hot-toast";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import Skeleton from "react-loading-skeleton";
 import {
   Button,
   Checkbox,
@@ -39,7 +38,7 @@ interface Props {
   users: User[];
   goals: Goals[];
   notes: Notes[];
-  setLoading: (value: boolean) => void;
+  setLoading?: (value: boolean) => void;
 }
 
 interface RoadmapItem {
@@ -102,9 +101,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -215,9 +213,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -270,9 +267,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       console.log(json);
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -543,16 +539,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const WorkspacePage = ({ users, goals, notes }: Props) => {
-  return (
-    <Layout
-      bgColor={"#121212"}
-      icon="workspace.svg"
-      text="Workspace"
-      border="gray-500"
-    >
-      <Home users={users} goals={goals} notes={notes} />
-    </Layout>
-  );
-};
+  return <Layout
+    bgColor={'#121212'}
+    icon='workspace.svg'
+    text='Workspace'
+    border='gray-500' hasBg={false}>
+    <Home users={users} goals={goals} notes={notes} />
+  </Layout>
+}
 
 export default WorkspacePage;

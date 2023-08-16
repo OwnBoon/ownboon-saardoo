@@ -1,11 +1,22 @@
-import React from 'react'
+import React from 'react';
+import Layout from '../components/Layout/Layout';
+import ComingSoonCard from '../components/ComingSoonCard';
 
-type Props = {}
-
-const chats = (props: Props) => {
+const chat = () => {
     return (
-        <div>chats</div>
-    )
-}
+        <Layout
+            hasBg={false}
+            bgColor={'#121212'}
+            icon='chat.svg'
+            text='Chats'
+            border='gray-500'
+            children={
+                <div className='flex flex-col items-center justify-center w-full h-full'>
+                    <ComingSoonCard />
+                </div>
+            }
+        />
+    );
+};
 
-export default chats
+export default chat;
