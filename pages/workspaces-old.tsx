@@ -548,6 +548,7 @@ const HomePage = () => {
       icon='workspace.svg'
       text='Workspace'
       border='gray-500'
+      hasBg={false}
       children={<Home users={[]} goals={[]} notes={[]} />} />
   )
 }
