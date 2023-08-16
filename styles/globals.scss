@@ -21,6 +21,15 @@
   font-weight: 100;
   font-style: normal;
 }
+div{
+  font-family: "fontspring";
+}
+button{
+  font-family: "fontspring";
+}
+span{
+  font-family: "fontspring";
+}
 
 html,
 body {
@@ -85,6 +94,20 @@ body {
   font-size: 0.9rem;
   font-weight: 500;  
 }
+.skeletonloading{
+  background: linear-gradient(to right, transparent 0%, #f2f2f283 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
 .blog h6{
   font-size: 0.7rem;
   font-weight: 600;  
@@ -105,7 +128,7 @@ body {
   font-family: BlackBones;
 }
 .font-fontspring {
-  font-family: fontspring;
+  font-family: "fontspring";
 }
 .font-alatsi {
   font-family: alatsi;

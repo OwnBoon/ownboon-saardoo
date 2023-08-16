@@ -29,10 +29,10 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
             </Head>
 
             <Sidebar border={border} />
-            <div className="w-4/5 ml-auto">
+            <div className="w-[89vw] ml-auto">
                 <Navbar icon={icon} text={text} bgColor={bgColor} border={border} />
                 <div
-                    className="text-[#DDDDDD] py-20 px-8 max-h-full overflow-y-scroll"
+                    className="text-[#DDDDDD]   max-h-full overflow-y-scroll"
                     style={{
                         backgroundImage: hasBg ? 'url(lofi.svg)' : 'none',
                     }}

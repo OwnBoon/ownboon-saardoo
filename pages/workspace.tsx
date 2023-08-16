@@ -14,6 +14,7 @@ import { fetchNotes } from "../utils/fetchNotes";
 import toast from "react-hot-toast";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Head from "next/head";
+import Skeleton from 'react-loading-skeleton'
 import {
   Button,
   Checkbox,
@@ -32,11 +33,13 @@ import { Toaster } from "react-hot-toast";
 import Layout from "../components/Layout/Layout";
 import Island from "../components/BoonIsland/Island";
 import Dialog from "../components/ChapterPopup/ChapterPopup";
+import SkeletonLoading from "../components/SkeletonLoading";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
-  users: User[];
-  goals: Goals[];
-  notes: Notes[];
+  users: User[],
+  goals: Goals[],
+  notes: Notes[],
+  setLoading: (value: boolean) => void;
 }
 
 interface RoadmapItem {
@@ -55,12 +58,12 @@ interface datatype {
   };
 }
 
-const Home = ({ users, goals, notes }: Props) => {
+const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
-
-  const [goal, setGoal] = useState<Goals[]>(goals);
-  const router = useRouter();
+setLoading? setLoading(true) :""
+const [goal, setGoal] = useState<Goals[]>(goals);
+const router = useRouter();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
@@ -71,6 +74,7 @@ const Home = ({ users, goals, notes }: Props) => {
     } else {
       null;
     }
+    setLoading? setLoading(false) :""
   }, []);
   const [showtask, setShowTask] = useState(false);
   const [title, setTitle] = useState("");
@@ -99,7 +103,7 @@ const Home = ({ users, goals, notes }: Props) => {
       toast.custom((t) => (
         <div
           className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+            } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -111,10 +115,10 @@ const Home = ({ users, goals, notes }: Props) => {
                 />
               </div>
               <div className="ml-3 flex-1">
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-[15px] font-medium text-gray-900">
                   Todos Updated
                 </p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-[15px] text-gray-500">
                   Try refreshing the page to see it!
                 </p>
               </div>
@@ -123,7 +127,7 @@ const Home = ({ users, goals, notes }: Props) => {
           <div className="flex border-l border-gray-200">
             <button
               onClick={() => toast.dismiss(t.id)}
-              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               Close
             </button>
@@ -194,7 +198,7 @@ const Home = ({ users, goals, notes }: Props) => {
   const addUnCompleted = async (id: string | undefined) => {
     toast.custom((t) => (
       <div>
-        <Loading type="default" />
+        <Loading color={"white"} size="md" />
       </div>
     ));
     try {
@@ -223,10 +227,10 @@ const Home = ({ users, goals, notes }: Props) => {
                 />
               </div>
               <div className="ml-3 flex-1">
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-[15px] font-medium text-gray-900">
                   U set ur todo to not completed
                 </p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-[15px] text-gray-500">
                   Try refreshing the page to see it!
                 </p>
               </div>
@@ -235,7 +239,7 @@ const Home = ({ users, goals, notes }: Props) => {
           <div className="flex border-l border-gray-200">
             <button
               onClick={() => toast.dismiss(t.id)}
-              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               Close
             </button>
@@ -277,10 +281,10 @@ const Home = ({ users, goals, notes }: Props) => {
                 />
               </div>
               <div className="ml-3 flex-1">
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-[15px] font-medium text-gray-900">
                   U Deleted a todos
                 </p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-[15px] text-gray-500">
                   Try refreshing the page to see it!
                 </p>
               </div>
@@ -289,7 +293,7 @@ const Home = ({ users, goals, notes }: Props) => {
           <div className="flex border-l border-gray-200">
             <button
               onClick={() => toast.dismiss(t.id)}
-              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               Close
             </button>
@@ -329,7 +333,6 @@ const Home = ({ users, goals, notes }: Props) => {
   const [desc, setDesc] = useState("");
   const [data, setData] = useState<datatype>();
   const [show, setShow] = useState(false);
-
   const refreshTodo = async () => {
     const todo = await fetchGoals();
     todo;
@@ -361,87 +364,91 @@ const Home = ({ users, goals, notes }: Props) => {
     }
   }, [data]);
   return (
-    <div className="overflow-hidden bg-[#000309] flex flex-row justify-end relative font-sans w-full items-start">
-      <div className="flex flex-col justify-start mt-5 gap-5 relative w-full items-end">
-        <div className="border-solid border-[#1b1f3a] self-center mb-px relative w-full h-px shrink-0 border" />
+    <div className="overflow-hidden bg-[#101010] flex mt-[80px] flex-row justify-end relative font-sans w-full items-start">
+      <div className="flex font-fontspring flex-col justify-start px-10 gap-5 relative w-full  items-end">
+        <div className="border-solid border-gray-700 self-center mb-px relative w-full h-px shrink-0 border" />
         <div className="flex flex-row justify-start gap-5 relative w-full items-center mb-px mr-5">
           <div className="flex flex-col justify-start gap-5 relative w-1/3 items-center">
-            <div className="border-solid border-[#1b1f3a] bg-[rgba(51,_56,_88,_0.13)] bg-[linear-gradient(0deg,_rgba(44,_211,_225,_0.2)_0%,rgba(44,_211,_225,_0)_100%)] bg-cover bg-50%_50% bg-blend-normal flex flex-col justify-start gap-2 relative w-full h-[295px] shrink-0 items-start pl-12 py-3 border rounded-lg">
+            <div className="border-solid border-gray-700 bg-gradient-to-br  flex flex-col justify-start gap-2 relative w-full h-[295px] shrink-0 items-start pl-12 py-3 border rounded-lg">
               <div className="self-center flex flex-row justify-start gap-1 relative w-24 items-center">
-                <div className="whitespace-nowrap text-lg font-sans text-white relative">
-                  To Do List
+                <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
+                  TODOS
                 </div>
                 <img
                   src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-                  className="min-h-0 min-w-0 relative w-2 shrink-0"
+                  className="min-h-0 min-w-0 relative w-4 shrink-0"
                 />
               </div>
-              <div className="border-solid border-[#1b1f3a] self-center mb-3 relative w-40 h-px shrink-0 bordert borderb-0 borderx-0" />
+              <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 bordert borderb-0 borderx-0" />
               <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 items-center">
-                <div className="border-solid border-[#333858] mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
                 <div className="whitespace-nowrap  font-sans text-white relative">
                   Step 1
                 </div>
               </div>
               <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 items-center">
-                <div className="border-solid border-[#333858] mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
                 <div className="whitespace-nowrap  text-[#dddddd] relative">
                   Step 1
                 </div>
               </div>
               <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 items-center">
-                <div className="border-solid border-[#333858] mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
                 <div className="whitespace-nowrap  text-[#dddddd] relative">
                   Step 1
                 </div>
               </div>
               <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
-                <div className="border-solid border-[#333858] mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
                 <div className="whitespace-nowrap  text-[#dddddd] relative">
                   Step 1
                 </div>
               </div>
-              <div className="border-solid border-[rgba(44,_211,_225,_0.5)] bg-[rgba(51,_56,_88,_0.13)] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[108px] py-2 border rounded">
+              <div className="border-solid border-gray-500 bg-gradient-to-r from-gray-600 to-black-100 self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[108px] py-2 border rounded">
                 <img
                   src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
                   className="min-h-0 min-w-0 relative w-4 shrink-0"
                 />
-                <div className="whitespace-nowrap text-sm font-sans text-[#dddddd] relative">
+                <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative">
                   Add Task
-                </div>
+                </button>
               </div>
             </div>
-            <div className="border-solid border-[#1b1f3a] bg-[rgba(51,_56,_88,_0.13)] flex flex-col justify-start gap-2 relative w-full h-56 shrink-0 items-center pt-4 pb-3 border rounded-lg">
-              <div className="whitespace-nowrap text-lg font-sans text-white relative">
-                AI Schedule Generator{" "}
+            <div className="border-solid border-gray-700 bg-[rgba(51,_56,_88,_0.13)] flex flex-col justify-start gap-2 relative w-full h-56 shrink-0 items-center pt-4 pb-3 border rounded-lg">
+              <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
+                AI Schedule Generator
               </div>
-              <div className="border-solid border-[#1b1f3a] mb-2 relative w-40 h-px shrink-0 bordert borderb-0 borderx-0" />
-              <div className="text-center text-sm  text-white mb-2 relative w-3/4">
+              <div className="border-solid border-gray-700 mb-2 relative w-40 h-px shrink-0 bordert borderb-0 borderx-0" />
+              <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
                 The AI schedule generator analyzes preferences, constraints, and resources to create optimized schedules, maximizing efficiency and productivity.
               </div>
-              <div className="border-solid border-[rgba(44,_211,_225,_0.5)] bg-[rgba(51,_56,_88,_0.13)] bg-[linear-gradient(89deg,_rgba(44,_211,_225,_0.2)_0%,rgba(44,_211,_225,_0.08)_18%,rgba(44,_211,_225,_0.06)_37%,rgba(44,_211,_225,_0.03)_55%,rgba(44,_211,_225,_0)_71%)] bg-cover bg-50%_50% bg-blend-normal flex flex-col justify-start relative h-10 shrink-0 items-center py-2 border rounded">
-                <div className="whitespace-nowrap text-sm font-sans text-[#dddddd] relative mx-24">
+              <div className="border-solid border-gray-500 bg-gradient-to-r from-gray-600 to-black-100 flex flex-col justify-start relative h-10 shrink-0 items-center py-2 border rounded">
+                <div className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
                   Generate Now
                 </div>
               </div>
             </div>
           </div>
-          <div className="border-solid border-[#1b1f3a] bg-[rgba(51,_56,_88,_0.13)] flex flex-col items-stretch justify-start relative w-2/3 h-[542px] py-3 border rounded-lg">
-            <div className="whitespace-nowrap text-lg text-center font-sans text-white relative">
+          <div className="border-solid border-gray-700 bg-[rgba(51,_56,_88,_0.13)] flex flex-col items-stretch justify-start relative w-2/3 h-[542px] py-3 border rounded-lg">
+            <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
               Boon Island
             </div>
-            <div className="grow p-20">
-              <Island users={users} />
+
+            <div className="grow flex ">
+              {/* <Island  users={users} /> */}
+              {/* display the image of the current level of boon island, static image to avoid long loading */}
             </div>
+
           </div>
         </div>
-        <div className="border-solid border-[#1b1f3a] bg-[rgba(51,_56,_88,_0.13)] flex flex-row justify-center mr-5 gap-6 relative w-full items-end py-3 border rounded-lg">
-          <div className="bg-[rgba(27,_31,_58,_0.25)] flex flex-col justify-start mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg">
-            <div className="text-center whitespace-nowrap  text-white relative">
+        <div className="border-solid border-gray-700  bg-[rgba(51,_56,_88,_0.13)] flex  flex-row justify-center mr-5 gap-6 relative w-full items-end py-3 border rounded-lg">
+          <div onClick={() => setShowModal(true)} className="bg-[rgba(27,_31,_58,_0.25)] cursor-pointer flex flex-col justify-start  h-[12.6vw] mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg">
+            <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
               Chapter 1
             </div>
-            <div className="border-solid border-[#1b1f3a] relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-            <div onClick={() => setShowModal(true)} className="text-sm  text-[#dddddd] self-center relative w-full">
+            <div className="w-24 h-[0px] border border-neutral-400"></div>
+            <div className="border-solid border-gray-700 relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+            <div  className="text-[15px]  text-[#dddddd] self-center relative w-full">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -451,19 +458,21 @@ const Home = ({ users, goals, notes }: Props) => {
           </div>
           <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
             <div className="flex flex-row justify-start gap-1 relative w-16 items-center">
-              <div className="text-lg  text-white relative">Notes</div>
+              <div className="text-[23px] text-white relative">Notes</div>
               <img
                 src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-                className="min-h-0 min-w-0 relative w-2 shrink-0"
+                className="min-h-0 min-w-0 relative w-4 shrink-0"
               />
             </div>
-            <div className="border-solid border-[#1b1f3a] mb-3 relative w-40 h-px shrink-0 bordert borderb-0 borderx-0" />
-            <div className="bg-[rgba(27,_31,_58,_0.25)] flex flex-col justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6 rounded-lg">
-              <div className="text-center whitespace-nowrap  text-white relative">
+            <div className="border-solid border-gray-700   mb-3 relative w-40 h-px  shrink-0 bordert borderb-0 borderx-0" />
+            <div onClick={() => setShowModal(true)} className="bg-[rgba(27,_31,_58,_0.25)] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg">
+              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
                 Chapter 1
               </div>
-              <div className="border-solid border-[#1b1f3a] relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-              <div onClick={() => setShowModal(true)} className="text-sm  text-[#dddddd] self-center relative w-full">
+              <div className="w-24 h-[0px] border border-neutral-400"></div>
+              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+              
+              <div  className="text-[15px]   text-[#dddddd] self-center relative w-full">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -472,12 +481,13 @@ const Home = ({ users, goals, notes }: Props) => {
               </div>
             </div>
           </div>
-          <div className="bg-[rgba(27,_31,_58,_0.25)] flex flex-col justify-start mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg">
-            <div className="text-center whitespace-nowrap  text-white relative">
+          <div onClick={() => setShowModal(true)} className="bg-[rgba(27,_31,_58,_0.25)] flex flex-col cursor-pointer  h-[12.6vw] justify-start mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg">
+            <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
               Chapter 1
             </div>
-            <div className="border-solid border-[#1b1f3a] relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-            <div onClick={() => setShowModal(true)} data-modal-target="defaultModal" data-modal-toggle="defaultModal" className="text-sm  text-[#dddddd] self-center relative w-full">
+            <div className="w-24 h-[0px] border border-neutral-400"></div>
+            <div className="border-solid border-gray-700 relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+            <div  data-modal-target="defaultModal" data-modal-toggle="defaultModal" className="text-[15px]  text-[#dddddd] self-center relative w-full">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris

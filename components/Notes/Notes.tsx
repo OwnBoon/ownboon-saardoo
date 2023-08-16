@@ -93,7 +93,7 @@ const Notes = ({ notess }: Props) => {
 
               <div>
                 <div className="flex space-x-5 items-center justify-center">
-                  <p >{notess.topic}</p>
+                  <p >{notess?.topic}</p>
                   <p onClick={() => setShow2(true)} className="text-2xl cursor-pointer font-semibold"> +</p>
                   {show2 ? (
                     <div>
@@ -118,7 +118,7 @@ const Notes = ({ notess }: Props) => {
                 <ReactQuill
                   theme="snow"
                   className="h-36 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                  value={text || notess.note}
+                  value={text || notess?.note}
                   onChange={setText}
                 />
                 {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
@@ -126,7 +126,7 @@ const Notes = ({ notess }: Props) => {
                   onPress={() => {
                     notess?.topic.length < 1
                       ? handleSubmit
-                      : handleSet(notess._id!, notess.topic);
+                      : handleSet(notess._id!, notess?.topic);
                   }}
                   className="mt-5"
                 >
