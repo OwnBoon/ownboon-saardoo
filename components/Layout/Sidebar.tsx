@@ -9,7 +9,7 @@ interface Props {
 const Sidebar = ({ border }: Props) => {
 
     const router = useRouter();
-    const selected = "transition-all duration-150 w-fit cursor-pointer flex items-center gap-8 text-white";
+    const selected = "transition-all duration-155 brightness-125 w-fit cursor-pointer flex items-center gap-8 text-white";
     const normal = "w-fit cursor-pointer flex items-center text-gray-400 gap-8";
 
     return (
@@ -18,7 +18,7 @@ const Sidebar = ({ border }: Props) => {
         >
             <div className="logo flex flex-col   gap-y-8" >
                 <div className="flex flex-row  gap-8 items-center">
-                <img className='w-[50px]' src="ownboon.svg" />
+                <img className='w-[55px]' src="ownboon.svg" />
                 <span  className='font-fontspring '>OwnBoon</span>
 
                 </div>
@@ -30,9 +30,9 @@ const Sidebar = ({ border }: Props) => {
                     <Image
                         src="socials.svg"
                         alt={""}
-                        width={50}
-                        height={50}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+                        width={55}
+                        height={55}
+                        className=" p-2  rounded  "
                     />
                     <span className='font-fontspring text-[15px]'>Socials</span>
                 </div>
@@ -42,10 +42,10 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="chat.svg"
-                        width={50}
-                        height={50}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+                        className=" p-2 rounded  "
                     />
                     <span  className='font-fontspring text-[15px]'>Chats</span>
                 </div>
@@ -55,10 +55,10 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="buddies.svg"
-                        width={50}
-                        height={50}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+                        className=" p-2 rounded  "
                     />
                     <span  className='font-fontspring'>Buddies</span>
                 </div>
@@ -68,10 +68,10 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="workspace.svg"
-                        width={50}
-                        height={50}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+                        className=" p-2 rounded  "
                     />
                     <span  className='font-fontspring'>Workspace</span>
                 </div>
@@ -81,10 +81,10 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="roadmap.svg"
-                        width={50}
-                        height={50}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+                        className=" p-2 rounded  "
                     />
                     <span  className='font-fontspring'>Roadmap</span>
                 </div>
@@ -94,10 +94,10 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="workspace.svg"
-                        width={50}
-                        height={50}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+                        className=" p-2 rounded  "
                     />
                     <span  className='font-fontspring'>Lofi</span>
                 </div>
@@ -109,10 +109,10 @@ const Sidebar = ({ border }: Props) => {
             <div className="p-2 flex gap-4 items-center text-white">
                 <Image
                     src="feedback.svg"
-                    width={50}
-                    height={50}
+                    width={55}
+                    height={55}
                     alt={""}
-                    className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+                    className=" p-2 rounded  "
                 />
                 <span  className='font-fontspring'>Feedback</span>
             </div>

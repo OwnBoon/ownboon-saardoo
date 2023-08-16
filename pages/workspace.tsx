@@ -14,7 +14,7 @@ import { fetchNotes } from "../utils/fetchNotes";
 import toast from "react-hot-toast";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from "react-loading-skeleton";
 import {
   Button,
   Checkbox,
@@ -36,9 +36,9 @@ import Dialog from "../components/ChapterPopup/ChapterPopup";
 import SkeletonLoading from "../components/SkeletonLoading";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
-  users: User[],
-  goals: Goals[],
-  notes: Notes[],
+  users: User[];
+  goals: Goals[];
+  notes: Notes[];
   setLoading: (value: boolean) => void;
 }
 
@@ -61,9 +61,9 @@ interface datatype {
 const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
-setLoading? setLoading(true) :""
-const [goal, setGoal] = useState<Goals[]>(goals);
-const router = useRouter();
+  setLoading ? setLoading(true) : "";
+  const [goal, setGoal] = useState<Goals[]>(goals);
+  const router = useRouter();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
@@ -74,7 +74,7 @@ const router = useRouter();
     } else {
       null;
     }
-    setLoading? setLoading(false) :""
+    setLoading ? setLoading(false) : "";
   }, []);
   const [showtask, setShowTask] = useState(false);
   const [title, setTitle] = useState("");
@@ -102,8 +102,9 @@ const router = useRouter();
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -214,8 +215,9 @@ const router = useRouter();
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -268,8 +270,9 @@ const router = useRouter();
       console.log(json);
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -353,7 +356,6 @@ const router = useRouter();
 
   const [showModal, setShowModal] = React.useState(false);
 
-
   useEffect(() => {
     if (data) {
       // @ts-ignore
@@ -364,12 +366,11 @@ const router = useRouter();
     }
   }, [data]);
   return (
-    <div className="overflow-hidden bg-[#101010] flex mt-[80px] flex-row justify-end relative font-sans w-full items-start">
-      <div className="flex font-fontspring flex-col justify-start px-10 gap-5 relative w-full  items-end">
-        <div className="border-solid border-gray-700 self-center mb-px relative w-full h-px shrink-0 border" />
-        <div className="flex flex-row justify-start gap-5 relative w-full items-center mb-px mr-5">
-          <div className="flex flex-col justify-start gap-5 relative w-1/3 items-center">
-            <div className="border-solid border-gray-700 bg-gradient-to-br  flex flex-col justify-start gap-2 relative w-full h-[295px] shrink-0 items-start pl-12 py-3 border rounded-lg">
+    <div className="overflow-hidden bg-[#101010] flex mt-[90px] flex-row justify-end relative font-sans w-full items-start">
+      <div className="flex font-fontspring flex-col justify-start mt-4 pl-10 gap-x-4 gap-y-3 relative w-full  items-end">
+        <div className="flex flex-row justify-start gap-3 relative w-full items-center  mr-5">
+          <div className="flex flex-col justify-start gap-y-2 relative w-1/3 items-center">
+            <div className="border-solid border-gray-700 bg-gradient-to-br  flex flex-col justify-start gap-2 relative w-full h-[16vw] shrink-0 items-start pl-12 py-3 border rounded-lg">
               <div className="self-center flex flex-row justify-start gap-1 relative w-24 items-center">
                 <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
                   TODOS
@@ -414,13 +415,15 @@ const router = useRouter();
                 </button>
               </div>
             </div>
-            <div className="border-solid border-gray-700 bg-[rgba(51,_56,_88,_0.13)] flex flex-col justify-start gap-2 relative w-full h-56 shrink-0 items-center pt-4 pb-3 border rounded-lg">
+            <div className="border-solid border-gray-700 bg-[rgba(51,_56,_88,_0.13)] flex flex-col justify-start gap-2 relative w-full h-[11.9vw] shrink-0 items-center pt-4 pb-3 border rounded-lg">
               <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
                 AI Schedule Generator
               </div>
               <div className="border-solid border-gray-700 mb-2 relative w-40 h-px shrink-0 bordert borderb-0 borderx-0" />
               <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
-                The AI schedule generator analyzes preferences, constraints, and resources to create optimized schedules, maximizing efficiency and productivity.
+                The AI schedule generator analyzes preferences, constraints, and
+                resources to create optimized schedules, maximizing efficiency
+                and productivity.
               </div>
               <div className="border-solid border-gray-500 bg-gradient-to-r from-gray-600 to-black-100 flex flex-col justify-start relative h-10 shrink-0 items-center py-2 border rounded">
                 <div className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
@@ -438,17 +441,19 @@ const router = useRouter();
               {/* <Island  users={users} /> */}
               {/* display the image of the current level of boon island, static image to avoid long loading */}
             </div>
-
           </div>
         </div>
-        <div className="border-solid border-gray-700  bg-[rgba(51,_56,_88,_0.13)] flex  flex-row justify-center mr-5 gap-6 relative w-full items-end py-3 border rounded-lg">
-          <div onClick={() => setShowModal(true)} className="bg-[rgba(27,_31,_58,_0.25)] cursor-pointer flex flex-col justify-start  h-[12.6vw] mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg">
+        <div className="border-solid border-gray-700  bg-[rgba(51,_56,_88,_0.13)] flex  flex-row justify-center mr-5 gap-6 relative w-full items-end pb-3 border rounded-lg">
+          <div
+            onClick={() => setShowModal(true)}
+            className="bg-gradient-to-br from-gray-700 to-black-400 cursor-pointer flex flex-col justify-start  h-[12.6vw] mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg"
+          >
             <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
               Chapter 1
             </div>
             <div className="w-24 h-[0px] border border-neutral-400"></div>
             <div className="border-solid border-gray-700 relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-            <div  className="text-[15px]  text-[#dddddd] self-center relative w-full">
+            <div className="text-[15px]  text-[#dddddd] self-center relative w-full">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -465,14 +470,17 @@ const router = useRouter();
               />
             </div>
             <div className="border-solid border-gray-700   mb-3 relative w-40 h-px  shrink-0 bordert borderb-0 borderx-0" />
-            <div onClick={() => setShowModal(true)} className="bg-[rgba(27,_31,_58,_0.25)] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg">
+            <div
+              onClick={() => setShowModal(true)}
+              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+            >
               <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
                 Chapter 1
               </div>
               <div className="w-24 h-[0px] border border-neutral-400"></div>
               <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-              
-              <div  className="text-[15px]   text-[#dddddd] self-center relative w-full">
+
+              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -481,13 +489,20 @@ const router = useRouter();
               </div>
             </div>
           </div>
-          <div onClick={() => setShowModal(true)} className="bg-[rgba(27,_31,_58,_0.25)] flex flex-col cursor-pointer  h-[12.6vw] justify-start mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg">
+          <div
+            onClick={() => setShowModal(true)}
+            className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer  h-[12.6vw] justify-start mb-4 gap-1 relative w-1/4 items-start pt-4 pb-5 px-6 rounded-lg"
+          >
             <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
               Chapter 1
             </div>
             <div className="w-24 h-[0px] border border-neutral-400"></div>
             <div className="border-solid border-gray-700 relative w-12 h-px shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-            <div  data-modal-target="defaultModal" data-modal-toggle="defaultModal" className="text-[15px]  text-[#dddddd] self-center relative w-full">
+            <div
+              data-modal-target="defaultModal"
+              data-modal-toggle="defaultModal"
+              className="text-[15px]  text-[#dddddd] self-center relative w-full"
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -497,11 +512,16 @@ const router = useRouter();
           </div>
 
           <Dialog isOpen={showModal} onClose={setShowModal}>
-            <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">Chapter 1</div>
+            <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
+              Chapter 1
+            </div>
             <div className="w-44 h-[0px] border border-neutral-400"></div>
-            <div className="w-full h-[579px] text-neutral-200 text-base font-medium mt-3">Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Ch<br />apter 1Chapter 1Chapter 1Chapter </div>
+            <div className="w-full h-[579px] text-neutral-200 text-base font-medium mt-3">
+              Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Ch
+              <br />
+              apter 1Chapter 1Chapter 1Chapter{" "}
+            </div>
           </Dialog>
-
         </div>
       </div>
     </div>
@@ -523,13 +543,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const WorkspacePage = ({ users, goals, notes }: Props) => {
-  return <Layout
-    bgColor={'#121212'}
-    icon='workspace.svg'
-    text='Workspace'
-    border='gray-500'>
-    <Home users={users} goals={goals} notes={notes} />
-  </Layout>
-}
+  return (
+    <Layout
+      bgColor={"#121212"}
+      icon="workspace.svg"
+      text="Workspace"
+      border="gray-500"
+    >
+      <Home users={users} goals={goals} notes={notes} />
+    </Layout>
+  );
+};
 
 export default WorkspacePage;

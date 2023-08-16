@@ -18,7 +18,7 @@ const Navbar = ({ icon, text, bgColor, border }: Props) => {
 
   return (
     <div
-      className={`w-[89vw] border-b-2 border-gray-700 flex items-center justify-between px-8 py-6 fixed z-50`}
+      className={`w-[89vw] border-b-2 border-gray-700 flex items-center justify-between px-8 py-3 fixed z-50`}
       style={{
         backgroundColor: bgColor,
       }}
@@ -35,16 +35,16 @@ const Navbar = ({ icon, text, bgColor, border }: Props) => {
       </div>
       <div className="flex items-center gap-10 relative">
         <Image
-          width={35}
-          height={35}
-          className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+          width={55}
+          height={55}
+          className=" p-2 rounded "
           src='search.svg'
           alt={'search'}
         />
         <Image
-          width={35}
-          height={35}
-          className="bg-[#1B1F3A] p-2 rounded border-2 border-gray-700"
+          width={70}
+          height={70}
+          className=" p-2 rounded "
           src='notification.svg'
           alt={'notification'}
         />
