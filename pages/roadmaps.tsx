@@ -7,7 +7,6 @@ import Navbar from "../components/Navbar";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, User, UserBody } from "../typings";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { fetchGoals } from "../utils/fetchGoals";
@@ -66,39 +65,28 @@ const Home = ({ users, goals, notes }: Props) => {
   const [data, setData] = useState<datatype>();
 
   const sampledata = {
-    category: "ui/ux",
-    roadmap: [
-      { id: 1, level: 0, parent: 0, title: "HTML5" },
-      { id: 2, level: 0, parent: 0, title: "CSS3" },
-      { id: 3, level: 0, parent: 0, title: "Javascript" },
-      { id: 4, level: 0, parent: 0, title: "React" },
-      { id: 5, level: 1, parent: 1, title: "Semantic Markup" },
-      { id: 6, level: 1, parent: 1, title: "Forms" },
-      { id: 7, level: 1, parent: 1, title: "Accessibility" },
-      { id: 8, level: 1, parent: 2, title: "Responsive Design" },
-      { id: 9, level: 1, parent: 2, title: "CSS Frameworks" },
-      { id: 10, level: 1, parent: 2, title: "CSS Preprocessors" },
-      { id: 11, level: 1, parent: 3, title: "ES6" },
-      { id: 12, level: 1, parent: 3, title: "Ajax and APIs" },
-      { id: 13, level: 1, parent: 3, title: "React State and Props" },
-      { id: 14, level: 1, parent: 3, title: "React Router" },
-      { id: 15, level: 1, parent: 4, title: "React Redux" },
-      { id: 16, level: 2, parent: 5, title: "SEO Friendly Markup" },
-      { id: 17, level: 2, parent: 5, title: "Microdata" },
-      { id: 18, level: 2, parent: 6, title: "Custom Validation" },
-      { id: 19, level: 2, parent: 6, title: "Progressive Enhancements" },
-      { id: 20, level: 2, parent: 8, title: "Mobile First Design" },
-      { id: 21, level: 2, parent: 8, title: "Fluid Grids" },
-      { id: 22, level: 2, parent: 8, title: "CSS Flexbox" },
-      { id: 23, level: 2, parent: 9, title: "Bootstrap" },
-      { id: 24, level: 2, parent: 9, title: "Materialize" },
-      { id: 25, level: 2, parent: 10, title: "Sass" },
-      { id: 26, level: 2, parent: 10, title: "Less" },
-      { id: 27, level: 2, parent: 11, title: "Async and Await" },
-      { id: 28, level: 2, parent: 11, title: "Arrow Functions" },
-      { id: 29, level: 2, parent: 12, title: "RESTful APIs" },
-      { id: 30, level: 2, parent: 12, title: "JSON Parsing" },
-    ],
+    message: {
+      id: "chatcmpl-7oDdGrMYqGQ7vLhrxnA9i9yUxkV2H",
+      object: "chat.completion",
+      created: 1692203158,
+      model: "gpt-3.5-turbo-0613",
+      choices: [
+        {
+          index: 0,
+          message: {
+            role: "assistant",
+            content:
+              '{"roadmap":[{"id":1,"level":0,"parent":0,"title":"Peeing Process"},{"id":2,"level":1,"parent":1,"title":"Find a suitable restroom"},{"id":3,"level":1,"parent":1,"title":"Unbutton or unzip pants"},{"id":4,"level":1,"parent":1,"title":"Pull down underwear"},{"id":5,"level":1,"parent":1,"title":"Position yourself over the toilet or urinal"},{"id":6,"level":1,"parent":1,"title":"Relax your muscles"},{"id":7,"level":1,"parent":1,"title":"Release the urine"},{"id":8,"level":1,"parent":1,"title":"Wipe or shake if necessary"},{"id":9,"level":1,"parent":1,"title":"Button or zip up pants"},{"id":10,"level":1,"parent":1,"title":"Flush the toilet if applicable"},{"id":11,"level":1,"parent":1,"title":"Wash your hands"}]}',
+          },
+          finish_reason: "stop",
+        },
+      ],
+      usage: {
+        prompt_tokens: 223,
+        completion_tokens: 221,
+        total_tokens: 444,
+      },
+    },
   };
 
   const [visible, setVisible] = useState(false);
@@ -135,7 +123,9 @@ const Home = ({ users, goals, notes }: Props) => {
 
     setShow(true);
 
-    const result = await fetch(`/api/roadmap/generate?title=${desc}`);
+    const result = await fetch(
+      `https://nodejs-sms.saard00vfx.repl.co/api?title=${desc}`
+    );
 
     const json = await result.json();
     setData(json);
@@ -143,15 +133,6 @@ const Home = ({ users, goals, notes }: Props) => {
     setShow(false);
     return json;
   };
-
-  if (data) {
-    const index = data.message.response.indexOf("[");
-
-    // Extract the substring starting from the third line
-    const result = data.message.response.substring(index);
-
-    console.log(result);
-  }
 
   const [modaldata, setModaldata] = useState<Info>();
   useEffect(() => {
@@ -244,11 +225,11 @@ const Home = ({ users, goals, notes }: Props) => {
   // const roadmap = dataObject.roadmap;
   if (data) {
     // @ts-ignore
-    const roadmapdata = data?.message.response.roadmap;
+    const roadmapdata = data?.message.choices[0].message.content;
     // const fine = roadmapdata.replace("@finish", "");
-    // const sus = JSON.parse(fine);
-    // console.log(sus);
-    // console.log(roadmapdata);
+    const sus = JSON.parse(roadmapdata);
+    console.log(sus);
+    console.log(roadmapdata);
 
     const addCategory = async (name: string) => {
       try {
@@ -347,7 +328,7 @@ const Home = ({ users, goals, notes }: Props) => {
                 </Grid>
               ) : null}
             </div>
-            {/* {sus.roadmap.map((roadmaps: RoadmapItem) => (
+             {sus.roadmap.map((roadmaps: RoadmapItem) => (
               <div className="flex items-center w-full justify-center">
                 <ArrowRightIcon className="h-5 w-5 " />
                 <Card
@@ -385,7 +366,7 @@ const Home = ({ users, goals, notes }: Props) => {
                   </Modal>
                 </Card>
               </div>
-            ))} */}
+            ))} 
           </div>
         </div>{" "}
       </div>
