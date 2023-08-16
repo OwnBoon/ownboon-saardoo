@@ -45,7 +45,7 @@ const lofi = ({ users }: Props) => {
 
         const minutes = Math.floor(rm / 60);
         const _seconds = seconds % 60;
-        setTime(`${hours > 0 ? hours + ' hrs' : ''}  ${minutes > 0 ? minutes + ' mins' : ''}  ${_seconds > 0 ? _seconds + ' secs' : ''}`);
+        setTime(`${hours > 0 ? hours + ' h' : ''}  ${minutes > 0 ? minutes + ' m' : ''}  ${_seconds > 0 ? _seconds + ' s' : ''}`);
     }, [seconds]);
 
     const match = users.filter(
@@ -79,8 +79,7 @@ const lofi = ({ users }: Props) => {
 
     useEffect(() => {
         if (endTime && startTime) {
-            const timeSpentInSeconds = Math.floor((endTime - startTime) / 1000);
-            const earnedPoints = calculatePoints(timeSpentInSeconds);
+            const earnedPoints = calculatePoints(seconds);
             const points = Number(match[0]?.focus) + earnedPoints;
 
             const postUser = async () => {
@@ -121,7 +120,7 @@ const lofi = ({ users }: Props) => {
                             <Discover />
                             {seconds > 0 && (
                                 <div
-                                    className='absolute right-4 top-16 h-20 w-20 rounded-full bg-[#D9D9D9] p-4 flex items-center justify'
+                                    className='absolute right-4 top-16 h-20 w-20 rounded-full bg-[#D9D9D9] p-4 flex items-center justify-center'
                                 >
                                     {time}
                                 </div>
