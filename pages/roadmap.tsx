@@ -109,6 +109,7 @@ const Home = ({ users, goals, notes }: Props) => {
 
     return (
         <Layout
+            hasBg={false}
             bgColor={'#121212'}
             icon='roadmap.svg'
             text='Roadmap'
