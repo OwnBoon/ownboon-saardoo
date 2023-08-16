@@ -1,52 +1,22 @@
-import React, { useEffect } from "react";
-import Main from "../components/dashboard/Main";
-import Header from "../components/dashboard/Main";
-import Progress from "../components/dashboard/Progress";
-import Sidebar from "../components/dashboard/Sidebar";
-import Navbar from "../components/Navbar";
-import ChatPage from "../components/Vent/ChatPage";
-import socketIO from "socket.io-client";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
-import { fetchMessage } from "../utils/fetchMessage";
-import { Message } from "../typings";
-import { useUser } from "@clerk/nextjs";
+import React from 'react';
+import Layout from '../components/Layout/Layout';
+import ComingSoonCard from '../components/ComingSoonCard';
 
-interface Props {
-  messages: Message[];
-}
-
-const vent = ({ messages }: Props) => {
-  const router = useRouter();
-  const { isLoaded, isSignedIn, user } = useUser();
-  // @ts-ignore
-  const socket = socketIO.connect(process.env.NEXT_PUBLIC_SOCKET_URL);
-  const userName = user?.username || user?.firstName || "random_user";
-  const pfp = user?.profileImageUrl!;
-
-  useEffect(() => {
-    localStorage.setItem("userName", userName);
-    localStorage.setItem("pfp", pfp);
-    socket.emit("newUser", { userName, socketID: socket.id, pfp });
-  }, []);
+const buddies = () => {
   return (
-    <div className="grid grid-cols-12 screen overflow-y-hidden bg-[#1F1F1F]">
-      <Sidebar />
-      {/* <Main /> */}
-      <ChatPage message={messages} socket={socket} />
-    </div>
+    <Layout
+      hasBg={false}
+      bgColor={'#121212'}
+      icon='buddies.svg'
+      text='Buddies'
+      border='gray-500'
+      children={
+        <div className='flex flex-col items-center justify-center w-full h-full'>
+          <ComingSoonCard />
+        </div>
+      }
+    />
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const messages = await fetchMessage();
-
-  return {
-    props: {
-      messages,
-    },
-  };
-};
-
-export default vent;
+export default buddies;

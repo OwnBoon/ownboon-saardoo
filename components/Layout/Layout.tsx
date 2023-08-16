@@ -32,7 +32,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
             <div className="w-[89vw] ml-auto">
                 <Navbar icon={icon} text={text} bgColor={bgColor} border={border} />
                 <div
-                    className="text-[#DDDDDD]   max-h-full overflow-y-scroll"
+                    className="text-[#DDDDDD] py-20 px-8 max-h-full overflow-hidden"
                     style={{
                         backgroundImage: hasBg ? 'url(lofi.svg)' : 'none',
                     }}
