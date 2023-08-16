@@ -101,8 +101,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -213,8 +214,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -267,8 +269,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       console.log(json);
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -351,6 +354,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   const [susdata, setSusData] = useState();
 
   const [showModal, setShowModal] = React.useState(false);
+  const [showPromptModal, setShowPromptModal] = useState(false)
 
   useEffect(() => {
     if (data) {
@@ -374,53 +378,53 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   // sample way to add dragable functionality todo list
-//   import React, { useState } from 'react';
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+  //   import React, { useState } from 'react';
+  // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-// const TodoList = () => {
-//   const [todos, setTodos] = useState([
-//     { id: '1', text: 'Task 1' },
-//     { id: '2', text: 'Task 2' },
-//     { id: '3', text: 'Task 3' },
-//   ]);
+  // const TodoList = () => {
+  //   const [todos, setTodos] = useState([
+  //     { id: '1', text: 'Task 1' },
+  //     { id: '2', text: 'Task 2' },
+  //     { id: '3', text: 'Task 3' },
+  //   ]);
 
-//   const handleDragEnd = (result) => {
-//     if (!result.destination) return;
+  //   const handleDragEnd = (result) => {
+  //     if (!result.destination) return;
 
-//     const items = Array.from(todos);
-//     const [reorderedItem] = items.splice(result.source.index, 1);
-//     items.splice(result.destination.index, 0, reorderedItem);
+  //     const items = Array.from(todos);
+  //     const [reorderedItem] = items.splice(result.source.index, 1);
+  //     items.splice(result.destination.index, 0, reorderedItem);
 
-//     setTodos(items);
-//   };
+  //     setTodos(items);
+  //   };
 
-//   return (
-//     <DragDropContext onDragEnd={handleDragEnd}>
-//       <Droppable droppableId="todos">
-//         {(provided) => (
-//           <ul {...provided.droppableProps} ref={provided.innerRef}>
-//             {todos.map((todo, index) => (
-//               <Draggable key={todo.id} draggableId={todo.id} index={index}>
-//                 {(provided) => (
-//                   <li
-//                     {...provided.draggableProps}
-//                     {...provided.dragHandleProps}
-//                     ref={provided.innerRef}
-//                   >
-//                     {todo.text}
-//                   </li>
-//                 )}
-//               </Draggable>
-//             ))}
-//             {provided.placeholder}
-//           </ul>
-//         )}
-//       </Droppable>
-//     </DragDropContext>
-//   );
-// };
+  //   return (
+  //     <DragDropContext onDragEnd={handleDragEnd}>
+  //       <Droppable droppableId="todos">
+  //         {(provided) => (
+  //           <ul {...provided.droppableProps} ref={provided.innerRef}>
+  //             {todos.map((todo, index) => (
+  //               <Draggable key={todo.id} draggableId={todo.id} index={index}>
+  //                 {(provided) => (
+  //                   <li
+  //                     {...provided.draggableProps}
+  //                     {...provided.dragHandleProps}
+  //                     ref={provided.innerRef}
+  //                   >
+  //                     {todo.text}
+  //                   </li>
+  //                 )}
+  //               </Draggable>
+  //             ))}
+  //             {provided.placeholder}
+  //           </ul>
+  //         )}
+  //       </Droppable>
+  //     </DragDropContext>
+  //   );
+  // };
 
-// export default TodoList;
+  // export default TodoList;
   return (
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[30px] flex-row justify-end relative font-sans w-full items-start">
       <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-3 relative w-full  items-end">
@@ -482,9 +486,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 and productivity.
               </div>
               <div className="border-solid border-gray-500 bg-gradient-to-r from-gray-600 to-black-100 flex flex-col justify-start relative h-10 shrink-0 items-center py-2 border rounded">
-                <div className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
+                <button onClick={()=>setShowPromptModal(true)} className="cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
                   Generate Now
-                </div>
+                </button>
               </div>
             </div>
           </div>
@@ -500,280 +504,265 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           </div>
         </div>
         <div className="border-solid border-gray-700  bg-[rgba(51,_56,_88,_0.13)] flex  flex-col  mr-5 gap-y-3 relative w-full items-center  border rounded-lg justify-center overflow-y-visible ">
-        <div className="flex flex-row justify-start gap-1 relative w-16 items-center">
-              <div className="text-[23px] text-white  pt-3 top-0 sticky ">Notes</div>
-              <img
-                src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-                className="min-h-0 min-w-0 relative w-4 shrink-0"
-              />
+          <div className="flex flex-row justify-start gap-1 relative w-16 items-center">
+            <div className="text-[23px] text-white  pt-3 top-0 sticky ">
+              Notes
             </div>
-            
-            <div className="border-solid border-gray-500 border   mb-3 relative w-40 h-px  shrink-0 " />
-       <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+            <img
+              src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
+              className="min-h-0 min-w-0 relative w-4 shrink-0"
+            />
+          </div>
 
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
+          <div className="border-solid border-gray-500 border   mb-3 relative w-40 h-px  shrink-0 " />
+          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+            <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
+              </div>
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
+              </div>
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
               </div>
             </div>
           </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
 
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
+              </div>
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
+              </div>
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
               </div>
             </div>
           </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
 
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
+              </div>
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
+              </div>
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
               </div>
             </div>
           </div>
+          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
 
-       </div>
-       <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
               </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
 
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
+              </div>
+            </div>
+            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+              <div
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+              >
+                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                  Chapter 1
+                </div>
+                <div className="w-24 h-[0px] border border-neutral-400"></div>
+                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
+                  dolor in reprehenderit in...
+                </div>
               </div>
             </div>
           </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-
-       </div>
-       <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-
-       </div>
-       <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-
-       </div>
-        
 
           <Dialog isOpen={showModal} onClose={setShowModal}>
             <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
@@ -785,6 +774,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               <br />
               apter 1Chapter 1Chapter 1Chapter{" "}
             </div>
+          </Dialog>
+          <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
+          <div className="flex w-[30vw] h-full pt-[-10vw]  flex-col ">
+            <div className="flex flex-col p-5 items-center justify-center">
+                <h1 className="text-[2vw] my-2  text-white text-center ">BoonBot</h1>
+        <div className="w-44 h-[0px] border border-neutral-400"></div>
+            </div>
+        <h2 className="text-[1vw] my-2  text-white font-medium ">How are you feeling today?</h2>
+        <textarea name="prompt" id="prompt" ></textarea>
+        {/* <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button> */}
+        </div>
           </Dialog>
         </div>
       </div>
@@ -807,13 +807,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const WorkspacePage = ({ users, goals, notes }: Props) => {
-  return <Layout
-    bgColor={'#121212'}
-    icon='workspace.svg'
-    text='Workspace'
-    border='gray-500' hasBg={false}>
-    <Home users={users} goals={goals} notes={notes} />
-  </Layout>
-}
+  return (
+    <Layout
+      bgColor={"#121212"}
+      icon="workspace.svg"
+      text="Workspace"
+      border="gray-500"
+      hasBg={false}
+    >
+      <Home users={users} goals={goals} notes={notes} />
+    </Layout>
+  );
+};
 
 export default WorkspacePage;
