@@ -126,7 +126,7 @@ const Notes = ({ notess }: Props) => {
                   onPress={() => {
                     notess?.topic.length < 1
                       ? handleSubmit
-                      : handleSet(notess._id!, notess.topic);
+                      : handleSet(notess._id!, notess?.topic);
                   }}
                   className="mt-5"
                 >

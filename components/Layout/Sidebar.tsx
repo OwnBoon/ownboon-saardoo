@@ -9,18 +9,20 @@ interface Props {
 const Sidebar = ({ border }: Props) => {
 
     const router = useRouter();
-    const selected = "transition-all duration-150 w-fit cursor-pointer flex items-center gap-8 text-[#2CD3E1]";
-    const normal = "w-fit cursor-pointer flex items-center gap-8";
+    const selected = "transition-all duration-155 brightness-125 w-fit cursor-pointer flex items-center gap-8 text-white";
+    const normal = "w-fit cursor-pointer flex items-center text-gray-400 gap-8";
 
     return (
         <div
-            className={`w-1/5 h-screen text-[#DDDDDD] flex flex-col items-start justify-between p-5 border-r-2 border-[#${border}] fixed`}
+            className={` h-screen w-[11vw]  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-5 border-r-2 border-[#1B1F3A] fixed`}
         >
-            <div className="logo flex justify-between items-center gap-8" >
-                <img src="ownboon.svg" />
-                <span>OwnBoon</span>
-            </div>
-            <div className="flex flex-col gap-8">
+            <div className="logo flex flex-col   gap-y-8" >
+                <div className="flex flex-row  gap-8 items-center">
+                <img className='w-[55px]' src="ownboon.svg" />
+                <span  className='font-fontspring '>OwnBoon</span>
+
+                </div>
+                <div className="flex flex-col  justify-center gap-y-8">
                 <div
                     onClick={() => router.push("/socials")}
                     className={router.pathname == "/socials" ? selected : normal}
@@ -28,11 +30,11 @@ const Sidebar = ({ border }: Props) => {
                     <Image
                         src="socials.svg"
                         alt={""}
-                        width={35}
-                        height={35}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                        width={55}
+                        height={55}
+                        className=" p-2  rounded  "
                     />
-                    <span>Socials</span>
+                    <span className='font-fontspring text-[15px]'>Socials</span>
                 </div>
                 <div
                     onClick={() => router.push("/chats")}
@@ -40,12 +42,12 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="chat.svg"
-                        width={35}
-                        height={35}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                        className=" p-2 rounded  "
                     />
-                    <span>Chats</span>
+                    <span  className='font-fontspring text-[15px]'>Chats</span>
                 </div>
                 <div
                     onClick={() => router.push("/buddies")}
@@ -53,12 +55,12 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="buddies.svg"
-                        width={35}
-                        height={35}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                        className=" p-2 rounded  "
                     />
-                    <span>Buddies</span>
+                    <span  className='font-fontspring'>Buddies</span>
                 </div>
                 <div
                     onClick={() => router.push("/workspace")}
@@ -66,12 +68,12 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="workspace.svg"
-                        width={35}
-                        height={35}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                        className=" p-2 rounded  "
                     />
-                    <span>Workspace</span>
+                    <span  className='font-fontspring'>Workspace</span>
                 </div>
                 <div
                     onClick={() => router.push("/roadmap")}
@@ -79,12 +81,12 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="roadmap.svg"
-                        width={35}
-                        height={35}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                        className=" p-2 rounded  "
                     />
-                    <span>Roadmap</span>
+                    <span  className='font-fontspring'>Roadmap</span>
                 </div>
                 <div
                     onClick={() => router.push("/lofi")}
@@ -92,23 +94,27 @@ const Sidebar = ({ border }: Props) => {
                 >
                     <Image
                         src="workspace.svg"
-                        width={35}
-                        height={35}
+                        width={55}
+                        height={55}
                         alt={""}
-                        className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                        className=" p-2 rounded  "
                     />
-                    <span>Lofi</span>
+                    <span  className='font-fontspring'>Lofi</span>
+                </div>
+
                 </div>
             </div>
-            <div className="p-2 flex gap-4 items-center text-[#2CD3E1]">
+            <div className="flex flex-col gap-8">
+            </div>
+            <div className="p-2 flex gap-4 items-center text-white">
                 <Image
                     src="feedback.svg"
-                    width={35}
-                    height={35}
+                    width={55}
+                    height={55}
                     alt={""}
-                    className="bg-[#1B1F3A] p-2 rounded border-2 border-[#333858]"
+                    className=" p-2 rounded  "
                 />
-                <span>Feedback</span>
+                <span  className='font-fontspring'>Feedback</span>
             </div>
         </div>
     );

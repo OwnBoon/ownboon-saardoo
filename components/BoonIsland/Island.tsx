@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { User } from "../../typings";
 import { useSession } from "next-auth/react";
@@ -7,10 +7,12 @@ import Spline from "@splinetool/react-spline";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 interface Props {
-  users: User[];
+  users: User[],setLoading?: (value: boolean) => void;
 }
 
-const Island = ({ users }: Props) => {
+const Island = ({ users,setLoading }: Props) => {
+  
+  
   const { isLoaded, isSignedIn, user } = useUser();
   const match = users.filter(
     (usere) => usere.email === user?.emailAddresses[0].emailAddress
@@ -24,12 +26,20 @@ const Island = ({ users }: Props) => {
   const level = Math.floor(focus_no! * factor);
   const barlevel = level * 10;
   console.log(level);
+  useEffect(() => {
+   setTimeout(() => {
+    setLoading?setLoading(false) : ""
+   }, 8000);
+  }, []);
   return (
-    <div className="h-full w-full flex relative">
+    <div className="h-[100%] w-full flex relative">
       {user ? (
         <>
           {level < 5 ? (
-            <Spline
+            <Spline 
+
+            
+            
               className=""
               scene="https://prod.spline.design/YXg9FOeBh95j4Z8Q/scene.splinecode"
             />
