@@ -362,8 +362,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     }
   }, [data]);
   return (
-    <div className="overflow-hidden bg-[#101010] fade flex mt-[90px] flex-row justify-end relative font-sans w-full items-start">
-      <div className="flex font-fontspring flex-col justify-start mt-4 pl-10 gap-x-4 gap-y-3 relative w-full  items-end">
+    <div className="overflow-y-visible bg-[#101010] fade flex mt-[30px] flex-row justify-end relative font-sans w-full items-start">
+      <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-3 relative w-full  items-end">
         <div className="flex flex-row justify-start gap-3 relative w-full items-center  mr-5">
           <div className="flex flex-col justify-start gap-y-2 relative w-1/3 items-center">
             <div className="border-solid border-gray-700 bg-gradient-to-br  flex flex-col justify-start gap-2 relative w-full h-[16vw] shrink-0 items-start pl-12 py-3 border rounded-lg">
@@ -450,7 +450,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             
             <div className="border-solid border-gray-500 border   mb-3 relative w-40 h-px  shrink-0 " />
        <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -471,7 +471,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -492,73 +492,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-
-       </div>
-       <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-           
-            <div
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-            >
-              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                Chapter 1
-              </div>
-              <div className="w-24 h-[0px] border border-neutral-400"></div>
-              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
-                reprehenderit in...
-              </div>
-            </div>
-          </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -582,7 +516,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
        </div>
        <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -603,7 +537,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -624,7 +558,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -648,7 +582,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
        </div>
        <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -669,7 +603,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
@@ -690,7 +624,73 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="self-start flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+           
+            <div
+              onClick={() => setShowModal(true)}
+              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+            >
+              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                Chapter 1
+              </div>
+              <div className="w-24 h-[0px] border border-neutral-400"></div>
+              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
+                reprehenderit in...
+              </div>
+            </div>
+          </div>
+
+       </div>
+       <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+           
+            <div
+              onClick={() => setShowModal(true)}
+              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+            >
+              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                Chapter 1
+              </div>
+              <div className="w-24 h-[0px] border border-neutral-400"></div>
+              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
+                reprehenderit in...
+              </div>
+            </div>
+          </div>
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+           
+            <div
+              onClick={() => setShowModal(true)}
+              className="bg-gradient-to-br from-gray-700 to-black-400 flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+            >
+              <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                Chapter 1
+              </div>
+              <div className="w-24 h-[0px] border border-neutral-400"></div>
+              <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+              <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequatDuis aute irure dolor in
+                reprehenderit in...
+              </div>
+            </div>
+          </div>
+          <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
            
             <div
               onClick={() => setShowModal(true)}
