@@ -47,8 +47,7 @@ export default async function handler(
             "messages": [{"role": "user", "content": basePrompt}],
         }
 
-
-  const apiEndpoint = `https://api.cattto.repl.co/v1/chat/completions`;
+        const apiEndpoint = "https://api.openai.com/v1/chat/completions";
 
   const result = await fetch(apiEndpoint, {
     headers: {
