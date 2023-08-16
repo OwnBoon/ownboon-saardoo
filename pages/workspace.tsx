@@ -517,7 +517,7 @@ const WorkspacePage = ({ users, goals, notes }: Props) => {
     bgColor={'#121212'}
     icon='workspace.svg'
     text='Workspace'
-    border='gray-500'>
+    border='gray-500' hasBg={false}>
     <Home users={users} goals={goals} notes={notes} />
   </Layout>
 }
