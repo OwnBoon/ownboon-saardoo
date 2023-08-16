@@ -65,7 +65,7 @@ const lofi = ({ users }: Props) => {
 
         return () => {
             router.events.off('routeChangeStart', handleRouteChange);
-            dispatch(setActiveSong({ song: null, data: null, id: null }));
+            // dispatch(setActiveSong({ song: null, data: null, id: null }));
             dispatch(setIsPlaying({ playing: false }));
         };
 
