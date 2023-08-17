@@ -14,7 +14,7 @@ const Sidebar = ({ border }: Props) => {
 
     return (
         <div
-            className={` h-screen w-[11vw]  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-5 border-r-2 border-[#1B1F3A] fixed`}
+            className={`h-screen w-[20vw]  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-5 border-r-2 border-[#1B1F3A] fixed`}
         >
             <div className="logo flex flex-col   gap-y-8" >
                 <div className="flex flex-row  gap-8 items-center">
