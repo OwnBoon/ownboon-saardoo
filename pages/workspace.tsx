@@ -539,7 +539,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   return (
     <>
     
-    {boonisland && <CustomLoader/>}
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
       <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
         <div className="flex flex-row justify-start gap-x-5 relative w-full items-center  mr-5">
@@ -1118,6 +1117,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           </Dialog>
           <Dialog isOpen={showBoonIslandModal} onClose={setShowBoonIslandModal}>
             <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+    {boonisland && <Loading color={"white"}/>}
              
               <div className="flex justify-center mt-7 text-center items-center">
               <Island  users={users} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -13,8 +13,9 @@ interface Props {
 
 const Navbar = ({ icon, text, bgColor, border, showsidebar }: Props) => {
   const { user } = useUser();
+  const [showsearch, setshowsearch] = useState("")
 
-  return (
+  return ( 
     <div
       className={`${showsidebar ? "w-[89vw]" : "w-[95vw] ml-[-1vw]"
         } border-b-2 border-gray-700 flex items-center justify-between px-8 py-3 fixed z-50`}
@@ -30,14 +31,14 @@ const Navbar = ({ icon, text, bgColor, border, showsidebar }: Props) => {
         <Image
           width={55}
           height={55}
-          className=" p-2 rounded "
+          className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
           src="search.svg"
           alt={"search"}
         />
         <Image
           width={70}
           height={70}
-          className=" p-2 rounded "
+          className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
           src="notification.svg"
           alt={"notification"}
         />
