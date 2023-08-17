@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Modal, Text } from "@nextui-org/react";
+
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, User } from "../typings";
-import { useRouter } from "next/router";
 import { fetchGoals } from "../utils/fetchGoals";
 import { fetchNotes } from "../utils/fetchNotes";
-
-import {
-    ArrowRightIcon,
-} from "@heroicons/react/24/outline";
-import { MdPassword } from "react-icons/md";
-import ReactPlayer from "react-player";
 import Layout from "../components/Layout/Layout";
+import handler from '../pages/api/roadmap/generate'
+
 interface datatype {
     message: {
         choices: [
@@ -42,6 +40,24 @@ interface RoadmapItem {
 const Home = ({ users, goals, notes }: Props) => {
 
     const [data, setData] = useState<datatype>();
+    const [visible, setVisible] = useState(false);
+    const [category, setCategory] = useState('self');
+    const [description, setDescription] = useState('');
+
+    const handleOpen = (category: any) => {
+        setVisible(true);
+        setCategory(category);
+    };
+    const closeHandler = () => {
+        setVisible(false);
+    };
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        setVisible(false);
+    }
+
+    // ------ data section --------
 
     const sampleData = [{
         category: "ui/ux",
@@ -116,6 +132,37 @@ const Home = ({ users, goals, notes }: Props) => {
             border='gray-500'
             children={(
                 <div>
+                    <Modal
+                        closeButton
+                        aria-labelledby="modal-title"
+                        open={visible}
+                        onClose={closeHandler}
+                    >
+                        <Modal.Header>
+                            <Text id="modal-title" size={18}>
+                                Describe what you want to learn
+                            </Text>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <textarea
+                                placeholder={`${category === 'self' ? 'Self Improvement' : 'Skill Improvement'}`}
+                                className="w-full h-32 p-2 rounded-md bg-[#191919] border border-[#585858] outline-none text-[#fff] placeholder-[#585858] placeholder-opacity-80 resize-none focus:ring-1 focus:ring-[#585858] focus:border-transparent"
+                                onChange={(e) => setDescription(e.target.value)}
+                                value={description}
+                            />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button
+                                className="bg-[#474747] py-2 px-3 rounded-md text-[#807d7d] w-full"
+                                style={{
+                                    border: "1px solid #585858"
+                                }}
+                                onClick={handleSubmit}
+                            >
+                                Send
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
                     <div className="flex w-full gap-6 ">
                         <div
                             className="first w-1/2 bg-[#191919] flex items-center justify-between p-4 rounded-md"
@@ -134,6 +181,7 @@ const Home = ({ users, goals, notes }: Props) => {
                                 style={{
                                     border: "1px solid #585858"
                                 }}
+                                onClick={() => handleOpen('self')}
                             >
                                 Generate Now
                             </button>
@@ -155,6 +203,7 @@ const Home = ({ users, goals, notes }: Props) => {
                                 style={{
                                     border: "1px solid #585858"
                                 }}
+                                onClick={() => handleOpen('skill')}
                             >
                                 Generate Now
                             </button>
@@ -164,10 +213,10 @@ const Home = ({ users, goals, notes }: Props) => {
                     {/* road map data */}
 
 
-                    {data && (<div className="flex items-center justify-center my-10 text-[#2CD3E1]">
+                    {!data && (<div className="flex items-center justify-center my-10 text-[#2CD3E1]">
                         <span>Haven't yet generated any -- plz chose category and continue!</span>
                     </div>)}
-                    {!data && (
+                    {data && (
                         <div className="w-full mt-8 flex flex-col gap-8">
                             <div
                                 className="flex relative"
