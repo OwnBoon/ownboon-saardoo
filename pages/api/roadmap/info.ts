@@ -12,10 +12,6 @@ export default async function handler(
 
     const title = req.query.title
 
-    const maxItems = 30
-    const minItems = 15
-    const minLevels = 5
-
     const basePrompt = `based on my prompt , explain that in very short and even provide the link for  the best youtube video one can watch to do that: 
     ${title}.  
     note: 
@@ -27,7 +23,7 @@ export default async function handler(
         }
 
 
-  const apiEndpoint = `https://api.cattto.repl.co/v1/chat/completions`;
+  const apiEndpoint = `https://api.openai.com/v1/chat/completions`;
 
   const result = await fetch(apiEndpoint, {
     headers: {
