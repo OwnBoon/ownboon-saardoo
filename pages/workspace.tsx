@@ -73,7 +73,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   useEffect(() => {
     if (user && !match[0].categories) {
-      router.push("/categories");
+      // router.push("/categories");
     } else {
       null;
     }
