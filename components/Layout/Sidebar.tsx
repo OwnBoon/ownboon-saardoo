@@ -6,7 +6,7 @@ import Dialog from "../ChapterPopup/ChapterPopup";
 interface Props {
   border: string;
   showsidebar: boolean;
-  setShowsidebar : (value: boolean) => void;
+  setShowsidebar: (value: boolean) => void;
 }
 
 const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
@@ -17,32 +17,32 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
   const [showBuddyModal, setShowBuddyModal] = React.useState(false);
   const [showChatsModal, setShowChatsModal] = useState(false);
   const [showSocialsModal, setShowSocialsModal] = useState(false);
-  
+
   return (
     <>
       <div
-        className={` h-screen transition-all   ${!showsidebar ? "w-[5vw]": "w-[11vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
+        className={` h-screen transition-all   ${!showsidebar ? "w-[5vw]" : "w-[11vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
       >
         <div className="logo flex flex-col transition-all   gap-y-8"
-         onMouseEnter={()=> setShowsidebar(true)} 
-         onMouseLeave={()=> setShowsidebar(false)}
-         >
+          onMouseEnter={() => setShowsidebar(true)}
+          onMouseLeave={() => setShowsidebar(false)}
+        >
 
           <div className="flex flex-row transition-all gap-4 items-center">
-          <img className="w-[55px] transition-all fade" src="ownboon.svg" />
-          {showsidebar && 
-            <span className="font-fontspring fade  transition-all">OwnBoon</span>
-          
-          }
-          {showsidebar && 
-            <Image
+            <img className="w-[55px] transition-all fade" src="ownboon.svg" />
+            {showsidebar &&
+              <span className="font-fontspring fade  transition-all">OwnBoon</span>
+
+            }
+            {showsidebar &&
+              <Image
                 src="sidebarexpand.svg"
                 alt={""}
                 width={40}
                 height={40}
                 className=" p-2 absolute right-0 fade transition-all  rounded  "
               />
-          }
+            }
           </div>
           <div className="flex flex-col transition-all justify-center  gap-y-8">
             <div
@@ -57,9 +57,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 height={55}
                 className=" p-2  rounded  "
               />
-         {showsidebar && 
-             <span className="font-fontspring fade ">Socials</span>
-         } 
+              {showsidebar &&
+                <span className="font-fontspring fade ">Socials</span>
+              }
             </div>
             <div
               onClick={() => setShowChatsModal(true)}
@@ -73,9 +73,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-              {showsidebar && 
-             <span className="font-fontspring fade ">Chats</span>
-         } 
+              {showsidebar &&
+                <span className="font-fontspring fade ">Chats</span>
+              }
             </div>
             <div
               onClick={() => setShowBuddyModal(true)}
@@ -89,9 +89,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-              {showsidebar && 
-             <span className="font-fontspring fade">Buddies</span>
-         } 
+              {showsidebar &&
+                <span className="font-fontspring fade">Buddies</span>
+              }
             </div>
             <div
               onClick={() => router.push("/workspace")}
@@ -104,9 +104,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-                {showsidebar && 
-             <span className="font-fontspring fade ">Workspace</span>
-         } 
+              {showsidebar &&
+                <span className="font-fontspring fade ">Workspace</span>
+              }
             </div>
             <div
               onClick={() => router.push("/roadmap")}
@@ -119,9 +119,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-             {showsidebar && 
-             <span className="font-fontspring fade ">Roadmap</span>
-         } 
+              {showsidebar &&
+                <span className="font-fontspring fade ">Roadmap</span>
+              }
             </div>
             <div
               onClick={() => router.push("/lofi")}
@@ -134,9 +134,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-                {showsidebar && 
-             <span className="font-fontspring fade ">Lofi</span>
-         } 
+              {showsidebar &&
+                <span className="font-fontspring fade ">Lofi</span>
+              }
             </div>
           </div>
         </div>
@@ -149,9 +149,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             alt={""}
             className=" p-2 rounded  "
           />
-          {showsidebar && 
-             <span className="font-fontspring fade ">Feedback</span>
-         } 
+          {showsidebar &&
+            <span className="font-fontspring fade ">Feedback</span>
+          }
         </div>
       </div>
       <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>

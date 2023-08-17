@@ -16,9 +16,8 @@ const Navbar = ({ icon, text, bgColor, border, showsidebar }: Props) => {
 
   return (
     <div
-      className={`${
-        showsidebar ? "w-[89vw]" : "w-[95vw] ml-[-1vw]"
-      } border-b-2 border-gray-700 flex items-center justify-between px-8 py-3 fixed z-50`}
+      className={`${showsidebar ? "w-[89vw]" : "w-[95vw] ml-[-1vw]"
+        } border-b-2 border-gray-700 flex items-center justify-between px-8 py-3 fixed z-50`}
       style={{
         backgroundColor: bgColor,
       }}
