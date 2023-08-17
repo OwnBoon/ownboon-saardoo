@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { GoalBody } from '../../typings'
+import { ReactSortable } from "react-sortablejs";
 
 type Props = {
     todos: any[],
@@ -153,14 +154,17 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             </div>
             <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
             <div className="overflow-auto">
-                {todos.map((t) => (
-                    <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
-                        <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                        <div className="whitespace-nowrap  font-sans text-white relative">
-                            {t.title}
+
+                <ReactSortable list={todos} setList={setTodos}>
+                    {todos.map((t) => (
+                        <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-full">
+                            <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                            <div className="whitespace-nowrap  font-sans text-white relative">
+                                {t.title}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </ReactSortable>
 
                 {tempTodo && (
                     <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
