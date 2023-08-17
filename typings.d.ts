@@ -156,7 +156,24 @@ export interface Message extends SanityBody {
 }
 
 interface Roadmaps {
-    _type: "roadmap"
-    content: string
-    email: string
+    _type?: "roadmap"
+    content?: string
+    email?: string
+    progress?: string
+    goal?: string
+    slug?: {
+        current: string
+    }
+}
+interface RoadBody {
+    _type?: "roadmap"
+    content?: {
+        
+    }
+    email?: string
+    progress?: string
+    goal?: string
+    slug?: {
+        current: string
+    }
 }
