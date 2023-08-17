@@ -142,15 +142,24 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 background:
                     "linear-gradient(0deg, rgba(61,61,61,1)   0%, transparent 100%)",
             }}
-            className="     flex flex-col justify-center gap-2 relative w-full h-[18vw] shrink-0  px-12 py-3  rounded-lg"
+            className="flex flex-col justify-center gap-2 relative w-full h-[18vw] shrink-0  px-12 py-3  rounded-lg"
         >
-            <div className="self-center  flex flex-row justify-start gap-1 relative w-24 items-center">
-                <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
-                    TODOS
+            <div className="w-full  flex flex-row gap-1 relative items-center justify-between">
+                <div className='w-10 h-10'></div>
+                <div className="whitespace-nowrap text-[23px] font-sans text-white w-fit flex gap-2">
+                    To Do List
+                    <img
+                        src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
+                        className="min-h-0 min-w-0 relative w-4 shrink-0"
+                    />
                 </div>
-                <img
-                    src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-                    className="min-h-0 min-w-0 relative w-4 shrink-0"
+
+                <Image
+                    src="more-options.svg"
+                    alt={""}
+                    width={40}
+                    height={40}
+                    className="p-2 fade transition-all  rounded  drag-handle"
                 />
             </div>
             <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
@@ -158,7 +167,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
 
                 <ReactSortable handle='.drag-handle' list={todos} setList={setTodos}>
                     {todos.map((t) => (
-                        <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-full">
+                        <div key={t._id} className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 ">
                             <Image
                                 src="draghandle.svg"
                                 alt={""}
@@ -170,6 +179,20 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                             <div className="whitespace-nowrap  font-sans text-white relative">
                                 {t.title}
                             </div>
+                            <Image
+                                src="delete-icon.svg"
+                                alt={""}
+                                width={30}
+                                height={30}
+                                className="p-2 fade transition-all  rounded  drag-handle ml-auto"
+                            />
+                            <Image
+                                src="calendar.svg"
+                                alt={""}
+                                width={30}
+                                height={30}
+                                className="p-2 fade transition-all  rounded  drag-handle"
+                            />
                         </div>
                     ))}
                 </ReactSortable>
