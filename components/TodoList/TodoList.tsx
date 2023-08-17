@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { GoalBody } from '../../typings'
 import { ReactSortable } from "react-sortablejs";
+import Image from "next/image";
 
 type Props = {
     todos: any[],
@@ -155,9 +156,16 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
             <div className="overflow-auto">
 
-                <ReactSortable list={todos} setList={setTodos}>
+                <ReactSortable handle='.drag-handle' list={todos} setList={setTodos}>
                     {todos.map((t) => (
                         <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-full">
+                            <Image
+                                src="draghandle.svg"
+                                alt={""}
+                                width={30}
+                                height={30}
+                                className="p-2 fade transition-all  rounded  drag-handle"
+                            />
                             <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
                             <div className="whitespace-nowrap  font-sans text-white relative">
                                 {t.title}
