@@ -61,17 +61,25 @@ interface datatype {
 const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
+
+  if (!isLoaded) {
+    return <div>Loading</div>
+  }
+
   setLoading ? setLoading(true) : "";
   const [goal, setGoal] = useState<Goals[]>(goals);
   const router = useRouter();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
-  const todos = goals.filter((goal) => goal.username == user?.username);
+  const [todos, setTodos] = useState<any[]>([]);
+
+  const [tempTodo, setTemptodo] = useState<any>(null)
 
   console.log(goals)
 
   useEffect(() => {
+    setTodos(goals.filter((goal) => goal.username == user?.username))
     if (user && !match[0].categories) {
       // router.push("/categories");
     } else {
@@ -92,18 +100,22 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const postInfo: GoalBody = {
         // @ts-ignore
         _type: "goals",
-        title: "test title",
+        title: todoText,
         progress: 0,
         username: user?.username!,
         completed: false,
         delete: false,
       };
+      setTemptodo(postInfo)
       fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
         method: "POST",
       }).then(async (res) => {
         const json = await res.json();
-        console.log(json)
+        console.log(json.message.results[0].document)
+        const newTodo = json.message.results[0].document
+        setTemptodo(null)
+        setTodos([...todos, newTodo])
         toast.success('Successfully toasted!')
         // toast.custom((t) => (
         //   <div
@@ -320,23 +332,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     (note) => note.email === user?.emailAddresses[0].emailAddress
   );
 
-  // const handleSubmit = async (e: any) => {
-  //   // e.preventDefault();
-  //   const mutations: Notes = {
-  //     _type: "notes",
-  //     topic: '',
-  //     note: text,
-  //     email: user?.emailAddresses[0].emailAddress!,
-  //   };
-
-  //   const result = await fetch(`/api/addNotes`, {
-  //     body: JSON.stringify(mutations),
-  //     method: "POST",
-  //   });
-
-  //   const json = await result.json();
-  //   return json;
-  // };
   const [visible, setVisible] = useState(false);
   const [texts, setTexts] = useState("");
   const [stuff, setStuff] = useState("");
@@ -385,55 +380,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setTemptodos(items);
   };
 
-  // sample way to add dragable functionality todo list
-  //   import React, { useState } from 'react';
-  // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
-  // const TodoList = () => {
-  //   const [todos, setTodos] = useState([
-  //     { id: '1', text: 'Task 1' },
-  //     { id: '2', text: 'Task 2' },
-  //     { id: '3', text: 'Task 3' },
-  //   ]);
-
-  //   const handleDragEnd = (result) => {
-  //     if (!result.destination) return;
-
-  //     const items = Array.from(todos);
-  //     const [reorderedItem] = items.splice(result.source.index, 1);
-  //     items.splice(result.destination.index, 0, reorderedItem);
-
-  //     setTodos(items);
-  //   };
-
-  //   return (
-  //     <DragDropContext onDragEnd={handleDragEnd}>
-  //       <Droppable droppableId="todos">
-  //         {(provided) => (
-  //           <ul {...provided.droppableProps} ref={provided.innerRef}>
-  //             {todos.map((todo, index) => (
-  //               <Draggable key={todo.id} draggableId={todo.id} index={index}>
-  //                 {(provided) => (
-  //                   <li
-  //                     {...provided.draggableProps}
-  //                     {...provided.dragHandleProps}
-  //                     ref={provided.innerRef}
-  //                   >
-  //                     {todo.text}
-  //                   </li>
-  //                 )}
-  //               </Draggable>
-  //             ))}
-  //             {provided.placeholder}
-  //           </ul>
-  //         )}
-  //       </Droppable>
-  //     </DragDropContext>
-  //   );
-  // };
-
-  // export default TodoList;
-
   const [userprompt, setUserprompt] = useState({ mood: "", objective: "", time: "" })
   const handlechange = (eventmood: string) => {
     if (userprompt.mood && userprompt.mood === eventmood) {
@@ -454,6 +400,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const [selectedOption, setSelectedOption] = useState("");
 
+  const [todoText, setTodoText] = useState("")
+
   const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setSelectedOption(event.target.value);
   };
@@ -466,6 +414,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const handleNewTaskChange = (e: any) => {
     console.log(e.target.value)
+    setTodoText(e.target.value)
   }
 
   return (
@@ -490,30 +439,27 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 />
               </div>
               <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  font-sans text-white relative">
-                  Step 1
-                </div>
+              <div className="overflow-auto">
+                {todos.map((t) => (
+                  <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                    <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                    <div className="whitespace-nowrap  font-sans text-white relative">
+                      {t.title}
+                    </div>
+                  </div>
+                ))}
+
+                {tempTodo && (
+                  <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                    <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                    <div className="whitespace-nowrap  font-sans text-white relative">
+                      {tempTodo.title}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
-              <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
+
+
               {showTaskInput && (
                 <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
                   <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
