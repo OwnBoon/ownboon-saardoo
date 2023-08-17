@@ -136,6 +136,60 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         }
     };
 
+    const addDeleted = async (id: string | undefined) => {
+        try {
+            const postInfo = {
+                // @ts-ignore
+                _id: id,
+            };
+            setTodos(todos.filter((t: any) => t._id != id))
+
+            const result = await fetch(`/api/deleteGoals`, {
+                body: JSON.stringify(postInfo),
+                method: "POST",
+            });
+            const json = await result.json();
+            console.log(json);
+            toast.custom((t) => (
+                <div
+                    className={`${t.visible ? "animate-enter" : "animate-leave"
+                        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                >
+                    <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0 pt-0.5">
+                                <img
+                                    className="h-10 w-10 rounded-full"
+                                    src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+                                    alt=""
+                                />
+                            </div>
+                            <div className="ml-3 flex-1">
+                                <p className="text-[15px] font-medium text-gray-900">
+                                    U Deleted a todos
+                                </p>
+                                <p className="mt-1 text-[15px] text-gray-500">
+                                    Try refreshing the page to see it!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex border-l border-gray-200">
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            ));
+            return json;
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     return (
         <div
             style={{
@@ -185,6 +239,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                                 width={30}
                                 height={30}
                                 className="p-2 fade transition-all  rounded  drag-handle ml-auto"
+                                onClick={() => addDeleted(t._id)}
                             />
                             <Image
                                 src="calendar.svg"
