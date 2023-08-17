@@ -116,6 +116,16 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     setVisible(false);
   };
 
+  const completeRoadmap = async (id: string) => {
+    const postInfo = {
+      id: id,
+    };
+    const result = await fetch(`/api/deleteRoadmap`, {
+      body: JSON.stringify(postInfo),
+      method: "POST",
+    });
+  };
+
   // ------ data section --------
 
   const sampleData = [

@@ -83,13 +83,14 @@ const Post = ({ roadmap }: Props) => {
   console.log("info text", infotext);
   //  @ts-ignore
 
-  const progress = 0;
   //   to use this code basically just add a dropdown with a item as option of set goal. then pass this like this:
   //  onClick={() => setGoal(roadmap.id, roadmap.title)}
-  const setGoal = async (id: string, goal: string) => {
+  const setGoal = async (id: string, goal: string, index: number) => {
+    const total = roadmapdata.roadmap.length();
+    const percentage = (index / total) * 100;
     const postInfo = {
       id: id,
-      progress: progress,
+      progress: percentage,
       goal: goal,
     };
     const result = await fetch(`/api/setCurrentRoadmap`, {
@@ -110,7 +111,7 @@ const Post = ({ roadmap }: Props) => {
         {/* <div>{roadmapdata}</div> */}
         <div className=" gap-5 flex">
           <div className="gap-5 space-y-5">
-            {roadmapdata.roadmap.map((roadmap: any) => (
+            {roadmapdata.roadmap.map((roadmap: any, index: number) => (
               <div
                 onClick={() => fetchInfo(roadmap.title)}
                 className="bg-red-500"
@@ -124,7 +125,21 @@ const Post = ({ roadmap }: Props) => {
                       <p>{infotext.description}</p>
                       <div className="scale-[0.6] rounded-lg">
                         {/* @ts-ignore */}
-                        <ReactPlayer controls url={infotext.link} />
+                        <ReactPlayer controls url={infotext.link[0].video} />
+                        {/* @ts-ignore */}
+                        <ReactPlayer controls url={infotext.link[1].video} />
+                      </div>
+                      <div>
+                        3 best creators:
+                        {/* @ts-ignore */}
+                        {infotext.creators.map((creator) => (
+                          <div>{creator.first}</div>
+                        ))}
+                      </div>
+                      <div>
+                        a nice blog:
+                        {/* @ts-ignore */}
+                        {infotext.blog.link}
                       </div>
                     </div>
                   ) : null}
