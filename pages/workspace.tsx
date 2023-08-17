@@ -61,16 +61,27 @@ interface datatype {
 const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
+
+  if (!isLoaded) {
+    return <div>Loading</div>
+  }
+
   setLoading ? setLoading(true) : "";
   const [goal, setGoal] = useState<Goals[]>(goals);
   const router = useRouter();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
-  const todos = goals.filter((goal) => goal.username == user?.username);
+  const [todos, setTodos] = useState<any[]>([]);
+
+  const [tempTodo, setTemptodo] = useState<any>(null)
+
+  console.log(goals)
+
   useEffect(() => {
+    setTodos(goals.filter((goal) => goal.username == user?.username))
     if (user && !match[0].categories) {
-      router.push("/categories");
+      // router.push("/categories");
     } else {
       null;
     }
@@ -89,15 +100,57 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const postInfo: GoalBody = {
         // @ts-ignore
         _type: "goals",
-        title: "test title",
+        title: todoText,
         progress: 0,
         username: user?.username!,
         completed: false,
         delete: false,
       };
+      setTemptodo(postInfo)
       fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
         method: "POST",
+      }).then(async (res) => {
+        const json = await res.json();
+        console.log(json.message.results[0].document)
+        const newTodo = json.message.results[0].document
+        setTemptodo(null)
+        setTodos([...todos, newTodo])
+        toast.success('Successfully toasted!')
+        // toast.custom((t) => (
+        //   <div
+        //     className={`${t.visible ? "animate-enter" : "animate-leave"
+        //       } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-black ring-opacity-5`}
+        //   >
+        //     <div className="flex-1 w-0 p-4">
+        //       <div className="flex items-start">
+        //         <div className="flex-shrink-0 pt-0.5">
+        //           <img
+        //             className="h-10 w-10 rounded-full"
+        //             src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+        //             alt=""
+        //           />
+        //         </div>
+        //         <div className="ml-3 flex-1">
+        //           <p className="text-[15px] font-medium text-gray-900">
+        //             Todos Updated
+        //           </p>
+        //           <p className="mt-1 text-[15px] text-gray-500">
+        //             Try refreshing the page to see it!
+        //           </p>
+        //         </div>
+        //       </div>
+        //       <div className="flex border-l border-gray-200">
+        //         <button
+        //           onClick={() => toast.dismiss(t.id)}
+        //           className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        //         >
+        //           Close
+        //         </button>
+        //       </div>
+        //     </div>
+        //   </div>
+        // ));
       });
 
       toast.custom((t) => (
@@ -164,11 +217,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   const handlesubmit = (e: any) => {
-    e.preventDefault();
-    addGoalData();
-    setShowTask(false);
-    setTitle("");
-    // router.replace(router.asPath);
+    if (e.key == "Enter") {
+      console.log("add todo")
+      e.preventDefault();
+      // e.preventDefault();
+      addGoalData();
+      setShowTask(false);
+      setTitle("");
+      setShowTaskInput(false)
+      // router.replace(router.asPath);
+    }
+
   };
   const [text, setText] = useState("");
 
@@ -310,23 +369,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     (note) => note.email === user?.emailAddresses[0].emailAddress
   );
 
-  // const handleSubmit = async (e: any) => {
-  //   // e.preventDefault();
-  //   const mutations: Notes = {
-  //     _type: "notes",
-  //     topic: '',
-  //     note: text,
-  //     email: user?.emailAddresses[0].emailAddress!,
-  //   };
-
-  //   const result = await fetch(`/api/addNotes`, {
-  //     body: JSON.stringify(mutations),
-  //     method: "POST",
-  //   });
-
-  //   const json = await result.json();
-  //   return json;
-  // };
   const [visible, setVisible] = useState(false);
   const [texts, setTexts] = useState("");
   const [stuff, setStuff] = useState("");
@@ -437,7 +479,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       setUserprompt({ ...userprompt, mood: eventmood });
     }
   };
-  const [empty, setEmpty] = useState(false);
   const handleprompt = () => {};
   const [pageposition, setPagepostion] = useState(0);
   let pageid = 0;
@@ -460,6 +501,29 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setPagepostion(pageid);
     setEmpty(false);
   };
+  const [empty, setEmpty] = useState(false)
+
+  const [showTaskInput, setShowTaskInput] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const [todoText, setTodoText] = useState("")
+
+  const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const handleAddingTask = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    setShowTaskInput(true)
+    // do something with the selected option
+  };
+
+  const handleNewTaskChange = (e: any) => {
+    console.log(e.target.value)
+    setTodoText(e.target.value)
+  }
+
   return (
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
       <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
@@ -482,42 +546,44 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 />
               </div>
               <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  font-sans text-white relative">
-                  Step 1
+              <div className="overflow-auto">
+                {todos.map((t) => (
+                  <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                    <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                    <div className="whitespace-nowrap  font-sans text-white relative">
+                      {t.title}
+                    </div>
+                  </div>
+                ))}
+
+                {tempTodo && (
+                  <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                    <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                    <div className="whitespace-nowrap  font-sans text-white relative">
+                      {tempTodo.title}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+
+              {showTaskInput && (
+                <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
+                  <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                  <input className="whitespace-nowrap" id="username" type="text" placeholder="Add new Task" onChange={(e) => handleNewTaskChange(e)} onKeyUp={handlesubmit} />
                 </div>
-              </div>
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
+              )}
+              {!showTaskInput && (
+                <div className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded">
+                  <img
+                    src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
+                    className="min-h-0 min-w-0 relative w-4 shrink-0"
+                  />
+                  <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handleAddingTask}>
+                    Add Task
+                  </button>
                 </div>
-              </div>
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
-              <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 ">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
-              <div className=" border-gray-500 bg-[#38383A]  flex flex-row justify-center gap-1 relative h-12 shrink-0 items-center px-[10vw] py-2 border rounded">
-                <img
-                  src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
-                  className="min-h-0 min-w-0 relative w-4 shrink-0"
-                />
-                <button
-                  className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative"
-                  onClick={handlesubmit}
-                >
-                  Add Task
-                </button>
-              </div>
+              )}
             </div>
             <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-[12.3vw] shrink-0 items-center pt-4 pb-3  rounded-lg">
               <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
@@ -1015,8 +1081,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             )}
           </Dialog>
         </div>
-      </div>
-    </div>
+            </div >
+        </div >
   );
 };
 
