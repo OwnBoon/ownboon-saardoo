@@ -67,6 +67,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
   const todos = goals.filter((goal) => goal.username == user?.username);
+
+  console.log(goals)
+
   useEffect(() => {
     if (user && !match[0].categories) {
       router.push("/categories");
@@ -97,42 +100,46 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
         method: "POST",
+      }).then(async (res) => {
+        const json = await res.json();
+        console.log(json)
+        toast.success('Successfully toasted!')
+        // toast.custom((t) => (
+        //   <div
+        //     className={`${t.visible ? "animate-enter" : "animate-leave"
+        //       } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-black ring-opacity-5`}
+        //   >
+        //     <div className="flex-1 w-0 p-4">
+        //       <div className="flex items-start">
+        //         <div className="flex-shrink-0 pt-0.5">
+        //           <img
+        //             className="h-10 w-10 rounded-full"
+        //             src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+        //             alt=""
+        //           />
+        //         </div>
+        //         <div className="ml-3 flex-1">
+        //           <p className="text-[15px] font-medium text-gray-900">
+        //             Todos Updated
+        //           </p>
+        //           <p className="mt-1 text-[15px] text-gray-500">
+        //             Try refreshing the page to see it!
+        //           </p>
+        //         </div>
+        //       </div>
+        //       <div className="flex border-l border-gray-200">
+        //         <button
+        //           onClick={() => toast.dismiss(t.id)}
+        //           className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        //         >
+        //           Close
+        //         </button>
+        //       </div>
+        //     </div>
+        //   </div>
+        // ));
       });
 
-      toast.custom((t) => (
-        <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-        >
-          <div className="flex-1 w-0 p-4">
-            <div className="flex items-start">
-              <div className="flex-shrink-0 pt-0.5">
-                <img
-                  className="h-10 w-10 rounded-full"
-                  src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
-                  alt=""
-                />
-              </div>
-              <div className="ml-3 flex-1">
-                <p className="text-[15px] font-medium text-gray-900">
-                  Todos Updated
-                </p>
-                <p className="mt-1 text-[15px] text-gray-500">
-                  Try refreshing the page to see it!
-                </p>
-              </div>
-            </div>
-            <div className="flex border-l border-gray-200">
-              <button
-                onClick={() => toast.dismiss(t.id)}
-                className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      ));
     } catch (err) {
       console.error(err);
     }
@@ -162,11 +169,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   const handlesubmit = (e: any) => {
-    e.preventDefault();
-    addGoalData();
-    setShowTask(false);
-    setTitle("");
-    // router.replace(router.asPath);
+    if (e.key == "Enter") {
+      console.log("add todo")
+      e.preventDefault();
+      // e.preventDefault();
+      addGoalData();
+      setShowTask(false);
+      setTitle("");
+      setShowTaskInput(false)
+      // router.replace(router.asPath);
+    }
+
   };
   const [text, setText] = useState("");
 
@@ -422,14 +435,21 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const [selectedOption, setSelectedOption] = useState("");
 
+  const [showTaskInput, setShowTaskInput] = useState(false);
+
   const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
+  const handleAddingTask = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
+    setShowTaskInput(true)
     // do something with the selected option
   };
+
+  const handleNewTaskChange = (e: any) => {
+    console.log(e.target.value)
+  }
 
   return (
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
@@ -441,7 +461,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 background:
                   "linear-gradient(0deg, rgba(61,61,61,1)   0%, transparent 100%)",
               }}
-              className="     flex flex-col justify-start gap-2 relative w-full h-[16vw] shrink-0 items-start pl-12 py-3  rounded-lg"
+              className="     flex flex-col justify-start gap-2 relative w-full h-[16vw] shrink-0 items-start pl-12 py-3  rounded-lg overflow-y-auto"
             >
               <div className="self-center flex flex-row justify-start gap-1 relative w-24 items-center">
                 <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
@@ -477,15 +497,23 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   Step 1
                 </div>
               </div>
-              <div className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded">
-                <img
-                  src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
-                  className="min-h-0 min-w-0 relative w-4 shrink-0"
-                />
-                <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handlesubmit}>
-                  Add Task
-                </button>
-              </div>
+              {showTaskInput && (
+                <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
+                  <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                  <input className="whitespace-nowrap" id="username" type="text" placeholder="Add new Task" onChange={(e) => handleNewTaskChange(e)} onKeyUp={handlesubmit} />
+                </div>
+              )}
+              {!showTaskInput && (
+                <div className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded">
+                  <img
+                    src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
+                    className="min-h-0 min-w-0 relative w-4 shrink-0"
+                  />
+                  <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handleAddingTask}>
+                    Add Task
+                  </button>
+                </div>
+              )}
             </div>
             <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-[11.9vw] shrink-0 items-center pt-4 pb-3  rounded-lg">
               <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
