@@ -88,55 +88,55 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const postInfo: GoalBody = {
         // @ts-ignore
         _type: "goals",
-        title: title,
+        title: "test title",
         progress: 0,
         username: user?.username!,
         completed: false,
         delete: false,
       };
-      const result = await fetch(`/api/addGoalData`, {
+      fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
         method: "POST",
-      });
-      const json = await result.json();
-      toast.custom((t) => (
-        <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-        >
-          <div className="flex-1 w-0 p-4">
-            <div className="flex items-start">
-              <div className="flex-shrink-0 pt-0.5">
-                <img
-                  className="h-10 w-10 rounded-full"
-                  src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
-                  alt=""
-                />
-              </div>
-              <div className="ml-3 flex-1">
-                <p className="text-[15px] font-medium text-gray-900">
-                  Todos Updated
-                </p>
-                <p className="mt-1 text-[15px] text-gray-500">
-                  Try refreshing the page to see it!
-                </p>
+      }).then((res) => {
+        console.log(res)
+
+        toast.custom((t) => (
+          <div
+            className={`${t.visible ? "animate-enter" : "animate-leave"
+              } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          >
+            <div className="flex-1 w-0 p-4">
+              <div className="flex items-start">
+                <div className="flex-shrink-0 pt-0.5">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src="https://ownboon-practice.vercel.app/_next/image?url=%2Flogo.png&w=48&q=75"
+                    alt=""
+                  />
+                </div>
+                <div className="ml-3 flex-1">
+                  <p className="text-[15px] font-medium text-gray-900">
+                    Todos Updated
+                  </p>
+                  <p className="mt-1 text-[15px] text-gray-500">
+                    Try refreshing the page to see it!
+                  </p>
+                </div>
               </div>
             </div>
+            <div className="flex border-l border-gray-200">
+              <button
+                onClick={() => toast.dismiss(t.id)}
+                className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                Close
+              </button>
+            </div>
           </div>
-          <div className="flex border-l border-gray-200">
-            <button
-              onClick={() => toast.dismiss(t.id)}
-              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      ));
+        ));
+      });
 
-      console.log(json);
 
-      return json;
     } catch (err) {
       console.error(err);
     }
@@ -169,7 +169,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     addGoalData();
     setShowTask(false);
     setTitle("");
-    router.replace(router.asPath);
+    // router.replace(router.asPath);
   };
   const [text, setText] = useState("");
 
@@ -466,7 +466,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
                   className="min-h-0 min-w-0 relative w-4 shrink-0"
                 />
-                <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative">
+                <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handlesubmit}>
                   Add Task
                 </button>
               </div>
