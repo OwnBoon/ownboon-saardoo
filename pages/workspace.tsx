@@ -102,8 +102,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -211,8 +212,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -265,8 +267,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       console.log(json);
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -421,22 +424,42 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // export default TodoList;
 
-  const [userprompt, setUserprompt] = useState({mood : "", objective : "", time : ""})
-  const handlechange = (eventmood : string)=>{
-    if(userprompt.mood && userprompt.mood === eventmood){
-      setUserprompt({...userprompt , mood : ""})
-
+  const [userprompt, setUserprompt] = useState({
+    mood: "",
+    objective: "",
+    time: "",
+  });
+  const handlechange = (eventmood: string) => {
+    setEmpty(false);
+    if (userprompt.mood && userprompt.mood === eventmood) {
+      setUserprompt({ ...userprompt, mood: "" });
+    } else {
+      setUserprompt({ ...userprompt, mood: eventmood });
     }
-    else{
-      setUserprompt({...userprompt , mood : eventmood})
-
+  };
+  const [empty, setEmpty] = useState(false);
+  const handleprompt = () => {};
+  const [pageposition, setPagepostion] = useState(0);
+  let pageid = 0;
+  useEffect(() => {
+    if(!showPromptModal){
+      pageid=0;
+      setPagepostion(pageid);
+      setEmpty(false);
+      setUserprompt({mood: "", objective: "", time: ""})
     }
-  }
-  const [empty, setEmpty] = useState(false)
-  const handleprompt = ()=>{
-
-  }
-
+  }, [showPromptModal])
+  
+  const handlenextpage = () => {
+    pageid = pageposition + 1;
+    setPagepostion(pageid);
+    setEmpty(false);
+  };
+  const handlepreviouspage = () => {
+    pageid = pageposition - 1;
+    setPagepostion(pageid);
+    setEmpty(false);
+  };
   return (
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
       <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
@@ -488,7 +511,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
                   className="min-h-0 min-w-0 relative w-4 shrink-0"
                 />
-                <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handlesubmit}>
+                <button
+                  className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative"
+                  onClick={handlesubmit}
+                >
                   Add Task
                 </button>
               </div>
@@ -721,7 +747,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               </div>
             </div>
-          </div >
+          </div>
           <div className="flex flex-row  justify-center items-center w-full gap-x-3">
             <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
               <div
@@ -797,81 +823,200 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             </div>
           </Dialog>
           <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
-            <div className="flex w-[50vw] p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+            <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
               <div className="flex flex-col  items-center justify-center">
                 <h1 className="text-[2vw] my-2  text-white text-center ">
                   BoonBot
                 </h1>
                 <div className="w-44 h-[0px] border border-neutral-400"></div>
               </div>
-              <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
-                How are you feeling today?
-              </h2>
-              <div className="p-2 flex flex-row    gap-x-5">
-                <div className="flex items-center justify-center flex-row gap-x-3">
-
-                <Checkbox
-                
-                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                      isSelected={userprompt.mood &&userprompt.mood === "Unmotivated"? true : false}
-                      onChange={()=> handlechange("Unmotivated")}
-                      // isDisabled={userprompt.mood && userprompt.mood !== "Unmotivated"? true : false}
-                      color="gradient"
-                      labelColor="warning"
-                    >
-                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                        Unmotivated
-                      </h4>
-                    </Checkbox>
-                <Checkbox
-                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                      isSelected={userprompt.mood &&userprompt.mood === "Great"? true : false}
-                      onChange={()=> handlechange("Great")}
-                      // isDisabled={userprompt.mood &&userprompt.mood !== "Great"? true : false}
-                      color="gradient"
-                      labelColor="warning"
-                    >
-                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                        Great
-                      </h4>
-                    </Checkbox>
-                <Checkbox
-                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                      isSelected={userprompt.mood && userprompt.mood === "Stressed"? true : false}
-                      onChange={()=> handlechange("Stressed")}
-                      // isDisabled={userprompt.mood && userprompt.mood !== "Stressed"? true : false}
-                      color="gradient"
-                      labelColor="warning"
-                    >
-                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                      Stressed
-                      </h4>
-                    </Checkbox>
-                <Checkbox
-                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                      isSelected={userprompt.mood && userprompt.mood === "Normal"? true : false}
-                      onChange={()=> handlechange("Normal")}
-                      // isDisabled={userprompt.mood &&userprompt.mood !== "Normal"? true : false}
-                      color="gradient"
-                      labelColor="warning"
-                    >
-                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                      Normal
-                      </h4>
-                    </Checkbox>
-                   
-             
+              <div className="flex justify-center mt-7 text-center items-center">
+                <div
+                  className={`${
+                    pageposition === 0 ? "pageentry " : "pageexit"
+                  } text-center`}
+                >
+                  <h2 className="text-[1.3vw]  mt-6 my-2 font-fontspring  text-white font-medium ">
+                    How are you feeling today?
+                  </h2>
+                  <div className="p-2 flex flex-row    gap-x-5">
+                    <div className="flex items-center justify-center flex-row gap-x-3">
+                      <Checkbox
+                        className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                        isSelected={
+                          userprompt.mood && userprompt.mood === "Unmotivated"
+                            ? true
+                            : false
+                        }
+                        onChange={() => handlechange("Unmotivated")}
+                        // isDisabled={userprompt.mood && userprompt.mood !== "Unmotivated"? true : false}
+                        color="gradient"
+                        labelColor="warning"
+                      >
+                        <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                          Unmotivated
+                        </h4>
+                      </Checkbox>
+                      <Checkbox
+                        className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                        isSelected={
+                          userprompt.mood && userprompt.mood === "Great"
+                            ? true
+                            : false
+                        }
+                        onChange={() => handlechange("Great")}
+                        // isDisabled={userprompt.mood &&userprompt.mood !== "Great"? true : false}
+                        color="gradient"
+                        labelColor="warning"
+                      >
+                        <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                          Great
+                        </h4>
+                      </Checkbox>
+                      <Checkbox
+                        className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                        isSelected={
+                          userprompt.mood && userprompt.mood === "Stressed"
+                            ? true
+                            : false
+                        }
+                        onChange={() => handlechange("Stressed")}
+                        // isDisabled={userprompt.mood && userprompt.mood !== "Stressed"? true : false}
+                        color="gradient"
+                        labelColor="warning"
+                      >
+                        <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                          Stressed
+                        </h4>
+                      </Checkbox>
+                      <Checkbox
+                        className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                        isSelected={
+                          userprompt.mood && userprompt.mood === "Normal"
+                            ? true
+                            : false
+                        }
+                        onChange={() => handlechange("Normal")}
+                        // isDisabled={userprompt.mood &&userprompt.mood !== "Normal"? true : false}
+                        color="gradient"
+                        labelColor="warning"
+                      >
+                        <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                          Normal
+                        </h4>
+                      </Checkbox>
+                    </div>
+                    {/* <textarea name="prompt" id="prompt" className="border-none font-poppins  bg-[#232222]" ></textarea> */}
+                  </div>
+                </div>
+                <div
+                  className={`${
+                    pageposition === 1 ? " pageentry " : "pageexit "
+                  } text-center`}
+                >
+                  <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
+                    What do you want to get done?
+                  </h2>
+                  <div className="p-2 flex flex-row w-[30vw]   gap-x-5">
+                    <textarea
+                      name="prompt"
+                      id="prompt"
+                      onChange={(e) =>
+                        setUserprompt({
+                          ...userprompt,
+                          objective: e.target.value,
+                        })
+                      }
+                      className="border-none font-poppins w-[30vw] bg-[#232222]"
+                    ></textarea>
+                  </div>
+                </div>
+                <div
+                  className={`${
+                    pageposition === 2 ? " pageentry " : "pageexit "
+                  } text-center`}
+                >
+                  <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                    How much time do you have?
+                  </h2>
+                  <div className="p-2 flex flex-row  w-[30vw]  gap-x-5">
+                    <textarea
+                      name="prompt"
+                      id="prompt"
+                      onChange={(e) =>
+                        setUserprompt({ ...userprompt, time: e.target.value })
+                      }
+                      className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
+                    ></textarea>
+                  </div>
+                  
+                </div>
+                <div
+                    className={`${
+                      pageposition === 3 ? " pageentry " : "pageexit "
+                    } text-center`}
+                  >
+                    <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                      Generate Your Roadmap!
+                    </h2>
+                    <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
+                      <div className="flex flex-row gap-x-4 items-center justify-center">
+                            <button
+                              onClick={() => setShowPromptModal(false)}
+                              className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                            >
+                              Cancel
+                            </button>
+                     
+                          <button
+                            onClick={() => handleprompt()}
+                            className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                          >
+                            Generate Now
+                          </button>
+                      </div>
+                    </div>
+                  </div>
               </div>
-              {/* <textarea name="prompt" id="prompt" className="border-none font-poppins  bg-[#232222]" ></textarea> */}
             </div>
-            <div className="flex flex-row items-end justify-end">
-              <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button>
-            </div>
-        </div >
+            {pageposition !== 3 ? (
+              <div className="flex flex-row  items-center justify-between">
+                <div className="flex flex-row items-start justify-start">
+                  {pageposition && (
+                    <button
+                      onClick={() => handlepreviouspage()}
+                      className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                    >
+                      {"<-"} Back
+                    </button>
+                  )}
+                </div>
+                <div className="flex flex-row items-end justify-end">
+                  {empty && "Please Pick one of the options"}
+
+                  <button
+                    onClick={() =>
+                      pageposition === 0 && !userprompt.mood
+                        ? setEmpty(true)
+                        : pageposition === 1 && !userprompt.objective
+                        ? setEmpty(true)
+                        : pageposition === 2 && !userprompt.time
+                        ? setEmpty(true)
+                        : handlenextpage()
+                    }
+                    className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                  >
+                    Next {"->"}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </Dialog>
-      </div >
+        </div>
       </div>
-    </div >
+    </div>
   );
 };
 
