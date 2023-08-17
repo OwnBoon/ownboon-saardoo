@@ -19,7 +19,7 @@ const Dialog = ({ isOpen, onClose, children }: any) => {
       <div className="fixed inset-0 bg-black opacity-50"></div>
       <div
         ref={dialogRef}
-        className="showmodal popupArea z-50  max-w-[50vw] p-6 mx-auto bg-[#101010] rounded-[7px] border border-slate-800 border-opacity-75 shadow-lg"
+        className="showmodal popupArea z-50  max-w-[50vw] p-6 mx-auto bg-[#101010] rounded-xl border border-slate-800 border-opacity-75 shadow-lg"
       >
         {children}
       </div>

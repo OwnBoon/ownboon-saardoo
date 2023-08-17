@@ -5,30 +5,49 @@ import Dialog from "../ChapterPopup/ChapterPopup";
 
 interface Props {
   border: string;
+  showsidebar: boolean;
+  setShowsidebar : (value: boolean) => void;
 }
 
-const Sidebar = ({ border }: Props) => {
+const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
   const router = useRouter();
   const selected =
-    "transition-all duration-155 brightness-125 w-fit cursor-pointer flex items-center gap-8 text-white";
-  const normal = "w-fit cursor-pointer flex items-center text-gray-400 gap-8";
+    "transition-all duration-155 brightness-150 w-fit cursor-pointer flex items-center gap-y-8 gap-x-4 text-white";
+  const normal = "w-fit cursor-pointer  brightness-[-50] flex items-center text-gray-400 gap-y-8 gap-x-4";
   const [showBuddyModal, setShowBuddyModal] = React.useState(false);
-  const [showChatsModal, setShowChatsModal] = useState(false)
-  const [showSocialsModal, setShowSocialsModal] = useState(false)
+  const [showChatsModal, setShowChatsModal] = useState(false);
+  const [showSocialsModal, setShowSocialsModal] = useState(false);
+  
   return (
     <>
       <div
-        className={` h-screen w-[11vw]  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-5 border-r-2 border-[#1B1F3A] fixed`}
+        className={` h-screen transition-all   ${!showsidebar ? "w-[5vw]": "w-[11vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
       >
-        <div className="logo flex flex-col   gap-y-8">
-          <div className="flex flex-row  gap-8 items-center">
-            <img className="w-[55px]" src="ownboon.svg" />
-            <span className="font-fontspring ">OwnBoon</span>
+        <div className="logo flex flex-col transition-all   gap-y-8"
+         onMouseEnter={()=> setShowsidebar(true)} 
+         onMouseLeave={()=> setShowsidebar(false)}
+         >
+
+          <div className="flex flex-row transition-all gap-4 items-center">
+          <img className="w-[55px] transition-all fade" src="ownboon.svg" />
+          {showsidebar && 
+            <span className="font-fontspring fade  transition-all">OwnBoon</span>
+          
+          }
+          {showsidebar && 
+            <Image
+                src="sidebarexpand.svg"
+                alt={""}
+                width={40}
+                height={40}
+                className=" p-2 absolute right-0 fade transition-all  rounded  "
+              />
+          }
           </div>
-          <div className="flex flex-col  justify-center gap-y-8">
+          <div className="flex flex-col transition-all justify-center  gap-y-8">
             <div
-           onClick={() => setShowSocialsModal(true)}
-            //   onClick={() => router.push("/socials")}
+              onClick={() => setShowSocialsModal(true)}
+              //   onClick={() => router.push("/socials")}
               className={router.pathname == "/socials" ? selected : normal}
             >
               <Image
@@ -38,11 +57,13 @@ const Sidebar = ({ border }: Props) => {
                 height={55}
                 className=" p-2  rounded  "
               />
-              <span className="font-fontspring text-[15px]">Socials</span>
+         {showsidebar && 
+             <span className="font-fontspring fade ">Socials</span>
+         } 
             </div>
             <div
-              onClick={() =>setShowChatsModal(true)}
-            //   onClick={() => router.push("/chats")}
+              onClick={() => setShowChatsModal(true)}
+              //   onClick={() => router.push("/chats")}
               className={router.pathname == "/chats" ? selected : normal}
             >
               <Image
@@ -52,11 +73,13 @@ const Sidebar = ({ border }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-              <span className="font-fontspring text-[15px]">Chats</span>
+              {showsidebar && 
+             <span className="font-fontspring fade ">Chats</span>
+         } 
             </div>
             <div
-              onClick={() =>setShowBuddyModal(true)}
-            //   onClick={() => router.push("/buddies")}
+              onClick={() => setShowBuddyModal(true)}
+              //   onClick={() => router.push("/buddies")}
               className={router.pathname == "/buddies" ? selected : normal}
             >
               <Image
@@ -66,7 +89,9 @@ const Sidebar = ({ border }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-              <span className="font-fontspring">Buddies</span>
+              {showsidebar && 
+             <span className="font-fontspring fade">Buddies</span>
+         } 
             </div>
             <div
               onClick={() => router.push("/workspace")}
@@ -79,7 +104,9 @@ const Sidebar = ({ border }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-              <span className="font-fontspring">Workspace</span>
+                {showsidebar && 
+             <span className="font-fontspring fade ">Workspace</span>
+         } 
             </div>
             <div
               onClick={() => router.push("/roadmap")}
@@ -92,7 +119,9 @@ const Sidebar = ({ border }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-              <span className="font-fontspring">Roadmap</span>
+             {showsidebar && 
+             <span className="font-fontspring fade ">Roadmap</span>
+         } 
             </div>
             <div
               onClick={() => router.push("/lofi")}
@@ -105,7 +134,9 @@ const Sidebar = ({ border }: Props) => {
                 alt={""}
                 className=" p-2 rounded  "
               />
-              <span className="font-fontspring">Lofi</span>
+                {showsidebar && 
+             <span className="font-fontspring fade ">Lofi</span>
+         } 
             </div>
           </div>
         </div>
@@ -118,37 +149,58 @@ const Sidebar = ({ border }: Props) => {
             alt={""}
             className=" p-2 rounded  "
           />
-          <span className="font-fontspring">Feedback</span>
+          {showsidebar && 
+             <span className="font-fontspring fade ">Feedback</span>
+         } 
         </div>
       </div>
       <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>
         <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
-            <div className="flex flex-col p-5 items-center justify-center">
-                <h1 className="text-[3vw] my-2  text-white text-center ">Empowering Buddies</h1>
-        <div className="w-44 h-[0px] border border-neutral-400"></div>
-        <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">Find Your Self Development Buddy</h2>
-            </div>
-        <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button>
+          <div className="flex flex-col p-5 items-center justify-center">
+            <h1 className="text-[3vw] my-2  text-white text-center ">
+              Empowering Buddies
+            </h1>
+            <div className="w-44 h-[0px] border border-neutral-400"></div>
+            <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
+              Find Your Self Development Buddy
+            </h2>
+          </div>
+          <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
+            Coming Soon
+          </button>
         </div>
       </Dialog>
       <Dialog isOpen={showSocialsModal} onClose={setShowSocialsModal}>
         <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
-            <div className="flex flex-col p-5 items-center justify-center">
-                <h1 className="text-[3vw] my-2  text-white text-center ">Healthy Social Media</h1>
-        <div className="w-44 h-[0px] border border-neutral-400"></div>
-        <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">The Only Healthy Social Media for your self improvement journey with the use of ai</h2>
-            </div>
-        <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button>
+          <div className="flex flex-col p-5 items-center justify-center">
+            <h1 className="text-[3vw] my-2  text-white text-center ">
+              Healthy Social Media
+            </h1>
+            <div className="w-44 h-[0px] border border-neutral-400"></div>
+            <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
+              The Only Healthy Social Media for your self improvement journey
+              with the use of ai
+            </h2>
+          </div>
+          <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
+            Coming Soon
+          </button>
         </div>
       </Dialog>
       <Dialog isOpen={showChatsModal} onClose={setShowChatsModal}>
         <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
-            <div className="flex flex-col p-5 items-center justify-center">
-                <h1 className="text-[3vw] my-2  text-white text-center ">Tailored Group Chats</h1>
-        <div className="w-44 h-[0px] border border-neutral-400"></div>
-        <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">Learn, Grow and Share your Experience with the world</h2>
-            </div>
-        <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button>
+          <div className="flex flex-col p-5 items-center justify-center">
+            <h1 className="text-[3vw] my-2  text-white text-center ">
+              Tailored Group Chats
+            </h1>
+            <div className="w-44 h-[0px] border border-neutral-400"></div>
+            <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
+              Learn, Grow and Share your Experience with the world
+            </h2>
+          </div>
+          <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
+            Coming Soon
+          </button>
         </div>
       </Dialog>
     </>
