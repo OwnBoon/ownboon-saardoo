@@ -29,7 +29,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
             </Head>
 
             <Sidebar border={border} />
-            <div className="w-[89vw] ml-auto">
+            <div className="w-[80vw] ml-auto">
                 <Navbar icon={icon} text={text} bgColor={bgColor} border={border} />
                 <div
                     className="text-[#DDDDDD] py-20 pl-12 max-h-full "
