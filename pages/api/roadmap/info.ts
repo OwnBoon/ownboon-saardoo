@@ -12,14 +12,10 @@ export default async function handler(
 
     const title = req.query.title
 
-    const maxItems = 30
-    const minItems = 15
-    const minLevels = 5
-
-    const basePrompt = `based on my prompt , explain that in very short and even provide the link for  the best youtube video one can watch to do that: 
+    const basePrompt = `based on my prompt , explain that in very short and even provide the 2 links for  the best youtube video one can watch to do that and also mention 3 good content creators also mention a existing blog  for this field.: 
     ${title}.  
     note: 
-    - make sure the response is in form of {"link":"...","description":"..."}`
+    - make sure the response is in form of {"link":[{"video": "..."}],"description":"...","creators": [{"first": "..."}], "blog":"{"link":{...}}"}`
 
         const  data = {
             "model": "gpt-3.5-turbo",
@@ -27,7 +23,7 @@ export default async function handler(
         }
 
 
-  const apiEndpoint = `https://api.cattto.repl.co/v1/chat/completions`;
+  const apiEndpoint = `https://api.openai.com/v1/chat/completions`;
 
   const result = await fetch(apiEndpoint, {
     headers: {
