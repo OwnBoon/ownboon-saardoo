@@ -14,6 +14,7 @@ import { fetchNotes } from "../utils/fetchNotes";
 import toast from "react-hot-toast";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Head from "next/head";
+
 import {
   Button,
   Checkbox,
@@ -60,19 +61,27 @@ interface datatype {
 const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
+
+  if (!isLoaded) {
+    return <div>Loading</div>
+  }
+
   setLoading ? setLoading(true) : "";
   const [goal, setGoal] = useState<Goals[]>(goals);
   const router = useRouter();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
-  const todos = goals.filter((goal) => goal.username == user?.username);
+  const [todos, setTodos] = useState<any[]>([]);
+
+  const [tempTodo, setTemptodo] = useState<any>(null)
 
   console.log(goals)
 
   useEffect(() => {
+    setTodos(goals.filter((goal) => goal.username == user?.username))
     if (user && !match[0].categories) {
-      router.push("/categories");
+      // router.push("/categories");
     } else {
       null;
     }
@@ -91,18 +100,22 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const postInfo: GoalBody = {
         // @ts-ignore
         _type: "goals",
-        title: "test title",
+        title: todoText,
         progress: 0,
         username: user?.username!,
         completed: false,
         delete: false,
       };
+      setTemptodo(postInfo)
       fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
         method: "POST",
       }).then(async (res) => {
         const json = await res.json();
-        console.log(json)
+        console.log(json.message.results[0].document)
+        const newTodo = json.message.results[0].document
+        setTemptodo(null)
+        setTodos([...todos, newTodo])
         toast.success('Successfully toasted!')
         // toast.custom((t) => (
         //   <div
@@ -319,23 +332,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     (note) => note.email === user?.emailAddresses[0].emailAddress
   );
 
-  // const handleSubmit = async (e: any) => {
-  //   // e.preventDefault();
-  //   const mutations: Notes = {
-  //     _type: "notes",
-  //     topic: '',
-  //     note: text,
-  //     email: user?.emailAddresses[0].emailAddress!,
-  //   };
-
-  //   const result = await fetch(`/api/addNotes`, {
-  //     body: JSON.stringify(mutations),
-  //     method: "POST",
-  //   });
-
-  //   const json = await result.json();
-  //   return json;
-  // };
   const [visible, setVisible] = useState(false);
   const [texts, setTexts] = useState("");
   const [stuff, setStuff] = useState("");
@@ -384,58 +380,27 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setTemptodos(items);
   };
 
-  // sample way to add dragable functionality todo list
-  //   import React, { useState } from 'react';
-  // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+  const [userprompt, setUserprompt] = useState({ mood: "", objective: "", time: "" })
+  const handlechange = (eventmood: string) => {
+    if (userprompt.mood && userprompt.mood === eventmood) {
+      setUserprompt({ ...userprompt, mood: "" })
 
-  // const TodoList = () => {
-  //   const [todos, setTodos] = useState([
-  //     { id: '1', text: 'Task 1' },
-  //     { id: '2', text: 'Task 2' },
-  //     { id: '3', text: 'Task 3' },
-  //   ]);
+    }
+    else {
+      setUserprompt({ ...userprompt, mood: eventmood })
 
-  //   const handleDragEnd = (result) => {
-  //     if (!result.destination) return;
+    }
+  }
+  const [empty, setEmpty] = useState(false)
+  const handleprompt = () => {
 
-  //     const items = Array.from(todos);
-  //     const [reorderedItem] = items.splice(result.source.index, 1);
-  //     items.splice(result.destination.index, 0, reorderedItem);
+  }
 
-  //     setTodos(items);
-  //   };
-
-  //   return (
-  //     <DragDropContext onDragEnd={handleDragEnd}>
-  //       <Droppable droppableId="todos">
-  //         {(provided) => (
-  //           <ul {...provided.droppableProps} ref={provided.innerRef}>
-  //             {todos.map((todo, index) => (
-  //               <Draggable key={todo.id} draggableId={todo.id} index={index}>
-  //                 {(provided) => (
-  //                   <li
-  //                     {...provided.draggableProps}
-  //                     {...provided.dragHandleProps}
-  //                     ref={provided.innerRef}
-  //                   >
-  //                     {todo.text}
-  //                   </li>
-  //                 )}
-  //               </Draggable>
-  //             ))}
-  //             {provided.placeholder}
-  //           </ul>
-  //         )}
-  //       </Droppable>
-  //     </DragDropContext>
-  //   );
-  // };
-
-  // export default TodoList;
+  const [showTaskInput, setShowTaskInput] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("");
 
-  const [showTaskInput, setShowTaskInput] = useState(false);
+  const [todoText, setTodoText] = useState("")
 
   const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setSelectedOption(event.target.value);
@@ -449,6 +414,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const handleNewTaskChange = (e: any) => {
     console.log(e.target.value)
+    setTodoText(e.target.value)
   }
 
   return (
@@ -461,9 +427,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 background:
                   "linear-gradient(0deg, rgba(61,61,61,1)   0%, transparent 100%)",
               }}
-              className="     flex flex-col justify-start gap-2 relative w-full h-[16vw] shrink-0 items-start pl-12 py-3  rounded-lg overflow-y-auto"
+              className="     flex flex-col justify-center gap-2 relative w-full h-[18vw] shrink-0  px-12 py-3  rounded-lg"
             >
-              <div className="self-center flex flex-row justify-start gap-1 relative w-24 items-center">
+              <div className="self-center  flex flex-row justify-start gap-1 relative w-24 items-center">
                 <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
                   TODOS
                 </div>
@@ -472,31 +438,28 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   className="min-h-0 min-w-0 relative w-4 shrink-0"
                 />
               </div>
-              <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 bordert borderb-0 borderx-0" />
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 items-center">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  font-sans text-white relative">
-                  Step 1
-                </div>
+              <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
+              <div className="overflow-auto">
+                {todos.map((t) => (
+                  <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                    <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                    <div className="whitespace-nowrap  font-sans text-white relative">
+                      {t.title}
+                    </div>
+                  </div>
+                ))}
+
+                {tempTodo && (
+                  <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                    <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                    <div className="whitespace-nowrap  font-sans text-white relative">
+                      {tempTodo.title}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 items-center">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
-              <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 items-center">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
-              <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
-                <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                <div className="whitespace-nowrap  text-[#dddddd] relative">
-                  Step 1
-                </div>
-              </div>
+
+
               {showTaskInput && (
                 <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
                   <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
@@ -515,7 +478,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               )}
             </div>
-            <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-[11.9vw] shrink-0 items-center pt-4 pb-3  rounded-lg">
+            <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-[12.3vw] shrink-0 items-center pt-4 pb-3  rounded-lg">
               <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
                 AI SCHEDULE GENERATOR
               </div>
@@ -525,7 +488,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 resources to create optimized schedules, maximizing efficiency
                 and productivity.
               </div>
-              <div className="bg-gradient-to-r border-gray-500 from-gray-300  flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
+              <div className="bg-gradient-to-r border-gray-500 from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
                 <button
                   onClick={() => setShowPromptModal(true)}
                   className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24"
@@ -535,7 +498,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className=" bg-[#191919] flex flex-col items-stretch justify-start relative w-2/3 h-[29vw] py-3  rounded-lg">
+          <div className=" bg-[#191919] flex flex-col items-stretch justify-start relative w-2/3 h-[31.5vw] py-3  rounded-lg">
             <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
               BOON ISLAND
             </div>
@@ -819,7 +782,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             </div>
           </Dialog>
           <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
-            <div className="flex w-[50vw] p-5 h-full mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+            <div className="flex w-[50vw] p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
               <div className="flex flex-col  items-center justify-center">
                 <h1 className="text-[2vw] my-2  text-white text-center ">
                   BoonBot
@@ -829,45 +792,70 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
                 How are you feeling today?
               </h2>
-              <div>
-                <input
-                  type="radio"
-                  id="option1"
-                  name="option"
-                  value="option1"
-                  checked={selectedOption === "option1"}
-                  onChange={handleOptionChange}
-                />
-                <label htmlFor="option1">Option 1</label>
+              <div className="p-2 flex flex-row    gap-x-5">
+                <div className="flex items-center justify-center flex-row gap-x-3">
+
+                  <Checkbox
+
+                    className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                    isSelected={userprompt.mood && userprompt.mood === "Unmotivated" ? true : false}
+                    onChange={() => handlechange("Unmotivated")}
+                    // isDisabled={userprompt.mood && userprompt.mood !== "Unmotivated"? true : false}
+                    color="gradient"
+                    labelColor="warning"
+                  >
+                    <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                      Unmotivated
+                    </h4>
+                  </Checkbox>
+                  <Checkbox
+                    className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                    isSelected={userprompt.mood && userprompt.mood === "Great" ? true : false}
+                    onChange={() => handlechange("Great")}
+                    // isDisabled={userprompt.mood &&userprompt.mood !== "Great"? true : false}
+                    color="gradient"
+                    labelColor="warning"
+                  >
+                    <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                      Great
+                    </h4>
+                  </Checkbox>
+                  <Checkbox
+                    className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                    isSelected={userprompt.mood && userprompt.mood === "Stressed" ? true : false}
+                    onChange={() => handlechange("Stressed")}
+                    // isDisabled={userprompt.mood && userprompt.mood !== "Stressed"? true : false}
+                    color="gradient"
+                    labelColor="warning"
+                  >
+                    <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                      Stressed
+                    </h4>
+                  </Checkbox>
+                  <Checkbox
+                    className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                    isSelected={userprompt.mood && userprompt.mood === "Normal" ? true : false}
+                    onChange={() => handlechange("Normal")}
+                    // isDisabled={userprompt.mood &&userprompt.mood !== "Normal"? true : false}
+                    color="gradient"
+                    labelColor="warning"
+                  >
+                    <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                      Normal
+                    </h4>
+                  </Checkbox>
+
+
+                </div>
+                {/* <textarea name="prompt" id="prompt" className="border-none font-poppins  bg-[#232222]" ></textarea> */}
               </div>
-              <div>
-                <input
-                  type="radio"
-                  id="option2"
-                  name="option"
-                  value="option2"
-                  checked={selectedOption === "option2"}
-                  onChange={handleOptionChange}
-                />
-                <label htmlFor="option2">Option 2</label>
+              <div className="flex flex-row items-end justify-end">
+                <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button>
               </div>
-              <div>
-                <input
-                  type="radio"
-                  id="option3"
-                  name="option"
-                  value="option3"
-                  checked={selectedOption === "option3"}
-                  onChange={handleOptionChange}
-                />
-                <label htmlFor="option3">Option 3</label>
-              </div>
-              {/* <textarea name="prompt" id="prompt" className="border-none font-poppins  bg-[#232222]" ></textarea> */}
-              {/* <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button> */}
-            </div>
+            </div >
           </Dialog>
         </div >
-      </div >
+      </div>
     </div >
   );
 };
