@@ -34,6 +34,7 @@ import Layout from "../components/Layout/Layout";
 import Island from "../components/BoonIsland/Island";
 import Dialog from "../components/ChapterPopup/ChapterPopup";
 import SkeletonLoading from "../components/SkeletonLoading";
+import CustomLoader from "../components/CustomLoader";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -59,11 +60,12 @@ interface datatype {
 }
 
 const Home = ({ users, goals, notes, setLoading }: Props) => {
+  
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded) {
-    return <div>Loading</div>
+    return <div>Loading</div>;
   }
 
   setLoading ? setLoading(true) : "";
@@ -74,12 +76,12 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   );
   const [todos, setTodos] = useState<any[]>([]);
 
-  const [tempTodo, setTemptodo] = useState<any>(null)
+  const [tempTodo, setTemptodo] = useState<any>(null);
 
-  console.log(goals)
+  console.log(goals);
 
   useEffect(() => {
-    setTodos(goals.filter((goal) => goal.username == user?.username))
+    setTodos(goals.filter((goal) => goal.username == user?.username));
     if (user && !match[0].categories) {
       // router.push("/categories");
     } else {
@@ -106,17 +108,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
         completed: false,
         delete: false,
       };
-      setTemptodo(postInfo)
+      setTemptodo(postInfo);
       fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
         method: "POST",
       }).then(async (res) => {
         const json = await res.json();
-        console.log(json.message.results[0].document)
-        const newTodo = json.message.results[0].document
-        setTemptodo(null)
-        setTodos([...todos, newTodo])
-        toast.success('Successfully toasted!')
+        console.log(json.message.results[0].document);
+        const newTodo = json.message.results[0].document;
+        setTemptodo(null);
+        setTodos([...todos, newTodo]);
+        toast.success("Successfully toasted!");
         // toast.custom((t) => (
         //   <div
         //     className={`${t.visible ? "animate-enter" : "animate-leave"
@@ -218,16 +220,15 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const handlesubmit = (e: any) => {
     if (e.key == "Enter") {
-      console.log("add todo")
+      console.log("add todo");
       e.preventDefault();
       // e.preventDefault();
       addGoalData();
       setShowTask(false);
       setTitle("");
-      setShowTaskInput(false)
+      setShowTaskInput(false);
       // router.replace(router.asPath);
     }
-
   };
   const [text, setText] = useState("");
 
@@ -483,14 +484,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   const [pageposition, setPagepostion] = useState(0);
   let pageid = 0;
   useEffect(() => {
-    if(!showPromptModal){
-      pageid=0;
+    if (!showPromptModal) {
+      pageid = 0;
       setPagepostion(pageid);
       setEmpty(false);
-      setUserprompt({mood: "", objective: "", time: ""})
+      setUserprompt({ mood: "", objective: "", time: "" });
     }
-  }, [showPromptModal])
-  
+  }, [showPromptModal]);
+
   const handlenextpage = () => {
     pageid = pageposition + 1;
     setPagepostion(pageid);
@@ -501,30 +502,44 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setPagepostion(pageid);
     setEmpty(false);
   };
-  const [empty, setEmpty] = useState(false)
+  const [empty, setEmpty] = useState(false);
 
   const [showTaskInput, setShowTaskInput] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("");
 
-  const [todoText, setTodoText] = useState("")
+  const [todoText, setTodoText] = useState("");
 
-  const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleOptionChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleAddingTask = (event: { preventDefault: () => void; }) => {
+  const handleAddingTask = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    setShowTaskInput(true)
+    setShowTaskInput(true);
     // do something with the selected option
   };
 
   const handleNewTaskChange = (e: any) => {
-    console.log(e.target.value)
-    setTodoText(e.target.value)
+    console.log(e.target.value);
+    setTodoText(e.target.value);
+  };
+  const [showBoonIslandModal, setShowBoonIslandModal] = useState(false);
+  const [boonisland, setBoonisland] = useState(false)
+  const load = ()=>{
+    setShowBoonIslandModal(true)
+    setBoonisland(true)
+    setTimeout(() => {
+      setBoonisland(false)
+    }, 6000);
   }
 
   return (
+    <>
+    
+    {boonisland && <CustomLoader/>}
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
       <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
         <div className="flex flex-row justify-start gap-x-5 relative w-full items-center  mr-5">
@@ -548,7 +563,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
               <div className="overflow-auto">
                 {todos.map((t) => (
-                  <div key={t._id} className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                  <div
+                    key={t._id}
+                    className="flex flex-row justify-start mb-1 gap-4 relative w-20 "
+                  >
                     <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
                     <div className="whitespace-nowrap  font-sans text-white relative">
                       {t.title}
@@ -566,11 +584,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 )}
               </div>
 
-
               {showTaskInput && (
                 <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
                   <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                  <input className="whitespace-nowrap" id="username" type="text" placeholder="Add new Task" onChange={(e) => handleNewTaskChange(e)} onKeyUp={handlesubmit} />
+                  <input
+                    className="whitespace-nowrap"
+                    id="username"
+                    type="text"
+                    placeholder="Add new Task"
+                    onChange={(e) => handleNewTaskChange(e)}
+                    onKeyUp={handlesubmit}
+                  />
                 </div>
               )}
               {!showTaskInput && (
@@ -579,7 +603,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
                     className="min-h-0 min-w-0 relative w-4 shrink-0"
                   />
-                  <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handleAddingTask}>
+                  <button
+                    className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative"
+                    onClick={handleAddingTask}
+                  >
                     Add Task
                   </button>
                 </div>
@@ -610,8 +637,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               BOON ISLAND
             </div>
 
-            <div className="grow flex ">
-              {/* <Island  users={users} /> */}
+            <div
+              className="grow flex "
+              onClick={() => load()}
+            >
               {/* display the image of the current level of boon island, static image to avoid long loading */}
             </div>
           </div>
@@ -974,6 +1003,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     </div>
                     {/* <textarea name="prompt" id="prompt" className="border-none font-poppins  bg-[#232222]" ></textarea> */}
                   </div>
+                  {empty && "Please Pick one of the options"}
                 </div>
                 <div
                   className={`${
@@ -986,6 +1016,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   <div className="p-2 flex flex-row w-[30vw]   gap-x-5">
                     <textarea
                       name="prompt"
+                      placeholder="I want to do trignometry 1 and magnetism for AP..."
                       id="prompt"
                       onChange={(e) =>
                         setUserprompt({
@@ -996,6 +1027,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       className="border-none font-poppins w-[30vw] bg-[#232222]"
                     ></textarea>
                   </div>
+                  {empty && "Please enter atleast a sentence"}
                 </div>
                 <div
                   className={`${
@@ -1007,6 +1039,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   </h2>
                   <div className="p-2 flex flex-row  w-[30vw]  gap-x-5">
                     <textarea
+                      placeholder="I got 5 hours until i fly to las vegas..."
                       name="prompt"
                       id="prompt"
                       onChange={(e) =>
@@ -1015,58 +1048,61 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
                     ></textarea>
                   </div>
-                  
+                  {empty && "Please enter atleast a sentence"}
                 </div>
                 <div
-                    className={`${
-                      pageposition === 3 ? " pageentry " : "pageexit "
-                    } text-center`}
-                  >
-                    <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
-                      Generate Your Roadmap!
-                    </h2>
-                    <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
-                      <div className="flex flex-row gap-x-4 items-center justify-center">
-                            <button
-                              onClick={() => setShowPromptModal(false)}
-                              className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
-                            >
-                              Cancel
-                            </button>
-                     
-                          <button
-                            onClick={() => handleprompt()}
-                            className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
-                          >
-                            Generate Now
-                          </button>
-                      </div>
+                  className={`${
+                    pageposition === 3 ? " pageentry " : "pageexit "
+                  } text-center`}
+                >
+                  <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                    Generate Your Roadmap
+                  </h2>
+                  <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
+                    <div className="flex flex-row gap-x-4 items-center justify-center">
+                      <button
+                        onClick={() => setShowPromptModal(false)}
+                        className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        onClick={() => handleprompt()}
+                        className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                      >
+                        Generate Now
+                      </button>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
             {pageposition !== 3 ? (
               <div className="flex flex-row  items-center justify-between">
                 <div className="flex flex-row items-start justify-start">
-                  {pageposition && (
+                  {pageposition ? (
                     <button
                       onClick={() => handlepreviouspage()}
-                      className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                      className="py-2 fade px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                     >
                       {"<-"} Back
                     </button>
+                  ) : (
+                    ""
                   )}
                 </div>
                 <div className="flex flex-row items-end justify-end">
-                  {empty && "Please Pick one of the options"}
-
                   <button
                     onClick={() =>
                       pageposition === 0 && !userprompt.mood
                         ? setEmpty(true)
-                        : pageposition === 1 && !userprompt.objective
+                        : pageposition === 1 &&
+                          (!userprompt.objective ||
+                            userprompt.objective.length < 40)
                         ? setEmpty(true)
-                        : pageposition === 2 && !userprompt.time
+                        : pageposition === 2 &&
+                          (!userprompt.time || userprompt.time.length < 40)
                         ? setEmpty(true)
                         : handlenextpage()
                     }
@@ -1080,9 +1116,20 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               ""
             )}
           </Dialog>
+          <Dialog isOpen={showBoonIslandModal} onClose={setShowBoonIslandModal}>
+            <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+             
+              <div className="flex justify-center mt-7 text-center items-center">
+              <Island  users={users} />
+               
+              </div>
+            </div>
+           
+          </Dialog>
         </div>
-            </div >
-        </div >
+      </div>
+    </div>
+      </>
   );
 };
 

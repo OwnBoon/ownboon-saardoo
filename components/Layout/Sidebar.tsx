@@ -12,8 +12,8 @@ interface Props {
 const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
   const router = useRouter();
   const selected =
-    "transition-all duration-155 brightness-150 w-fit cursor-pointer flex items-center gap-y-8 gap-x-4 text-white";
-  const normal = "w-fit cursor-pointer  brightness-[-50] flex items-center text-gray-400 gap-y-8 gap-x-4";
+    "transition-all duration-155 sidebar brightness-150 w-fit cursor-pointer flex items-center gap-y-8 gap-x-4 text-white";
+  const normal = "w-fit cursor-pointer sidebar brightness-[-50] flex items-center text-gray-400 gap-y-8 gap-x-4";
   const [showBuddyModal, setShowBuddyModal] = React.useState(false);
   const [showChatsModal, setShowChatsModal] = useState(false);
   const [showSocialsModal, setShowSocialsModal] = useState(false);
@@ -44,7 +44,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               />
             }
           </div>
-          <div className="flex flex-col transition-all justify-center  gap-y-8">
+          <div className="flex  flex-col transition-all justify-center  gap-y-8">
             <div
               onClick={() => setShowSocialsModal(true)}
               //   onClick={() => router.push("/socials")}

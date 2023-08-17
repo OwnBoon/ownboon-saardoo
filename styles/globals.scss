@@ -109,6 +109,17 @@ body {
     opacity: 100%;
   }
 }
+.sidebar:hover{
+  transition: 1s all;
+  transform: scale(1.1);
+  filter: brightness(1.3);
+  color: rgb(198, 198, 198);
+}
+.sidebar {
+  transition: 1s all;
+  transform: scale(1);
+  filter: brightness(1);
+}
 
 .blog h1 {
   font-size: 1.7rem;
