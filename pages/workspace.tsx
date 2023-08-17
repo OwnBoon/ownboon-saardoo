@@ -14,6 +14,7 @@ import { fetchNotes } from "../utils/fetchNotes";
 import toast from "react-hot-toast";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Head from "next/head";
+
 import {
   Button,
   Checkbox,
@@ -420,16 +421,21 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // export default TodoList;
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [userprompt, setUserprompt] = useState({mood : "", objective : "", time : ""})
+  const handlechange = (eventmood : string)=>{
+    if(userprompt.mood && userprompt.mood === eventmood){
+      setUserprompt({...userprompt , mood : ""})
 
-  const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setSelectedOption(event.target.value);
-  };
+    }
+    else{
+      setUserprompt({...userprompt , mood : eventmood})
 
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
-    // do something with the selected option
-  };
+    }
+  }
+  const [empty, setEmpty] = useState(false)
+  const handleprompt = ()=>{
+
+  }
 
   return (
     <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
@@ -802,50 +808,69 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 How are you feeling today?
               </h2>
               <div className="p-2 flex flex-row    gap-x-5">
-                <div className="flex flex-row gap-x-3">
+                <div className="flex items-center justify-center flex-row gap-x-3">
 
-                <input
-                  type="radio"
-                  id="option1"
-                  name="option"
-                  value="option1"
-                  checked={selectedOption === "option1"}
-                  onChange={handleOptionChange}
-                  />
-                <label htmlFor="option1">Option 1</label>
-                  </div>
-                <div className="flex flex-row gap-x-3">
-
-                <input
-                  type="radio"
-                  id="option1"
-                  name="option"
-                  value="option1"
-                  checked={selectedOption === "option1"}
-                  onChange={handleOptionChange}
-                  />
-                <label htmlFor="option1">Option 1</label>
-                  </div>
-                <div className="flex flex-row gap-x-3">
-
-                <input
-                  type="radio"
-                  id="option1"
-                  name="option"
-                  value="option1"
-                  checked={selectedOption === "option1"}
-                  onChange={handleOptionChange}
-                  />
-                <label htmlFor="option1">Option 1</label>
-                  </div>
+                <Checkbox
+                
+                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                      isSelected={userprompt.mood &&userprompt.mood === "Unmotivated"? true : false}
+                      onChange={()=> handlechange("Unmotivated")}
+                      // isDisabled={userprompt.mood && userprompt.mood !== "Unmotivated"? true : false}
+                      color="gradient"
+                      labelColor="warning"
+                    >
+                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                        Unmotivated
+                      </h4>
+                    </Checkbox>
+                <Checkbox
+                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                      isSelected={userprompt.mood &&userprompt.mood === "Great"? true : false}
+                      onChange={()=> handlechange("Great")}
+                      // isDisabled={userprompt.mood &&userprompt.mood !== "Great"? true : false}
+                      color="gradient"
+                      labelColor="warning"
+                    >
+                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                        Great
+                      </h4>
+                    </Checkbox>
+                <Checkbox
+                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                      isSelected={userprompt.mood && userprompt.mood === "Stressed"? true : false}
+                      onChange={()=> handlechange("Stressed")}
+                      // isDisabled={userprompt.mood && userprompt.mood !== "Stressed"? true : false}
+                      color="gradient"
+                      labelColor="warning"
+                    >
+                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                      Stressed
+                      </h4>
+                    </Checkbox>
+                <Checkbox
+                      className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                      isSelected={userprompt.mood && userprompt.mood === "Normal"? true : false}
+                      onChange={()=> handlechange("Normal")}
+                      // isDisabled={userprompt.mood &&userprompt.mood !== "Normal"? true : false}
+                      color="gradient"
+                      labelColor="warning"
+                    >
+                      <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                      Normal
+                      </h4>
+                    </Checkbox>
+                   
              
               </div>
               {/* <textarea name="prompt" id="prompt" className="border-none font-poppins  bg-[#232222]" ></textarea> */}
-              {/* <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button> */}
             </div>
-          </Dialog>
+            <div className="flex flex-row items-end justify-end">
+              <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">Coming Soon</button>
+            </div>
         </div >
+          </Dialog>
       </div >
+      </div>
     </div >
   );
 };
