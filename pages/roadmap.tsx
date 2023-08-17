@@ -79,17 +79,16 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
 
     // const fine = content!.replace("@finish", "");
 
-    setTimeout(() => {}, 1000);
     const content = data?.message.choices[0].message.content;
-    const fiine = content?.replace("@finish", "");
-    const sus = JSON.parse(fiine!);
-    console.log(sus.roadmap[0].title);
+    // const fiine = content?.replace("@finish", "");
+    // const sus = JSON.parse(fiine!);
+    // console.log(sus.roadmap[0].title);
 
     const mutations = {
       _type: "roadmap",
       content: content,
       email: user?.emailAddresses[0].emailAddress,
-      goal: sus.roadmap[0].title,
+      // goal: sus.roadmap[0].title,
       progress: 0,
       slug: {
         current: random,
