@@ -128,7 +128,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               className={router.pathname == "/lofi" ? selected : normal}
             >
               <Image
-                src="workspace.svg"
+                src="lofi.svg"
                 width={55}
                 height={55}
                 alt={""}
