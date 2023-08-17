@@ -13,7 +13,8 @@ interface Props {
 
 const Navbar = ({ icon, text, bgColor, border, showsidebar }: Props) => {
   const { user } = useUser();
-  const [showsearch, setshowsearch] = useState("")
+  const [showsearch, setshowsearch] = useState(false)
+  const [search, setSearch] = useState("")
 
   return ( 
     <div

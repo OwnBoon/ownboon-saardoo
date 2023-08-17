@@ -20,12 +20,12 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
 
   return (
     <>
-      <div
+      <div  onMouseEnter={() => setShowsidebar(true)}
+          onMouseLeave={() => setShowsidebar(false)}
         className={` h-screen transition-all   ${!showsidebar ? "w-[5vw]" : "w-[11vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
       >
         <div className="logo flex flex-col transition-all   gap-y-8"
-          onMouseEnter={() => setShowsidebar(true)}
-          onMouseLeave={() => setShowsidebar(false)}
+         
         >
 
           <div className="flex flex-row transition-all gap-4 items-center">
@@ -139,18 +139,17 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               }
             </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-8"></div>
-        <div className="p-2 flex gap-4 items-center text-white">
+          </div>
+        <div className="p-2 sidebar cursor-pointer flex gap-4 items-center text-white">
           <Image
             src="feedback.svg"
             width={55}
             height={55}
             alt={""}
             className=" p-2 rounded  "
-          />
+            />
           {showsidebar &&
-            <span className="font-fontspring fade ">Feedback</span>
+            <span className="font-fontspring  fade ">Feedback</span>
           }
         </div>
       </div>
