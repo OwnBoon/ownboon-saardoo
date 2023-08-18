@@ -16,8 +16,9 @@ import axios from "axios";
 
 interface Props {
   users: User[];
+  setLoading?: (value: boolean) => void;
 }
-const Home = ({ users }: Props) => {
+const Home = ({ users, setLoading }: Props) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
   const [encrypt, setEnCrpyt] = useState("");
