@@ -61,7 +61,6 @@ interface datatype {
 }
 
 const Home = ({ users, goals, notes, setLoading }: Props) => {
-
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
 
@@ -91,13 +90,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setLoading ? setLoading(false) : "";
   }, []);
 
-
   const refreshGoals = async () => {
     const goals: Goals[] = await fetchGoals();
     setGoal(goals);
   };
-
-
 
   const addGoalDataSchedule = async (title: string) => {
     try {
@@ -164,8 +160,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -267,7 +264,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       setUserprompt({ ...userprompt, mood: eventmood });
     }
   };
-  const handleprompt = () => { };
+  const handleprompt = () => {};
   const [pageposition, setPagepostion] = useState(0);
   let pageid = 0;
   useEffect(() => {
@@ -302,18 +299,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   const [showBoonIslandModal, setShowBoonIslandModal] = useState(false);
-  const [boonisland, setBoonisland] = useState(false)
+  const [boonisland, setBoonisland] = useState(false);
   const load = () => {
-    setShowBoonIslandModal(true)
-    setBoonisland(true)
+    setShowBoonIslandModal(true);
+    setBoonisland(true);
     setTimeout(() => {
-      setBoonisland(false)
+      setBoonisland(false);
     }, 1000);
-  }
+  };
 
   return (
     <>
-
       <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
           <div className="flex flex-row justify-start gap-x-5 relative w-full items-center  mr-5">
@@ -326,9 +322,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
                 <div className="mb-2 relative w-40 h-px shrink-0 " />
                 <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
-                  The AI schedule generator analyzes preferences, constraints, and
-                  resources to create optimized schedules, maximizing efficiency
-                  and productivity.
+                  The AI schedule generator analyzes preferences, constraints,
+                  and resources to create optimized schedules, maximizing
+                  efficiency and productivity.
                 </div>
                 <div className="bg-gradient-to-r border-gray-500 from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
                   <button
@@ -340,74 +336,20 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
-            <img
-              src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-              className="min-h-0 min-w-0 relative w-4 shrink-0"
-            />
-          </div>
-
-          <div className="border-solid border-gray-500 border   mb-3 relative w-40 h-px  shrink-0 " />
-          <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
-            <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-              <div
-                onClick={() => setShowModal(true)}
-                className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-              >
-                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                  Chapter 1
-                </div>
-                <div className="w-24 h-[0px] border border-neutral-400"></div>
-                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                  dolor in reprehenderit in...
-                </div>
-=======
             <div className=" bg-[#191919] flex flex-col items-stretch justify-start relative w-2/3 h-[31.5vw] py-3  rounded-lg">
               <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
                 BOON ISLAND
->>>>>>> 6478151d24861461f4539df20a0fdfe20772d458
               </div>
 
-              <div
-                className="grow flex "
-                onClick={() => load()}
-              >
+              <div className="grow flex " onClick={() => load()}>
                 {/* display the image of the current level of boon island, static image to avoid long loading */}
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
-            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-              <div
-                onClick={() => setShowModal(true)}
-                className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-              >
-                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                  Chapter 1
-                </div>
-                <div className="w-24 h-[0px] border border-neutral-400"></div>
-                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                  dolor in reprehenderit in...
-                </div>
-=======
           <div className="  bg-[#191919] flex  flex-col  mr-5 gap-y-3 relative w-full items-center   rounded-lg justify-center overflow-y-visible ">
             <div className="flex flex-row justify-start gap-1 relative w-16 items-center">
               <div className="text-[23px] text-white  pt-3 top-0 sticky ">
                 NOTES
->>>>>>> 6478151d24861461f4539df20a0fdfe20772d458
               </div>
               <img
                 src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
@@ -430,10 +372,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
                   <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
                   </div>
                 </div>
               </div>
@@ -450,10 +392,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
                   <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
                   </div>
                 </div>
               </div>
@@ -470,94 +412,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
                   <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-            </div>
-<<<<<<< HEAD
-          </div>
-          <div className="flex flex-row transition-all  justify-center items-center w-full gap-x-3">
-            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-              <div
-                onClick={() => setShowModal(true)}
-                className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-              >
-                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                  Chapter 1
-                </div>
-                <div className="w-24 h-[0px] border border-neutral-400"></div>
-                <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                  dolor in reprehenderit in...
-=======
-            <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
-                  </div>
->>>>>>> 6478151d24861461f4539df20a0fdfe20772d458
-                </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
                   </div>
                 </div>
               </div>
@@ -576,44 +434,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
                   <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
                   </div>
-                </div>
-              </div>
-<<<<<<< HEAD
-            </div>
-          </div>
-          <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
-            <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-              <div
-                onClick={() => setShowModal(true)}
-                className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-              >
-                <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                  Chapter 1
-=======
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
-                  </div>
->>>>>>> 6478151d24861461f4539df20a0fdfe20772d458
                 </div>
               </div>
               <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
@@ -629,15 +454,36 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
                   <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
+                  </div>
+                </div>
+              </div>
+              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+                <div
+                  onClick={() => setShowModal(true)}
+                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+                >
+                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                    Chapter 1
+                  </div>
+                  <div className="w-24 h-[0px] border border-neutral-400"></div>
+                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+
+                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+
+            <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
               <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
                 <div
                   onClick={() => setShowModal(true)}
@@ -651,10 +497,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
                   <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
                   </div>
                 </div>
               </div>
@@ -671,30 +517,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
                   <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequatDuis aute irure
-                    dolor in reprehenderit in...
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                    aute irure dolor in reprehenderit in...
                   </div>
                 </div>
               </div>
@@ -702,13 +528,13 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
             <Dialog isOpen={showModal} onClose={setShowModal}>
               <div className="rounded-xl bg-[#101010] p-16">
-
                 <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
                   Chapter 1
                 </div>
                 <div className="w-44 h-[0px] border border-neutral-400"></div>
                 <div className="w-full h-[579px] text-neutral-200 text-base font-medium mt-3">
-                  Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Ch
+                  Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter
+                  1Ch
                   <br />
                   apter 1Chapter 1Chapter 1Chapter{" "}
                 </div>
@@ -724,8 +550,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
                 <div className="flex justify-center mt-7 text-center items-center">
                   <div
-                    className={`${pageposition === 0 ? "pageentry " : "pageexit"
-                      } text-center`}
+                    className={`${
+                      pageposition === 0 ? "pageentry " : "pageexit"
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw]  mt-6 my-2 font-fontspring  text-white font-medium ">
                       How are you feeling today?
@@ -797,8 +624,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please Pick one of the options"}
                   </div>
                   <div
-                    className={`${pageposition === 1 ? " pageentry " : "pageexit "
-                      } text-center`}
+                    className={`${
+                      pageposition === 1 ? " pageentry " : "pageexit "
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
                       What do you want to get done?
@@ -820,8 +648,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please enter atleast a sentence"}
                   </div>
                   <div
-                    className={`${pageposition === 2 ? " pageentry " : "pageexit "
-                      } text-center`}
+                    className={`${
+                      pageposition === 2 ? " pageentry " : "pageexit "
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
                       How much time do you have?
@@ -840,8 +669,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please enter atleast a sentence"}
                   </div>
                   <div
-                    className={`${pageposition === 3 ? " pageentry " : "pageexit "
-                      } text-center`}
+                    className={`${
+                      pageposition === 3 ? " pageentry " : "pageexit "
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
                       Generate Your Roadmap
@@ -888,11 +718,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           : pageposition === 1 &&
                             (!userprompt.objective ||
                               userprompt.objective.length < 40)
-                            ? setEmpty(true)
-                            : pageposition === 2 &&
-                              (!userprompt.time || userprompt.time.length < 40)
-                              ? setEmpty(true)
-                              : handlenextpage()
+                          ? setEmpty(true)
+                          : pageposition === 2 &&
+                            (!userprompt.time || userprompt.time.length < 40)
+                          ? setEmpty(true)
+                          : handlenextpage()
                       }
                       className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                     >
@@ -904,16 +734,22 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 ""
               )}
             </Dialog>
-            <Dialog isOpen={showBoonIslandModal} onClose={setShowBoonIslandModal}>
+            <Dialog
+              isOpen={showBoonIslandModal}
+              onClose={setShowBoonIslandModal}
+            >
               <div className="flex w-[94.3vw] ml-[-21vw] mt-[5.2vw]  h-[48vw] items-center justify-center  rounded-xl  flex-col ">
-                {boonisland && <Loading className="mt-[10vw]" color={"white"} />}
+                {boonisland && (
+                  <Loading className="mt-[10vw]" color={"white"} />
+                )}
 
                 <div className="flex   text-center items-center">
-                  <Island setShowBoonIslandModal={setShowBoonIslandModal} users={users} />
-
+                  <Island
+                    setShowBoonIslandModal={setShowBoonIslandModal}
+                    users={users}
+                  />
                 </div>
               </div>
-
             </Dialog>
           </div>
         </div>

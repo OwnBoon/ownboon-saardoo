@@ -32,7 +32,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
         border={border}
       />
       <div
-        className={`${showsidebar ? "w-[84vw]" : "w-[92vw]"
+        className={`${showsidebar ? "w-[86vw]" : "w-[92vw]"
           }  ml-auto transition-all`}
       >
         <Navbar
@@ -43,7 +43,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] py-24 pb-24 px-4 ${!showsidebar ? "pl-5" : "pl-11"}`}
+          className={`text-[#DDDDDD] py-24 pb-24 pr-4 ${!showsidebar ? "" : ""}`}
           style={{
             backgroundImage: hasBg ? "url(lofi.svg)" : "none",
           }}

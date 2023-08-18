@@ -14,7 +14,6 @@ interface Props {
   setLoading?: (value: boolean) => void;
 }
 
-<<<<<<< HEAD
 const Navbar = ({
   icon,
   text,
@@ -23,14 +22,10 @@ const Navbar = ({
   showsidebar,
   setLoading,
 }: Props) => {
-=======
-const Navbar = ({ icon, text, bgColor, border, showsidebar, setLoading }: Props) => {
->>>>>>> 6478151d24861461f4539df20a0fdfe20772d458
   const { user } = useUser();
   const [showsearch, setshowsearch] = useState(false);
   const [shownotifications, setShownotifications] = useState(false);
   const [search, setSearch] = useState("");
-<<<<<<< HEAD
   const togglenotification = () => {
     if (shownotifications) {
       setShownotifications(false);
@@ -49,18 +44,7 @@ const Navbar = ({ icon, text, bgColor, border, showsidebar, setLoading }: Props)
     setLoading ? setLoading(false) : "";
     setShownotifications(false);
     setSearch("");
-=======
-  const handlesearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading ? setLoading(true) : "";
-    setshowsearch(false)
-    setSearch("")
-  };
-  useEffect(() => {
-    setLoading ? setLoading(false) : "";
-    setSearch("")
->>>>>>> 6478151d24861461f4539df20a0fdfe20772d458
-  }, []);
+  });
 
   return (
     <>
@@ -69,14 +53,7 @@ const Navbar = ({ icon, text, bgColor, border, showsidebar, setLoading }: Props)
         setShownotifications={setShownotifications}
       />
       <div
-<<<<<<< HEAD
-        className={`${
-          showsidebar ? "" : "ml-[-1vw] "
-        } w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-50`}
-=======
-        className={`${showsidebar ? "w-[89vw]" : "w-[95vw] ml-[-1vw]"
-          } border-b-2 border-gray-700 flex items-center justify-between px-8 py-3 fixed z-50`}
->>>>>>> 6478151d24861461f4539df20a0fdfe20772d458
+        className={` ml-[-3vw] w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-50`}
         style={{
           backgroundColor: bgColor,
         }}
@@ -85,15 +62,18 @@ const Navbar = ({ icon, text, bgColor, border, showsidebar, setLoading }: Props)
           <Image width={30} height={30} className="" src={icon} alt={text} />
           <span className="font-fontspring text-[20px]">{text}</span>
         </div>
-        <div className={` ${
-          showsidebar ? "translate-x-[-6vw]" : "translate-x-0"
-        } flex items-center transition-all gap-10 relative`}>
+        <div
+          className={` ${
+            showsidebar ? "translate-x-[-6vw]" : "translate-x-0"
+          } flex items-center transition-all gap-10 relative`}
+        >
           <Image
             width={55}
             height={55}
             onClick={() => setshowsearch(true)}
-            className={`p-2 ${showsearch ? "hidden" : ""
-              } rounded hover:brightness-150 fade transition-all cursor-pointer`}
+            className={`p-2 ${
+              showsearch ? "hidden" : ""
+            } rounded hover:brightness-150 fade transition-all cursor-pointer`}
             src="search.svg"
             alt={"search"}
           />

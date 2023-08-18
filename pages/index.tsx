@@ -109,7 +109,7 @@ const Home = ({ users, setLoading }: Props) => {
         <title>OwnBoon</title>
         <link rel="icon" href="/logo.png" />
       </Head>
-      <Navbar />
+      <Navbar setLoading={setLoading}/>
       <div className="mx-auto my-auto">
         <Hero />
         <Body />
