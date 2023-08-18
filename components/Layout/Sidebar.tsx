@@ -19,9 +19,10 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
   const [showSocialsModal, setShowSocialsModal] = useState(false);
 
   return (
-    <>
+    <div
+      className={` h-screen transition-all   ${!showsidebar ? "w-[8vw]" : "w-[16vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
+    >
       <div
-        className={` h-screen transition-all   ${!showsidebar ? "w-[5vw]" : "w-[11vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
       >
         <div className="logo flex flex-col transition-all   gap-y-8"
           onMouseEnter={() => setShowsidebar(true)}
@@ -203,7 +204,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
           </button>
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };
 
