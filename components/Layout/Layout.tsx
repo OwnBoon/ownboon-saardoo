@@ -10,9 +10,10 @@ interface Props {
   text: string;
   border: string;
   hasBg: Boolean;
+  setLoading?: (value: boolean) => void;
 }
 
-const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
+const Layout = ({ children, bgColor, icon, text, border, hasBg,setLoading }: Props) => {
   const [showsidebar, setShowsidebar] = useState(false);
   return (
     <div
@@ -32,10 +33,11 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
         border={border}
       />
       <div
-        className={`${showsidebar ? "w-[84vw]" : "w-[92vw]"
+        className={`${showsidebar ? "w-[86vw]" : "w-[92vw]"
           }  ml-auto transition-all`}
       >
         <Navbar
+        setLoading={setLoading}
           showsidebar={showsidebar}
           icon={icon}
           text={text}
@@ -43,7 +45,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] py-24 pb-24 px-4 ${!showsidebar ? "pl-5" : "pl-11"}`}
+          className={`text-[#DDDDDD] py-24 pb-24 pr-4 ${!showsidebar ? "" : ""}`}
           style={{
             backgroundImage: hasBg ? "url(lofi.svg)" : "none",
           }}
