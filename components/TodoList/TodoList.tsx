@@ -278,7 +278,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                                 height={30}
                                 className="p-2 fade transition-all  rounded  drag-handle"
                             />
-                            <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
+                            <input id="default-checkbox" type="checkbox" value="" className="border-solid border-gray-700 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#2CD3E1]" />
                             <div className="whitespace-nowrap  font-sans text-white relative">
                                 {t.title}
                             </div>
