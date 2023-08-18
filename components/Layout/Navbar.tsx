@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Loading } from "@nextui-org/react";
+import Notification from "../Notification";
 
 interface Props {
   icon: string;
@@ -13,26 +14,47 @@ interface Props {
   setLoading?: (value: boolean) => void;
 }
 
-const Navbar = ({ icon, text, bgColor, border, showsidebar, setLoading }: Props) => {
+const Navbar = ({
+  icon,
+  text,
+  bgColor,
+  border,
+  showsidebar,
+  setLoading,
+}: Props) => {
   const { user } = useUser();
   const [showsearch, setshowsearch] = useState(false);
+  const [shownotifications, setShownotifications] = useState(false);
   const [search, setSearch] = useState("");
+  const togglenotification = () => {
+    if (shownotifications) {
+      setShownotifications(false);
+    } else {
+      setShownotifications(true);
+    }
+  };
   const handlesearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading ? setLoading(true) : "";
-    setshowsearch(false)
-    setSearch("")
+    setshowsearch(false);
+    setShownotifications(false);
+    setSearch("");
   };
   useEffect(() => {
     setLoading ? setLoading(false) : "";
-    setSearch("")
+    setShownotifications(false);
+    setSearch("");
   }, []);
 
   return (
     <>
+      <Notification
+        shownotifications={shownotifications}
+        setShownotifications={setShownotifications}
+      />
       <div
         className={`${showsidebar ? "w-[89vw]" : "w-[95vw] ml-[-1vw]"
-          } border-b-2 border-gray-700 flex items-center justify-between px-8 py-3 fixed z-50`}
+          } border-b-2 border-gray-700 flex items-center  justify-between px-8 py-3 fixed z-50`}
         style={{
           backgroundColor: bgColor,
         }}
@@ -78,6 +100,7 @@ const Navbar = ({ icon, text, bgColor, border, showsidebar, setLoading }: Props)
           )}
           <Image
             width={70}
+            onClick={() => togglenotification()}
             height={70}
             className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
             src="notification.svg"
