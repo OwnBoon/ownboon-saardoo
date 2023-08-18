@@ -5,7 +5,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/workspace',
+        destination: '/',
         permanent: true,
       },{
         source: '/vent-choose',
