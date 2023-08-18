@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { User } from "../../typings";
 import { useSession } from "next-auth/react";
@@ -6,13 +6,14 @@ import { useRouter } from "next/router";
 import Spline from "@splinetool/react-spline";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
+import Dialog from "../ChapterPopup/ChapterPopup";
 interface Props {
-  users: User[],setLoading?: (value: boolean) => void;
+  users: User[];
+  setLoading?: (value: boolean) => void;
+  setShowBoonIslandModal?: (value: boolean) => void;
 }
 
-const Island = ({ users,setLoading }: Props) => {
-  
-  
+const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const match = users.filter(
     (usere) => usere.email === user?.emailAddresses[0].emailAddress
@@ -25,23 +26,21 @@ const Island = ({ users,setLoading }: Props) => {
   const focus_no = Number(focus);
   const level = Math.floor(focus_no! * factor);
   const barlevel = level * 10;
-  console.log(level);
+  const [showislandinfo, setShowislandinfo] = useState(false);
   useEffect(() => {
-   setTimeout(() => {
-    setLoading?setLoading(false) : ""
-   }, 8000);
+    setTimeout(() => {
+      setLoading ? setLoading(false) : "";
+    }, 500);
   }, []);
+
   return (
-    <div className="h-[100%] w-full flex relative">
+    <div className="h-[48vw] fade justify-center items-center w-[94.3vw] flex relative">
       {user ? (
         <>
           {level < 5 ? (
-            <Spline 
-
-            
-            
+            <Spline
               className=""
-              scene="https://prod.spline.design/YXg9FOeBh95j4Z8Q/scene.splinecode"
+              scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
             />
           ) : level < 10 ? (
             <div>
@@ -70,10 +69,66 @@ const Island = ({ users,setLoading }: Props) => {
               className=""
               scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
             />
-          ) :
-            <Image src={'/boonisland.png'} fill alt={""} />}
+          ) : (
+            <Image src={"/boonisland.png"} fill alt={""} />
+          )}
+          <div className="flex animate-floaty gap-x-8 shadow-zinc-700 shadow-2xl	 flex-row py-8 rounded-3xl  px-8 bg-[#191919a8] text-white absolute  bottom-4">
+            <div className="flex flex-col gap-y-2 justify-center items-center text-center">
+              <h1 className="font-poppins text-md  ">Current Level</h1>
+              <h2 className="font-poppins text-3xl">Level Name</h2>
+            </div>
+            <div className="w-0 h-16 border border-neutral-400"></div>
+            <div className="flex flex-col gap-y-2 justify-center items-center text-center">
+              <h1 className="font-poppins text-md  ">Current Level</h1>
+              <h2 className="font-poppins text-3xl">Level Name</h2>
+            </div>
+            <div className="w-0 h-16 border border-neutral-400"></div>
+            <div className="flex flex-col gap-y-2 justify-center items-center text-center">
+              <h1 className="font-poppins text-md  ">Current Level</h1>
+              <h2 className="font-poppins text-3xl">Level Name</h2>
+            </div>
+          </div>
+          <div
+            onClick={() =>
+              setShowBoonIslandModal ? setShowBoonIslandModal(false) : null
+            }
+            className="flex flex-col text-white rounded-xl fade cursor-pointer absolute shadow-2xl left-8 top-5 py-3 px-5 bg-[#191919a8] font-poppins text-xl"
+          >
+            {"<-"}
+          </div>
+          <div
+            onClick={() => (setShowislandinfo ? setShowislandinfo(true) : null)}
+            className="flex flex-col text-white rounded-xl fade cursor-pointer absolute shadow-2xl right-8 top-5 py-3 px-6 bg-[#191919a8] font-poppins text-xl"
+          >
+            {"i"}
+          </div>
+          <Dialog isOpen={showislandinfo} onClose={setShowislandinfo}>
+            <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
+              <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+              <div className="flex flex-col my-3 items-center space-y-2">
+                {/* display the image of the current level of boon island, static image to avoid long loading */}
+                <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                  <li className="text-xl text-white font-poppins">
+                    You've spent more than x amount of time on your productivity
+                  </li>
+                  <li className="text-xl text-white font-poppins">
+                    You're becoming a greek god because you've solved more than
+                    x problems on ownboon
+                  </li>
+                  <li className="text-xl text-white font-poppins">
+                    You're in one of the top x% users
+                  </li>
+                  <li className="text-xl text-white font-poppins">
+                    You've explored x% potential of ownboon
+                  </li>
+                </div>
+              </div>
+            </div>
+          </Dialog>
         </>
-      ) : <Image src={'/boonisland.png'} fill alt={""} />}
+      ) : (
+        <Image src={"/boonisland.png"} fill alt={""} />
+      )}
     </div>
   );
 };

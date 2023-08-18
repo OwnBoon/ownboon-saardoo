@@ -154,6 +154,8 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
         </div>
       </div>
       <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>
+      <div className="rounded-xl bg-[#101010] p-16">
+
         <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
           <div className="flex flex-col p-5 items-center justify-center">
             <h1 className="text-[3vw] my-2  text-white text-center ">
@@ -168,9 +170,11 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             Coming Soon
           </button>
         </div>
+        </div>
       </Dialog>
       <Dialog isOpen={showSocialsModal} onClose={setShowSocialsModal}>
-        <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
+      <div className="rounded-xl bg-[#101010] p-16">
+        <div className="flex items-center  w-[30vw] h-full justify-center flex-col ">
           <div className="flex flex-col p-5 items-center justify-center">
             <h1 className="text-[3vw] my-2  text-white text-center ">
               Healthy Social Media
@@ -185,8 +189,11 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             Coming Soon
           </button>
         </div>
+        </div>
       </Dialog>
       <Dialog isOpen={showChatsModal} onClose={setShowChatsModal}>
+        <div className="rounded-xl bg-[#101010] p-16">
+
         <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
           <div className="flex flex-col p-5 items-center justify-center">
             <h1 className="text-[3vw] my-2  text-white text-center ">
@@ -201,6 +208,8 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             Coming Soon
           </button>
         </div>
+        </div>
+
       </Dialog>
     </>
   );

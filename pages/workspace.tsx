@@ -533,7 +533,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setBoonisland(true)
     setTimeout(() => {
       setBoonisland(false)
-    }, 6000);
+    }, 1000);
   }
 
   return (
@@ -906,6 +906,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           </div>
 
           <Dialog isOpen={showModal} onClose={setShowModal}>
+            <div className="rounded-xl bg-[#101010] p-16">
+
             <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
               Chapter 1
             </div>
@@ -914,6 +916,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Ch
               <br />
               apter 1Chapter 1Chapter 1Chapter{" "}
+            </div>
             </div>
           </Dialog>
           <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
@@ -943,7 +946,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             : false
                         }
                         onChange={() => handlechange("Unmotivated")}
-                        // isDisabled={userprompt.mood && userprompt.mood !== "Unmotivated"? true : false}
                         color="gradient"
                         labelColor="warning"
                       >
@@ -959,7 +961,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             : false
                         }
                         onChange={() => handlechange("Great")}
-                        // isDisabled={userprompt.mood &&userprompt.mood !== "Great"? true : false}
                         color="gradient"
                         labelColor="warning"
                       >
@@ -975,7 +976,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             : false
                         }
                         onChange={() => handlechange("Stressed")}
-                        // isDisabled={userprompt.mood && userprompt.mood !== "Stressed"? true : false}
                         color="gradient"
                         labelColor="warning"
                       >
@@ -991,7 +991,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             : false
                         }
                         onChange={() => handlechange("Normal")}
-                        // isDisabled={userprompt.mood &&userprompt.mood !== "Normal"? true : false}
                         color="gradient"
                         labelColor="warning"
                       >
@@ -1000,7 +999,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </h4>
                       </Checkbox>
                     </div>
-                    {/* <textarea name="prompt" id="prompt" className="border-none font-poppins  bg-[#232222]" ></textarea> */}
                   </div>
                   {empty && "Please Pick one of the options"}
                 </div>
@@ -1023,7 +1021,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           objective: e.target.value,
                         })
                       }
-                      className="border-none font-poppins w-[30vw] bg-[#232222]"
+                      className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
                     ></textarea>
                   </div>
                   {empty && "Please enter atleast a sentence"}
@@ -1033,7 +1031,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     pageposition === 2 ? " pageentry " : "pageexit "
                   } text-center`}
                 >
-                  <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                  <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
                     How much time do you have?
                   </h2>
                   <div className="p-2 flex flex-row  w-[30vw]  gap-x-5">
@@ -1116,11 +1114,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             )}
           </Dialog>
           <Dialog isOpen={showBoonIslandModal} onClose={setShowBoonIslandModal}>
-            <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
-    {boonisland && <Loading color={"white"}/>}
+            <div className="flex w-[94.3vw] ml-[-21vw] mt-[5.2vw]  h-[48vw] items-center justify-center  rounded-xl  flex-col ">
+    {boonisland && <Loading className="mt-[10vw]" color={"white"}/>}
              
-              <div className="flex justify-center mt-7 text-center items-center">
-              <Island  users={users} />
+              <div className="flex   text-center items-center">
+              <Island setShowBoonIslandModal={setShowBoonIslandModal}  users={users} />
                
               </div>
             </div>
