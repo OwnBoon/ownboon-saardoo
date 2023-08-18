@@ -47,6 +47,11 @@ module.exports = {
         destination: '/workspace',
         permanent: true,
       },
+      {
+        source: '/dashboard',
+        destination: '/workspace',
+        permanent: true,
+      },
     ];
   },
 };
