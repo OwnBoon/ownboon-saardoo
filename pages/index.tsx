@@ -113,7 +113,7 @@ const Home = ({ users, setLoading }: Props) => {
       <div className="mx-auto my-auto">
         <Hero />
         <Body />
-      </div>
+      </div>  
     </>
   );
 };
