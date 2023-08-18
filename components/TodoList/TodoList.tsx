@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { GoalBody } from '../../typings'
 import { ReactSortable } from "react-sortablejs";
@@ -190,6 +190,29 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         }
     };
 
+    const [isOpen, setIsOpen] = useState(false);
+
+
+    const dropdownRef = useRef<any>(null);
+
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const handleClickOutside = (event: any) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return (
         <div
             style={{
@@ -207,14 +230,40 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                         className="min-h-0 min-w-0 relative w-4 shrink-0"
                     />
                 </div>
+                <div className="relative inline-block text-left" ref={dropdownRef}>
+                    <button
+                        onClick={toggleDropdown}
+                        type="button"
 
-                <Image
-                    src="more-options.svg"
-                    alt={""}
-                    width={40}
-                    height={40}
-                    className="p-2 fade transition-all  rounded  drag-handle"
-                />
+                    >
+                        <Image
+                            src="more-options.svg"
+                            alt={""}
+                            width={40}
+                            height={40}
+                            className="p-2 fade transition-all  rounded  drag-handle"
+                        />
+                    </button>
+                    {isOpen && (
+                        <div className="absolute z-50 w-fit left-[30px] top-0 mt-2 origin-top-right bg-slate-800 divide-y rounded-md shadow-lg">
+                            <div className="py-1">
+                                <a
+                                    href="#"
+                                    className="px-4 py-2 text-sm whitespace-nowrap hover:bg-slate-700  flex w-full"
+                                >
+                                    Delete all Tasks
+                                </a>
+                                <a
+                                    href="#"
+                                    className="block px-4 py-2 text-sm hover:bg-slate-700 whitespace-nowrap"
+                                >
+                                    Delete Completed Task
+                                </a>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
             </div>
             <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
             <div className="overflow-auto">
@@ -253,11 +302,32 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 </ReactSortable>
 
                 {tempTodo && (
-                    <div className="flex flex-row justify-start mb-1 gap-4 relative w-20 ">
+                    <div className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 opactity-50">
+                        <Image
+                            src="draghandle.svg"
+                            alt={""}
+                            width={30}
+                            height={30}
+                            className="p-2 fade transition-all  rounded  drag-handle"
+                        />
                         <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
                         <div className="whitespace-nowrap  font-sans text-white relative">
                             {tempTodo.title}
                         </div>
+                        <Image
+                            src="delete-icon.svg"
+                            alt={""}
+                            width={30}
+                            height={30}
+                            className="p-2 fade transition-all  rounded  drag-handle ml-auto"
+                        />
+                        <Image
+                            src="calendar.svg"
+                            alt={""}
+                            width={30}
+                            height={30}
+                            className="p-2 fade transition-all  rounded  drag-handle"
+                        />
                     </div>
                 )}
             </div>
