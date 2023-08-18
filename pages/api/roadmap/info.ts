@@ -15,7 +15,9 @@ export default async function handler(
     const basePrompt = `based on my prompt , explain that in very short and even provide the 2 links for  the best youtube video one can watch to do that and also mention 3 good content creators also mention a existing blog  for this field.: 
     ${title}.  
     note: 
-    - make sure the response is in form of {"link":[{"video": "..."}],"description":"...","creators": [{"first": "..."}], "blog":"{"link":{...}}"}`
+    - make sure the response is in form of {"link":[{"video": "..."}],"description":"...","creators": [{"first": "..."}], "blog":"{"link":{...}}"}
+    - dont at all miss any comma or '{}'
+    - dont leave anything incomplete`
 
         const  data = {
             "model": "gpt-3.5-turbo",

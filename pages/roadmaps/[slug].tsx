@@ -11,7 +11,9 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-
+import Layout from "../../components/Layout/Layout";
+import { Card, Text, Tooltip } from "@nextui-org/react";
+import Link from "next/link";
 interface Props {
   roadmap: any;
 }
@@ -45,6 +47,7 @@ const Post = ({ roadmap }: Props) => {
   console.log(roadmap.content.replace("@finish", ""));
   const normal = roadmap.content.replace("@finish", "");
   const [info, setInfo] = useState("");
+  const [blockSelected, setBlockSelected] = useState("");
   const [infotext, setInfotext] = useState();
   const roadmapdata = JSON.parse(normal);
   console.log(roadmapdata.roadmap.map((roadmap: any) => roadmap.title));
@@ -59,6 +62,7 @@ const Post = ({ roadmap }: Props) => {
 
   const fetchInfo = async (texts: string) => {
     // setText(texts);
+    setBlockSelected(texts);
     const result = await fetch(`/api/roadmap/info?title=${texts}`);
     const json = await result.json();
     // @ts-ignore
@@ -100,56 +104,103 @@ const Post = ({ roadmap }: Props) => {
     const json = await result.json;
   };
   return (
-    <div className=" h-screen overflow-hidden flex justify-center  !scrollbar !scrollbar-none bg-black">
-      <Head>
-        <title>{roadmap.email}</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
-      <div className="text-white py-5">
-        User Roadmap
-        {/* <div>{roadmap.content.roadmap[0].title}</div> */}
-        {/* <div>{roadmapdata}</div> */}
-        <div className=" gap-5 flex">
-          <div className="gap-5 space-y-5">
-            {roadmapdata.roadmap.map((roadmap: any, index: number) => (
-              <div
-                onClick={() => fetchInfo(roadmap.title)}
-                className="bg-red-500"
-              >
-                <p>{roadmap.title}</p>
+    <Layout
+      hasBg={false}
+      bgColor={"#121212"}
+      icon="roadmap.svg"
+      text="Roadmap"
+      border="gray-500"
+      children={
+        <div className="flex justify-between h-screen overflow-hidden p-5 gap-20 ">
+          {/* Roadmaps  */}
+          <div className=" h-full overflow-y-scroll   w-full">
+            <div className=" relative space-y-10 flex w-full items-center py-10 flex-col justify-center">
+              <div className="absolute border z-0 border-zinc-700/20 w-1 rounded-3xl bg-zinc-700 bg-opacity-20 h-full"></div>
+              {roadmapdata.roadmap.map((roadmap: any, index: number) => (
+                <Tooltip
+                  content={`Click to know more about ${roadmap.title}`}
+                  color="invert"
+                  placement="right"
+                >
+                  <div
+                    onClick={() => fetchInfo(roadmap.title)}
+                    className="rounded-md hover:bg-gradient-to-tr transition-all hover:transition-all hover:duration-150 duration-100 hover:from-slate-300/10 border shadow-xl shadow-black/50 z-10 border-zinc-700 bg-neutral-900  w-fit border-opacity-50 p-5"
+                  >
+                    <h1 className="text-white">{roadmap.title}</h1>
+                  </div>
+                </Tooltip>
+              ))}
+            </div>
+          </div>
+          {/* Info */}
+          <div className="h-full w-full -my-10 p-10 ">
+            <div className="h-full w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
+              <div className="space-y-5">
+                <h1 className="text-xl text-white font-semibold">
+                  Block Title: {!blockSelected ? <div></div> : blockSelected}
+                </h1>
+                {/* data */}
+                {/* @ts-ignore */}
+                <div>{infotext ? <p>{infotext.description}</p> : null}</div>
+              </div>
+              <div className="">
+                <h1 className="text-xl text-white font-semibold">
+                  Recommended Youtube Videos
+                </h1>
                 <div>
-                  info on the topic:
                   {infotext ? (
-                    <div>
+                    <div className="flex gap-10 rounded-lg">
                       {/* @ts-ignore */}
-                      <p>{infotext.description}</p>
-                      <div className="scale-[0.6] rounded-lg">
-                        {/* @ts-ignore */}
-                        <ReactPlayer controls url={infotext.link[0].video} />
-                        {/* @ts-ignore */}
-                        <ReactPlayer controls url={infotext.link[1].video} />
-                      </div>
-                      <div>
-                        3 best creators:
-                        {/* @ts-ignore */}
-                        {infotext.creators.map((creator) => (
-                          <div>{creator.first}</div>
-                        ))}
-                      </div>
-                      <div>
-                        a nice blog:
-                        {/* @ts-ignore */}
-                        {infotext.blog.link}
-                      </div>
+                      <ReactPlayer
+                        width={300}
+                        height={150}
+                        controls
+                        // @ts-ignore
+                        url={infotext.link[0].video}
+                      />
+                      {/* @ts-ignore */}
+                      <ReactPlayer
+                        width={300}
+                        height={150}
+                        controls
+                        // @ts-ignore
+                        url={infotext.link[1].video}
+                      />
                     </div>
                   ) : null}
                 </div>
               </div>
-            ))}
+              <div>
+                <h1 className="text-xl text-white font-semibold">
+                  Recommended Blog
+                </h1>
+                {infotext ? (
+                  // @ts-ignore
+                  <Link href={infotext.blog.link}>
+                    <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
+                      Open in web
+                    </div>
+                  </Link>
+                ) : null}
+              </div>
+              <div>
+                <h1>3 best content creators in the field</h1>
+                <div>
+                  {infotext ? (
+                    <div>
+                      {/* @ts-ignore */}
+                      {infotext.creators.map((creator) => (
+                        <div>{creator.first}</div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      }
+    ></Layout>
   );
 };
 
