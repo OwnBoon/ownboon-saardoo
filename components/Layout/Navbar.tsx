@@ -44,7 +44,7 @@ const Navbar = ({
     setLoading ? setLoading(false) : "";
     setShownotifications(false);
     setSearch("");
-  });
+  },[]);
 
   return (
     <>
