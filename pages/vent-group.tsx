@@ -17,10 +17,10 @@ const vent = () => {
   // @ts-ignore
   const router = useRouter();
   useEffect(() => {
-    
-    router.push("/workspace")
+
+    // router.push("/workspace")
   }, [])
-  
+
 
   return (
     <div className="grid grid-cols-12 h-screen bg-[#f4f1eb]/50">

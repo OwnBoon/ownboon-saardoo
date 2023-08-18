@@ -213,6 +213,17 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         };
     }, []);
 
+    const deleteAllTodos = () => {
+        if (user) {
+            fetch(`/api/deleteAllGoals`, {
+                body: JSON.stringify(user?.username),
+                method: "POST",
+            }).then(async (res) => {
+                setTodos([])
+            })
+        }
+    }
+
     return (
         <div
             style={{
@@ -250,6 +261,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                                 <a
                                     href="#"
                                     className="px-4 py-2 text-sm whitespace-nowrap hover:bg-slate-700  flex w-full"
+                                    onClick={deleteAllTodos}
                                 >
                                     Delete all Tasks
                                 </a>
