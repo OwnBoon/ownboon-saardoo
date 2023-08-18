@@ -225,6 +225,36 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         }
     }
 
+    const deleteAllCompletedTodos = () => {
+        setIsOpen(false)
+        if (user) {
+            fetch(`/api/deleteCompletedGoals`, {
+                body: JSON.stringify(user?.username),
+                method: "POST",
+            }).then(async (res) => {
+                setTodos(todos.filter((t) => t.completed != true))
+            })
+        }
+    }
+
+    const changeTodoState = (id: any, e: any) => {
+        if (user) {
+            setTodos(todos.map((t) => {
+                if (t._id == id) {
+                    return { ...t, completed: e.target.checked }
+                } else {
+                    return t
+                }
+            }))
+            fetch(`/api/changeTodoState`, {
+                body: JSON.stringify({ _id: id, state: e.target.checked }),
+                method: "POST",
+            }).then(async (res) => {
+                console.log("updated")
+            })
+        }
+    }
+
     return (
         <div
             style={{
@@ -291,7 +321,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                                 height={30}
                                 className="p-2 fade transition-all  rounded  drag-handle"
                             />
-                            <input id="default-checkbox" type="checkbox" value="" className="border-solid border-gray-700 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#2CD3E1] focus:ring-transparent focus:border-none" />
+                            <input id="default-checkbox" type="checkbox" value="" checked={t.completed} onChange={(e) => changeTodoState(t._id, e)} className="border-solid border-gray-700 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#2CD3E1] focus:ring-transparent focus:border-none" />
                             <div className="whitespace-nowrap  font-sans text-white relative">
                                 {t.title}
                             </div>
