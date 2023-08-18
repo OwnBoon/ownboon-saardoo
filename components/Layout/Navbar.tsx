@@ -44,7 +44,7 @@ const Navbar = ({
     setLoading ? setLoading(false) : "";
     setShownotifications(false);
     setSearch("");
-  },[]);
+  }, []);
 
   return (
     <>
@@ -52,7 +52,7 @@ const Navbar = ({
         shownotifications={shownotifications}
         setShownotifications={setShownotifications}
       />
-      <div
+       <div
         className={` ml-[-3vw] w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-50`}
         style={{
           backgroundColor: bgColor,
