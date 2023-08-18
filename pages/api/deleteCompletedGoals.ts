@@ -16,9 +16,10 @@ export default async function handler(
     mutations: [
       {
         delete: {
-          "query": "*[_type == 'goals' && completed == $state]",
+          "query": "*[_type == 'goals' && completed == $state && username == $user]",
           "params": {
-            "state": true
+            "state": true,
+            "user": data
           },
         },
       },

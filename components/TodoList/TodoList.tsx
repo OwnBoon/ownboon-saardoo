@@ -214,12 +214,43 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     }, []);
 
     const deleteAllTodos = () => {
+        setIsOpen(false)
         if (user) {
             fetch(`/api/deleteAllGoals`, {
                 body: JSON.stringify(user?.username),
                 method: "POST",
             }).then(async (res) => {
                 setTodos([])
+            })
+        }
+    }
+
+    const deleteAllCompletedTodos = () => {
+        setIsOpen(false)
+        if (user) {
+            fetch(`/api/deleteCompletedGoals`, {
+                body: JSON.stringify(user?.username),
+                method: "POST",
+            }).then(async (res) => {
+                setTodos(todos.filter((t) => t.completed != true))
+            })
+        }
+    }
+
+    const changeTodoState = (id: any, e: any) => {
+        if (user) {
+            setTodos(todos.map((t) => {
+                if (t._id == id) {
+                    return { ...t, completed: e.target.checked }
+                } else {
+                    return t
+                }
+            }))
+            fetch(`/api/changeTodoState`, {
+                body: JSON.stringify({ _id: id, state: e.target.checked }),
+                method: "POST",
+            }).then(async (res) => {
+                console.log("updated")
             })
         }
     }
@@ -290,7 +321,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                                 height={30}
                                 className="p-2 fade transition-all  rounded  drag-handle"
                             />
-                            <input id="default-checkbox" type="checkbox" value="" className="border-solid border-gray-700 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#2CD3E1] focus:ring-transparent focus:border-none" />
+                            <input id="default-checkbox" type="checkbox" value="" checked={t.completed} onChange={(e) => changeTodoState(t._id, e)} className="border-solid border-gray-700 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#2CD3E1] focus:ring-transparent focus:border-none" />
                             <div className="whitespace-nowrap  font-sans text-white relative">
                                 {t.title}
                             </div>
@@ -352,12 +383,12 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 </div>
             )}
             {!showTaskInput && (
-                <div className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded">
+                <div onClick={handleAddingTask} className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded">
                     <img
                         src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
                         className="min-h-0 min-w-0 relative w-4 shrink-0"
                     />
-                    <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handleAddingTask}>
+                    <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" >
                         Add Task
                     </button>
                 </div>
