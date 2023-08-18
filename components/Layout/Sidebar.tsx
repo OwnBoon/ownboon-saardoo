@@ -20,12 +20,12 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
 
   return (
     <>
-      <div  onMouseEnter={() => setShowsidebar(true)}
-          onMouseLeave={() => setShowsidebar(false)}
+      <div onMouseEnter={() => setShowsidebar(true)}
+        onMouseLeave={() => setShowsidebar(false)}
         className={` h-screen transition-all   ${!showsidebar ? "w-[5vw]" : "w-[11vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
       >
         <div className="logo flex flex-col transition-all   gap-y-8"
-         
+
         >
 
           <div className="flex flex-row transition-all gap-4 items-center">
@@ -145,7 +145,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               }
             </div>
           </div>
-          </div>
+        </div>
         <div className="p-2 sidebar cursor-pointer flex gap-4 items-center text-white">
           <Image
             src="feedback.svg"
@@ -153,67 +153,67 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             height={55}
             alt={""}
             className=" p-2 rounded  "
-            />
+          />
           {showsidebar &&
             <span className="font-fontspring transition-all  fade ">Feedback</span>
           }
         </div>
       </div>
       <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>
-      <div className="rounded-xl bg-[#101010] p-16">
+        <div className="rounded-xl bg-[#101010] p-16">
 
-        <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
-          <div className="flex flex-col p-5 items-center justify-center">
-            <h1 className="text-[3vw] my-2  text-white text-center ">
-              Empowering Buddies
-            </h1>
-            <div className="w-44 h-[0px] border border-neutral-400"></div>
-            <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
-              Find Your Self Development Buddy
-            </h2>
+          <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
+            <div className="flex flex-col p-5 items-center justify-center">
+              <h1 className="text-[3vw] my-2  text-white text-center ">
+                Empowering Buddies
+              </h1>
+              <div className="w-44 h-[0px] border border-neutral-400"></div>
+              <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
+                Find Your Self Development Buddy
+              </h2>
+            </div>
+            <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
+              Coming Soon
+            </button>
           </div>
-          <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
-            Coming Soon
-          </button>
-        </div>
         </div>
       </Dialog>
       <Dialog isOpen={showSocialsModal} onClose={setShowSocialsModal}>
-      <div className="rounded-xl bg-[#101010] p-16">
-        <div className="flex items-center  w-[30vw] h-full justify-center flex-col ">
-          <div className="flex flex-col p-5 items-center justify-center">
-            <h1 className="text-[3vw] my-2  text-white text-center ">
-              Healthy Social Media
-            </h1>
-            <div className="w-44 h-[0px] border border-neutral-400"></div>
-            <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
-              The Only Healthy Social Media for your self improvement journey
-              with the use of ai
-            </h2>
+        <div className="rounded-xl bg-[#101010] p-16">
+          <div className="flex items-center  w-[30vw] h-full justify-center flex-col ">
+            <div className="flex flex-col p-5 items-center justify-center">
+              <h1 className="text-[3vw] my-2  text-white text-center ">
+                Healthy Social Media
+              </h1>
+              <div className="w-44 h-[0px] border border-neutral-400"></div>
+              <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
+                The Only Healthy Social Media for your self improvement journey
+                with the use of ai
+              </h2>
+            </div>
+            <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
+              Coming Soon
+            </button>
           </div>
-          <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
-            Coming Soon
-          </button>
-        </div>
         </div>
       </Dialog>
       <Dialog isOpen={showChatsModal} onClose={setShowChatsModal}>
         <div className="rounded-xl bg-[#101010] p-16">
 
-        <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
-          <div className="flex flex-col p-5 items-center justify-center">
-            <h1 className="text-[3vw] my-2  text-white text-center ">
-              Tailored Group Chats
-            </h1>
-            <div className="w-44 h-[0px] border border-neutral-400"></div>
-            <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
-              Learn, Grow and Share your Experience with the world
-            </h2>
+          <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
+            <div className="flex flex-col p-5 items-center justify-center">
+              <h1 className="text-[3vw] my-2  text-white text-center ">
+                Tailored Group Chats
+              </h1>
+              <div className="w-44 h-[0px] border border-neutral-400"></div>
+              <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
+                Learn, Grow and Share your Experience with the world
+              </h2>
+            </div>
+            <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
+              Coming Soon
+            </button>
           </div>
-          <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
-            Coming Soon
-          </button>
-        </div>
         </div>
 
       </Dialog>
