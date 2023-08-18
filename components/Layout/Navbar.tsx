@@ -54,8 +54,8 @@ const Navbar = ({
       />
       <div
         className={`${
-          showsidebar ? "w-[89vw]" : "w-[95vw] ml-[-1vw]"
-        } border-b-2 border-gray-700 flex items-center  justify-between px-8 py-3 fixed z-50`}
+          showsidebar ? "" : "ml-[-1vw] "
+        } w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-50`}
         style={{
           backgroundColor: bgColor,
         }}
@@ -64,7 +64,9 @@ const Navbar = ({
           <Image width={30} height={30} className="" src={icon} alt={text} />
           <span className="font-fontspring text-[20px]">{text}</span>
         </div>
-        <div className="flex items-center gap-10 relative">
+        <div className={` ${
+          showsidebar ? "translate-x-[-6vw]" : "translate-x-0"
+        } flex items-center transition-all gap-10 relative`}>
           <Image
             width={55}
             height={55}

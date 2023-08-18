@@ -656,7 +656,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           </div>
 
           <div className="border-solid border-gray-500 border   mb-3 relative w-40 h-px  shrink-0 " />
-          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+          <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
             <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
               <div
                 onClick={() => setShowModal(true)}
@@ -718,7 +718,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+          <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
             <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
               <div
                 onClick={() => setShowModal(true)}
@@ -780,7 +780,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+          <div className="flex flex-row transition-all  justify-center items-center w-full gap-x-3">
             <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
               <div
                 onClick={() => setShowModal(true)}
@@ -842,7 +842,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row  justify-center items-center w-full gap-x-3">
+          <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
             <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
               <div
                 onClick={() => setShowModal(true)}

@@ -29,12 +29,18 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
         >
 
           <div className="flex flex-row transition-all gap-4 items-center">
-            <img className="w-[55px] transition-all fade" src="ownboon.svg" />
+          <Image
+                src="ownboon.svg"
+                alt={""}
+                width={55}
+                height={55}
+                className=" p-2  rounded  "
+              />
             {showsidebar &&
-              <span className="font-fontspring fade  transition-all">OwnBoon</span>
+              <span className="font-fontspring   transition-all">OwnBoon</span>
 
             }
-            {showsidebar &&
+            {/* {showsidebar &&
               <Image
                 src="sidebarexpand.svg"
                 alt={""}
@@ -42,7 +48,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 height={40}
                 className=" p-2 absolute right-0 fade transition-all  rounded  "
               />
-            }
+            } */}
           </div>
           <div className="flex  flex-col transition-all justify-center  gap-y-8">
             <div
@@ -58,7 +64,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 className=" p-2  rounded  "
               />
               {showsidebar &&
-                <span className="font-fontspring fade ">Socials</span>
+                <span className="font-fontspring transition-all fade ">Socials</span>
               }
             </div>
             <div
@@ -74,7 +80,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 className=" p-2 rounded  "
               />
               {showsidebar &&
-                <span className="font-fontspring fade ">Chats</span>
+                <span className="font-fontspring transition-all fade ">Chats</span>
               }
             </div>
             <div
@@ -90,7 +96,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 className=" p-2 rounded  "
               />
               {showsidebar &&
-                <span className="font-fontspring fade">Buddies</span>
+                <span className="font-fontspring transition-all fade">Buddies</span>
               }
             </div>
             <div
@@ -105,7 +111,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 className=" p-2 rounded  "
               />
               {showsidebar &&
-                <span className="font-fontspring fade ">Workspace</span>
+                <span className="font-fontspring transition-all fade ">Workspace</span>
               }
             </div>
             <div
@@ -120,7 +126,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 className=" p-2 rounded  "
               />
               {showsidebar &&
-                <span className="font-fontspring fade ">Roadmap</span>
+                <span className="font-fontspring transition-all fade ">Roadmap</span>
               }
             </div>
             <div
@@ -135,7 +141,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 className=" p-2 rounded  "
               />
               {showsidebar &&
-                <span className="font-fontspring fade ">Lofi</span>
+                <span className="font-fontspring transition-all fade ">Lofi</span>
               }
             </div>
           </div>
@@ -149,7 +155,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             className=" p-2 rounded  "
             />
           {showsidebar &&
-            <span className="font-fontspring  fade ">Feedback</span>
+            <span className="font-fontspring transition-all  fade ">Feedback</span>
           }
         </div>
       </div>
