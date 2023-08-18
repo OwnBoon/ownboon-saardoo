@@ -707,7 +707,12 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         {"<-"} Back
                       </button>
                     ) : (
-                      ""
+                      <button
+                      onClick={() => setShowPromptModal(false)}
+                      className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                    >
+                      Cancel
+                    </button>
                     )}
                   </div>
                   <div className="flex flex-row items-end justify-end">
