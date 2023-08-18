@@ -383,12 +383,12 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 </div>
             )}
             {!showTaskInput && (
-                <div className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded">
+                <div onClick={handleAddingTask} className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded">
                     <img
                         src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
                         className="min-h-0 min-w-0 relative w-4 shrink-0"
                     />
-                    <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" onClick={handleAddingTask}>
+                    <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative" >
                         Add Task
                     </button>
                 </div>
