@@ -214,6 +214,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     }, []);
 
     const deleteAllTodos = () => {
+        setIsOpen(false)
         if (user) {
             fetch(`/api/deleteAllGoals`, {
                 body: JSON.stringify(user?.username),
