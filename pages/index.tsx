@@ -16,9 +16,9 @@ import axios from "axios";
 
 interface Props {
   users: User[];
-  setLoading?: (value: boolean) => void;
+
 }
-const Home = ({ users, setLoading }: Props) => {
+const Home = ({ users }: Props) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
   const [encrypt, setEnCrpyt] = useState("");
@@ -109,7 +109,7 @@ const Home = ({ users, setLoading }: Props) => {
         <title>OwnBoon</title>
         <link rel="icon" href="/logo.png" />
       </Head>
-      <Navbar setLoading={setLoading}/>
+      <Navbar />
       <div className="mx-auto my-auto">
         <Hero />
         <Body />

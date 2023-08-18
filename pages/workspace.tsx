@@ -708,11 +708,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       </button>
                     ) : (
                       <button
-                      onClick={() => setShowPromptModal(false)}
-                      className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
-                    >
-                      Cancel
-                    </button>
+                        onClick={() => setShowPromptModal(false)}
+                        className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                      >
+                        Cancel
+                      </button>
                     )}
                   </div>
                   <div className="flex flex-row items-end justify-end">
@@ -777,9 +777,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const WorkspacePage = ({ users, goals, notes }: Props) => {
+const WorkspacePage = ({ users, goals, notes, setLoading }: Props) => {
   return (
     <Layout
+      setLoading={setLoading}
       bgColor={"#121212"}
       icon="workspace.svg"
       text="Workspace"

@@ -37,7 +37,7 @@ const Navbar = ({
     e.preventDefault();
     setLoading ? setLoading(true) : "";
     setshowsearch(false);
-    setShownotifications(false);
+    setShownotifications(false); 
     setSearch("");
   };
   useEffect(() => {

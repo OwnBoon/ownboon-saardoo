@@ -10,9 +10,10 @@ interface Props {
   text: string;
   border: string;
   hasBg: Boolean;
+  setLoading?: (value: boolean) => void;
 }
 
-const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
+const Layout = ({ children, bgColor, icon, text, border, hasBg,setLoading }: Props) => {
   const [showsidebar, setShowsidebar] = useState(false);
   return (
     <div
@@ -36,6 +37,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg }: Props) => {
           }  ml-auto transition-all`}
       >
         <Navbar
+        setLoading={setLoading}
           showsidebar={showsidebar}
           icon={icon}
           text={text}
