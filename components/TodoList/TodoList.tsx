@@ -228,11 +228,13 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     const deleteAllCompletedTodos = () => {
         setIsOpen(false)
         if (user) {
+            setTodos(todos.filter((t) => t.completed != true))
+
             fetch(`/api/deleteCompletedGoals`, {
                 body: JSON.stringify(user?.username),
                 method: "POST",
             }).then(async (res) => {
-                setTodos(todos.filter((t) => t.completed != true))
+                console.log("deleted")
             })
         }
     }
@@ -299,6 +301,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                                 <a
                                     href="#"
                                     className="block px-4 py-2 text-sm hover:bg-slate-700 whitespace-nowrap"
+                                    onClick={deleteAllCompletedTodos}
                                 >
                                     Delete Completed Task
                                 </a>
