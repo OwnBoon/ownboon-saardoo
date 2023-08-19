@@ -12,10 +12,11 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import Layout from "../../components/Layout/Layout";
-import { Card, Text, Tooltip } from "@nextui-org/react";
+import { Card, Dropdown, Text, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
+import { Menu } from "../../components/Roadmap/more";
 interface Props {
-  roadmap: any;
+  roadmap: Roadmaps;
 }
 
 // const ptComponents = {
@@ -44,7 +45,10 @@ const Post = ({ roadmap }: Props) => {
       ssr: false,
     }
   );
+  // @ts-ignore
   console.log(roadmap.content.replace("@finish", ""));
+  const deafult = roadmap._id;
+  // @ts-ignore
   const normal = roadmap.content.replace("@finish", "");
   const [info, setInfo] = useState("");
   const [blockSelected, setBlockSelected] = useState("");
@@ -90,10 +94,13 @@ const Post = ({ roadmap }: Props) => {
   //   to use this code basically just add a dropdown with a item as option of set goal. then pass this like this:
   //  onClick={() => setGoal(roadmap.id, roadmap.title)}
   const setGoal = async (id: string, goal: string, index: number) => {
-    const total = roadmapdata.roadmap.length();
+    // @ts-ignore
+    console.log("hello");
+    console.log(id);
+    const total = roadmapdata.roadmap.length;
     const percentage = (index / total) * 100;
     const postInfo = {
-      id: id,
+      _id: id,
       progress: percentage,
       goal: goal,
     };
@@ -101,7 +108,8 @@ const Post = ({ roadmap }: Props) => {
       body: JSON.stringify(postInfo),
       method: "POST",
     });
-    const json = await result.json;
+    const json = await result.json();
+    console.log(json);
   };
   return (
     <Layout
@@ -117,18 +125,29 @@ const Post = ({ roadmap }: Props) => {
             <div className=" relative space-y-10 flex w-full items-center py-10 flex-col justify-center">
               <div className="absolute border z-0 border-zinc-700/20 w-1 rounded-3xl bg-zinc-700 bg-opacity-20 h-full"></div>
               {roadmapdata.roadmap.map((roadmap: any, index: number) => (
-                <Tooltip
-                  content={`Click to know more about ${roadmap.title}`}
-                  color="invert"
-                  placement="right"
-                >
-                  <div
-                    onClick={() => fetchInfo(roadmap.title)}
-                    className="rounded-md hover:bg-gradient-to-tr transition-all hover:transition-all hover:duration-150 duration-100 hover:from-slate-300/10 border shadow-xl shadow-black/50 z-10 border-zinc-700 bg-neutral-900  w-fit border-opacity-50 p-5"
+                <div>
+                  <Tooltip
+                    content={`click to know more`}
+                    color="invert"
+                    placement="right"
                   >
-                    <h1 className="text-white">{roadmap.title}</h1>
+                    <div
+                      onClick={() => fetchInfo(roadmap.title)}
+                      className="rounded-md flex gap-5 items-center hover:bg-gradient-to-tr transition-all hover:transition-all hover:duration-150 duration-100 hover:from-slate-300/10 border shadow-xl shadow-black/50 z-10 border-zinc-700 bg-neutral-900  w-fit border-opacity-50 p-5"
+                    >
+                      <h1 className="text-white">{roadmap.title}</h1>
+                    </div>
+                  </Tooltip>
+                  <div>
+                    <div
+                      // @ts-ignore
+                      onClick={() => setGoal(deafult, roadmap.title, index)}
+                      className="text-lg hover:cursor-pointer"
+                    >
+                      +
+                    </div>
                   </div>
-                </Tooltip>
+                </div>
               ))}
             </div>
           </div>
@@ -176,7 +195,7 @@ const Post = ({ roadmap }: Props) => {
                 </h1>
                 {infotext ? (
                   // @ts-ignore
-                  <Link href={infotext.blog.link}>
+                  <Link className="" href={infotext.blog.link}>
                     <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
                       Open in web
                     </div>

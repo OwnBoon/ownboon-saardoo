@@ -16,8 +16,8 @@ export default async function handler(
     ${title}.  
     note: 
     - make sure the response is in form of {"link":[{"video": "..."}],"description":"...","creators": [{"first": "..."}], "blog":"{"link":{...}}"}
-    - dont at all miss any comma or '{}'
-    - dont leave anything incomplete`
+    - use a proper json format.
+    - only use one variable name for videos, dont add video1 and video2. just add video.`
 
         const  data = {
             "model": "gpt-3.5-turbo",

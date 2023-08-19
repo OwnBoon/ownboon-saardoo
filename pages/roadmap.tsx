@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { Modal, Text } from "@nextui-org/react";
+import { Dropdown, Modal, Text } from "@nextui-org/react";
 
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, Roadmaps, User } from "../typings";
@@ -12,6 +12,8 @@ import handler from "../pages/api/roadmap/generate";
 import { fetchRoadmaps } from "../utils/fetchRoadmap";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
+import RoadComp from "../components/Roadmap/roadmaps";
+import ReactTimeago from "react-timeago";
 interface datatype {
   message: {
     choices: [
@@ -119,7 +121,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     const postInfo = {
       id: id,
     };
-    const result = await fetch(`/api/deleteRoadmap`, {
+    const result = await fetch(`/api/setCurrentRoadmap`, {
       body: JSON.stringify(postInfo),
       method: "POST",
     });
@@ -294,7 +296,12 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       ],
     },
   ];
+  const [selected, setSelected] = useState(new Set(["Complete"]));
 
+  const selectedValue = useMemo(
+    () => Array.from(selected).join(", ").replaceAll("_", " "),
+    [selected]
+  );
   const lastCompleted = () => {
     const completedItems = sampleData[0].roadmap.filter(
       (item) => item.completed === true
@@ -446,7 +453,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
           {userroadmap && (
             <div className="w-full mt-8 flex flex-col gap-8">
               {userroadmap.map((roadmap: Roadmaps) => (
-                <div className="flex relative">
+                <div className="flex relative bg-gradient-to-r overflow-hidden from-[#585858] via-[#121212]  to-[#121212] rounded-tl-[10px] rounded-bl-[10px]     rounded-lg   ">
                   {/* <div className="completed relative bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#dddddd54] w-1/2 flex flex-col py-6 rounded-l-lg">
                   <div className="flex justify-between px-6">
                     {aboveItems?.map((item, i) => (
@@ -546,31 +553,73 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                     ))}
                     </div>
                   </div> */}
+                  <div className="absolute z-0 opacity-25 overflow-hidden flex justify-center items-center mt-10">
+                    <RoadComp roadmap={roadmap} />
+                  </div>
 
-                  <div className="content absolute top-0 left-0 w-1/2 h-full flex flex-col py-8 pl-8 text-white">
-                    <p className="flex items-center gap-6 my-1 bold text-sm">
-                      Total Progress <ArrowRightIcon width={"12px"} />{" "}
-                      {roadmap.progress}
-                    </p>
-                    <p className="flex items-center gap-6 my-1 bold text-sm">
+                  <div className=" top-0 left-0 w-full z-10 h-full flex flex-col py-8 pl-8 text-white">
+                    <div className="flex justify-between">
+                      <p className="flex items-center tracking-[1px] text-lg gap-6 my-1 bold font-light">
+                        Total Progress <ArrowRightIcon width={"12px"} />{" "}
+                        {/* @ts-ignore */}
+                        {Math.round(roadmap.progress)}%
+                      </p>
+                      <div className="px-10">
+                        <Dropdown>
+                          {/* @ts-ignore */}
+                          <Dropdown.Button color="" light>
+                            :
+                          </Dropdown.Button>
+                          <Dropdown.Menu
+                            onAction={() => {
+                              if (selectedValue === "Complete") {
+                                null;
+                              } else {
+                                // @ts-ignore
+                                handleDelete(message._id);
+                              }
+                            }}
+                            selectedKeys={selected}
+                            // @ts-ignore
+                            onSelectionChange={setSelected}
+                            variant="light"
+                            aria-label="Actions"
+                          >
+                            <Dropdown.Item key="new">Complete</Dropdown.Item>
+                            <Dropdown.Item
+                              key="delete"
+                              color="error"
+                              withDivider
+                            >
+                              Delete Roadmaps
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </div>
+                    </div>
+                    <p className="flex items-center gap-6 my-1  tracking-[1px] text-lg font-light bold ">
                       Current Goal <ArrowRightIcon width={"12px"} />{" "}
                       {roadmap.goal}
                     </p>
-                    <p className="flex items-center gap-6 my-1 bold text-sm">
-                      Days Spent <ArrowRightIcon width={"12px"} /> 7{" "}
+                    <p className="flex items-center tracking-[1px] text-lg font-light gap-6 my-1 bold ">
+                      Days Spent <ArrowRightIcon width={"12px"} />{" "}
+                      {/* @ts-ignore */}
+                      <ReactTimeago date={roadmap._createdAt} />
                     </p>
                     <button
                       onClick={() =>
                         router.push(`/roadmaps/${roadmap.slug?.current}`)
                       }
-                      className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
+                      className=" bg-neutral-800 rounded-[5px] flex  border border-zinc-700  text-white/80 w-fit py-2 px-3  mt-4"
                       style={{
                         border: "none",
                         outline: "none",
-                        color: "#585858",
+                        // color: "#585858",
                       }}
                     >
-                      Explore More
+                      <p className="text-neutral-200 text-sm font-semibold">
+                        Explore more
+                      </p>
                     </button>
                   </div>
                 </div>
