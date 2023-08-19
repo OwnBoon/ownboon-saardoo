@@ -3,12 +3,18 @@ import toast from 'react-hot-toast'
 import { GoalBody } from '../../typings'
 import { ReactSortable } from "react-sortablejs";
 import Image from "next/image";
+import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 type Props = {
     todos: any[],
     user: any,
     setTodos: any
 }
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const TodoList = ({ todos, user, setTodos }: Props) => {
 
@@ -18,6 +24,8 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     const [tempTodo, setTemptodo] = useState<any>(null)
 
     const [showtask, setShowTask] = useState(false);
+
+    const [value, onChange] = useState<Value>(new Date());
 
     const handleAddingTask = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
@@ -228,11 +236,13 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     const deleteAllCompletedTodos = () => {
         setIsOpen(false)
         if (user) {
+            setTodos(todos.filter((t) => t.completed != true))
+
             fetch(`/api/deleteCompletedGoals`, {
                 body: JSON.stringify(user?.username),
                 method: "POST",
             }).then(async (res) => {
-                setTodos(todos.filter((t) => t.completed != true))
+                console.log("deleted")
             })
         }
     }
@@ -255,13 +265,16 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         }
     }
 
+    const color = "#2CD3E180";
+    const border = "1px solid #2CD3E180"
+
     return (
         <div
             style={{
                 background:
                     "linear-gradient(0deg, rgba(61,61,61,1)   0%, transparent 100%)",
             }}
-            className="flex flex-col justify-center gap-2 relative w-full h-[18vw] shrink-0  px-12 py-3  rounded-lg"
+            className="flex flex-col gap-2 relative w-full min-h-[18vw] h-fit shrink-0  px-12 py-3  rounded-lg"
         >
             <div className="w-full  flex flex-row gap-1 relative items-center justify-between">
                 <div className='w-10 h-10'></div>
@@ -299,6 +312,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                                 <a
                                     href="#"
                                     className="block px-4 py-2 text-sm hover:bg-slate-700 whitespace-nowrap"
+                                    onClick={deleteAllCompletedTodos}
                                 >
                                     Delete Completed Task
                                 </a>
@@ -309,7 +323,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
 
             </div>
             <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
-            <div className="overflow-auto">
+            {!showTaskInput && <div className="overflow-auto">
 
                 <ReactSortable handle='.drag-handle' list={todos} setList={setTodos}>
                     {todos.map((t) => (
@@ -373,13 +387,48 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                         />
                     </div>
                 )}
-            </div>
+            </div>}
 
 
             {showTaskInput && (
-                <div className="flex flex-row justify-start mb-3 gap-4 relative w-20 items-center">
-                    <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-                    <input className="whitespace-nowrap" id="username" type="text" placeholder="Add new Task" onChange={(e) => handleNewTaskChange(e)} onKeyUp={handlesubmit} />
+                <div className="flex flex-col mb-3 gap-4 relative">
+                    <input className="whitespace-nowrap w-40 rounded bg-transparent border border-cyan-400 border-opacity-30" id="username" type="text" placeholder="Name of the task" onChange={(e) => handleNewTaskChange(e)} onKeyUp={handlesubmit} />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker sx={{
+                            svg: { color },
+                            input: { color: "white" },
+                            label: { color },
+                            border: { border },
+                            ":focus": {
+                                border: { border },
+                                borderColor: { color: 'transparent' },
+                            }
+                        }} />
+                        <TimePicker sx={{
+                            svg: { color },
+                            input: { color: "white" },
+                            label: { color },
+                            border: { border },
+                            ":focus": {
+                                border: { border },
+                                borderColor: { color: 'transparent' },
+                            }
+                        }} />
+                        <TimePicker views={['hours', 'minutes']} ampm={false} format="hh:mm" sx={{
+                            svg: { color },
+                            input: { color: "white" },
+                            label: { color },
+                            border: { border },
+                            ":focus": {
+                                border: { border },
+                                borderColor: { color: 'transparent' },
+                            }
+                        }} />
+                    </LocalizationProvider>
+                    <div className='flex justify-between'>
+                        <div>Delete Task</div>
+                        <div>Delete from Calendar</div>
+                    </div>
                 </div>
             )}
             {!showTaskInput && (
