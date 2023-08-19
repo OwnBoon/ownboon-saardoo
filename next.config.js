@@ -4,10 +4,6 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: '/',
-        destination: '/',
-        permanent: true,
-      },{
         source: '/vent-choose',
         destination: '/workspace',
         permanent: true,
