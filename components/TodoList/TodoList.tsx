@@ -392,6 +392,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
 
             {showTaskInput && (
                 <div className="flex flex-col mb-3 gap-4 relative">
+                    <div onClick={() => setShowTaskInput(false)}>Back</div>
                     <input className="whitespace-nowrap w-40 rounded bg-transparent border border-cyan-400 border-opacity-30" id="username" type="text" placeholder="Name of the task" onChange={(e) => handleNewTaskChange(e)} onKeyUp={handlesubmit} />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker sx={{
