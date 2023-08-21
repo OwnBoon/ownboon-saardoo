@@ -81,7 +81,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   console.log(goals);
 
   useEffect(() => {
-    setTodos(goals.filter((goal) => goal.username == user?.username));
+    setTodos(goals.filter((goal) => goal.username == user?.username).sort((a, b) => a.todoIndex != undefined && b.todoIndex != undefined ? a.todoIndex - b.todoIndex : 0));
     if (user && !match[0]?.categories) {
       // router.push("/categories");
     } else {
