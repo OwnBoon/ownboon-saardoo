@@ -81,8 +81,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   console.log(goals);
 
   useEffect(() => {
-    setTodos(goals.filter((goal) => goal.username == user?.username));
-    if (user && !match[0].categories) {
+    setTodos(goals.filter((goal) => goal.username == user?.username).sort((a, b) => a.todoIndex != undefined && b.todoIndex != undefined ? a.todoIndex - b.todoIndex : 0));
+    if (user && !match[0]?.categories) {
       // router.push("/categories");
     } else {
       null;
@@ -160,9 +160,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -264,7 +263,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       setUserprompt({ ...userprompt, mood: eventmood });
     }
   };
-  const handleprompt = () => {};
+  const handleprompt = () => { };
   const [pageposition, setPagepostion] = useState(0);
   let pageid = 0;
   useEffect(() => {
@@ -550,9 +549,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
                 <div className="flex justify-center mt-7 text-center items-center">
                   <div
-                    className={`${
-                      pageposition === 0 ? "pageentry " : "pageexit"
-                    } text-center`}
+                    className={`${pageposition === 0 ? "pageentry " : "pageexit"
+                      } text-center`}
                   >
                     <h2 className="text-[1.3vw]  mt-6 my-2 font-fontspring  text-white font-medium ">
                       How are you feeling today?
@@ -624,9 +622,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please Pick one of the options"}
                   </div>
                   <div
-                    className={`${
-                      pageposition === 1 ? " pageentry " : "pageexit "
-                    } text-center`}
+                    className={`${pageposition === 1 ? " pageentry " : "pageexit "
+                      } text-center`}
                   >
                     <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
                       What do you want to get done?
@@ -648,9 +645,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please enter atleast a sentence"}
                   </div>
                   <div
-                    className={`${
-                      pageposition === 2 ? " pageentry " : "pageexit "
-                    } text-center`}
+                    className={`${pageposition === 2 ? " pageentry " : "pageexit "
+                      } text-center`}
                   >
                     <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
                       How much time do you have?
@@ -669,9 +665,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please enter atleast a sentence"}
                   </div>
                   <div
-                    className={`${
-                      pageposition === 3 ? " pageentry " : "pageexit "
-                    } text-center`}
+                    className={`${pageposition === 3 ? " pageentry " : "pageexit "
+                      } text-center`}
                   >
                     <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
                       Generate Your Roadmap
@@ -723,11 +718,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           : pageposition === 1 &&
                             (!userprompt.objective ||
                               userprompt.objective.length < 40)
-                          ? setEmpty(true)
-                          : pageposition === 2 &&
-                            (!userprompt.time || userprompt.time.length < 40)
-                          ? setEmpty(true)
-                          : handlenextpage()
+                            ? setEmpty(true)
+                            : pageposition === 2 &&
+                              (!userprompt.time || userprompt.time.length < 40)
+                              ? setEmpty(true)
+                              : handlenextpage()
                       }
                       className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                     >

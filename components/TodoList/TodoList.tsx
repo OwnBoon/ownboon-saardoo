@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { GoalBody } from '../../typings'
-import { ReactSortable } from "react-sortablejs";
+import { ReactSortable, Sortable, Store } from "react-sortablejs";
 import Image from "next/image";
 import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -47,6 +47,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 username: user?.username!,
                 completed: false,
                 delete: false,
+                todoIndex: todos.length
             };
             setTemptodo(postInfo)
             fetch(`/api/addGoalData`, {
@@ -268,6 +269,19 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     const color = "#2CD3E180";
     const border = "1px solid #2CD3E180"
 
+    const handleSort = (newState: any[], sortable: Sortable | null, store: Store) => {
+        console.log(newState)
+        setTodos(newState)
+        newState.forEach((s, i) => {
+            fetch('/api/sortGoals', {
+                body: JSON.stringify({ _id: s._id, newIndex: i }),
+                method: "POST",
+            }).then(async (res) => {
+                console.log("updated")
+            })
+        })
+    }
+
     return (
         <div
             style={{
@@ -325,7 +339,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
             {!showTaskInput && <div className="overflow-auto">
 
-                <ReactSortable handle='.drag-handle' list={todos} setList={setTodos}>
+                <ReactSortable handle='.drag-handle' list={todos} setList={handleSort}>
                     {todos.map((t) => (
                         <div key={t._id} className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 ">
                             <Image
