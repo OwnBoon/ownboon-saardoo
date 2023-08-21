@@ -63,6 +63,7 @@ export interface Goals extends SanityBody {
     username?: string
     completed: boolean
     delete?: boolean
+    todoIndex?: number
 }
 export interface GoalBody {
     _type?: 'goals'
@@ -70,7 +71,8 @@ export interface GoalBody {
     progress: number
     username?: string
     completed?: boolean
-    delete?: boolean
+    delete?: boolean,
+    todoIndex?: number
 }
 
 export interface Comment extends SanityBody {
@@ -168,7 +170,7 @@ interface Roadmaps {
 interface RoadBody {
     _type?: "roadmap"
     content?: {
-        
+
     }
     email?: string
     progress?: string

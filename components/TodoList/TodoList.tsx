@@ -47,6 +47,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 username: user?.username!,
                 completed: false,
                 delete: false,
+                todoIndex: todos.length
             };
             setTemptodo(postInfo)
             fetch(`/api/addGoalData`, {

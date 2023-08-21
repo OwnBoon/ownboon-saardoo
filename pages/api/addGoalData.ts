@@ -21,7 +21,8 @@ export default async function handler(
           progress: data.progress,
           username: data.username,
           completed: data.completed,
-          delete: data.delete
+          delete: data.delete,
+          todoIndex: data.todoIndex
         },
       },
     ],
