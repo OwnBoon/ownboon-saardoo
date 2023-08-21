@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { Dropdown, Modal, Text } from "@nextui-org/react";
+import { Button, Dropdown, Modal, Text } from "@nextui-org/react";
 
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, Roadmaps, User } from "../typings";
@@ -77,7 +77,10 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       `https://nodejs-sms.saard00vfx.repl.co/api?title=${desc}`
     );
     const json = await result.json();
-    setData(json);
+    console.log(json);
+    if (json != undefined) {
+      setData(json);
+    }
 
     // const fine = content!.replace("@finish", "");
 
@@ -92,11 +95,11 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       email: user?.emailAddresses[0].emailAddress,
       // goal: sus.roadmap[0].title,
       progress: 0,
+      completed: false,
       slug: {
         current: random,
       },
     };
-
     const result2 = await fetch(`/api/addRoadmaps`, {
       body: JSON.stringify(mutations),
       method: "POST",
@@ -104,6 +107,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     const json2 = await result2.json();
     return json;
   };
+  console.log("data is", data);
   const handleOpen = (category: any) => {
     setVisible(true);
     setCategory(category);
@@ -118,13 +122,33 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   };
 
   const completeRoadmap = async (id: string) => {
+    console.log(id);
     const postInfo = {
-      id: id,
+      _id: id,
+      completed: true,
     };
     const result = await fetch(`/api/setCurrentRoadmap`, {
       body: JSON.stringify(postInfo),
       method: "POST",
     });
+
+    console.log("completing roadmap");
+    const json = await result.json();
+    console.log(json);
+    return json;
+  };
+  const deleteRoadmap = async (id: string) => {
+    const postInfo = {
+      _id: id,
+    };
+    const result = await fetch(`/api/deleteRoadmap`, {
+      body: JSON.stringify(postInfo),
+      method: "POST",
+    });
+    console.log("deleting roadmap");
+    const json = await result.json();
+    console.log(json);
+    return json;
   };
 
   // ------ data section --------
@@ -573,10 +597,11 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                           <Dropdown.Menu
                             onAction={() => {
                               if (selectedValue === "Complete") {
-                                null;
+                                // @ts-ignore
+                                completeRoadmap(roadmap._id);
                               } else {
                                 // @ts-ignore
-                                handleDelete(message._id);
+                                deleteRoadmap(roadmap._id);
                               }
                             }}
                             selectedKeys={selected}
@@ -585,13 +610,8 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                             variant="light"
                             aria-label="Actions"
                           >
-                            <Dropdown.Item key="new">Complete</Dropdown.Item>
-                            <Dropdown.Item
-                              key="delete"
-                              color="error"
-                              withDivider
-                            >
-                              Delete Roadmaps
+                            <Dropdown.Item key="Complete">
+                              Complete
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
@@ -606,21 +626,31 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                       {/* @ts-ignore */}
                       <ReactTimeago date={roadmap._createdAt} />
                     </p>
-                    <button
-                      onClick={() =>
-                        router.push(`/roadmaps/${roadmap.slug?.current}`)
-                      }
-                      className=" bg-neutral-800 rounded-[5px] flex  border border-zinc-700  text-white/80 w-fit py-2 px-3  mt-4"
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        // color: "#585858",
-                      }}
-                    >
-                      <p className="text-neutral-200 text-sm font-semibold">
-                        Explore more
-                      </p>
-                    </button>
+                    <div className="flex justify-between items-center">
+                      <button
+                        onClick={() =>
+                          router.push(`/roadmaps/${roadmap.slug?.current}`)
+                        }
+                        className=" bg-neutral-800   rounded-[5px] flex  border border-zinc-700  text-white/80 w-fit py-2 px-3  mt-4"
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          // color: "#585858",
+                        }}
+                      >
+                        <p className="text-neutral-200 text-sm font-semibold">
+                          Explore more
+                        </p>
+                      </button>
+                      <Button
+                        onPress={() => deleteRoadmap(roadmap._id)}
+                        className="!mx-4"
+                        color="error"
+                        size={"sm"}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}

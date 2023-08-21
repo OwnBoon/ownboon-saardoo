@@ -1,15 +1,24 @@
 const express = require("express");
 const cors = require("cors");
 const fetch = require("node-fetch");
-
+// const { Configuration, OpenAIApi } = require("openai");
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://fluffy-space-acorn-67jxvqqq4p42r6wr-3000.app.github.dev",
+      "http://localhost:3000",
+      "https://localhost:3000",
+      "https://ownboon.com",
+    ],
+  })
+);
 
-const maxItems = 25;
+const maxItems = 10;
 const minItems = 5;
-const minLevels = 3;
+const minLevels = 2;
 
-app.get("/api/handler", async (req, res) => {
+app.get("/api", async (req, res) => {
   const { title } = req.query;
 
   const basePrompt = `based on my prompt, make up to date roadmap
@@ -45,30 +54,31 @@ app.get("/api/handler", async (req, res) => {
   ${title}`;
 
   const data = {
-    model: "gpt-3.5-turbo-16k-0613",
+    model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: basePrompt }],
-    temperature: 0.4,
-    max_tokens: 1000,
+    // temperature: 0.4,
+    // max_tokens: 1000,
   };
 
-  const apiEndpoint = "https://api.cattto.repl.co/v1/chat/completions";
+  const apiEndpoint = "https://api.openai.com/v1/chat/completions";
 
-  try {
-    const result = await fetch(apiEndpoint, {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer catto_key_B3825mSZ0GZ3h8kDDUsxllWU`,
-      },
-      body: JSON.stringify(data),
-      method: "POST",
-    });
+  // const chat_completion = await openai.createChatCompletion({
+  //   model: "gpt-3.5-turbo",
+  //   messages: [{ role: "user", content: "yo how are you" }],
+  //   temperature: 0.4,
+  // });
 
-    const json = await result.json();
-
-    res.status(200).json({ message: json });
-  } catch (error) {
-    res.status(500).json({ message: "An error occurred" });
-  }
+  const result = await fetch(apiEndpoint, {
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer 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  `,
+    },
+    body: JSON.stringify(data),
+    method: "POST",
+  });
+  const json = await result.json();
+  console.log(title);
+  res.status(200).json({ message: json });
 });
 
 const port = process.env.PORT || 4000;

@@ -69,6 +69,7 @@ const Post = ({ roadmap }: Props) => {
     setBlockSelected(texts);
     const result = await fetch(`/api/roadmap/info?title=${texts}`);
     const json = await result.json();
+    console.log(json);
     // @ts-ignore
     // const deez = stuff.message.choices[0].message.content;
     // const json1 = JSON.parse(deez);
@@ -80,13 +81,15 @@ const Post = ({ roadmap }: Props) => {
   useEffect(() => {
     if (info) {
       // @ts-ignore
-      const infostring = info.message.choices[0].message.content;
+      const infostring =
+        info.message.choices[0].message.function_call.arguments;
       const parse = JSON.parse(infostring);
       setInfotext(parse);
     } else {
       null;
     }
   }, [info]);
+
   //  @ts-ignore
   console.log("info text", infotext);
   //  @ts-ignore
@@ -175,7 +178,7 @@ const Post = ({ roadmap }: Props) => {
                         height={150}
                         controls
                         // @ts-ignore
-                        url={infotext.link[0].video}
+                        url={infotext.link[0]}
                       />
                       {/* @ts-ignore */}
                       <ReactPlayer
@@ -183,7 +186,7 @@ const Post = ({ roadmap }: Props) => {
                         height={150}
                         controls
                         // @ts-ignore
-                        url={infotext.link[1].video}
+                        url={infotext.link[1]}
                       />
                     </div>
                   ) : null}
@@ -195,7 +198,7 @@ const Post = ({ roadmap }: Props) => {
                 </h1>
                 {infotext ? (
                   // @ts-ignore
-                  <Link className="" href={infotext.blog.link}>
+                  <Link className="" href={infotext.blog}>
                     <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
                       Open in web
                     </div>
@@ -209,7 +212,7 @@ const Post = ({ roadmap }: Props) => {
                     <div>
                       {/* @ts-ignore */}
                       {infotext.creators.map((creator) => (
-                        <div>{creator.first}</div>
+                        <div>{creator.name}</div>
                       ))}
                     </div>
                   ) : null}
