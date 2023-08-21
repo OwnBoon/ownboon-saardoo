@@ -16,6 +16,7 @@ import axios from "axios";
 
 interface Props {
   users: User[];
+
 }
 const Home = ({ users }: Props) => {
   const router = useRouter();
@@ -112,7 +113,7 @@ const Home = ({ users }: Props) => {
       <div className="mx-auto my-auto">
         <Hero />
         <Body />
-      </div>
+      </div>  
     </>
   );
 };
