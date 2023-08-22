@@ -52,6 +52,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   );
 
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("self");
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -69,22 +70,22 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   const [description, setDescription] = useState("");
   console.log(desc);
 
-  const fetchRoadmap = async (e: any) => {
+  const fetchRoadmap = async () => {
     // e.preventDefault();
     setVisible(false);
+    console.log(desc);
     setDesc("");
+    setLoading(true);
     const result = await fetch(
       `https://nodejs-sms.saard00vfx.repl.co/api?title=${desc}`
     );
     const json = await result.json();
-    console.log(json);
-    if (json != undefined) {
-      setData(json);
-    }
-
+    setVisible(false);
+    // console.log(json);
+    setData(json);
     // const fine = content!.replace("@finish", "");
 
-    const content = data?.message.choices[0].message.content;
+    const content = json?.message.choices[0].message.content;
     // const fiine = content?.replace("@finish", "");
     // const sus = JSON.parse(fiine!);
     // console.log(sus.roadmap[0].title);
@@ -107,7 +108,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     const json2 = await result2.json();
     return json;
   };
-  console.log("data is", data);
+  // console.log("data is", data);
   const handleOpen = (category: any) => {
     setVisible(true);
     setCategory(category);
@@ -148,6 +149,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     console.log("deleting roadmap");
     const json = await result.json();
     console.log(json);
+    router.replace(router.asPath);
     return json;
   };
 
@@ -320,12 +322,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       ],
     },
   ];
-  const [selected, setSelected] = useState(new Set(["Complete"]));
 
-  const selectedValue = useMemo(
-    () => Array.from(selected).join(", ").replaceAll("_", " "),
-    [selected]
-  );
   const lastCompleted = () => {
     const completedItems = sampleData[0].roadmap.filter(
       (item) => item.completed === true
@@ -379,40 +376,46 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       border="gray-500"
       children={
         <div>
-          <Modal
-            closeButton
-            aria-labelledby="modal-title"
-            open={visible}
-            onClose={closeHandler}
-          >
-            <Modal.Header>
-              <Text id="modal-title" size={18}>
-                Describe what you want to learn
-              </Text>
-            </Modal.Header>
-            <Modal.Body>
-              <textarea
-                placeholder={`${
-                  category === "self" ? "Self Improvement" : "Skill Improvement"
-                }`}
-                className="w-full h-32 p-2 rounded-md bg-[#191919] border border-[#585858] outline-none text-[#fff] placeholder-[#585858] placeholder-opacity-80 resize-none focus:ring-1 focus:ring-[#585858] focus:border-transparent"
-                onChange={(e) => setDesc(e.target.value)}
-                value={desc}
-              />
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                className="bg-[#474747] py-2 px-3 rounded-md text-[#807d7d] w-full"
-                style={{
-                  border: "1px solid #585858",
-                }}
-                onClick={fetchRoadmap}
-              >
-                Send
-              </button>
-            </Modal.Footer>
-          </Modal>
           <div className="flex w-full gap-6 ">
+            <Modal
+              closeButton
+              aria-labelledby="modal-title"
+              className="!bg-[#191919]"
+              open={visible}
+              onClose={closeHandler}
+            >
+              <Modal.Header>
+                <Text id="modal-title" color="gray" size={18}>
+                  Describe what you want to learn
+                </Text>
+              </Modal.Header>
+              <Modal.Body>
+                <textarea
+                  placeholder={`${
+                    category === "self"
+                      ? "Self Improvement"
+                      : "Skill Improvement"
+                  }`}
+                  className="w-full h-32 p-2 rounded-md !bg-[#232222] border border-[#585858] outline-none text-[#fff] placeholder-[#585858] placeholder-opacity-80 resize-none focus:ring-1 focus:ring-[#585858] focus:border-transparent"
+                  onChange={(e) => setDesc(e.target.value)}
+                  value={desc}
+                />
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  className="bg-[#474747] py-2 px-3 rounded-md text-[#807d7d] w-full"
+                  style={{
+                    border: "1px solid #585858",
+                  }}
+                  disabled={userroadmap.length <= 4 ? false : true}
+                  onClick={fetchRoadmap}
+                >
+                  {userroadmap.length <= 4
+                    ? "send"
+                    : "You can only generate upto 5 roadmaps"}
+                </button>
+              </Modal.Footer>
+            </Modal>
             <div
               className="first w-1/2 bg-[#191919] flex items-center justify-between p-4 rounded-md"
               style={{
@@ -438,6 +441,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 Generate Now
               </button>
             </div>
+
             <div
               className="first w-1/2 bg-[#191919] flex items-center justify-between p-4 rounded-md"
               style={{
@@ -478,105 +482,6 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
             <div className="w-full mt-8 flex flex-col gap-8">
               {userroadmap.map((roadmap: Roadmaps) => (
                 <div className="flex relative bg-gradient-to-r overflow-hidden from-[#585858] via-[#121212]  to-[#121212] rounded-tl-[10px] rounded-bl-[10px]     rounded-lg   ">
-                  {/* <div className="completed relative bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#dddddd54] w-1/2 flex flex-col py-6 rounded-l-lg">
-                  <div className="flex justify-between px-6">
-                    {aboveItems?.map((item, i) => (
-                      <div
-                        key={i}
-                        className={`w-1/3 flex justify-center flex-col text-center ${
-                          i % 2 !== 0
-                            ? ""
-                            : 'after:content-["|"] after:width-[1px] after:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "end",
-                        }}
-                      >
-                        <p>{item}</p>
-                      </div>
-                      ))}
-                  </div>
-                  <div className="h-4 px-6 bg-gradient-to-l from-[#cccccc] to-[#47474722] my-2 flex justify-evenly rounded-l-lg">
-                    <span className="w-1/3 flex justify-center">
-                      <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                    <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                      <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                  </div>
-                  <div className="flex justify-between px-6">
-                    {belowItems?.map((item, i) => (
-                      <div
-                        key={i}
-                        className={`w-1/3 flex justify-center flex-col text-center ${
-                          i % 2 === 0
-                          ? ""
-                            : 'before:content-["|"] before:width-[1px] before:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "start",
-                        }}
-                        >
-                        <p>{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
-
-                  {/* <div className="remaining text-[#585858] w-1/2 flex flex-col py-6 rounded">
-                  <div className="flex justify-between px-6">
-                    {aboveItems?.map((item, i) => (
-                      <div
-                        key={i}
-                        className={`w-1/3 flex  ${
-                          i === 0 ? "text-[#fff]" : "text-[#585858]"
-                        } justify-center flex-col text-center ${
-                          i % 2 !== 0
-                            ? ""
-                            : 'after:content-["|"] after:width-[1px] after:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "end",
-                        }}
-                      >
-                        <p>{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="h-4 my-2 px-6 bg-gradient-to-r from-[#cccccc] to-[#cccccc6e] rounded-r-lg flex justify-between">
-                    <span className="w-1/3 flex text-center justify-center">
-                      <span className="h-4 w-4 bg-[#fff] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                      <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                    <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                  </div>
-                  <div className="flex justify-between px-6">
-                  {belowItems?.map((item, i) => (
-                    <div
-                        key={i}
-                        className={`w-1/3 flex ${
-                          i === 0 ? "text-[#fff]" : "text-[#585858]"
-                        } justify-center flex-col text-center ${
-                          i % 2 === 0
-                            ? ""
-                            : 'before:content-["|"] before:width-[1px] before:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "start",
-                        }}
-                      >
-                        <p>{item}</p>
-                      </div>
-                    ))}
-                    </div>
-                  </div> */}
                   <div className="absolute z-0 opacity-25 overflow-hidden flex justify-center items-center mt-10">
                     <RoadComp roadmap={roadmap} />
                   </div>
@@ -596,17 +501,9 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                           </Dropdown.Button>
                           <Dropdown.Menu
                             onAction={() => {
-                              if (selectedValue === "Complete") {
-                                // @ts-ignore
-                                completeRoadmap(roadmap._id);
-                              } else {
-                                // @ts-ignore
-                                deleteRoadmap(roadmap._id);
-                              }
+                              // @ts-ignore
+                              completeRoadmap(roadmap._id);
                             }}
-                            selectedKeys={selected}
-                            // @ts-ignore
-                            onSelectionChange={setSelected}
                             variant="light"
                             aria-label="Actions"
                           >
@@ -643,6 +540,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                         </p>
                       </button>
                       <Button
+                        // @ts-ignore
                         onPress={() => deleteRoadmap(roadmap._id)}
                         className="!mx-4"
                         color="error"

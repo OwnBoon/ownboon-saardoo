@@ -82,6 +82,7 @@ const Post = ({ roadmap }: Props) => {
     if (info) {
       // @ts-ignore
       const infostring =
+        // @ts-ignore
         info.message.choices[0].message.function_call.arguments;
       const parse = JSON.parse(infostring);
       setInfotext(parse);

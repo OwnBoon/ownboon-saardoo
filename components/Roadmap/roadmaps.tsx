@@ -38,10 +38,9 @@ interface Props {
 const RoadComp = ({ roadmap }: Props) => {
   // in the following code when you will click the div, a api req will be sent to openai and the info will come abt the information of roadmap stage.
 
-  console.log(roadmap.content.replace("@finish", ""));
   const normal = roadmap.content.replace("@finish", "");
   const roadmapdata = JSON.parse(normal);
-  console.log(roadmapdata.roadmap.map((roadmap: any) => roadmap.title));
+  // console.log(roadmapdata.roadmap.map((roadmap: any) => roadmap.title));
   const sampledata = {
     roadmap: [
       { id: 1, level: 0, parent: 0, title: "Peeing Process" },
