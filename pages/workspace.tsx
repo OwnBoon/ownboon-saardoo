@@ -5,7 +5,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Navbar from "../components/Navbar";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
-import { GoalBody, Goals, Notes, User } from "../typings";
+import { GoalBody, Goals, User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -36,6 +36,8 @@ import Dialog from "../components/ChapterPopup/ChapterPopup";
 import SkeletonLoading from "../components/SkeletonLoading";
 import TodoList from "../components/TodoList/TodoList";
 import CustomLoader from "../components/CustomLoader";
+import Notes from "../components/Notes/Notes";
+
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -78,7 +80,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const [tempTodo, setTemptodo] = useState<any>(null);
 
-  console.log(goals);
+  const [notesList, setNotesList] = useState<any[]>([])
 
   useEffect(() => {
     setTodos(goals.filter((goal) => goal.username == user?.username).sort((a, b) => a.todoIndex != undefined && b.todoIndex != undefined ? a.todoIndex - b.todoIndex : 0));
@@ -88,6 +90,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       null;
     }
     setLoading ? setLoading(false) : "";
+    setNotesList(notes)
   }, []);
 
   const refreshGoals = async () => {
@@ -297,6 +300,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setSelectedOption(event.target.value);
   };
 
+  const [showAddNotesModal, setShowAddNotesModal] = useState(false);
   const [showBoonIslandModal, setShowBoonIslandModal] = useState(false);
   const [boonisland, setBoonisland] = useState(false);
   const load = () => {
@@ -306,6 +310,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       setBoonisland(false);
     }, 1000);
   };
+
+  const [dummyNote, setDummyNote] = useState<any>(null)
+
+  const handleAddingNewNote = () => {
+    setShowAddNotesModal(true)
+  }
+
+  // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
   return (
     <>
@@ -346,184 +358,78 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             </div>
           </div>
           <div className="  bg-[#191919] flex  flex-col  mr-5 gap-y-3 relative w-full items-center   rounded-lg justify-center overflow-y-visible ">
-            <div className="flex flex-row justify-start gap-1 relative w-16 items-center">
-              <div className="text-[23px] text-white  pt-3 top-0 sticky ">
-                NOTES
+            <div className="grid grid-cols-3 w-full justify-center gap-1 relative items-center">
+              <div className='w-10 h-10'></div>
+              <div className="flex items-center gap-2 justify-center">
+                <div className="text-[23px] text-white">
+                  NOTES
+                </div>
+                <img
+                  src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
+                />
               </div>
-              <img
-                src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-                className="min-h-0 min-w-0 relative w-4 shrink-0"
-              />
+              <div onClick={handleAddingNewNote} className="border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 h-10 items-center px-[10px] py-2 border rounded m-3 ml-auto">
+                <img
+                  src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
+                  className="min-h-0 min-w-0"
+                />
+                <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd]" >
+                  Add Note
+                </button>
+              </div>
             </div>
 
             <div className="border-solid border-gray-500 border   mb-3 relative w-40 h-px  shrink-0 " />
             <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-              <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+              {notesList.map((n) => (
+                <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+                  <div
+                    onClick={() => setShowModal(true)}
+                    className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+                  >
+                    <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                      Chapter 1
+                    </div>
+                    <div className="w-24 h-[0px] border border-neutral-400"></div>
+                    <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
 
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
+                    <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                      do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                      aute irure dolor in reprehenderit in...
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
+              ))}
+              {dummyNote && (
+                <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+                  <div
+                    onClick={() => setShowModal(true)}
+                    className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+                  >
+                    <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
+                      Chapter 1
+                    </div>
+                    <div className="w-24 h-[0px] border border-neutral-400"></div>
+                    <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
 
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
+                    <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                      do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
+                      aute irure dolor in reprehenderit in...
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
 
-            <div className="flex flex-row transition-all justify-center items-center w-full gap-x-3">
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-              <div className="self-start hoverpop flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                <div
-                  onClick={() => setShowModal(true)}
-                  className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                >
-                  <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                    Chapter 1
-                  </div>
-                  <div className="w-24 h-[0px] border border-neutral-400"></div>
-                  <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                  <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                    aute irure dolor in reprehenderit in...
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Dialog isOpen={showAddNotesModal} onClose={setShowAddNotesModal}>
+              {<Notes setNotes={setNotesList} setDummyNote={setDummyNote} notes={notes} />}
+            </Dialog>
 
             <Dialog isOpen={showModal} onClose={setShowModal}>
               <div className="rounded-xl bg-[#101010] p-16">
