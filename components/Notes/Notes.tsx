@@ -9,16 +9,15 @@ import { Notes } from "../../typings";
 import { useUser } from "@clerk/nextjs";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
-interface Props {
-  notess: Notes;
-}
 
-const Notes = ({ notess }: Props) => {
+const Notes = ({ setNotes, setDummyNote, notes }: any) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [topic, setTopic] = useState("");
   const [text, setText] = useState("");
+
+  const [note, setNote] = useState({ text: "", topic: "", note: "", _id: "" })
 
   const handleSubmit = async (e: any) => {
     // e.preventDefault();
@@ -29,12 +28,16 @@ const Notes = ({ notess }: Props) => {
       email: user?.emailAddresses[0].emailAddress!,
     };
 
+    setDummyNote(mutations)
+
     const result = await fetch(`/api/addNotes`, {
       body: JSON.stringify(mutations),
       method: "POST",
     });
 
     const json = await result.json();
+    setNotes([...notes, json])
+    setDummyNote(null)
     return json;
   };
   const handleSet = async (id: string, topic: string) => {
@@ -58,7 +61,7 @@ const Notes = ({ notess }: Props) => {
       {" "}
       <div className="border   bg-white space-y-5 overflow-y-scroll h-fit  w-full px-2 rounded-xl py-2">
         <div className="flex justify-center items-center">
-          {notess?.topic.length == 0 ? (
+          {note?.topic.length == 0 ? (
             <div onClick={() => setShow(true)} className="cursor-pointer">
               Add Topic
             </div>
@@ -93,7 +96,7 @@ const Notes = ({ notess }: Props) => {
 
               <div>
                 <div className="flex space-x-5 items-center justify-center">
-                  <p >{notess?.topic}</p>
+                  <p >{note?.topic}</p>
                   <p onClick={() => setShow2(true)} className="text-2xl cursor-pointer font-semibold"> +</p>
                   {show2 ? (
                     <div>
@@ -118,15 +121,15 @@ const Notes = ({ notess }: Props) => {
                 <ReactQuill
                   theme="snow"
                   className="h-36 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                  value={text || notess?.note}
+                  value={text || note?.note}
                   onChange={setText}
                 />
                 {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
                 <Button
                   onPress={() => {
-                    notess?.topic.length < 1
+                    note?.topic.length < 1
                       ? handleSubmit
-                      : handleSet(notess._id!, notess?.topic);
+                      : handleSet(note._id!, note?.topic);
                   }}
                   className="mt-5"
                 >
