@@ -13,8 +13,15 @@ interface Props {
   setLoading?: (value: boolean) => void;
 }
 
-const Layout = ({ children, bgColor, icon, text, border, hasBg,setLoading }: Props) => {
+const Layout = ({ children, bgColor, icon, text, border, hasBg, setLoading }: Props) => {
   const [showsidebar, setShowsidebar] = useState(false);
+
+  const selectRandomBg = () => {
+    const bgImages = ['lofi_1.png', 'lofi_2.png', 'lofi_3.png', 'lofi_4.png']
+    const random = Math.floor(Math.random() * bgImages.length);
+    return bgImages[random]
+  }
+
   return (
     <div
       className={`w-full flex h-screen`}
@@ -37,7 +44,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg,setLoading }: Pro
           }  ml-auto transition-all`}
       >
         <Navbar
-        setLoading={setLoading}
+          setLoading={setLoading}
           showsidebar={showsidebar}
           icon={icon}
           text={text}
@@ -47,7 +54,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg,setLoading }: Pro
         <div
           className={`text-[#DDDDDD] py-24 pb-24 pr-4 ${!showsidebar ? "" : ""}`}
           style={{
-            backgroundImage: hasBg ? "url(lofi.svg)" : "none",
+            backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}
         >
           {children}
