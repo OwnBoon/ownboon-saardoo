@@ -28,7 +28,7 @@ export default function Hero() {
             <h1 className="py-3">
               Unleash your{" "}
               <span className="md:tracking-[12px] tracking-[3px]">
-                POTENTIAL
+                POTENTIAl
               </span>
             </h1>
             <svg
