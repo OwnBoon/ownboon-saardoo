@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Body from "../components/Home/Body";
+import Footer from "../components/Home/Footer";
 import Spline from "@splinetool/react-spline";
 import { fetchUsers } from "../utils/fetchUsers";
 import { User, UserBody } from "../typings";
@@ -15,6 +16,8 @@ import axios from "axios";
 import Hero from "../components/Home/Hero";
 import { Balls, Skateboard } from "../components/ext";
 import Benefits from "../components/Home/Benefits";
+import Reviews from "../components/Home/Reviews";
+import About from "../components/Home/About";
 
 interface Props {
   users: User[];
@@ -120,6 +123,9 @@ const Home = ({ users }: Props) => {
         <Body />
       </section>
       <Benefits></Benefits>
+      <Reviews></Reviews>
+      <About></About>
+      <Footer></Footer>
     </>
   );
 };
