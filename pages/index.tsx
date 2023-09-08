@@ -14,6 +14,7 @@ import CryptoJS from "crypto-js";
 import axios from "axios";
 import Hero from "../components/Home/Hero";
 import { Balls, Skateboard } from "../components/ext";
+import Benefits from "../components/Home/Benefits";
 
 interface Props {
   users: User[];
@@ -118,6 +119,7 @@ const Home = ({ users }: Props) => {
         </div>
         <Body />
       </section>
+      <Benefits></Benefits>
     </>
   );
 };

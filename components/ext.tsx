@@ -94,7 +94,7 @@ export const Skateboard = () => {
 
   return (
     <div id="counter" className=" text-[#262626] py-5 mb-10">
-      <div className="mx-auto h-[8vh] w-[3vw] flex flex-col justify-center items-center">
+      <div className="mx-auto h-[8vh] w-[3vw] flex flex-col justify-center items-center font-[poppins]">
         <button
           id="ripple"
           onClick={preview}
@@ -107,7 +107,7 @@ export const Skateboard = () => {
         <div className="countsquare mx-5 z-100 z-no h-[101px] w-[172px]">
           <h5 className="mb-[-1vh] z-100 text-[2rem] text-[#484848]">
             <CountUpAnimation duration={2000}>150</CountUpAnimation>
-            <span className="absolute font-bold text-[1.3rem]">+</span>
+            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">+</span>
           </h5>
           <h6 className="text-[1rem] font-200 ">Anticipating Users</h6>
           <Image
@@ -122,7 +122,7 @@ export const Skateboard = () => {
         <div className="countsquare mx-5  z-100 z-no h-[101px] w-[172px]">
           <h5 className="mb-[-1vh] z-100 text-[2rem] text-[#484848]">
             <CountUpAnimation duration={2000}>100</CountUpAnimation>
-            <span className="absolute font-bold text-[1.3rem]">+</span>
+            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">+</span>
           </h5>
           <h6 className="text-[1rem] font-200 ">Growth Guides</h6>
           <Image
@@ -137,7 +137,7 @@ export const Skateboard = () => {
         <div className="countsquare mx-5  z-100 z-no h-[101px] w-[172px]">
           <h5 className="mb-[-1vh] z-100 text-[2rem] text-[#484848]">
             <CountUpAnimation duration={2000}>50</CountUpAnimation>
-            <span className="absolute font-bold text-[1.3rem]">+</span>
+            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">+</span>
           </h5>
           <h6 className="text-[1rem] font-200 ">Creators Engaged</h6>
           <Image

@@ -1,159 +1,151 @@
-import React, { useEffect } from "react";
+import Image from "next/image";
+import { useEffect } from "react";
 
 export default function Body() {
   useEffect(() => {
+    
     function reveal() {
-      var reveals = document.querySelectorAll(".showbody");
-      for (var i = 0; i < reveals.length; i++) {
+      var headingleft = document.querySelectorAll(".headingleft");
+      var headingright = document.querySelectorAll(".headingright");
+      var heading = document.querySelectorAll(".revealtitle");
+      var paragraph = document.querySelectorAll(".paragraph");
+      for (var i = 0; i < headingleft.length; i++) {
         var windowHeight = window.innerHeight;
-        var elementTop = reveals[i]?.getBoundingClientRect().top;
+        var headingleftTop = headingleft[i].getBoundingClientRect().top;
         var elementVisible = 150;
-
-        if (elementTop < windowHeight - elementVisible) {
-          reveals[i].classList.add("active");
+        
+        if (headingleftTop < windowHeight - elementVisible) {
+          headingleft[i]?.classList.add("show");
+          headingright[i]?.classList.add("show");
+        }
+      }
+      for (var j = 0; j < paragraph.length; j++) {
+        var windowHeight = window.innerHeight;
+        var paragraphTop = paragraph[j].getBoundingClientRect().top;
+        var elementVisible = 150;
+        if (paragraphTop < windowHeight - elementVisible) {
+          paragraph[j]?.classList.add("show");
+        }
+        
+      }
+      for (var k = 0; k < heading.length; k++) {
+        
+        var windowHeight = window.innerHeight;
+        var headingTop = heading[k].getBoundingClientRect().top;
+        var elementVisible = 150;
+        
+        if (headingTop < windowHeight - elementVisible) {
+          heading[k]?.classList.add("show");
         }
       }
     }
-
     window.addEventListener("scroll", reveal);
-  }, []);
+  }, [])
+  
   return (
-    <div className="mt-[30vh]  flex flex-col font-poppins mx-auto my-auto items-center align-center justify-center">
-      <div className="heading">
-        <h1 className="text-[3rem]">Why OwnBoon?</h1>
-        <h3 className="text-[1.5rem] py-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    <div className="pt-[50px] bg-white text-[#2E2E2E] flex flex-col font-poppins  items-center align-center p-5 justify-center pb-5 md:pb-0">
+      <div className="heading mb-8">
+        <h1 className="revealtitle md:text-[4rem] text-[2.5rem]">Why OwnBoon?</h1>
+        <h3 className="md:text-[1.5rem] text-[15px] py-1 ">
+          Elevate Your Self-Improvement Journey
         </h3>
       </div>
-      <div className="my-auto mx-auto p-5  justify-between flex flex-row">
-        <div className="bodyimg1">
-          <svg
-            width="23.8vw"
-            height="34vh"
-            className="z-no absolute"
-            viewBox="0 0 458 344"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.8" filter="url(#filter0_f_80_54)">
-              <path
-                d="M97.3634 42.1279C145.776 36.3606 173.012 63.2339 221.338 56.7933C272.262 50.0063 297.337 19.1363 342.694 5.98624C404.801 -12.0202 419.611 34.3652 434.615 77.251C447.225 113.297 416.35 117.973 421.177 174.116C425.077 219.47 469.49 251.269 451.894 290.966C439.311 319.351 444.492 340.639 373.808 319.35C303.124 298.062 264.142 351.006 194.323 340.639C139.249 332.461 100.372 330.027 60.676 290.966C0.714401 231.963 -21.4497 136.623 33.2447 77.251C59.2215 49.0526 63.4313 46.1702 97.3634 42.1279Z"
-                fill="#FFFF00"
-                fillOpacity="0.6"
-              />
-            </g>
-            <defs>
-              <filter
-                id="filter0_f_80_54"
-                x="0"
-                y="0"
-                width="458"
-                height="344"
-                filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
-              >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="BackgroundImageFix"
-                  result="shape"
-                />
-                <feGaussianBlur
-                  stdDeviation="1"
-                  result="effect1_foregroundBlur_80_54"
-                />
-              </filter>
-            </defs>
-          </svg>
 
-          <img loading="lazy" src="/bodyimage1.gif" alt="Gif" />
+      <div className=" justify-center pb-5 md:pb-0 flex flex-row md:flex-nowrap flex-wrap">
+        <div className=" bodyimg1">
+          <Image
+            className="md:w-[25vw]"
+            width={500}
+            height={500}
+            loading="lazy"
+            src="/bodyimage1.webp"
+            alt="Gif1"
+          />
         </div>
-        <div className="flex flex-col showbody align-center justify-center">
-          <h1 className="text-[1.4rem] font-semibold py-3">
-            Lorem ipsum dolor sit amet consectetur
-          </h1>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum
-            et incidunt facilis, corporis provident velit modi numquam magni{" "}
-            <br />
-            assumenda odit cumque culpa similique.
+        <div className="flex flex-col px-8  text-center md:text-left align-center justify-center pb-5 md:pb-0 md:w-[50%]">
+          <h4 className="headingleft text-[1.2rem] md:text-[1.3vw] font-poppins font-semibold py-3">
+            Supportive Community
+          </h4>
+          <p className=" paragraph text-[0.9rem] text-justify md:text-[1.1vw] break-normal ">
+            OwnBoon provides a welcoming community of like-minded individuals
+            who are dedicated to personal growth and self-improvement. Connect
+            with others who share your goals, join specific group chats based on
+            your interests, and access a wealth of resources to help you on your
+            journey.
           </p>
         </div>
       </div>
-      <div className="my-auto mx-auto p-5 showbody justify-between flex flex-row">
-        <div className="flex flex-col  align-center justify-center">
-          <h1 className="text-[1.4rem] font-semibold py-3">
-            Lorem ipsum dolor sit amet consectetur
-          </h1>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum
-            et incidunt facilis, corporis provident velit modi numquam magni{" "}
-            <br />
-            assumenda odit cumque culpa similique.
+      <div className=" justify-center pb-5 md:pb-0 flex flex-wrap md:flex-nowrap">
+        <div className="md:w-[50%] flex flex-col px-8 text-center md:text-left align-center justify-center pb-5 md:pb-0 order-2 md:order-1">
+          <h4 className=" headingright text-[1.2rem] md:text-[1.3vw] font-poppins font-semibold py-3">
+            Find Support and Encouragement
+          </h4>
+          <p className="paragraph text-[0.9rem] text-justify md:text-[1.1vw] break-normal ">
+            Whether you need advice or simply a listening ear, the OwnBoon
+            community is here to support you. Use the vent zone to share your
+            feelings and receive life advice, or connect with a gym buddy or
+            study partner to stay on track and motivated.
           </p>
         </div>
-        <div className="bodyimg2">
-          <img loading="lazy" src="/bodyimage2.gif" alt="Gif" />
+        <div className=" bodyimg2 order-1 md:order-2">
+          <Image
+           className="md:w-[25vw]"
+            width={500}
+            height={500}
+            loading="lazy"
+            src="/bodyimage2.webp"
+            alt="Gif2"
+          />
         </div>
       </div>
-      <div className="my-auto mx-auto p-5 showbody justify-between flex flex-row">
-        <div className="bodyimg3">
-          <svg
-            width="22.8vw"
-            height="34.8vh"
-            viewBox="0 0 439 352"
-            className="absolute z-no"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.8" filter="url(#filter0_f_175_3)">
-              <path
-                d="M17.0786 101.319C19.5416 30.2156 77.7455 -7.66382 154.558 10.5302C220.411 26.1285 243 101.319 373 10.5302C429.089 -28.6413 443.775 81.8048 433 134.5C426.132 168.088 386.788 158.109 383.5 207C380.537 251.051 411.295 261.555 383.5 298C309.035 395.637 293.344 324.416 203.521 324.153C115.14 323.894 -1.61277 386.933 2.08572 307.872C4.38413 258.74 67.5151 272.469 71.2228 223.406C75.2618 169.959 15.2239 154.863 17.0786 101.319Z"
-                fill="#00F0B5"
-                fillOpacity="0.6"
-              />
-            </g>
-            <defs>
-              <filter
-                id="filter0_f_175_3"
-                x="0"
-                y="0.29541"
-                width="438.282"
-                height="351.174"
-                filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
-              >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="BackgroundImageFix"
-                  result="shape"
-                />
-                <feGaussianBlur
-                  stdDeviation="1"
-                  result="effect1_foregroundBlur_175_3"
-                />
-              </filter>
-            </defs>
-          </svg>
 
-          <img loading="lazy" src="/bodyimage3.gif" alt="Gif" />
+      <div className=" justify-center pb-5 md:pb-0 flex flex-row md:flex-nowrap flex-wrap">
+        <div className=" bodyimg3">
+          <Image
+           className="md:w-[25vw]"
+            width={500}
+            height={500}
+            loading="lazy"
+            src="/bodyimage3.webp"
+            alt="Gif3"
+          />
         </div>
-        <div className="flex flex-col  align-center justify-center">
-          <h1 className="text-[1.4rem] font-semibold py-3 ">
-            Lorem ipsum dolor sit amet consectetur
-          </h1>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            accusamus quo officiis nam. <br /> Accusantium, reprehenderit harum
-            et incidunt facilis, corporis provident velit modi numquam magni{" "}
-            <br />
-            assumenda odit cumque culpa similique.
+
+        <div className="md:w-[50%] flex flex-col px-8 text-center md:text-left align-center justify-center pb-5 md:pb-0">
+          <h4 className="headingleft text-[1.2rem] md:text-[1.3vw] font-poppins font-semibold py-3">
+            Grow Your Self-Improvement Journey
+          </h4>
+          <p className="paragraph  text-[0.9rem] text-justify md:text-[1.1vw] break-normal ">
+            With OwnBoon, you'll have access to personalized roadmaps and
+            exclusive blog content on self-improvement and productivity. Stay
+            informed with the latest tips and techniques from top influencers
+            across different platforms and share your own progress and
+            experiences with a supportive community
           </p>
+        </div>
+      </div>
+      <div className="  px-8   items-center p-5 justify-center   flex flex-wrap md:flex-nowrap text-center md:text-left">
+        <div className="md:w-[50%] order-2 md:order-1">
+          <h4 className="headingright text-[1.2rem] md:text-[1.3vw] font-poppins font-semibold py-3">
+            Boost Your Productivity
+          </h4>
+          <p className="paragraph text-[0.9rem] text-justify md:text-[1.1vw] break-normal ">
+            OwnBoon offers a variety of productivity tools, Focus Planet and
+            Lofi sessions, and an AI scheduler to help you stay organized and
+            focused. You can also access the right study techniques and tips
+            based on your mood to help you stay on track and improve your
+            workflow.
+          </p>
+        </div>
+        <div className="order-1 md:order-2">
+          <Image
+           className="animate-float md:w-[25vw]"
+            width={500}
+            height={500}
+            loading="lazy"
+            src="/bodyimage4.webp"
+            alt="Gif"
+          />
         </div>
       </div>
     </div>
