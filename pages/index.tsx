@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Navbar from "../components/Navbar";
 import Body from "../components/Home/Body";
 import Footer from "../components/Home/Footer";
 import Spline from "@splinetool/react-spline";
@@ -18,6 +17,7 @@ import { Balls, Skateboard } from "../components/ext";
 import Benefits from "../components/Home/Benefits";
 import Reviews from "../components/Home/Reviews";
 import About from "../components/Home/About";
+import Navbar from "../components/Navbar/Navbar";
 
 interface Props {
   users: User[];
@@ -113,7 +113,7 @@ const Home = ({ users }: Props) => {
         <title>OwnBoon</title>
         <link rel="icon" href="/logo.png" />
       </Head>
-      <Navbar />
+      <Navbar/>
       <section id="home" >
         <Balls />
         <div className="flex mt-[100px] min-h-screen justify-center flex-col">

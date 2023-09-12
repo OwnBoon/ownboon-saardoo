@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import CountUpAnimation from "./CountUpAnimation";
+import { useRouter } from "next/router";
 export const Balls = () => {
   
   useEffect(() => {
@@ -66,17 +67,7 @@ export const Balls = () => {
 };
 
 export const Skateboard = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const openPopup = () => {
-    setIsOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsOpen(false);
-  };
-  const preview = () => {
-    openPopup(true);
-  }
+  const router = useRouter();
   useEffect(() => {
     const buttons = document.getElementById("ripple");
     buttons.addEventListener("click", function (e) {
@@ -97,8 +88,10 @@ export const Skateboard = () => {
       <div className="mx-auto h-[8vh] w-[3vw] flex flex-col justify-center items-center font-[poppins]">
         <button
           id="ripple"
-          onClick={preview}
-          className="items-center text-[4vw] md:text-[1.3rem] xs:text-[1rem]  md:w-[35vw] md:h-[50px] w-[65vw] h-[50px] hover:cursor-pointer  skatebar bg-white font-semibold absolute "
+          onClick={() => {
+            router.push("/sign-in");
+          }}
+          className="items-center text-[4vw] md:text-[1.3rem] xs:text-[1rem]  md:w-[35vw] md:h-[50px] w-[65vw] h-[50px] hover:cursor-pointer  skatebar bg-white font-semibold absolute font-[Poppins]"
         >
           Join our community now!
         </button>
