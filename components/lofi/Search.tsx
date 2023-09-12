@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { useGetSongsBySearchQuery } from "../../redux/services/shazamCore";
+import { useGetSongsBySearchQuery } from "../../services/shazamCore";
 import Loader from "./components/Loader";
 import Error from "./components/Error";
 import SongCard from "./components/SongCard";

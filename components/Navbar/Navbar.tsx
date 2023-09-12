@@ -112,7 +112,7 @@ export default function Navbar() {
             <Image
               width={40}
               height={40}
-              src="/applogo.png"
+              src="/logo.png"
               className=" mr-1 rounded-full "
               alt="Ownboon Logo"
             />
