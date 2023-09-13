@@ -9,7 +9,7 @@ import {
 } from "react-icons/hi";
 import { RiCloseLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetSongsByGenreQuery } from "../../redux/services/shazamCore";
+import { useGetSongsByGenreQuery } from "../../services/shazamCore";
 import Loader from "./components/Loader";
 import Error from "./components/Error";
 import { genres } from "../../assets/constants";
