@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import CountUpAnimation from "./CountUpAnimation";
 import { useRouter } from "next/router";
 export const Balls = () => {
-  
+
   useEffect(() => {
     const container = document.getElementById("animation-container");
-    const balls = Array.from(document.getElementsByClassName("ball"));
-    let mouseX = container.clientWidth / 2;
-    let mouseY = container.clientHeight / 2;
+    const balls: HTMLElement[] = Array.from(document.getElementsByClassName("ball")) as HTMLElement[];
+    let mouseX = container ? container.clientWidth / 2 : 0;
+    let mouseY = container ? container.clientHeight / 2 : 0;
 
     function setInitialPositions() {
       if (window.screen.width < 768) {

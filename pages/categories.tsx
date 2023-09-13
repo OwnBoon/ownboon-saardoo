@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Body from "../components/Home/Body";
 import Spline from "@splinetool/react-spline";
@@ -14,6 +13,7 @@ import { useUser } from "@clerk/nextjs";
 import { categories } from "../utils/constants";
 import useSWR, { mutate } from "swr";
 import { Toaster, toast } from "react-hot-toast";
+import Navbar from "../components/Navbar/Navbar";
 interface Props {
   users: User[];
 }
@@ -50,9 +50,8 @@ const Home = ({ users }: Props) => {
 
       toast.custom((t) => (
         <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">

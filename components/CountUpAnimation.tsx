@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-const easeOutQuad = (t) => t * (2 - t);
+const easeOutQuad = (t: any) => t * (2 - t);
 const frameDuration = 1000 / 60;
 
-const CountUpAnimation = ({ children, duration = 2000 }) => {
+const CountUpAnimation = ({ children, duration = 2000 }: any) => {
   const countTo = parseInt(children, 10);
   const [count, setCount] = useState(0);
 

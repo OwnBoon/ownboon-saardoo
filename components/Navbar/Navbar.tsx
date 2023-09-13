@@ -49,7 +49,7 @@ export default function Navbar() {
     const sections = document.querySelectorAll("section");
     const navLi = document.querySelectorAll("nav ul li");
     window.onscroll = () => {
-      var current = "";
+      var current: any = "";
 
       sections.forEach((section) => {
         const sectionTop = section.offsetTop;
@@ -67,13 +67,13 @@ export default function Navbar() {
     };
 
     const handleScroll = () => {
-     
 
-        const currentScrollPos = window.pageYOffset;
-        const visible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
-        setShow(visible);
-        setPrevScrollPos(currentScrollPos);
-      
+
+      const currentScrollPos = window.pageYOffset;
+      const visible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
+      setShow(visible);
+      setPrevScrollPos(currentScrollPos);
+
     }
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -82,7 +82,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`${show? "navbarhide":"navbarshow"} px-5 sm:px-4 text-[0.9rem] py-2.5 fixed  w-full z-100 bg-white z-20 top-0 left-0 text-[#2E2E2E]  font-inter `}
+        className={`${show ? "navbarhide" : "navbarshow"} px-5 sm:px-4 text-[0.9rem] py-2.5 fixed  w-full z-100 bg-white z-20 top-0 left-0 text-[#2E2E2E]  font-inter `}
       >
         <div className="container bg-white flex flex-wrap items-center justify-between mx-auto">
           <button
@@ -132,18 +132,16 @@ export default function Navbar() {
             </button>
           </div>
           <div
-            className={`items-center text-[0.9rem] justify-between ${
-              bugermenu === true ? "" : "hidden"
-            } w-full md:flex md:w-auto md:order-1`}
+            className={`items-center text-[0.9rem] justify-between ${bugermenu === true ? "" : "hidden"
+              } w-full md:flex md:w-auto md:order-1`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 mt-4 bg-white rounded-lg md:flex-row md:space-x-8 md:mt-0 ">
               <li>
                 <Link
                   href={`${asPath === "/" ? "/#home" : "/"}`}
-                  className={`transform-letter  block py-2 pl-3 pr-4 md:p-0 ${
-                    asPath == "/" ? " activelink font-bold" : "Link"
-                  }`}
+                  className={`transform-letter  block py-2 pl-3 pr-4 md:p-0 ${asPath == "/" ? " activelink font-bold" : "Link"
+                    }`}
                   id="homelink"
                   scroll={false}
                 >
@@ -154,14 +152,13 @@ export default function Navbar() {
                 <button
                   id="dropdownNavbarLink"
                   onClick={dropdownlock}
-                  className={`transform-letter flex text-left justify-between w-full  py-2 pl-3 pr-4 md:p-0 font-medium ${
-                    asPath == "/productivity" ||
-                    asPath == "/habits" ||
-                    asPath == "/workspace" ||
-                    asPath == "/community"
+                  className={`transform-letter flex text-left justify-between w-full  py-2 pl-3 pr-4 md:p-0 font-medium ${asPath == "/productivity" ||
+                      asPath == "/habits" ||
+                      asPath == "/workspace" ||
+                      asPath == "/community"
                       ? "activelink font-bold"
                       : "Link"
-                  }  md:w-auto `}
+                    }  md:w-auto `}
                 >
                   Explore
                   <svg
@@ -180,9 +177,8 @@ export default function Navbar() {
                 </button>
                 <div
                   id="dropdownNavbar"
-                  className={`${
-                    display === true ? "z-100 ml-2 " : "hidden"
-                  } bg-white items-start  font-light   divide-y divide-gray-100 rounded-lg  w-full `}
+                  className={`${display === true ? "z-100 ml-2 " : "hidden"
+                    } bg-white items-start  font-light   divide-y divide-gray-100 rounded-lg  w-full `}
                 >
                   <ul
                     className="ml-[-30px] z-100 bg-white justify-center py-3 px-5 items-center absolute text-gray-700 transform-letter"
@@ -191,9 +187,8 @@ export default function Navbar() {
                     <li>
                       <Link
                         href="/habits"
-                        className={`transform-letter block p-4  ${
-                          asPath === "/habits" ? "activelink font-bold" : "Link"
-                        }`}
+                        className={`transform-letter block p-4  ${asPath === "/habits" ? "activelink font-bold" : "Link"
+                          }`}
                       >
                         Habits
                       </Link>
@@ -201,11 +196,10 @@ export default function Navbar() {
                     <li>
                       <Link
                         href="/productivity"
-                        className={`transform-letter block p-4  ${
-                          asPath == "/productivity"
+                        className={`transform-letter block p-4  ${asPath == "/productivity"
                             ? "activelink font-bold"
                             : "Link"
-                        }`}
+                          }`}
                       >
                         Productivity
                       </Link>
@@ -214,11 +208,10 @@ export default function Navbar() {
                     <li>
                       <Link
                         href="/community"
-                        className={`transform-letter  block p-4  ${
-                          asPath == "/community"
+                        className={`transform-letter  block p-4  ${asPath == "/community"
                             ? "activelink font-bold"
                             : "Link"
-                        }`}
+                          }`}
                       >
                         Community
                       </Link>
@@ -231,9 +224,8 @@ export default function Navbar() {
                   href="/#benefit"
                   scroll={false}
                   id="benefitlink"
-                  className={`transform-letter block  ${
-                    asPath == "/#benefit" ? "activelink font-bold" : "Link"
-                  } py-2  pl-3 pr-4 md:p-0 `}
+                  className={`transform-letter block  ${asPath == "/#benefit" ? "activelink font-bold" : "Link"
+                    } py-2  pl-3 pr-4 md:p-0 `}
                 >
                   Benefit
                 </Link>
@@ -242,9 +234,8 @@ export default function Navbar() {
                 <Link
                   scroll={false}
                   href="/#about"
-                  className={`transform-letter block  ${
-                    asPath == "/#about" ? "activelink font-bold" : "Link"
-                  } py-2  pl-3 pr-4 md:p-0 `}
+                  className={`transform-letter block  ${asPath == "/#about" ? "activelink font-bold" : "Link"
+                    } py-2  pl-3 pr-4 md:p-0 `}
                 >
                   About Us
                 </Link>
