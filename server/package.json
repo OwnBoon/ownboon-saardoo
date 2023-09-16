@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "group": "nodemon server.js",
-    "lofi": "nodemon lofi.js"
+    "lofi": "nodemon lofi.js",
+    "roadmap": "nodemon roadmap.js"
   },
   "keywords": [],
   "author": "",

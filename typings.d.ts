@@ -157,12 +157,13 @@ export interface Message extends SanityBody {
     replymessage?: string
 }
 
-interface Roadmaps {
+interface Roadmaps extends SanityBody {
     _type?: "roadmap"
     content?: string
     email?: string
     progress?: string
     goal?: string
+    completed?: boolean
     slug?: {
         current: string
     }
@@ -173,6 +174,7 @@ interface RoadBody {
 
     }
     email?: string
+    completed?: boolean
     progress?: string
     goal?: string
     slug?: {

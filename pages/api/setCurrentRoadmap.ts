@@ -19,7 +19,8 @@ export default async function handler(
             id: data._id,
             set: {
                 goal: data.goal,
-                progress: data.progress
+                progress: data.progress,
+                completed: data.completed
             }
         },
       },

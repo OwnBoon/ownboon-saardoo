@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { Modal, Text } from "@nextui-org/react";
+import { Button, Dropdown, Modal, Text } from "@nextui-org/react";
 
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, Roadmaps, User } from "../typings";
@@ -12,6 +12,8 @@ import handler from "../pages/api/roadmap/generate";
 import { fetchRoadmaps } from "../utils/fetchRoadmap";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
+import RoadComp from "../components/Roadmap/roadmaps";
+import ReactTimeago from "react-timeago";
 interface datatype {
   message: {
     choices: [
@@ -50,6 +52,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   );
 
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("self");
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -67,19 +70,22 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   const [description, setDescription] = useState("");
   console.log(desc);
 
-  const fetchRoadmap = async (e: any) => {
+  const fetchRoadmap = async () => {
     // e.preventDefault();
     setVisible(false);
+    console.log(desc);
     setDesc("");
+    setLoading(true);
     const result = await fetch(
       `https://nodejs-sms.saard00vfx.repl.co/api?title=${desc}`
     );
     const json = await result.json();
+    setVisible(false);
+    // console.log(json);
     setData(json);
-
     // const fine = content!.replace("@finish", "");
 
-    const content = data?.message.choices[0].message.content;
+    const content = json?.message.choices[0].message.content;
     // const fiine = content?.replace("@finish", "");
     // const sus = JSON.parse(fiine!);
     // console.log(sus.roadmap[0].title);
@@ -90,11 +96,11 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       email: user?.emailAddresses[0].emailAddress,
       // goal: sus.roadmap[0].title,
       progress: 0,
+      completed: false,
       slug: {
         current: random,
       },
     };
-
     const result2 = await fetch(`/api/addRoadmaps`, {
       body: JSON.stringify(mutations),
       method: "POST",
@@ -102,6 +108,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     const json2 = await result2.json();
     return json;
   };
+  // console.log("data is", data);
   const handleOpen = (category: any) => {
     setVisible(true);
     setCategory(category);
@@ -116,13 +123,34 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   };
 
   const completeRoadmap = async (id: string) => {
+    console.log(id);
     const postInfo = {
-      id: id,
+      _id: id,
+      completed: true,
+    };
+    const result = await fetch(`/api/setCurrentRoadmap`, {
+      body: JSON.stringify(postInfo),
+      method: "POST",
+    });
+
+    console.log("completing roadmap");
+    const json = await result.json();
+    console.log(json);
+    return json;
+  };
+  const deleteRoadmap = async (id: string) => {
+    const postInfo = {
+      _id: id,
     };
     const result = await fetch(`/api/deleteRoadmap`, {
       body: JSON.stringify(postInfo),
       method: "POST",
     });
+    console.log("deleting roadmap");
+    const json = await result.json();
+    console.log(json);
+    router.replace(router.asPath);
+    return json;
   };
 
   // ------ data section --------
@@ -348,40 +376,46 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       border="gray-500"
       children={
         <div>
-          <Modal
-            closeButton
-            aria-labelledby="modal-title"
-            open={visible}
-            onClose={closeHandler}
-          >
-            <Modal.Header>
-              <Text id="modal-title" size={18}>
-                Describe what you want to learn
-              </Text>
-            </Modal.Header>
-            <Modal.Body>
-              <textarea
-                placeholder={`${
-                  category === "self" ? "Self Improvement" : "Skill Improvement"
-                }`}
-                className="w-full h-32 p-2 rounded-md bg-[#191919] border border-[#585858] outline-none text-[#fff] placeholder-[#585858] placeholder-opacity-80 resize-none focus:ring-1 focus:ring-[#585858] focus:border-transparent"
-                onChange={(e) => setDesc(e.target.value)}
-                value={desc}
-              />
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                className="bg-[#474747] py-2 px-3 rounded-md text-[#807d7d] w-full"
-                style={{
-                  border: "1px solid #585858",
-                }}
-                onClick={fetchRoadmap}
-              >
-                Send
-              </button>
-            </Modal.Footer>
-          </Modal>
           <div className="flex w-full gap-6 ">
+            <Modal
+              closeButton
+              aria-labelledby="modal-title"
+              className="!bg-[#191919]"
+              open={visible}
+              onClose={closeHandler}
+            >
+              <Modal.Header>
+                <Text id="modal-title" color="gray" size={18}>
+                  Describe what you want to learn
+                </Text>
+              </Modal.Header>
+              <Modal.Body>
+                <textarea
+                  placeholder={`${
+                    category === "self"
+                      ? "Self Improvement"
+                      : "Skill Improvement"
+                  }`}
+                  className="w-full h-32 p-2 rounded-md !bg-[#232222] border border-[#585858] outline-none text-[#fff] placeholder-[#585858] placeholder-opacity-80 resize-none focus:ring-1 focus:ring-[#585858] focus:border-transparent"
+                  onChange={(e) => setDesc(e.target.value)}
+                  value={desc}
+                />
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  className="bg-[#474747] py-2 px-3 rounded-md text-[#807d7d] w-full"
+                  style={{
+                    border: "1px solid #585858",
+                  }}
+                  disabled={userroadmap.length <= 4 ? false : true}
+                  onClick={fetchRoadmap}
+                >
+                  {userroadmap.length <= 4
+                    ? "send"
+                    : "You can only generate upto 5 roadmaps"}
+                </button>
+              </Modal.Footer>
+            </Modal>
             <div
               className="first w-1/2 bg-[#191919] flex items-center justify-between p-4 rounded-md"
               style={{
@@ -407,6 +441,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 Generate Now
               </button>
             </div>
+
             <div
               className="first w-1/2 bg-[#191919] flex items-center justify-between p-4 rounded-md"
               style={{
@@ -446,132 +481,74 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
           {userroadmap && (
             <div className="w-full mt-8 flex flex-col gap-8">
               {userroadmap.map((roadmap: Roadmaps) => (
-                <div className="flex relative">
-                  {/* <div className="completed relative bg-gradient-to-r from-[#cccccc] to-[#121212] text-[#dddddd54] w-1/2 flex flex-col py-6 rounded-l-lg">
-                  <div className="flex justify-between px-6">
-                    {aboveItems?.map((item, i) => (
-                      <div
-                        key={i}
-                        className={`w-1/3 flex justify-center flex-col text-center ${
-                          i % 2 !== 0
-                            ? ""
-                            : 'after:content-["|"] after:width-[1px] after:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "end",
-                        }}
-                      >
-                        <p>{item}</p>
-                      </div>
-                      ))}
+                <div className="flex relative bg-gradient-to-r overflow-hidden from-[#585858] via-[#121212]  to-[#121212] rounded-tl-[10px] rounded-bl-[10px]     rounded-lg   ">
+                  <div className="absolute z-0 opacity-25 overflow-hidden flex justify-center items-center mt-10">
+                    <RoadComp roadmap={roadmap} />
                   </div>
-                  <div className="h-4 px-6 bg-gradient-to-l from-[#cccccc] to-[#47474722] my-2 flex justify-evenly rounded-l-lg">
-                    <span className="w-1/3 flex justify-center">
-                      <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                    <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                      <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                  </div>
-                  <div className="flex justify-between px-6">
-                    {belowItems?.map((item, i) => (
-                      <div
-                        key={i}
-                        className={`w-1/3 flex justify-center flex-col text-center ${
-                          i % 2 === 0
-                          ? ""
-                            : 'before:content-["|"] before:width-[1px] before:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "start",
-                        }}
-                        >
-                        <p>{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
 
-                  {/* <div className="remaining text-[#585858] w-1/2 flex flex-col py-6 rounded">
-                  <div className="flex justify-between px-6">
-                    {aboveItems?.map((item, i) => (
-                      <div
-                        key={i}
-                        className={`w-1/3 flex  ${
-                          i === 0 ? "text-[#fff]" : "text-[#585858]"
-                        } justify-center flex-col text-center ${
-                          i % 2 !== 0
-                            ? ""
-                            : 'after:content-["|"] after:width-[1px] after:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "end",
-                        }}
-                      >
-                        <p>{item}</p>
+                  <div className=" top-0 left-0 w-full z-10 h-full flex flex-col py-8 pl-8 text-white">
+                    <div className="flex justify-between">
+                      <p className="flex items-center tracking-[1px] text-lg gap-6 my-1 bold font-light">
+                        Total Progress <ArrowRightIcon width={"12px"} />{" "}
+                        {/* @ts-ignore */}
+                        {Math.round(roadmap.progress)}%
+                      </p>
+                      <div className="px-10">
+                        <Dropdown>
+                          {/* @ts-ignore */}
+                          <Dropdown.Button color="" light>
+                            :
+                          </Dropdown.Button>
+                          <Dropdown.Menu
+                            onAction={() => {
+                              // @ts-ignore
+                              completeRoadmap(roadmap._id);
+                            }}
+                            variant="light"
+                            aria-label="Actions"
+                          >
+                            <Dropdown.Item key="Complete">
+                              Complete
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
                       </div>
-                    ))}
-                  </div>
-                  <div className="h-4 my-2 px-6 bg-gradient-to-r from-[#cccccc] to-[#cccccc6e] rounded-r-lg flex justify-between">
-                    <span className="w-1/3 flex text-center justify-center">
-                      <span className="h-4 w-4 bg-[#fff] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                      <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                    <span className="w-1/3 flex justify-center">
-                    <span className="h-4 w-4 bg-[#474747] rounded-full"></span>
-                    </span>
-                  </div>
-                  <div className="flex justify-between px-6">
-                  {belowItems?.map((item, i) => (
-                    <div
-                        key={i}
-                        className={`w-1/3 flex ${
-                          i === 0 ? "text-[#fff]" : "text-[#585858]"
-                        } justify-center flex-col text-center ${
-                          i % 2 === 0
-                            ? ""
-                            : 'before:content-["|"] before:width-[1px] before:height-[1px]'
-                        }`}
-                        style={{
-                          alignSelf: "start",
-                        }}
-                      >
-                        <p>{item}</p>
-                      </div>
-                    ))}
                     </div>
-                  </div> */}
-
-                  <div className="content absolute top-0 left-0 w-1/2 h-full flex flex-col py-8 pl-8 text-white">
-                    <p className="flex items-center gap-6 my-1 bold text-sm">
-                      Total Progress <ArrowRightIcon width={"12px"} />{" "}
-                      {roadmap.progress}
-                    </p>
-                    <p className="flex items-center gap-6 my-1 bold text-sm">
+                    <p className="flex items-center gap-6 my-1  tracking-[1px] text-lg font-light bold ">
                       Current Goal <ArrowRightIcon width={"12px"} />{" "}
                       {roadmap.goal}
                     </p>
-                    <p className="flex items-center gap-6 my-1 bold text-sm">
-                      Days Spent <ArrowRightIcon width={"12px"} /> 7{" "}
+                    <p className="flex items-center tracking-[1px] text-lg font-light gap-6 my-1 bold ">
+                      Days Spent <ArrowRightIcon width={"12px"} />{" "}
+                      {/* @ts-ignore */}
+                      <ReactTimeago date={roadmap._createdAt} />
                     </p>
-                    <button
-                      onClick={() =>
-                        router.push(`/roadmaps/${roadmap.slug?.current}`)
-                      }
-                      className="bg-[#191919] w-1/3 py-2 px-3 rounded-md mt-4"
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        color: "#585858",
-                      }}
-                    >
-                      Explore More
-                    </button>
+                    <div className="flex justify-between items-center">
+                      <button
+                        onClick={() =>
+                          router.push(`/roadmaps/${roadmap.slug?.current}`)
+                        }
+                        className=" bg-neutral-800   rounded-[5px] flex  border border-zinc-700  text-white/80 w-fit py-2 px-3  mt-4"
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          // color: "#585858",
+                        }}
+                      >
+                        <p className="text-neutral-200 text-sm font-semibold">
+                          Explore more
+                        </p>
+                      </button>
+                      <Button
+                        // @ts-ignore
+                        onPress={() => deleteRoadmap(roadmap._id)}
+                        className="!mx-4"
+                        color="error"
+                        size={"sm"}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}

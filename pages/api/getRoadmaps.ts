@@ -5,7 +5,7 @@ import {  Roadmaps, User } from "../../typings";
 
 
 const query = groq`
-*[_type == "roadmap"] {
+*[_type == "roadmap"  ] {
     ...,
   }  | order(rating desc)
     

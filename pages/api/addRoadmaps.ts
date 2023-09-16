@@ -21,7 +21,8 @@ export default async function handler(
           slug: data.slug,
           content: data.content,
           progress: data.progress,
-          goal: data.goal
+          goal: data.goal,
+          completed: data.completed
 
         },
       },
