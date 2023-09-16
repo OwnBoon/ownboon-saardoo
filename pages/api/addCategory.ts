@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import {  UserBody } from "../../typings";
+import { UserBody } from "../../typings";
 
 type Data = {
   message: string;
@@ -16,17 +16,17 @@ export default async function handler(
     mutations: [
       {
         patch: {
-            id: data.id!,
-            set: {
-                categories: data.categories,
-                about: data.about
-            }
+          id: data.id!,
+          set: {
+            categories: data.categories,
+            about: data.about
+          }
         },
       },
     ],
   };
 
-  const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
+  const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}?returnDocuments=true`;
 
   const result = await fetch(apiEndpoint, {
     headers: {

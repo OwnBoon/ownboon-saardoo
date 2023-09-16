@@ -12,10 +12,15 @@ import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 
 const vent = () => {
-  const router = useRouter();
   const [room, setRoom] = useState("");
   const { isLoaded, isSignedIn, user } = useUser();
   // @ts-ignore
+  const router = useRouter();
+  useEffect(() => {
+
+    // router.push("/workspace")
+  }, [])
+
 
   return (
     <div className="grid grid-cols-12 h-screen bg-[#f4f1eb]/50">
