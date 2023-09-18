@@ -156,8 +156,8 @@ const Post = ({ roadmap }: Props) => {
             </div>
           </div>
           {/* Info */}
-          <div className="h-full w-full -my-10 p-10 ">
-            <div className="h-full w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
+          <div className="h-screen w-full -my-10 p-10 ">
+            <div className="h-screen w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
               <div className="space-y-5">
                 <h1 className="text-xl text-white font-semibold">
                   Block Title: {!blockSelected ? <div></div> : blockSelected}
@@ -198,12 +198,15 @@ const Post = ({ roadmap }: Props) => {
                   Recommended Blog
                 </h1>
                 {infotext ? (
-                  // @ts-ignore
-                  <Link className="" href={infotext.blog}>
-                    <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
-                      Open in web
-                    </div>
-                  </Link>
+                  <>
+                    {/*  @ts-ignore */}
+                    <Link className="" href={infotext.blog}>
+                      <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
+                        Open in web
+                      </div>
+                    </Link>
+                    <div>{/* @ts-ignore */}</div>
+                  </>
                 ) : null}
               </div>
               <div>
