@@ -32,7 +32,7 @@
     "pages/sign-in",
     "components/DraggableRoadmap.jsx",
     ".next/types/**/*.ts"
-, "components/Habits/ParentHabit.jsx"  ],
+, "components/Habits/ParentHabit.jsx", "components/Home/Benefits.jsx", "components/Home/Body.jsx", "components/Layout/ExplorePages.jsx", "components/Home/About.jsx", "components/Home/ReviewCard.jsx", "components/Home/Hero.jsx", "components/ext.jsx"  ],
   "exclude": [
     "node_modules"
   ]

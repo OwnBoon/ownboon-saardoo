@@ -2,11 +2,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import CountUpAnimation from "./CountUpAnimation";
 import { useRouter } from "next/router";
+import { useUser } from "@clerk/nextjs";
 export const Balls = () => {
 
   useEffect(() => {
     const container = document.getElementById("animation-container");
-    const balls: HTMLElement[] = Array.from(document.getElementsByClassName("ball")) as HTMLElement[];
+    const balls = Array.from(document.getElementsByClassName("ball"));
     let mouseX = container ? container.clientWidth / 2 : 0;
     let mouseY = container ? container.clientHeight / 2 : 0;
 
@@ -67,6 +68,7 @@ export const Balls = () => {
 };
 
 export const Skateboard = () => {
+  const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
   useEffect(() => {
     const buttons = document.getElementById("ripple");
@@ -89,7 +91,7 @@ export const Skateboard = () => {
         <button
           id="ripple"
           onClick={() => {
-            router.push("/sign-in");
+            isSignedIn ? router.push("/sign-in") : router.push("/workspace");
           }}
           className="items-center text-[4vw] md:text-[1.3rem] xs:text-[1rem]  md:w-[35vw] md:h-[50px] w-[65vw] h-[50px] hover:cursor-pointer  skatebar bg-white font-semibold absolute font-[Poppins]"
         >
@@ -100,7 +102,9 @@ export const Skateboard = () => {
         <div className="countsquare mx-5 z-100 z-no h-[101px] w-[172px]">
           <h5 className="mb-[-1vh] z-100 text-[2rem] text-[#484848]">
             <CountUpAnimation duration={2000}>150</CountUpAnimation>
-            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">+</span>
+            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">
+              +
+            </span>
           </h5>
           <h6 className="text-[1rem] font-200 ">Anticipating Users</h6>
           <Image
@@ -115,7 +119,9 @@ export const Skateboard = () => {
         <div className="countsquare mx-5  z-100 z-no h-[101px] w-[172px]">
           <h5 className="mb-[-1vh] z-100 text-[2rem] text-[#484848]">
             <CountUpAnimation duration={2000}>100</CountUpAnimation>
-            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">+</span>
+            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">
+              +
+            </span>
           </h5>
           <h6 className="text-[1rem] font-200 ">Growth Guides</h6>
           <Image
@@ -130,7 +136,9 @@ export const Skateboard = () => {
         <div className="countsquare mx-5  z-100 z-no h-[101px] w-[172px]">
           <h5 className="mb-[-1vh] z-100 text-[2rem] text-[#484848]">
             <CountUpAnimation duration={2000}>50</CountUpAnimation>
-            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">+</span>
+            <span className="font-[Poppins] absolute font-bold text-[1.3rem]">
+              +
+            </span>
           </h5>
           <h6 className="text-[1rem] font-200 ">Creators Engaged</h6>
           <Image
