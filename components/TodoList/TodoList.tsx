@@ -288,9 +288,10 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 background:
                     "linear-gradient(0deg, rgba(61,61,61,1)   0%, transparent 100%)",
             }}
-            className="flex flex-col gap-2 relative w-full min-h-[18vw] h-fit shrink-0  px-12 py-3  rounded-lg"
+            className="flex flex-col gap-2 relative w-full min-h-[18vw] h-full shrink-0  px-12 py-3  rounded-lg"
         >
-            <div className="w-full  flex flex-row gap-1 relative items-center justify-between">
+            
+            <div className="w-full flex flex-row gap-1 relative items-center justify-between">
                 <div className='w-10 h-10'></div>
                 <div className="whitespace-nowrap text-[23px] font-sans text-white w-fit flex gap-2">
                     To Do List
@@ -336,7 +337,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 </div>
 
             </div>
-            <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0 " />
+            <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0" />
             {!showTaskInput && <div className="overflow-auto">
 
                 <ReactSortable handle='.drag-handle' list={todos} setList={handleSort}>
