@@ -51,20 +51,17 @@ export const StackedImageAnimation = () => {
         const isPreviousActiveIndex = (activeIndex + size - 1) % size === i;
 
         return (
+          // @ts-ignore
           <Box
             key={image}
             backgroundImage={`url(${image})`}
-            backgroundSize={activeIndex===3?"cover":"100%"}
+            backgroundSize={activeIndex === 3 ? "cover" : "100%"}
             backgroundRepeat="no-repeat"
             width="inherit"
             height="inherit"
             position="absolute"
             top={iphone === false ? 40 : 60}
-            style={
-              activeIndex - i === 0
-                ? { opacity: 1 }
-                : { opacity: 0 }
-            }
+            style={activeIndex - i === 0 ? { opacity: 1 } : { opacity: 0 }}
             right={iphone ? 0 - 0.075 * factor * 280 : 0 - 0.075 * factor * 580}
             transform={`scale(${1 - 0.075 * factor})`}
             zIndex={map.get(i)}
