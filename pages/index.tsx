@@ -21,6 +21,7 @@ import Navbar from "../components/Navbar/Navbar";
 
 interface Props {
   users: User[];
+
 }
 const Home = ({ users }: Props) => {
   const router = useRouter();
@@ -126,6 +127,7 @@ const Home = ({ users }: Props) => {
       <Reviews></Reviews>
       <About></About>
       <Footer></Footer>
+      </div>  
     </>
   );
 };
