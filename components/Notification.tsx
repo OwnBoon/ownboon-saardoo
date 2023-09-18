@@ -13,9 +13,9 @@ export default function Notification({
 }: Props) {
   return (
     <div
-      className={`flex flex-col fade fixed right-3 rounded-b-2xl w-[25vw] h-[45vw] max-h-[50vw] transition-all ${
-        shownotifications ? "translate-y-0 top-24" : "translate-y-[-40vw] "
-      } shadow-2xl  p-5  z-30 items-center bg-[#101010] `}
+      className={`flex flex-col fade fixed right-3 rounded-b-2xl w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-scroll ${
+        shownotifications ? "translate-y-0 top-24" :"-translate-y-[100vh] "
+      } shadow-2xl  p-5  z-30 items-center bg-[#101010]`}
     >
       <div className="flex flex-col  items-center justify-center">
         <h1 className="text-[1.3vw] my-2  text-white text-center ">
@@ -33,7 +33,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -46,7 +46,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -59,7 +59,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -72,7 +72,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -85,7 +85,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -98,7 +98,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -111,7 +111,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -124,7 +124,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
@@ -137,7 +137,7 @@ export default function Notification({
             alt={"cancel"}
           />
           <div className="flex flex-col">
-            <h1 className="text-white font-poppins text-xl">Heading of notification</h1>
+            <h1 className="text-white font-poppins text-lg md:text-xl">Heading of notification</h1>
             <h2 className="text-gray-400 font-poppins text-md">Little Descrioption</h2>
           </div>
         </Link>
