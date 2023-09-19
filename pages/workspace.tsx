@@ -352,7 +352,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
 
             </div>
-            <div id="boonIland-wraper" className="bg-[#191919]  w-full h-full py-3 rounded-lg ">
+            <div id="boonIland-wraper" className="bg-[#191919]  w-full h-full py-3 rounded-lg ">z
               <div className="h-full text-[23px] text-center font-sans text-white">
                 BOON ISLAND
               </div>

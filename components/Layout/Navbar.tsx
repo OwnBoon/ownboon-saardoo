@@ -53,7 +53,7 @@ const Navbar = ({
         setShownotifications={setShownotifications}
       />
        <div
-        className={` ml-[-3vw] w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-50`}
+        className={`w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-[3]`}
         style={{
           backgroundColor: bgColor,
         }}

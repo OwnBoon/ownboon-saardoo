@@ -40,8 +40,8 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg, setLoading }: Pr
         border={border}
       />
       <div
-        className={`${showsidebar ? "w-[86vw]" : "w-[92vw]"
-          }  ml-auto transition-all`}
+        className={`${showsidebar ? "w-[86vw]" :"w-[89vw] md:[91vw] lg:w-[92vw] xl[93vw]"
+          } ml-auto transition-all`}
       >
         <Navbar
           setLoading={setLoading}

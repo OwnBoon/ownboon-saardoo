@@ -22,7 +22,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
     <>
       <div onMouseEnter={() => setShowsidebar(true)}
         onMouseLeave={() => setShowsidebar(false)}
-        className={` h-screen transition-all   ${!showsidebar ? "w-[5vw]" : "w-[11vw]"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2 border-[#1B1F3A] fixed`}
+        className={`h-screen transition-all fixed z-10 duration-[2000] p-[3px] md:p-4 border-r-2  border-[#1B1F3A] mr-[2px] ${!showsidebar ? "w-[60px] md:w-[90px]" :"w-[240px] bg-black"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
       >
         <div className="logo flex flex-col transition-all   gap-y-8"
 
