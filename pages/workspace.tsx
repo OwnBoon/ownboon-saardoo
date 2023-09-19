@@ -62,14 +62,32 @@ interface datatype {
   };
 }
 
+function CategoryDropdown({ categories, handleCategoryChange }: any) {
+  return (
+    <select
+      className="bg-transparent outline-none border-none ring-0 divide-x-0 select-none"
+      onChange={handleCategoryChange}
+    >
+      {Array.from(categories).map((category: any, index) => (
+        <option
+          className="bg-transparent text-black"
+          key={index}
+          value={category}
+        >
+          {category}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const { activeSong } = useSelector((state: any) => state.player);
   const { isLoaded, isSignedIn, user } = useUser();
-
   if (!isLoaded) {
     return <div>Loading</div>;
   }
-
+  const [selectedCategory, setSelectedCategory] = useState("");
   setLoading ? setLoading(true) : "";
   const [goal, setGoal] = useState<Goals[]>(goals);
   const router = useRouter();
@@ -80,17 +98,25 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const [tempTodo, setTemptodo] = useState<any>(null);
 
-  const [notesList, setNotesList] = useState<any[]>([])
+  const [notesList, setNotesList] = useState<any[]>([]);
 
   useEffect(() => {
-    setTodos(goals.filter((goal) => goal.username == user?.username).sort((a, b) => a.todoIndex != undefined && b.todoIndex != undefined ? a.todoIndex - b.todoIndex : 0));
+    setTodos(
+      goals
+        .filter((goal) => goal.username == user?.username)
+        .sort((a, b) =>
+          a.todoIndex != undefined && b.todoIndex != undefined
+            ? a.todoIndex - b.todoIndex
+            : 0
+        )
+    );
     if (user && !match[0]?.categories) {
       // router.push("/categories");
     } else {
       null;
     }
     setLoading ? setLoading(false) : "";
-    setNotesList(notes)
+    setNotesList(notes);
   }, []);
 
   const refreshGoals = async () => {
@@ -108,6 +134,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
         username: user?.username!,
         completed: false,
         delete: false,
+        todoIndex: todos.length,
       };
       const result = await fetch(`/api/addGoalData`, {
         body: JSON.stringify(postInfo),
@@ -163,8 +190,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       const json = await result.json();
       toast.custom((t) => (
         <div
-          className={`${t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -203,11 +231,29 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       console.error(err);
     }
   };
+  const focus = match[0]?.focus;
+  const factor = 0.02;
+  const focus_no = Number(focus);
+  const level = Math.floor(focus_no! * factor);
 
   const notess = notes.filter(
     (note) => note.email === user?.emailAddresses[0].emailAddress
   );
 
+  let categories = new Set();
+  notess.forEach((note) => {
+    categories.add(note.category);
+  });
+
+  const handleCategoryChange = (event: any) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  console.log("selected", selectedCategory);
+
+  const filteredNotes = notess.filter(
+    (note) => selectedCategory === "" || note.category === selectedCategory
+  );
   const [desc, setDesc] = useState("");
   const [data, setData] = useState<datatype>();
   const [show, setShow] = useState(false);
@@ -215,18 +261,25 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     const todo = await fetchGoals();
     todo;
   };
-  const fetchRoadmap = async (e: any) => {
+  const fetchRoadmap = async (
+    mood: string,
+    objective: string,
+    time: string
+  ) => {
     // e.preventDefault();
 
     setShow(true);
 
-    const result = await fetch(`/api/roadmap/schedule?title=${desc}`);
+    const result = await fetch(
+      `/api/roadmap/schedule?title=${objective}?mood=${mood}?time=${time}`
+    );
 
     const json = await result.json();
     setData(json);
     setShow(false);
     return json;
   };
+  console.log("scheldular data", data);
   const [susdata, setSusData] = useState();
 
   const [showModal, setShowModal] = React.useState(false);
@@ -266,7 +319,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       setUserprompt({ ...userprompt, mood: eventmood });
     }
   };
-  const handleprompt = () => { };
+  const handleprompt = () => {};
   const [pageposition, setPagepostion] = useState(0);
   let pageid = 0;
   useEffect(() => {
@@ -277,6 +330,19 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       setUserprompt({ mood: "", objective: "", time: "" });
     }
   }, [showPromptModal]);
+  const handleNoteChange = async (id: string) => {
+    const mutations = {
+      _id: id,
+      note: text,
+    };
+
+    const result = await fetch("/api/setNotes", {
+      body: JSON.stringify(mutations),
+      method: "POST",
+    });
+    const json = result.json();
+    return json;
+  };
 
   const handlenextpage = () => {
     pageid = pageposition + 1;
@@ -311,11 +377,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     }, 1000);
   };
 
-  const [dummyNote, setDummyNote] = useState<any>(null)
+  const [dummyNote, setDummyNote] = useState<any>(null);
 
   const handleAddingNewNote = () => {
-    setShowAddNotesModal(true)
-  }
+    setShowAddNotesModal(true);
+  };
+  const showNote = () => {
+    setShowModal(true);
+  };
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
@@ -327,9 +396,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             <div className="flex flex-col justify-start gap-y-5 relative w-1/3 items-center">
               <TodoList todos={todos} user={user} setTodos={setTodos} />
 
-              <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-[12.3vw] shrink-0 items-center pt-4 pb-3  rounded-lg">
-                <div className="whitespace-nowrap text-[23px] font-sans text-white relative">
-                  AI SCHEDULE GENERATOR
+              <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
+                <div className="whitespace-nowrap underline underline-offset-8 text-[23px] font-sans text-white relative">
+                  Ai Schedule Generator
                 </div>
                 <div className="mb-2 relative w-40 h-px shrink-0 " />
                 <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
@@ -337,7 +406,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   and resources to create optimized schedules, maximizing
                   efficiency and productivity.
                 </div>
-                <div className="bg-gradient-to-r border-gray-500 from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
+                <div className=" border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
                   <button
                     onClick={() => setShowPromptModal(true)}
                     className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24"
@@ -347,104 +416,121 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               </div>
             </div>
-            <div className=" bg-[#191919] flex flex-col items-stretch justify-start relative w-2/3 h-[31.5vw] py-3  rounded-lg">
+            <div className=" bg-[#191919] flex flex-col items-stretch justify-start relative w-2/3 h-full py-3  rounded-lg">
               <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
-                BOON ISLAND
+                Boon Island
               </div>
 
-              <div className="grow flex " onClick={() => load()}>
+              <div className="grow flex group  " onClick={() => load()}>
                 {/* display the image of the current level of boon island, static image to avoid long loading */}
+                <div className="opacity-100  bg-transparent hover:cursor-pointer w-full group h-full absolute "></div>
+                {level < 5 ? (
+                  <img
+                    className="group-hover:brightness-110 transition-all duration-150"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                  />
+                ) : level < 10 ? (
+                  <div>
+                    <img
+                      className="group-hover:brightness-110 transition-all duration-150"
+                      src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    />
+                  </div>
+                ) : level < 21 ? (
+                  <img
+                    className="group-hover:brightness-110 transition-all duration-150"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                  />
+                ) : level < 31 ? (
+                  <img
+                    className="group-hover:brightness-110 transition-all duration-150"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                  />
+                ) : level < 41 ? (
+                  <img
+                    className="group-hover:brightness-110 transition-all duration-150"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/914f72baf217a69b15346c9ae10db7057b1d4d12-3072x1414.png?w=2000&fit=max&auto=format"
+                  />
+                ) : level > 51 ? (
+                  <img
+                    className="group-hover:brightness-110 transition-all duration-150"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                  />
+                ) : null}
               </div>
             </div>
           </div>
-          <div className="  bg-[#191919] flex  flex-col  mr-5 gap-y-3 relative w-full items-center   rounded-lg justify-center overflow-y-visible ">
-            <div className="grid grid-cols-3 w-full justify-center gap-1 relative items-center">
-              <div className='w-10 h-10'></div>
-              <div className="flex items-center gap-2 justify-center">
-                <div className="text-[23px] text-white">
-                  NOTES
+          <div className="  bg-[#191919] flex  flex-col  mr-5 gap-y-3 relative w-full items-center h-full   rounded-lg justify-center overflow-y-visible ">
+            <div className="flex justify-center w-full  gap-1 relative items-center">
+              <div className="flex items-center gap-2 col-span-2 justify-end w-full">
+                <div className="w-full"></div>
+                <div className="flex justify-between w-full">
+                  <CategoryDropdown
+                    categories={categories}
+                    handleCategoryChange={handleCategoryChange}
+                  />
                 </div>
-                <img
-                  src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-                />
-              </div>
-              <div onClick={handleAddingNewNote} className="border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 h-10 items-center px-[10px] py-2 border rounded m-3 ml-auto">
-                <img
-                  src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
-                  className="min-h-0 min-w-0"
-                />
-                <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd]" >
-                  Add Note
-                </button>
+                <div
+                  onClick={handleAddingNewNote}
+                  className="border-gray-500 col-span-1 bg-[#38383A] self-center flex flex-row justify-center gap-1 h-10 items-center px-[10px] py-2 border rounded m-3 ml-auto"
+                >
+                  <img
+                    src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
+                    className="min-h-0 min-w-0"
+                  />
+                  <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd]">
+                    Add Note
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="border-solid border-gray-500 border   mb-3 relative w-40 h-px  shrink-0 " />
-            <div className="flex flex-row  justify-center items-center w-full gap-x-3">
-              {notesList.map((n) => (
-                <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
+            <div className="flex justify-center items-center       flex-shrink-0 " />
+            <div className="flex flex-row  justify-center items-center w-full h-full gap-x-3">
+              {filteredNotes.map((note) => (
+                <>
                   <div
                     onClick={() => setShowModal(true)}
-                    className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
+                    className="bg-[#212121] p-4 space-y-5 w-1/6 rounded-lg"
                   >
-                    <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                      Chapter 1
+                    <div>
+                      <h1 className="border-b w-fit">{note.topic}</h1>
                     </div>
-                    <div className="w-24 h-[0px] border border-neutral-400"></div>
-                    <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                    <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                      do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                      aute irure dolor in reprehenderit in...
+                    <div>
+                      <div dangerouslySetInnerHTML={{ __html: note.note }} />
                     </div>
                   </div>
-                </div>
+                  <Dialog isOpen={showModal} onClose={setShowModal}>
+                    <div className="rounded-xl bg-[#101010] p-16">
+                      <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
+                        {note.topic}
+                      </div>
+                      <div className="w-44 h-[0px] border border-neutral-400"></div>
+                      <ReactQuill
+                        theme="snow"
+                        className="h-64 mt-5 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                        value={text || note?.note}
+                        onChange={(e) => {
+                          setText(e);
+                          handleNoteChange(note._id!);
+                        }}
+                      />
+                    </div>
+                  </Dialog>
+                </>
               ))}
-              {dummyNote && (
-                <div className="self-start hoverpop  flex flex-col justify-start mb-4 gap-2 relative w-1/4 items-center">
-                  <div
-                    onClick={() => setShowModal(true)}
-                    className="bg-[#212121] flex flex-col cursor-pointer h-[12.6vw]  justify-start gap-1 relative w-full items-start pt-4 pb-5 px-6   rounded-lg"
-                  >
-                    <div className="text-center whitespace-nowrap text-[20px]  text-white relative">
-                      Chapter 1
-                    </div>
-                    <div className="w-24 h-[0px] border border-neutral-400"></div>
-                    <div className="border-solid border-gray-700  relative w-12  shrink-0 mb-1 ml-px bordert borderb-0 borderx-0" />
-
-                    <div className="text-[15px]   text-[#dddddd] self-center relative w-full">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                      do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequatDuis
-                      aute irure dolor in reprehenderit in...
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             <Dialog isOpen={showAddNotesModal} onClose={setShowAddNotesModal}>
-              {<Notes setNotes={setNotesList} setDummyNote={setDummyNote} notes={notes} />}
+              {
+                <Notes
+                  setNotes={setNotesList}
+                  setDummyNote={setDummyNote}
+                  notes={notes}
+                />
+              }
             </Dialog>
 
-            <Dialog isOpen={showModal} onClose={setShowModal}>
-              <div className="rounded-xl bg-[#101010] p-16">
-                <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
-                  Chapter 1
-                </div>
-                <div className="w-44 h-[0px] border border-neutral-400"></div>
-                <div className="w-full h-[579px] text-neutral-200 text-base font-medium mt-3">
-                  Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter 1Chapter
-                  1Ch
-                  <br />
-                  apter 1Chapter 1Chapter 1Chapter{" "}
-                </div>
-              </div>
-            </Dialog>
             <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
               <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
                 <div className="flex flex-col  items-center justify-center">
@@ -455,8 +541,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
                 <div className="flex justify-center mt-7 text-center items-center">
                   <div
-                    className={`${pageposition === 0 ? "pageentry " : "pageexit"
-                      } text-center`}
+                    className={`${
+                      pageposition === 0 ? "pageentry " : "pageexit"
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw]  mt-6 my-2 font-fontspring  text-white font-medium ">
                       How are you feeling today?
@@ -528,8 +615,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please Pick one of the options"}
                   </div>
                   <div
-                    className={`${pageposition === 1 ? " pageentry " : "pageexit "
-                      } text-center`}
+                    className={`${
+                      pageposition === 1 ? " pageentry " : "pageexit "
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
                       What do you want to get done?
@@ -551,8 +639,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please enter atleast a sentence"}
                   </div>
                   <div
-                    className={`${pageposition === 2 ? " pageentry " : "pageexit "
-                      } text-center`}
+                    className={`${
+                      pageposition === 2 ? " pageentry " : "pageexit "
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
                       How much time do you have?
@@ -571,8 +660,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {empty && "Please enter atleast a sentence"}
                   </div>
                   <div
-                    className={`${pageposition === 3 ? " pageentry " : "pageexit "
-                      } text-center`}
+                    className={`${
+                      pageposition === 3 ? " pageentry " : "pageexit "
+                    } text-center`}
                   >
                     <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
                       Generate Your Roadmap
@@ -587,7 +677,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </button>
 
                         <button
-                          onClick={() => handleprompt()}
+                          onClick={() => {
+                            fetchRoadmap(
+                              userprompt.mood,
+                              userprompt.objective,
+                              userprompt.time
+                            );
+                            handlenextpage();
+                          }}
                           className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                         >
                           Generate Now
@@ -595,9 +692,43 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       </div>
                     </div>
                   </div>
+                  <div
+                    className={`${
+                      pageposition === 4 ? " pageentry " : "pageexit "
+                    } text-center`}
+                  >
+                    <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                      Here's your schedule
+                    </h2>
+                    {susdata ? (
+                      <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
+                        <div className="space-y-2">
+                          <>
+                            {/* @ts-ignore */}
+                            {susdata.roadmap.map((roadmaps: any) => (
+                              <div className="space-y-5 flex justify-start h-full">
+                                {roadmaps.title}
+                              </div>
+                            ))}
+                          </>
+                        </div>
+                        <div
+                          onClick={() => {
+                            // @ts-ignore
+                            susdata.roadmap.map((roadmaps: any) => {
+                              addGoalDataSchedule(roadmaps.title);
+                            });
+                          }}
+                          className="mt-5 border w-fit p-2 rounded-lg cursor-pointer"
+                        >
+                          Add to todos
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
-              {pageposition !== 3 ? (
+              {pageposition !== 4 ? (
                 <div className="flex flex-row  items-center justify-between">
                   <div className="flex flex-row items-start justify-start">
                     {pageposition ? (
@@ -623,12 +754,12 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           ? setEmpty(true)
                           : pageposition === 1 &&
                             (!userprompt.objective ||
-                              userprompt.objective.length < 40)
-                            ? setEmpty(true)
-                            : pageposition === 2 &&
-                              (!userprompt.time || userprompt.time.length < 40)
-                              ? setEmpty(true)
-                              : handlenextpage()
+                              userprompt.objective.length < 30)
+                          ? setEmpty(true)
+                          : pageposition === 2 &&
+                            (!userprompt.time || userprompt.time.length < 2)
+                          ? setEmpty(true)
+                          : handlenextpage()
                       }
                       className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                     >

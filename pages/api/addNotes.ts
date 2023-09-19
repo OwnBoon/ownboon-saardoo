@@ -19,7 +19,8 @@ export default async function handler(
           _type: "notes",
           note: data.note,
           email: data.email,
-          topic: data.topic
+          topic: data.topic,
+          category: data.category
 
         },
       },

@@ -22,7 +22,10 @@ export default async function handler(
           username: data.username,
           completed: data.completed,
           delete: data.delete,
-          todoIndex: data.todoIndex
+          todoIndex: data.todoIndex,
+          duration: data.duration,
+          due: data.due,
+
         },
       },
     ],
