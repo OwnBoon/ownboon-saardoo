@@ -54,6 +54,8 @@ export interface Notes extends SanityBody {
     note: string
     email: string
     topic: string
+    category?: string
+
 }
 
 export interface Goals extends SanityBody {
@@ -61,15 +63,27 @@ export interface Goals extends SanityBody {
     title?: string
     progress?: number
     username?: string
-    completed: boolean
+    completed?: boolean
+    name?: string
+    category?: string
+    linkedToCalendar?: boolean
+    startDate?: string
+    due?: string
+    duration?: string
     delete?: boolean
     todoIndex?: number
 }
 export interface GoalBody {
     _type?: 'goals'
-    title: string
-    progress: number
+    title?: string
+    progress?: number
     username?: string
+    name?: string
+    category?: string
+    linkedToCalendar?: boolean
+    startDate?: string
+    due?: string
+    duration?: string
     completed?: boolean
     delete?: boolean,
     todoIndex?: number
