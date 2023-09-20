@@ -30,6 +30,7 @@ const PostCard = ({ post, match, users }: Props) => {
   }, []);
 
   const blogauthor = users.filter((userss) => userss.email === post.email);
+  const temp = match[0].follow?.map((follows) => follows.email);
 
   const [input, setInput] = useState("");
 
@@ -77,7 +78,6 @@ const PostCard = ({ post, match, users }: Props) => {
         window.location.reload();
       }
     };
-
     return (
       <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
         <div className=" col-span-4  rounded-lg ">
@@ -138,16 +138,18 @@ const PostCard = ({ post, match, users }: Props) => {
         <div className="col-span-2 border-l px-2">
           <div className="flex items-center border-b py-1">
             <User name={post.author} src={post.profileImage} />
-
-            <Button
-              onPress={() => addCategory()}
-              size={"xs"}
-              bordered
-              shadow
-              auto
-            >
-              Follow
-            </Button>
+            {/* @ts-ignore */}
+            {temp === blogauthor[0].email ? null : (
+              <Button
+                onPress={() => addCategory()}
+                size={"xs"}
+                bordered
+                shadow
+                auto
+              >
+                Follow
+              </Button>
+            )}
           </div>
           <div className="p-2">
             <Text h2 size={15} className="font-semibold">
@@ -201,7 +203,7 @@ const PostCard = ({ post, match, users }: Props) => {
           follow: [
             ...follows,
             {
-              _key: "5t632xwqeqx",
+              _key: "rahshasabbsaz",
               _ref: blogauthor[0]._id!,
               _type: "reference",
             },

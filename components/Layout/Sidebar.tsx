@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Dialog from "../ChapterPopup/ChapterPopup";
+import Link from "next/link";
 
 interface Props {
   border: string;
@@ -50,8 +51,8 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             </span>
           </div>
           <div className="flex  flex-col transition-all justify-center  gap-y-8">
-            <div
-              onClick={() => setShowSocialsModal(true)}
+            <Link
+              href={"/socials"}
               //   onClick={() => router.push("/socials")}
               className={router.pathname == "/socials" ? selected : normal}
             >
@@ -72,7 +73,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               >
                 Socials
               </span>
-            </div>
+            </Link>
             <div
               onClick={() => setShowChatsModal(true)}
               //   onClick={() => router.push("/chats")}
