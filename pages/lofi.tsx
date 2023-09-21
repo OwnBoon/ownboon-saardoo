@@ -128,13 +128,13 @@ const lofi = ({ users }: Props) => {
                         </>
                     ) : (
                         <div
-                            className='flex items-center justify-center  w-full'
+                            className='flex items-center justify-center w-full h-full'
                         >
                             <button
-                                className='bg-[#D9D9D9] w-1/5 rounded p-4 cursor-pointer'
+                                className='bg-[#D9D9D9] bg-opacity-50 border-white border text-white w-1/5 rounded p-4 cursor-pointer'
                                 onClick={handleStart}
                             >
-                                START SESSION
+                                Start Session
                             </button>
                         </div>
                     )}
