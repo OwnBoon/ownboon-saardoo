@@ -815,6 +815,8 @@ const WorkspacePage = ({ users, goals, notes, setLoading }: Props) => {
       setLoading={setLoading}
       bgColor={"#121212"}
       icon="workspace.svg"
+      goals={goals}
+      users={users}
       text="Workspace"
       border="gray-500"
       hasBg={false}

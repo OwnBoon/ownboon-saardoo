@@ -7,13 +7,14 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./public/**/*.html",
   ],
+
   plugins: [require("flowbite/plugin"), require("tailwind-scrollbar")],
   theme: {
     extend: {
       gradientColorStopPositions: {
-        1: '%',
-        99: '99%',
-      }
+        1: "%",
+        99: "99%",
+      },
     },
   },
 };

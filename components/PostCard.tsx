@@ -30,7 +30,6 @@ const PostCard = ({ post, match, users }: Props) => {
   }, []);
 
   const blogauthor = users.filter((userss) => userss.email === post.email);
-  const temp = match[0].follow?.map((follows) => follows.email);
 
   const [input, setInput] = useState("");
 
@@ -139,17 +138,16 @@ const PostCard = ({ post, match, users }: Props) => {
           <div className="flex items-center border-b py-1">
             <User name={post.author} src={post.profileImage} />
             {/* @ts-ignore */}
-            {temp === blogauthor[0].email ? null : (
-              <Button
-                onPress={() => addCategory()}
-                size={"xs"}
-                bordered
-                shadow
-                auto
-              >
-                Follow
-              </Button>
-            )}
+
+            <Button
+              onPress={() => addCategory()}
+              size={"xs"}
+              bordered
+              shadow
+              auto
+            >
+              Follow
+            </Button>
           </div>
           <div className="p-2">
             <Text h2 size={15} className="font-semibold">

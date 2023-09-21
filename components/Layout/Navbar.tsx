@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useUser, UserButton } from "@clerk/nextjs";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { Loading } from "@nextui-org/react";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { Avatar, Badge, Loading } from "@nextui-org/react";
 import Notification from "../Notification";
+import { GetServerSideProps } from "next";
+import { fetchUsers } from "../../utils/fetchUsers";
+import { fetchGoals } from "../../utils/fetchGoals";
+import { fetchNotes } from "../../utils/fetchNotes";
+import { Goals, User } from "../../typings";
 
 interface Props {
   icon: string;
@@ -12,9 +17,13 @@ interface Props {
   border: string;
   showsidebar: boolean;
   setLoading?: (value: boolean) => void;
+  users?: User[];
+  goals?: Goals[];
 }
 
 const Navbar = ({
+  users,
+  goals,
   icon,
   text,
   bgColor,
@@ -23,9 +32,34 @@ const Navbar = ({
   setLoading,
 }: Props) => {
   const { user } = useUser();
+  const match = users?.filter(
+    (userss) => userss.email == user?.emailAddresses[0].emailAddress
+  );
+
   const [showsearch, setshowsearch] = useState(false);
   const [shownotifications, setShownotifications] = useState(false);
   const [search, setSearch] = useState("");
+  // @ts-ignore
+  const [todolist, setTodoList] = useState<any[]>([]);
+
+  const todos = goals?.filter((goal) => goal.username == user?.username);
+  const now = new Date();
+  useEffect(() => {
+    const now = new Date();
+    const checkTodos = todos?.filter((todo) => {
+      // @ts-ignore
+      const dueDate = new Date(todo.due);
+      const day = new Date(todo.duration!);
+      const diffHour = Math.abs(dueDate.getHours() - now.getHours());
+      return diffHour <= 2 && day.getDay() == now.getDay();
+    });
+    // @ts-ignore
+    setTodoList(checkTodos);
+
+    // Run checkTodos every hour
+
+    // Clear interval on component unmount
+  }, [todos]);
   const togglenotification = () => {
     if (shownotifications) {
       setShownotifications(false);
@@ -37,7 +71,7 @@ const Navbar = ({
     e.preventDefault();
     setLoading ? setLoading(true) : "";
     setshowsearch(false);
-    setShownotifications(false); 
+    setShownotifications(false);
     setSearch("");
   };
   useEffect(() => {
@@ -49,10 +83,12 @@ const Navbar = ({
   return (
     <>
       <Notification
+        match={match}
         shownotifications={shownotifications}
         setShownotifications={setShownotifications}
+        notifications={todolist}
       />
-       <div
+      <div
         className={` ml-[-3vw] w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-50`}
         style={{
           backgroundColor: bgColor,
@@ -102,14 +138,16 @@ const Navbar = ({
               />
             </form>
           )}
-          <Image
-            width={70}
-            onClick={() => togglenotification()}
-            height={70}
-            className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
-            src="notification.svg"
-            alt={"notification"}
-          />
+          <Badge color="error" content={5}>
+            <Image
+              width={70}
+              onClick={() => togglenotification()}
+              height={70}
+              className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
+              src="notification.svg"
+              alt={"notification"}
+            />
+          </Badge>
           <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
             {user && <UserButton />}
             <span className="text-[15px]">{user?.username}</span>
