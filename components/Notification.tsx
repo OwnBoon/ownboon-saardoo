@@ -40,8 +40,9 @@ export default function Notification({
       </div>
       <div className="flex flex-col w-full justify-center space-y-6 my-2 text-white">
         <div className="space-y-1 flex flex-col  items-center p-2 w-full h-full">
-          {notifications.map((notification, index) => (
+          {notifications?.map((notification, index) => (
             <div
+              key={index}
               className={
                 index === 0
                   ? "flex p-2 bg-[#212121] cursor-pointer hover:border-b-2 hover:border-b-white/20 rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4"
