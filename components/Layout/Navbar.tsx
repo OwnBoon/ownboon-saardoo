@@ -53,7 +53,7 @@ const Navbar = ({
         setShownotifications={setShownotifications}
       />
        <div
-        className={`w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-[3]`}
+        className={`w-[95vw] border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-[3]`}
         style={{
           backgroundColor: bgColor,
         }}
@@ -64,7 +64,7 @@ const Navbar = ({
         </div>
         <div
           className={` ${
-            showsidebar ? "translate-x-[-6vw]" : "translate-x-0"
+            showsidebar ? "translate-x-[0vw]" : "translate-x-0"
           } flex items-center transition-all gap-10 relative`}
         >
           <Image

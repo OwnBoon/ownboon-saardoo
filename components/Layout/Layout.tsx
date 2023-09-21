@@ -40,8 +40,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg, setLoading }: Pr
         border={border}
       />
       <div
-        className={`${showsidebar ? "w-[86vw]" :"w-[88vw] md:[90vw] lg:w-[91vw] xl:w-[93vw]"
-          } ml-auto transition-all`}
+        className="max-[500px]:w-[84vw] w-[88vw] md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto"
       >
         <Navbar
           setLoading={setLoading}
@@ -52,7 +51,7 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg, setLoading }: Pr
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] py-24 pb-24 pr-4 ${!showsidebar ? "" : ""}`}
+          className={`text-[#DDDDDD] p-1 py-24 pb-24 ml-[16px] ${!showsidebar ? "" : ""}`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}

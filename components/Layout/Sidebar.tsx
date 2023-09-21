@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Dialog from "../ChapterPopup/ChapterPopup";
+import Link from "next/link";
+
 
 interface Props {
   border: string;
@@ -22,7 +24,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
     <>
       <div onMouseEnter={() => setShowsidebar(true)}
         onMouseLeave={() => setShowsidebar(false)}
-        className={`h-screen transition-all fixed z-10 duration-[2000] p-[3px] md:p-4 border-r-2  border-[#1B1F3A] mr-[2px] ${!showsidebar ? "w-[60px] md:w-[90px]" :"w-[240px] bg-black"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
+        className={`h-screen transition-all fixed z-10 duration-[2000] p-[3px] md:p-2 lg:p-3 border-r-2  border-[#1B1F3A] mr-[2px] ${!showsidebar ? "w-[60px] md:w-[80px] lg:w-[90px]":"w-[240px] bg-black"}  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
       >
         <div className="logo flex flex-col transition-all   gap-y-8"
 
@@ -51,9 +53,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             } */}
           </div>
           <div className="flex  flex-col transition-all justify-center  gap-y-8">
-            <div
-              onClick={() => setShowSocialsModal(true)}
-              //   onClick={() => router.push("/socials")}
+            <Link
+            href={"/socials"}
+              
               className={router.pathname == "/socials" ? selected : normal}
             >
               <Image
@@ -66,7 +68,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               {showsidebar &&
                 <span className="font-fontspring transition-all fade ">Socials</span>
               }
-            </div>
+            </Link>
             <div
               onClick={() => setShowChatsModal(true)}
               //   onClick={() => router.push("/chats")}
