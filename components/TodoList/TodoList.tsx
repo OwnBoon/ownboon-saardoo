@@ -532,9 +532,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 },
               }}
               disablePast
-              onChange={(e: any) =>
-                setTime(e.$H.toString() + ":" + e.$m.toString())
-              }
+              onChange={(newValue: any) => setTime(newValue)}
             />
           </LocalizationProvider>
           <div className="flex justify-end">
