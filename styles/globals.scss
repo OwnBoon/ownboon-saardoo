@@ -113,13 +113,13 @@ body {
   }
 } 
 .sidebar:hover{
-  transition: 1s all;
+  transition: 0.1s all;
   transform: scale(1.1);
   filter: brightness(1.3);
   color: rgb(198, 198, 198);
 }
 .sidebar {
-  transition: 1s all;
+  transition: 0.1s all;
   transform: scale(1);
   filter: brightness(1);
 }

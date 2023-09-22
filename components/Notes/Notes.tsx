@@ -56,7 +56,7 @@ const Notes = ({ setNotes, setDummyNote, notes }: any) => {
   return (
     <div>
       {" "}
-      <div className="border border-white/50  bg-[#212121] space-y-5 overflow-y-scroll h-fit  w-full px-2 rounded-xl py-2">
+      <div className="border border-white/50  bg-[#212121] space-y-5 overflow-y-scroll h-fit   w-full px-2 rounded-xl py-2">
         <div className="flex justify-center items-center">
           <div className="flex flex-col gap-5">
             <input
