@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Goals, User } from "../typings";
+import { useUser } from "@clerk/nextjs";
 interface Props {
   shownotifications: boolean;
   setShownotifications?: (value: boolean) => void;
@@ -16,6 +17,7 @@ export default function Notification({
   match,
 }: Props) {
   const now = new Date();
+  const { user, isLoaded, isSignedIn } = useUser();
   const [boonNoti, setBoonNoti] = useState("");
 
   useEffect(() => {
@@ -41,27 +43,32 @@ export default function Notification({
       </div>
       <div className="flex flex-col w-full justify-center space-y-6 my-2 text-white">
         <div className="space-y-1 flex flex-col  items-center p-2 w-full h-full">
-          {notifications.map((notification, index) => (
-            <div
-              className={
-                index === 0
-                  ? "flex p-2 bg-[#212121] cursor-pointer hover:border-b-2 hover:border-b-white/20 rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4"
-                  : "flex p-2 bg-[#212121] cursor-pointer rounded-lg w-full hover:border-b-2 transition-all duration-50 flex-row px-5   space-x-4"
-              }
-            >
-              <div className="flex flex-col">
-                <h2 className="text-gray-400 font-extralight font-poppins text-md">
-                  Task Due in a while
-                </h2>
-                <Link
-                  href={"/workspace"}
-                  className="text-white hover:underline-offset-4 font-extralight font-poppins text-lg md:text-lg"
+          {notifications ? (
+            <>
+              {notifications.map((notification, index) => (
+                <div
+                  className={
+                    index === 0
+                      ? "flex p-2 bg-[#212121] cursor-pointer border-b hover:border-b-2 hover:border-b-white/20 rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4"
+                      : "flex p-2 bg-[#212121] cursor-pointer rounded-lg w-full hover:border-b-2 transition-all duration-50 flex-row px-5   space-x-4"
+                  }
                 >
-                  {notification.title}
-                </Link>
-              </div>
-            </div>
-          ))}
+                  <div className="flex flex-col">
+                    <h2 className="text-gray-400 font-extralight font-poppins text-md">
+                      Task Due in a while
+                    </h2>
+                    <Link
+                      href={"/workspace"}
+                      className="text-white hover:underline-offset-4 font-extralight font-poppins text-lg md:text-lg"
+                    >
+                      {notification.title}
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : null}
+
           <div
             className={
               "flex p-2 bg-[#212121] cursor-pointer rounded-lg w-full hover:border-b-2 transition-all duration-50 flex-row px-5   space-x-4"
