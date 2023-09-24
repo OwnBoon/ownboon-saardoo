@@ -32,7 +32,7 @@
     "pages/sign-in",
     "components/DraggableRoadmap.jsx",
     ".next/types/**/*.ts"
-  ],
+, "pages/vent-choose.tsx"  ],
   "exclude": [
     "node_modules"
   ]

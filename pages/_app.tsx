@@ -16,6 +16,11 @@ import { useEffect, useState } from "react";
 import CustomLoader from "../components/CustomLoader";
 import { useRouter } from "next/router";
 
+import { ThemeProvider } from '../chat-components/providers/theme-provider'
+import { ModalProvider } from '../chat-components/providers/modal-provider'
+import { SocketProvider } from '../chat-components/providers/socket-provider'
+import { QueryProvider } from '../chat-components/providers/query-provider'
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const { isBrowser } = useSSR();
   const [loading, setLoading] = useState(false);
@@ -47,6 +52,15 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
         <ClerkProvider
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            storageKey="discord-theme"
+          >
+          <SocketProvider>
+              <ModalProvider />
+              <QueryProvider>
           {isBrowser && (
             <div className="fade">
               {loading && <CustomLoader />}
@@ -54,6 +68,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
               <Analytics />
             </div>
           )}
+          </QueryProvider>
+            </SocketProvider>
+          </ThemeProvider>
         </ClerkProvider>
       </RecoilRoot>
     </Provider>
