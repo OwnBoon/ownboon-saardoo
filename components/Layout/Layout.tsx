@@ -52,11 +52,7 @@ const Layout = ({
         setShowsidebar={setShowsidebar}
         border={border}
       />
-      <div
-        className={`${
-          showsidebar ? "w-[86vw]" : "w-[92vw]"
-        }  ml-auto transition-all`}
-      >
+      <div className="max-[500px]:w-[84vw] w-[88vw] md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
         <Navbar
           goals={goals}
           users={users}
@@ -68,7 +64,7 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] py-24 pb-24 pr-4 ${
+          className={`text-[#DDDDDD] p-1 py-24 pb-24 ml-[16px] ${
             !showsidebar ? "" : ""
           }`}
           style={{

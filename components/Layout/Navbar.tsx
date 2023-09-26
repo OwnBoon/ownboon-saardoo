@@ -31,7 +31,7 @@ const Navbar = ({
   showsidebar,
   setLoading,
 }: Props) => {
-  const { user } = useUser();
+  const { user, isSignedIn, isLoaded } = useUser();
   const match = users?.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
@@ -45,21 +45,23 @@ const Navbar = ({
   const todos = goals?.filter((goal) => goal.username == user?.username);
   const now = new Date();
   useEffect(() => {
-    const now = new Date();
-    const checkTodos = todos?.filter((todo) => {
+    if (isLoaded) {
+      const now = new Date();
+      const checkTodos = todos?.filter((todo) => {
+        // @ts-ignore
+        const dueDate = new Date(todo.due);
+        const day = new Date(todo.duration!);
+        const diffHour = Math.abs(dueDate.getHours() - now.getHours());
+        return diffHour <= 2 && day.getDay() == now.getDay();
+      });
       // @ts-ignore
-      const dueDate = new Date(todo.due);
-      const day = new Date(todo.duration!);
-      const diffHour = Math.abs(dueDate.getHours() - now.getHours());
-      return diffHour <= 2 && day.getDay() == now.getDay();
-    });
-    // @ts-ignore
-    setTodoList(checkTodos);
+      setTodoList(checkTodos);
+    } else null;
 
     // Run checkTodos every hour
 
     // Clear interval on component unmount
-  }, [todos]);
+  }, [isLoaded]);
   const togglenotification = () => {
     if (shownotifications) {
       setShownotifications(false);
@@ -82,14 +84,16 @@ const Navbar = ({
 
   return (
     <>
-      <Notification
-        match={match}
-        shownotifications={shownotifications}
-        setShownotifications={setShownotifications}
-        notifications={todolist}
-      />
+      {isSignedIn ? (
+        <Notification
+          match={match}
+          shownotifications={shownotifications}
+          setShownotifications={setShownotifications}
+          notifications={todolist}
+        />
+      ) : null}
       <div
-        className={` ml-[-3vw] w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-50`}
+        className={` ml-[-3vw] w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-[3]`}
         style={{
           backgroundColor: bgColor,
         }}
@@ -100,7 +104,7 @@ const Navbar = ({
         </div>
         <div
           className={` ${
-            showsidebar ? "translate-x-[-6vw]" : "translate-x-0"
+            showsidebar ? "translate-x-[0vw]" : "translate-x-0"
           } flex items-center transition-all gap-10 relative`}
         >
           <Image
@@ -138,7 +142,25 @@ const Navbar = ({
               />
             </form>
           )}
-          <Badge color="error" content={5}>
+          {todolist ? (
+            <Badge
+              variant={"dot"}
+              content=""
+              isSquared
+              className=""
+              placement={"top-right"}
+              size={"xs"}
+            >
+              <Image
+                width={70}
+                onClick={() => togglenotification()}
+                height={70}
+                className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
+                src="notification.svg"
+                alt={"notification"}
+              />
+            </Badge>
+          ) : (
             <Image
               width={70}
               onClick={() => togglenotification()}
@@ -147,7 +169,8 @@ const Navbar = ({
               src="notification.svg"
               alt={"notification"}
             />
-          </Badge>
+          )}
+
           <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
             {user && <UserButton />}
             <span className="text-[15px]">{user?.username}</span>

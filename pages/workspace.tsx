@@ -392,8 +392,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     <>
       <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
-          <div className="flex flex-row justify-start gap-x-5 relative w-full items-center  mr-5">
-            <div className="flex flex-col justify-start gap-y-5 relative w-1/3 items-center">
+          <section
+            id="section-1"
+            className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5"
+          >
+            <div
+              id="TodoAndGenerator-container"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 flex-col md:flex-row lg:flex-col justify-start gap-5 relative items-center"
+            >
               <TodoList todos={todos} user={user} setTodos={setTodos} />
 
               <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
@@ -416,14 +422,16 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               </div>
             </div>
-            <div className=" bg-[#191919] flex flex-col items-stretch justify-start relative w-2/3 h-full py-3  rounded-lg">
+            <div
+              id="boonIland-wraper "
+              className="bg-[#191919] xl:col-span-2 w-full h-full py-3 rounded-lg overflow-hidden gap-2"
+            >
               <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
                 Boon Island
               </div>
-
-              <div className="grow flex group  " onClick={() => load()}>
+              <div className="" onClick={() => load()}>
                 {/* display the image of the current level of boon island, static image to avoid long loading */}
-                <div className="opacity-100  bg-transparent hover:cursor-pointer w-full group h-full absolute "></div>
+                <div className="opacity-100  bg-transparent hover:cursor-pointer w-full md:w-1/2 group h-full absolute "></div>
                 {level < 5 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
@@ -459,8 +467,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 ) : null}
               </div>
             </div>
-          </div>
-          <div className="  bg-[#191919] flex  flex-col  mr-5 gap-y-3 relative w-full items-center h-full   rounded-lg justify-center overflow-y-visible ">
+          </section>
+          <div className="p-2 overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible ">
             <div className="flex justify-center w-full  gap-1 relative items-center">
               <div className="flex items-center gap-2 col-span-2 justify-end w-full">
                 <div className="w-full"></div>
@@ -484,14 +492,13 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               </div>
             </div>
-
-            <div className="flex justify-center items-center       flex-shrink-0 " />
-            <div className="flex flex-row  justify-center items-center w-full h-full gap-x-3">
+            {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
               {filteredNotes.map((note) => (
                 <>
                   <div
                     onClick={() => setShowModal(true)}
-                    className="bg-[#212121] p-4 space-y-5 w-1/6 rounded-lg"
+                    className="bg-[#212121] p-4 space-y-5 w-full rounded-lg"
                   >
                     <div>
                       <h1 className="border-b w-fit">{note.topic}</h1>
@@ -501,20 +508,22 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     </div>
                   </div>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
-                    <div className="rounded-xl bg-[#101010] p-16">
-                      <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
+                    <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
+                      <div className="md:w-[139px] md:h-[43px] text-white md:text-3xl  text-sm font-semibold">
                         {note.topic}
                       </div>
-                      <div className="w-44 h-[0px] border border-neutral-400"></div>
-                      <ReactQuill
-                        theme="snow"
-                        className="h-64 mt-5 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                        value={text || note?.note}
-                        onChange={(e) => {
-                          setText(e);
-                          handleNoteChange(note._id!);
-                        }}
-                      />
+                      <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
+                      <div className="scale-75 md:scale-100 w-full h-full text-sm">
+                        <ReactQuill
+                          theme="snow"
+                          className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                          value={text || note?.note}
+                          onChange={(e) => {
+                            setText(e);
+                            handleNoteChange(note._id!);
+                          }}
+                        />
+                      </div>
                     </div>
                   </Dialog>
                 </>

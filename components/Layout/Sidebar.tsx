@@ -13,7 +13,7 @@ interface Props {
 const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
   const router = useRouter();
   const selected =
-    "transition-all duration-155 sidebar brightness-150 w-fit cursor-pointer flex items-center gap-y-8 gap-x-4 text-white";
+    "transition-all duration-50 sidebar brightness-150 w-fit cursor-pointer flex items-center gap-y-8 gap-x-4 text-white";
   const normal =
     "w-fit cursor-pointer sidebar brightness-[-50] flex items-center text-gray-400 gap-y-8 gap-x-4";
   const [showBuddyModal, setShowBuddyModal] = React.useState(false);
@@ -25,11 +25,11 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
       <div
         onMouseEnter={() => setShowsidebar(true)}
         onMouseLeave={() => setShowsidebar(false)}
-        className={` h-screen transition-all   ${
+        className={`h-screen transition-all fixed z-10 duration-[2000] p-[3px] md:p-2 lg:p-3 border-r-2  border-[#1B1F3A] mr-[2px] ${
           !showsidebar
-            ? "w-[5vw]  transition-transform duration-500"
-            : "w-fit !border-white transition-transform  duration-500 z-50  "
-        }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between p-4 border-r-2  transition-all duration-100 z-50 bg-[#101010]  border-white/50 fixed`}
+            ? "w-[60px] md:w-[80px] lg:w-[90px]"
+            : "w-[240px] bg-[#101010]"
+        }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
       >
         <div className="logo flex flex-col transition-all   gap-y-8">
           <div className="flex flex-row transition-all gap-4 items-center">
@@ -182,7 +182,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               </span>
             </div>
           </div>
-          <div className="sidebar cursor-pointer flex gap-4 items-center text-white">
+          <div  className={router.pathname == "/lofi" ? selected : normal}>
             <Image
               src="feedback.svg"
               width={55}
