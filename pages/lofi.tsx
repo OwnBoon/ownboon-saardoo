@@ -11,6 +11,7 @@ import { User } from "../typings";
 import { fetchUsers } from '../utils/fetchUsers';
 import MusicPlayer from '../components/lofi/MusicPlayer';
 import { setActiveSong, setIsPlaying } from '../redux/features/playerSlice';
+import Clock from '../components/Clock/Clock';
 
 interface Props {
     users: User[];
@@ -128,13 +129,14 @@ const lofi = ({ users }: Props) => {
                         </>
                     ) : (
                         <div
-                            className='flex items-center justify-center  w-full'
+                            className='flex items-center justify-center w-full h-full flex-col gap-10'
                         >
+                            <Clock />
                             <button
-                                className='bg-[#D9D9D9] w-1/5 rounded p-4 cursor-pointer'
+                                className='bg-[#D9D9D9] bg-opacity-50 border-white border text-white w-1/5 rounded p-4 cursor-pointer'
                                 onClick={handleStart}
                             >
-                                START SESSION
+                                Start Session
                             </button>
                         </div>
                     )}
