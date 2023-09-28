@@ -2298,6 +2298,28 @@
     base64url "^3.0.1"
     tslib "^2.3.1"
 
+"@sendbird/chat@^4.9.9":
+  version "4.9.13"
+  resolved "https://registry.yarnpkg.com/@sendbird/chat/-/chat-4.9.13.tgz#690b988776d7d995ef01e31e2a641fe49d2d224f"
+  integrity sha512-SOTPb8OrI/EyUGuJ5e1qESK+61lBLXoQUd64+Eu3S7aI44xW/qFu/t03WoBlhgP3QdDUAmjRfvWYGfu5AI9bew==
+
+"@sendbird/uikit-react@^3.6.8":
+  version "3.6.8"
+  resolved "https://registry.yarnpkg.com/@sendbird/uikit-react/-/uikit-react-3.6.8.tgz#dd7513786a3baddcb4d3fb4f027814a3d7baebd1"
+  integrity sha512-tdWbxh5DH/sqMnMBinKTcSh+Ke63CYq6WJAwStFTHstHpopu5+xb2TmNqmW5dh10JMrO7VawTi+6XVXvFJMOlA==
+  dependencies:
+    "@sendbird/chat" "^4.9.9"
+    "@sendbird/uikit-tools" "0.0.1-alpha.40"
+    css-vars-ponyfill "^2.3.2"
+    date-fns "^2.16.1"
+    dompurify "^3.0.1"
+    prop-types "^15.7.2"
+
+"@sendbird/uikit-tools@0.0.1-alpha.40":
+  version "0.0.1-alpha.40"
+  resolved "https://registry.yarnpkg.com/@sendbird/uikit-tools/-/uikit-tools-0.0.1-alpha.40.tgz#2c54d1bc22c7067f9bbe83b2028f87f33d71c706"
+  integrity sha512-Ld23LpXxN6XJayNayD/wcOa6mRKvR2cy1Qk+QHt9SLO/z3K1uglPI+x89JHOmaPzu3vbUkosM7iTjFJ0ab6LeQ==
+
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@sigstore/protobuf-specs/-/protobuf-specs-0.1.0.tgz#957cb64ea2f5ce527cc9cf02a096baeb0d2b99b4"
@@ -3438,7 +3460,7 @@ babel-plugin-macros@^3.1.0:
     cosmiconfig "^7.0.0"
     resolve "^1.19.0"
 
-balanced-match@^1.0.0:
+balanced-match@^1.0.0, balanced-match@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
@@ -4026,6 +4048,14 @@ css-loader@^6.7.3:
     postcss-value-parser "^4.2.0"
     semver "^7.3.8"
 
+css-vars-ponyfill@^2.3.2:
+  version "2.4.8"
+  resolved "https://registry.yarnpkg.com/css-vars-ponyfill/-/css-vars-ponyfill-2.4.8.tgz#5e34912730b9ea272197e44f33cd8679907dc72c"
+  integrity sha512-4/j4AX4htytYHWyHVZ2BFQ+NoCGZEcOH2h4/2mmgE4SkrFg4Xq6tGYR77DtvvUIDsaXuJN+sj41bbgauA0Gfmg==
+  dependencies:
+    balanced-match "^1.0.2"
+    get-css-data "^2.0.2"
+
 cssesc@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
@@ -4123,6 +4153,13 @@ data-uri-to-buffer@3:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"
   integrity sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==
+
+date-fns@^2.16.1:
+  version "2.30.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
+  integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
 
 dayjs@^1.11.9:
   version "1.11.9"
@@ -4318,6 +4355,11 @@ domhandler@^4.0.0, domhandler@^4.2.0:
   integrity sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==
   dependencies:
     domelementtype "^2.2.0"
+
+dompurify@^3.0.1:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.5.tgz#eb3d9cfa10037b6e73f32c586682c4b2ab01fbed"
+  integrity sha512-F9e6wPGtY+8KNMRAVfxeCOHU0/NPWMSENNq4pQctuXRqqdEPW7q3CrLbR5Nse044WwacyjHGOMlvNsBe1y6z9A==
 
 domutils@^2.5.2:
   version "2.8.0"
@@ -5092,6 +5134,11 @@ gcp-metadata@^5.2.0:
   dependencies:
     gaxios "^5.0.0"
     json-bigint "^1.0.0"
+
+get-css-data@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/get-css-data/-/get-css-data-2.1.0.tgz#4d53e5255d98b553577cb80b8ca1f2e114aef602"
+  integrity sha512-HtPrzGk8aBF9rLeQNuImcXci7YVqsMEKzVflEWaCJu25ehxyDNiZRWoSxqSFUBfma8LERqKo70t/TcaGjIsM9g==
 
 get-intrinsic@^1.0.2, get-intrinsic@^1.1.1:
   version "1.2.0"

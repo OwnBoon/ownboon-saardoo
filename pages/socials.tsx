@@ -355,7 +355,7 @@ function Home({ posts, users, videoData, feed }: Props) {
           }
         />
       );
-    }
+    } else return <div className="w-full h-full bg-white">yoo</div>;
   }
 }
 

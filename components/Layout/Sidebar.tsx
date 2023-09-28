@@ -25,7 +25,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
       <div
         onMouseEnter={() => setShowsidebar(true)}
         onMouseLeave={() => setShowsidebar(false)}
-        className={`h-screen transition-all fixed z-10 duration-[2000] p-[3px] md:p-2 lg:p-3 border-r-2  border-[#1B1F3A] mr-[2px] ${
+        className={`h-screen transition-all fixed z-10 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-3 border-r-2  border-[#3a3a3b] mr-[2px] ${
           !showsidebar
             ? "w-[60px] md:w-[80px] lg:w-[90px]"
             : "w-[240px] bg-[#101010]"
@@ -74,8 +74,8 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
                 Socials
               </span>
             </Link>
-            <div
-              onClick={() => setShowChatsModal(true)}
+            <Link
+              href={"/chat"}
               //   onClick={() => router.push("/chats")}
               className={router.pathname == "/chats" ? selected : normal}
             >
@@ -95,7 +95,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               >
                 Chats
               </span>
-            </div>
+            </Link>
             <div
               onClick={() => setShowBuddyModal(true)}
               //   onClick={() => router.push("/buddies")}
@@ -182,7 +182,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               </span>
             </div>
           </div>
-          <div  className={router.pathname == "/lofi" ? selected : normal}>
+          <div className={router.pathname == "/lofi" ? selected : normal}>
             <Image
               src="feedback.svg"
               width={55}
