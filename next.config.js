@@ -7,14 +7,14 @@ module.exports = {
       bufferutil: "commonjs bufferutil"
     });
 
-    config.resolve = {
-      ...config.resolve,
-      fallback: {
-        "fs": false,
-        "path": false,
-        "os": false,
-      }
-    }
+    // config.resolve = {
+    //   ...config.resolve,
+    //   fallback: {
+    //     "fs": false,
+    //     "path": false,
+    //     "os": false,
+    //   }
+    // }
 
     return config;
   },

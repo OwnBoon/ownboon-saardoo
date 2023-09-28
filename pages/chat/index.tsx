@@ -1,82 +1,33 @@
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
-import prisma from "../../lib/db";
-import { initialProfile } from "../../lib/initial-profile";
+import { useEffect,useState } from "react";
+// import { initialProfile } from "../../lib/initial-profile";
 import { InitialModal } from "../../chat-components/modals/initial-modal";
+import { PrismaClient } from '@prisma/client'
+import { useUser } from "@clerk/nextjs";
+import {db} from '../../lib/db'
+import type { GetServerSideProps, NextPage } from "next";
+import { initialProfile } from "../../utils/initial-profile";
 
-const SetupPage = () => {
-  const { isLoaded, isSignedIn, user } = useUser();
-  // console.log(user);
-  let server;
+//@ts-ignore
+const SetupPage = ({user}) => {
 
-  useEffect( () => { 
-    async function fetchData() {
-        try {
-          const profile = await initialProfile(user);
+  console.log(user)
 
-          server = await prisma.server.findFirst({
-            where: {
-              //@ts-ignore
-              members: {
-                some: {
-                  profileId: profile.id
-                }
-              }
-            }
-          });
-        } catch (err) {
-            console.log(err);
-        }
-    }
-    fetchData();
-}, []);
-
+  return <h1>hello</h1>
   
-
-
-  //   let server:any;
-  //   useEffect( () => {
-  //     async function fetchData() {
-  //         try {
-
-  //           const newProfile = await prisma.profile.create({
-  //             data: {
-  //               //@ts-ignore
-  //               userId: user?.id,
-  //               name: `${user?.username}`,
-  //               //@ts-ignore
-  //               imageUrl: user?.imageUrl,
-  //               //@ts-ignore
-  //               email: user?.emailAddresses[0].emailAddress
-  //             }
-  //           });
-
-  //           server = await prisma.server.findFirst({
-  //             where: {
-  //               //@ts-ignore
-  //               members: {
-  //                 some: {
-  //                   profileId: user?.id
-  //                 }
-  //               }
-  //             }
-  //           });
-
-  //         } catch (err) {
-  //           return err;
-  //         }
-  //     }
-  //     fetchData();
-  // }, []);
-
-  if (server) {
-    //@ts-ignore
-    return redirect(`/servers/${server.id}`);
-  }
-
-  //@ts-ignore
-  return <InitialModal userid={user?.id} />;
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/fetchUserId`)
+
+  const data = await res.json()
+
+  return {
+    props: {
+      user:data.user,
+    },
+  };
+};
+
+//@ts-ignore
 export default SetupPage;

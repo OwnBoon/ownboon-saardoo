@@ -1,10 +1,11 @@
 import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from 'next/navigation'
+import { auth } from '@clerk/nextjs';
 import { db } from "../lib/db";
 
+//@ts-ignore
 export const initialProfile = async () => {
-
-  const user = await currentUser();
+  const user = await auth();
 
   if (!user) {
     return redirect('/sign-up');
