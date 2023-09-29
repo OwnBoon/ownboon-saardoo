@@ -31,12 +31,12 @@ export default function Notification({
   }, [match]);
   return (
     <div
-      className={`flex flex-col fade fixed right-3 rounded-b-2xl w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-scroll ${
+      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-scroll ${
         shownotifications ? "translate-y-0 top-24" : "-translate-y-[100vh] "
       } shadow-2xl  p-1  z-30 items-center bg-[#101010]`}
     >
       <div className="flex flex-col  items-center justify-center">
-        <h1 className="text-[1.3vw] cursor-pointer my-2 tracking-tight  text-white text-center ">
+        <h1 className=" cursor-pointer my-2 tracking-tight  text-white text-center ">
           Notifications
         </h1>
         <div className="w-44 h-[0px] border border-neutral-400 mb-1"></div>

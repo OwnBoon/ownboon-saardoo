@@ -93,7 +93,7 @@ const Navbar = ({
         />
       ) : null}
       <div
-        className={`  w-full  max-w-full  border-b-2 border-gray-700 flex items-center transition-all  justify-center   pl-8 pr-12 py-1 fixed z-[3]`}
+        className={`  w-full  max-w-full  border-b-2 border-gray-700 flex items-center transition-all  justify-center   pl-8 pr-12 py-1 fixed z-40`}
         style={{
           backgroundColor: bgColor,
         }}
@@ -106,7 +106,7 @@ const Navbar = ({
           <div
             className={` ${
               showsidebar ? "translate-x-[0vw]" : "translate-x-0"
-            } flex mr-20 items-center transition-all gap-10 relative`}
+            } flex md:mr-20  mr-10 items-center transition-all gap-5 md:gap-10 relative`}
           >
             <Image
               width={55}
@@ -114,7 +114,7 @@ const Navbar = ({
               onClick={() => setshowsearch(true)}
               className={`p-2 ${
                 showsearch ? "hidden" : ""
-              } rounded hover:brightness-150 fade transition-all cursor-pointer`}
+              } rounded hover:brightness-150 fade hidden md:inline transition-all cursor-pointer`}
               src="search.svg"
               alt={"search"}
             />
@@ -174,7 +174,9 @@ const Navbar = ({
 
             <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
               {user && <UserButton />}
-              <span className="text-[15px]">{user?.username}</span>
+              <span className="text-[15px] hidden md:inline font-sans font-[500]">
+                {user?.username}
+              </span>
             </div>
           </div>
         </div>
