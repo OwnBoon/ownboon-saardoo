@@ -40,7 +40,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           {level < 5 ? (
             <Spline
               className=""
-              scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
+              scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
             />
           ) : level < 10 ? (
             <div>
@@ -57,12 +57,12 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           ) : level < 31 ? (
             <Spline
               className=""
-              scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
+              scene="https://prod.spline.design/q8RK-jgRIn6o4Muj/scene.splinecode"
             />
           ) : level < 41 ? (
             <Spline
               className=""
-              scene="https://prod.spline.design/NK3aT6hTvsLAsxSD/scene.splinecode"
+              scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
             />
           ) : level > 51 ? (
             <Spline
