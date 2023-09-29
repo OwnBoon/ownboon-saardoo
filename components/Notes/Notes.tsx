@@ -5,7 +5,7 @@ import { Notes } from "../../typings";
 import { useUser } from "@clerk/nextjs";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
-const Notes = ({ setNotes, setDummyNote, notes }: any) => {
+const Notes = ({ setNotes, setDummyNote, notes, close }: any) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -88,6 +88,7 @@ const Notes = ({ setNotes, setDummyNote, notes }: any) => {
                 <button
                   onClick={(e) => {
                     handleSubmit(e);
+                    close();
                   }}
                   className="mt-16 px-5 border py-2 rounded-xl"
                 >
