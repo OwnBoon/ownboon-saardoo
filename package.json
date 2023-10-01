@@ -27,6 +27,7 @@
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@reduxjs/toolkit": "1.8.5",
     "@sanity/image-url": "^1.0.2",
+    "@sendbird/uikit-react": "^3.6.8",
     "@sindresorhus/slugify": "^2.2.0",
     "@splinetool/react-spline": "^2.2.6",
     "@splinetool/runtime": "^0.9.396",

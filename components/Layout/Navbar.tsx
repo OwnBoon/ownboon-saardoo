@@ -93,64 +93,75 @@ const Navbar = ({
         />
       ) : null}
       <div
-        className={` ml-[-3vw] w-[95vw]  border-b-2 border-gray-700 flex items-center transition-all  justify-between px-8 py-3 fixed z-[3]`}
+        className={`  w-full  max-w-full  border-b-2 border-gray-700 flex items-center transition-all  justify-center   pl-8 pr-12 py-1 fixed z-40`}
         style={{
           backgroundColor: bgColor,
         }}
       >
-        <div className="flex items-center gap-2 text-white">
-          <Image width={30} height={30} className="" src={icon} alt={text} />
-          <span className="font-fontspring text-[20px]">{text}</span>
-        </div>
-        <div
-          className={` ${
-            showsidebar ? "translate-x-[0vw]" : "translate-x-0"
-          } flex items-center transition-all gap-10 relative`}
-        >
-          <Image
-            width={55}
-            height={55}
-            onClick={() => setshowsearch(true)}
-            className={`p-2 ${
-              showsearch ? "hidden" : ""
-            } rounded hover:brightness-150 fade transition-all cursor-pointer`}
-            src="search.svg"
-            alt={"search"}
-          />
-          {showsearch && (
-            <form
-              onSubmit={(e) => handlesearch(e)}
-              className="flex flex-row items-center justify-center"
-            >
-              <input
-                type={"text"}
-                value={search}
-                name="search"
-                aria-multiline={false}
-                id="search"
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search..."
-                className="w-[10vw] h-[2vw] active:border-gray-400  text-md text-white bg-transparent backdrop-blur-3xl font-poppins pageentry  border-b border-t-0 border-r-0 border-l-0 border-gray-400 "
-              ></input>
-              <Image
-                width={45}
-                height={45}
-                onClick={() => setshowsearch(false)}
-                className={`p-2  fade rounded hover:brightness-150 transition-all cursor-pointer`}
-                src="cancel.svg"
-                alt={"cancel"}
-              />
-            </form>
-          )}
-          {todolist ? (
-            <Badge
-              variant={"dot"}
-              content=""
-              isSquared
-              className=""
-              placement={"top-right"}
-              size={"xs"}
-            >
+        <div className="flex justify-between w-full">
+          <div className="flex items-center gap-2 text-white">
+            <Image width={30} height={30} className="" src={icon} alt={text} />
+            <span className="font-fontspring text-[20px]">{text}</span>
+          </div>
+          <div
+            className={` ${
+              showsidebar ? "translate-x-[0vw]" : "translate-x-0"
+            } flex md:mr-20  mr-10 items-center transition-all gap-5 md:gap-10 relative`}
+          >
+            <Image
+              width={55}
+              height={55}
+              onClick={() => setshowsearch(true)}
+              className={`p-2 ${
+                showsearch ? "hidden" : ""
+              } rounded hover:brightness-150 fade hidden md:inline transition-all cursor-pointer`}
+              src="search.svg"
+              alt={"search"}
+            />
+            {showsearch && (
+              <form
+                onSubmit={(e) => handlesearch(e)}
+                className="flex flex-row items-center justify-center"
+              >
+                <input
+                  type={"text"}
+                  value={search}
+                  name="search"
+                  aria-multiline={false}
+                  id="search"
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search..."
+                  className="w-[10vw] h-[2vw] active:border-gray-400  text-md text-white bg-transparent backdrop-blur-3xl font-poppins pageentry  border-b border-t-0 border-r-0 border-l-0 border-gray-400 "
+                ></input>
+                <Image
+                  width={45}
+                  height={45}
+                  onClick={() => setshowsearch(false)}
+                  className={`p-2  fade rounded hover:brightness-150 transition-all cursor-pointer`}
+                  src="cancel.svg"
+                  alt={"cancel"}
+                />
+              </form>
+            )}
+            {todolist ? (
+              <Badge
+                variant={"dot"}
+                content=""
+                isSquared
+                className=""
+                placement={"top-right"}
+                size={"xs"}
+              >
+                <Image
+                  width={70}
+                  onClick={() => togglenotification()}
+                  height={70}
+                  className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
+                  src="notification.svg"
+                  alt={"notification"}
+                />
+              </Badge>
+            ) : (
               <Image
                 width={70}
                 onClick={() => togglenotification()}
@@ -159,21 +170,14 @@ const Navbar = ({
                 src="notification.svg"
                 alt={"notification"}
               />
-            </Badge>
-          ) : (
-            <Image
-              width={70}
-              onClick={() => togglenotification()}
-              height={70}
-              className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
-              src="notification.svg"
-              alt={"notification"}
-            />
-          )}
+            )}
 
-          <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
-            {user && <UserButton />}
-            <span className="text-[15px]">{user?.username}</span>
+            <div className="flex items-center gap-2 text-[#DDDDDD] cursor-pointer">
+              {user && <UserButton />}
+              <span className="text-[15px] hidden md:inline font-sans font-[500]">
+                {user?.username}
+              </span>
+            </div>
           </div>
         </div>
       </div>

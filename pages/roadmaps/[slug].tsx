@@ -129,7 +129,7 @@ const Post = ({ roadmap }: Props) => {
             <div className=" relative space-y-10 flex w-full items-center py-10 flex-col justify-center">
               <div className="absolute border z-0 border-zinc-700/20 w-1 rounded-3xl bg-zinc-700 bg-opacity-20 h-full"></div>
               {roadmapdata.roadmap.map((roadmap: any, index: number) => (
-                <div>
+                <div className="z-20 flex items-center gap-[0.65rem]">
                   <Tooltip
                     content={`click to know more`}
                     color="invert"
@@ -143,13 +143,15 @@ const Post = ({ roadmap }: Props) => {
                     </div>
                   </Tooltip>
                   <div>
-                    <div
-                      // @ts-ignore
-                      onClick={() => setGoal(deafult, roadmap.title, index)}
-                      className="text-lg hover:cursor-pointer"
-                    >
-                      +
-                    </div>
+                    <Tooltip content={`add current goal`} >
+                      <div
+                        // @ts-ignore
+                        onClick={() => setGoal(deafult, roadmap.title, index)}
+                        className="text-lg font-sans hover:cursor-pointer"
+                      >
+                        +
+                      </div>
+                    </Tooltip>
                   </div>
                 </div>
               ))}
