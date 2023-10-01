@@ -8,6 +8,8 @@ import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
 import { User } from "../typings";
 import { useUser } from "@clerk/nextjs";
+
+
 const Chat = dynamic(() => import("../components/Chat/Chat"), {
   ssr: false,
   loading: () => <p>...</p>,
@@ -23,6 +25,7 @@ const buddies = ({ users }: Props) => {
     const match = users.filter(
       (userss) => userss.email == user.emailAddresses[0].emailAddress
     );
+
     return (
       <Layout
         hasBg={false}
