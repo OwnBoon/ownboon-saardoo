@@ -31,7 +31,7 @@ const Discover = () => {
 
     return (
         <div className="w-full flex flex-col overflow-hidden overflow-x-hidden">
-            <div className="flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
+            {/* <div className="flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
                 <select
                     onChange={(e) => dispatch(selectGenreListId(e.target.value))}
                     value={genreListId || "544711374"}
@@ -43,18 +43,18 @@ const Discover = () => {
                         </option>
                     ))}
                 </select>
-            </div>
+            </div> */}
 
-            <div className="flex flex-wrap sm:justify-start  overflow-x-hidden justify-center gap-8">
-                <div className="flex w-screen  overflow-y-hidden">
+            <div className="flex flex-wrap sm:justify-start w-fit rounded-md overflow-x-hidden justify-center gap-8 bg-white bg-opacity-50 border-white border">
+                <div className="flex w-[300px] flex-col items-start overflow-x-hidden">
                     {filteredSongs?.map((song: any, i: any) => (
                         <div
                             className={
-                                isPlaying ? "opacity-0 transition-all duration-2000 mr-4 ease " : play
+                                play
                             }
                             key={i}
                             style={{
-                                display: isPlaying ? 'none' : 'flex'
+                                display: 'flex'
                             }}
                         >
                             <SongCard

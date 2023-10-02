@@ -116,8 +116,11 @@ const lofi = ({ users }: Props) => {
                 <div
                     className='w-full h-screen text-[#000000]'
                 >
-                    {sessionStarted ? (
-                        <>
+
+                    <div
+                        className='flex items-center justify-center w-full h-full flex-col gap-10'
+                    >
+                        {sessionStarted && <>
                             <Discover />
                             {seconds > 0 && (
                                 <div
@@ -126,20 +129,16 @@ const lofi = ({ users }: Props) => {
                                     {time}
                                 </div>
                             )}
-                        </>
-                    ) : (
-                        <div
-                            className='flex items-center justify-center w-full h-full flex-col gap-10'
+                        </>}
+                        <Clock />
+                        <button
+                            className='bg-[#D9D9D9] bg-opacity-50 border-white border text-white w-1/5 rounded p-4 cursor-pointer'
+                            onClick={handleStart}
                         >
-                            <Clock />
-                            <button
-                                className='bg-[#D9D9D9] bg-opacity-50 border-white border text-white w-1/5 rounded p-4 cursor-pointer'
-                                onClick={handleStart}
-                            >
-                                Start Session
-                            </button>
-                        </div>
-                    )}
+                            {sessionStarted ? "Stop Session" : "Start Session"}
+                        </button>
+                    </div>
+
 
                     {activeSong?.title && (
                         <div className="absolute z-50 h-28 w-4/5 bottom-0  right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl ">
