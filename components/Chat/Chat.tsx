@@ -39,6 +39,7 @@ const Chat = ({ user }: Props) => {
         <div className="flex justify-between h-full w-full">
           <div className="w-fit">
             <SBChannelList
+            allowProfileEdit
               onChannelSelect={(channel: any) => {
                 if (channel && channel.url) {
                   setCurrentChannelUrl(channel.url);
