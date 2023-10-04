@@ -40,7 +40,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           {level < 5 ? (
             <Spline
               className=""
-              scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
+              scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
             />
           ) : level < 10 ? (
             <div>
@@ -57,12 +57,12 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           ) : level < 31 ? (
             <Spline
               className=""
-              scene="https://prod.spline.design/HQk3zt1YEJNNpIMv/scene.splinecode"
+              scene="https://prod.spline.design/q8RK-jgRIn6o4Muj/scene.splinecode"
             />
           ) : level < 41 ? (
             <Spline
               className=""
-              scene="https://prod.spline.design/NK3aT6hTvsLAsxSD/scene.splinecode"
+              scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
             />
           ) : level > 51 ? (
             <Spline
@@ -75,17 +75,17 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           <div className="flex animate-floaty gap-x-8 shadow-zinc-700 shadow-2xl	 flex-row py-8 rounded-3xl  px-8 bg-[#191919a8] text-white absolute  bottom-4">
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
               <h1 className="font-poppins text-md  ">Current Level</h1>
-              <h2 className="font-poppins text-3xl">Level Name</h2>
+              <h2 className="font-poppins text-3xl">{level}</h2>
             </div>
             <div className="w-0 h-16 border border-neutral-400"></div>
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Current Level</h1>
-              <h2 className="font-poppins text-3xl">Level Name</h2>
+              <h1 className="font-poppins text-md  ">Points</h1>
+              <h2 className="font-poppins text-3xl">{focus}</h2>
             </div>
             <div className="w-0 h-16 border border-neutral-400"></div>
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Current Level</h1>
-              <h2 className="font-poppins text-3xl">Level Name</h2>
+              <h1 className="font-poppins text-md  ">Next Level</h1>
+              <h2 className="font-poppins text-3xl">{level + 1} </h2>
             </div>
           </div>
           <div

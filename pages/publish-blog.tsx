@@ -18,6 +18,7 @@ import { set } from "lodash";
 import { BsImage } from "react-icons/bs";
 import Head from "next/head";
 import { categories } from "../utils/constants";
+import Layout from "../components/Layout/Layout";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -169,145 +170,144 @@ function BlogPost({ users }: Props) {
   };
 
   return (
-    <div className="grid grid-cols-12 overflow-hidden bg-[#f4f1eb]/50">
-      <Head>
-        <title>Blog @ {user?.firstName || user?.username}</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
-      <Sidebar />
-      <div className="container mx-auto col-span-9  py-8 mt ">
-        {/* <Header /> */}
-        <div className="flex px-5  justify-between items-center">
-          {/* <div className="flex gap-4 font-bold text-lg">
+    <Layout
+      hasBg={false}
+      bgColor={"#121212"}
+      icon="socials.svg"
+      text="Socials"
+      border="gray-500"
+      children={
+        <div className=" ">
+          <div className="container mx-auto col-span-9  py-8 mt ">
+            {/* <Header /> */}
+            <div className="flex px-5  justify-between items-center">
+              {/* <div className="flex gap-4 font-bold text-lg">
             <UserButton />
             <p>Hi {user?.firstName || user?.username}, welcome Back!</p>
           </div> */}
-          <div className="font-semibold text-xl">Socials</div>
-          <div className="items-center flex gap-5">
-            {/* <p className="text-sm font-semibold text-black/50">
+              <div className="font-semibold text-xl">Publish your Blog</div>
+              <div className="items-center flex gap-5">
+                {/* <p className="text-sm font-semibold text-black/50">
               {formattedDate}
             </p>
             <div className="bg-black/5 p-2 text-black/80 cursor-pointer hover:text-black hover:bg-black/30 transition-all duration-150  rounded-lg">
               <p>Add New Goal</p>
             </div> */}
-            <div className="flex gap-5 items-center ">
-              <div
-                onClick={handleSubmit}
-                className="bg-cyan-500  p-2 rounded-full text-white text-sm
+                <div className="flex gap-5 items-center ">
+                  <div
+                    onClick={handleSubmit}
+                    className="bg-cyan-800/40  p-2 rounded-full text-white text-sm
                cursor-pointer"
-              >
-                <p>Publish</p>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <p>{user?.firstName || user?.username}</p>
-                <UserButton />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="flex flex-col bg-white h-full overflow-y-scroll  mt-5 p-10
-          "
-          // onSubmit={handleSubmit}
-        >
-          <div className="flex flex-col   mx-auto items-center w-full justify-center">
-            <div className="px-3  border-l-2 ">
-              <input
-                className=" text-4xl w-full  font-light placeholder:text-gray-400 outline-none  h-full"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className=" mr-44 mt-5">
-              <input
-                className="  text font-light  placeholder:text-gray-400 outline-none"
-                placeholder="Write up to 4 tags"
-                value={category}
-                onChange={(e) => handleInputChange(e.target.value)}
-              />
-              <div className="space-y-2 mt-1 px-5">
-                {filteredCategories.map((item) => (
-                  <h1
-                    key={item.name}
-                    className="cursor-pointer"
-                    onClick={() => handleSuggestionClick(item)}
                   >
-                    {item.name}
-                  </h1>
-                ))}
-              </div>
-            </div>
-            <div className="mt-5">
-              <img
-                className={imageSrc ? "inline rounded-lg" : "hidden"}
-                src={imageSrc}
-              />
-            </div>
-            {category.length > 12 && (
-              <div className="flex items-center  mr-9 px-3 w-96 border-l-2 mt-5">
-                <input
-                  className="   text font-extralight cursor-text  w-full  placeholder:text-gray-400 outline-none"
-                  placeholder="Didn't add your cover image?"
-                  disabled={true}
-                />
-                <form
-                  method="post"
-                  onChange={handleOnChange}
-                  onSubmit={handleOnSubmit}
-                >
-                  <label htmlFor="file-input">
-                    <BsImage className="text-gray-400 hover:text-gray-800 transition-all duration-150 cursor-pointer" />
-                  </label>
-                  <div className="flex items-center justify-center">
-                    <input
-                      id="file-input"
-                      type="file"
-                      accept="image/"
-                      className="hidden"
-                      name="file"
-                    />
-                    <div>
-                      {imageSrc && !uploadData && (
-                        <p>
-                          <button>Upload Files</button>
-                        </p>
-                      )}
-                    </div>
+                    <p>Publish</p>
                   </div>
-                </form>
+                </div>
               </div>
-            )}
-
+            </div>
             <div
-              className={
-                imageSrc
-                  ? "inline transition-all duration-200 mt-5"
-                  : "hidden transition-all duration-200"
-              }
+              className="flex flex-col bg-[#212121] h-screen overflow-y-scroll  mt-5 p-10
+          "
+              // onSubmit={handleSubmit}
             >
-              <Editor
-                id="Editor"
-                apiKey={process.env.NEXT_PUBLIC_TINY}
-                // @ts-ignore
-                onInit={(evt, editor) => (editorRef.current = editor)}
-                init={{
-                  height: 500,
-                  menubar: false,
-                  plugins:
-                    "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                  toolbar:
-                    "undo redo | blocks  | bold italic underline codesample | link image media  | align  | numlist bullist  |",
-                  content_style:
-                    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                }}
-              />
+              <div className="flex flex-col   mx-auto items-center w-full justify-center">
+                <div className="px-3  border-l-2 border-white/20 ">
+                  <input
+                    className=" text-4xl w-full  font-light bg-[#212121] placeholder:text-gray-400 outline-none  h-full"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                <div className=" mr-44 mt-5">
+                  <input
+                    className="  text font-light bg-transparent  placeholder:text-gray-400 outline-none"
+                    placeholder="Write up to 4 tags"
+                    value={category}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                  />
+                  <div className="space-y-2 mt-1 px-5">
+                    {filteredCategories.map((item) => (
+                      <h1
+                        key={item.name}
+                        className="cursor-pointer"
+                        onClick={() => handleSuggestionClick(item)}
+                      >
+                        {item.name}
+                      </h1>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-5">
+                  <img
+                    className={imageSrc ? "inline rounded-lg" : "hidden"}
+                    src={imageSrc}
+                  />
+                </div>
+                {category.length > 12 && (
+                  <div className="flex items-center  mr-9 px-3 w-96 border-l-2 mt-5">
+                    <input
+                      className=" cursor-pointer  text font-extralight select-none w-full bg-transparent  placeholder:text-gray-400 outline-none"
+                      placeholder="Didn't add your cover image?"
+                      disabled={true}
+                    />
+                    <form
+                      method="post"
+                      onChange={handleOnChange}
+                      onSubmit={handleOnSubmit}
+                    >
+                      <label htmlFor="file-input">
+                        <BsImage className="text-gray-400 hover:text-gray-100 transition-all duration-150 cursor-pointer" />
+                      </label>
+                      <div className="flex items-center justify-center">
+                        <input
+                          id="file-input"
+                          type="file"
+                          accept="image/"
+                          className="hidden"
+                          name="file"
+                        />
+                        <div>
+                          {imageSrc && !uploadData && (
+                            <p>
+                              <button>Upload Files</button>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                <div
+                  className={
+                    imageSrc
+                      ? "inline transition-all duration-200 mt-5"
+                      : "hidden transition-all duration-200"
+                  }
+                >
+                  <Editor
+                    id="Editor"
+                    apiKey={process.env.NEXT_PUBLIC_TINY}
+                    // @ts-ignore
+                    onInit={(evt, editor) => (editorRef.current = editor)}
+                    init={{
+                      height: 500,
+                      menubar: false,
+                      plugins:
+                        "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+                      toolbar:
+                        "undo redo | blocks  | bold italic underline codesample | link image media  | align  | numlist bullist  |",
+                      content_style:
+                        "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <Progress />
-    </div>
+      }
+    />
   );
 }
 

@@ -19,7 +19,9 @@ export default async function handler(
           id: data._id,
           set: {
             completed: data.completed,
-            delete: data.delete
+            delete: data.delete,
+            duration: data.duration,
+            due: data.due,
           }
         },
       },

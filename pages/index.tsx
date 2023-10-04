@@ -6,7 +6,6 @@ import Spline from "@splinetool/react-spline";
 import { fetchUsers } from "../utils/fetchUsers";
 import { User, UserBody } from "../typings";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { currentUser } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
@@ -24,7 +23,7 @@ interface Props {
 
 }
 const Home = ({ users }: Props) => {
-  const router = useRouter();
+ const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
   const [encrypt, setEnCrpyt] = useState("");
 
@@ -65,6 +64,7 @@ const Home = ({ users }: Props) => {
       leaderboard: users.length + 1,
       secret: secret,
       verified: false,
+      chatid: slug.current,
       profileImage: user?.profileImageUrl,
       slug: slug,
     };
@@ -73,6 +73,27 @@ const Home = ({ users }: Props) => {
       method: "POST",
     });
 
+    const json = await result.json();
+    return json;
+  };
+
+  const sendbirdUser = async (slug: { type: string; current: string }) => {
+    const userInfo = {
+      user_id: slug.current,
+      nickname: user?.username,
+      profile_url: user?.profileImageUrl,
+    };
+    const result = await fetch(
+      `https://api-7FB154A3-C967-45D0-90B7-6A63E5F0E3EB.sendbird.com/v3/users`,
+      {
+        method: "POST",
+        headers: {
+          "Api-Token": "41d1f2713e9ae9eae6144731df5c5d84e2392124",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      }
+    );
     const json = await result.json();
     return json;
   };
@@ -98,16 +119,15 @@ const Home = ({ users }: Props) => {
         };
         const createUser = async () => {
           console.log("posting user");
+
           postUser(slugtype);
+          sendbirdUser(slugtype);
         };
         createUser();
       }
     } else null;
   }, [isNewUser]);
 
-  // if (session) {
-  //   router.push("/dashboard");
-  // } else
   return (
     <>
       <Head>

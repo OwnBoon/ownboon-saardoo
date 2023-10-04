@@ -9,7 +9,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { RecoilRoot } from "recoil";
 import "reactflow/dist/style.css";
 import { useSSR } from "@nextui-org/react";
-import "../styles/chats.scss";
 import { createTheme, NextUIProvider, Text } from "@nextui-org/react";
 import { Analytics } from "@vercel/analytics/react";
 import { useEffect, useState } from "react";

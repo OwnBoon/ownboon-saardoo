@@ -31,8 +31,9 @@
     "pages/api/auth/[...nextauth].js",
     "pages/sign-in",
     "components/DraggableRoadmap.jsx",
-    ".next/types/**/*.ts"
-, "components/Home/About.jsx", "components/Home/Benefits.jsx"  ],
+    ".next/types/**/*.ts",
+    "node_modules/@sendbird/uikit-react/index.d.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

@@ -12,6 +12,7 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { MdAddCircle } from "react-icons/md";
 
 type Props = {
   todos: any[];
@@ -23,7 +24,7 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const TodoList = ({ todos, user, setTodos }: Props) => {
+const LofiTodo = ({ todos, user, setTodos }: Props) => {
   const [todoText, setTodoText] = useState("");
 
   const [showTaskInput, setShowTaskInput] = useState(false);
@@ -296,8 +297,8 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     }
   };
 
-  const color = "#2CD3E180";
-  const border = "1px solid #2CD3E180";
+  const color = "white";
+  const border = "1px solid white";
 
   const handleSort = (
     newState: any[],
@@ -317,54 +318,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
   };
 
   return (
-    <div
-      style={{
-        background:
-          "linear-gradient(0deg, rgba(61,61,61,1)   0%, transparent 100%)",
-      }}
-      className="flex flex-col gap-2 relative w-full min-h-[18vw] h-full shrink-0  px-12 py-3  rounded-lg"
-    >
-      <div className="w-full flex flex-row gap-1 relative items-center justify-between">
-        <div className="w-10 h-10"></div>
-        <div className="whitespace-nowrap text-[23px] font-sans text-white w-fit flex gap-2">
-          To Do List
-          <img
-            src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-            className="min-h-0 min-w-0 relative w-4 shrink-0"
-          />
-        </div>
-        <div className="relative inline-block text-left" ref={dropdownRef}>
-          <button onClick={toggleDropdown} type="button">
-            <Image
-              src="more-options.svg"
-              alt={""}
-              width={40}
-              height={40}
-              className="p-2 fade transition-all  rounded  drag-handle"
-            />
-          </button>
-          {isOpen && (
-            <div className="absolute z-50 w-fit left-[30px] top-0 mt-2 origin-top-right bg-slate-800 divide-y rounded-md shadow-lg">
-              <div className="py-1">
-                <a
-                  href="#"
-                  className="px-4 py-2 text-sm whitespace-nowrap hover:bg-slate-700  flex w-full"
-                  onClick={deleteAllTodos}
-                >
-                  Delete all Tasks
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm hover:bg-slate-700 whitespace-nowrap"
-                  onClick={deleteAllCompletedTodos}
-                >
-                  Delete Completed Task
-                </a>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+    <div className="flex flex-col gap-2 relative bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl h-fit shrink-0 w-fit    rounded-lg">
       <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0" />
       {!showTaskInput && (
         <div className="overflow-auto">
@@ -376,14 +330,14 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             {todos.map((t: Goals) => (
               <div
                 key={t._id}
-                className="flex flex-row  mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 "
+                className="flex flex-row pr-5 drag-handle cursor-pointer    mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-white/10 hover:border-opacity-30 "
               >
                 <Image
                   src="draghandle.svg"
                   alt={""}
                   width={30}
                   height={30}
-                  className="p-2 fade transition-all  rounded  drag-handle"
+                  className=" fade transition-all h-1   opacity-0 rounded  drag-handle"
                 />
                 <input
                   id="default-checkbox"
@@ -391,49 +345,12 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                   value=""
                   checked={t.completed}
                   onChange={(e) => changeTodoState(t._id, e)}
-                  className="border-solid border-gray-700 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#2CD3E1] focus:ring-transparent focus:border-none"
+                  className="border-solid border-white bg-transparent mb-px relative w-6 shrink-0 h-6 border rounded checked:bg-white/20 focus:ring-transparent focus:border-none"
                 />
                 <div className="whitespace-nowrap   font-sans text-white relative">
                   {t.title}
                 </div>
-                <Image
-                  src="delete-icon.svg"
-                  alt={""}
-                  width={30}
-                  height={30}
-                  className="p-2  fade transition-all  rounded  drag-handle ml-auto"
-                  onClick={() => addDeleted(t._id)}
-                />
-                <div className="mr-20">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      disablePast
-                      sx={{
-                        svg: { color },
-                        input: { color: "white" },
-                        label: { color },
-                        border: { border },
 
-                        width: 2,
-                        ":focus": {
-                          border: 0,
-                          outline: 0,
-                          borderColor: { color: "transparent" },
-                        },
-                      }}
-                      value={dayjs(t.duration!)}
-                      className="rounded-lg"
-                      onChange={
-                        (newValue: any) => {
-                          mutateTodo(t._id!, newValue);
-                          // setCalendar(newValue);
-                        }
-
-                        // console.log(e)
-                      }
-                    />
-                  </LocalizationProvider>
-                </div>
                 {/* <Image
                   src="calendar.svg"
                   alt={""}
@@ -446,7 +363,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
           </ReactSortable>
 
           {tempTodo && (
-            <div className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 opactity-50">
+            <div className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-white/70 hover:border-opacity-30 opactity-50">
               <Image
                 src="draghandle.svg"
                 alt={""}
@@ -478,15 +395,15 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
       )}
 
       {showTaskInput && (
-        <div className="flex flex-col mb-3 gap-4 relative">
+        <div className="flex flex-col mb-3 gap-4 px-3 relative">
           <div
             onClick={() => setShowTaskInput(false)}
-            className="font-serif cursor-pointer select-none hover:text-cyan-600 duration-50 transition-colors"
+            className="font-serif cursor-pointer select-none hover:text-white/80  text-white duration-50 transition-colors"
           >
             {"<-"}
           </div>
           <input
-            className="whitespace-nowrap w-40 rounded bg-transparent border border-cyan-400 border-opacity-30"
+            className="whitespace-nowrap w-40 rounded text-white  bg-transparent border border-white placeholder-white/40 focus:ring-transparent focus:outline-none  border-opacity-30"
             id="username"
             type="text"
             placeholder="Name of the task"
@@ -538,29 +455,27 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
           <div className="flex justify-end">
             <div
               onClick={handlesubmit}
-              className="text-[#2CD3E180] hover:text-cyan-400 transition-colors duration-200 cursor-pointer"
+              className="text-white hover:text-white/80 transition-colors duration-200 cursor-pointer"
             >
-              Add
+              <MdAddCircle className="h-6 w-6" />
             </div>
           </div>
         </div>
       )}
       {!showTaskInput && (
-        <div
-          onClick={handleAddingTask}
-          className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded"
-        >
-          <img
-            src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
-            className="min-h-0 min-w-0 relative w-4 shrink-0"
-          />
-          <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative">
-            Add Task
-          </button>
+        <div className="flex justify-center p-2 ">
+          <div
+            onClick={handleAddingTask}
+            className="bg-opacity-30 rounded-sm w-fit bg-white flex p-2 justify-center items-center"
+          >
+            <button className=" text-sm  text-[#dddddd] relative px-5">
+              Add Todos
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default TodoList;
+export default LofiTodo;
