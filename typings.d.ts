@@ -60,6 +60,13 @@ export interface Notes extends SanityBody {
 
 }
 
+export interface LofiTodo extends SanityBody {
+    _type?: 'lofi-todo'
+    note: string
+    email: string
+    completed?: boolean
+}
+
 export interface Goals extends SanityBody {
     _type?: 'goals'
     title?: string
