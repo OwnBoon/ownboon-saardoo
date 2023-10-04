@@ -1,4 +1,5 @@
 import Spline from "@splinetool/react-spline";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Hero() {
@@ -441,12 +442,12 @@ export default function Hero() {
             </svg>
           </div>
         </div>
-        <div
-          onClick={() => router.push("/dashboard")}
+        <Link
+          href="/workspace"
           className="py-[6vh] md:text-[1.5rem]  text-md  justify-center text-center"
         >
           <h2>revolutionizing your productivity and health</h2>
-        </div>
+        </Link>
       </div>
     </>
   );

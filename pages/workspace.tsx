@@ -88,6 +88,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     return <div>Loading</div>;
   }
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedNote, setSelectedNote] = useState("");
+  const [selectedNoteData, setSelectedNoteData] = useState("");
   setLoading ? setLoading(true) : "";
   const [goal, setGoal] = useState<Goals[]>(goals);
   const router = useRouter();
@@ -392,8 +394,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     <>
       <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
-          <section id="section-1" className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5">
-            <div id="TodoAndGenerator-container" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 flex-col md:flex-row lg:flex-col justify-start gap-5 relative items-center">
+          <section
+            id="section-1"
+            className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5"
+          >
+            <div
+              id="TodoAndGenerator-container"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 flex-col md:flex-row lg:flex-col justify-start gap-5 relative items-center"
+            >
               <TodoList todos={todos} user={user} setTodos={setTodos} />
 
               <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
@@ -416,7 +424,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               </div>
             </div>
-            <div  id="boonIland-wraper " className="bg-[#191919] xl:col-span-2 w-full h-full py-3 rounded-lg overflow-hidden gap-2">
+            <div
+              id="boonIland-wraper "
+              className="bg-[#191919] xl:col-span-2 w-full h-full py-3 rounded-lg overflow-hidden gap-2"
+            >
               <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
                 Boon Island
               </div>
@@ -426,24 +437,24 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 {level < 5 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
                   />
                 ) : level < 10 ? (
                   <div>
                     <img
                       className="group-hover:brightness-110 transition-all duration-150"
-                      src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                      src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
                     />
                   </div>
                 ) : level < 21 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/996a064b91c927a0fceec73bc265112d1207822f-3072x1414.png?w=2000&fit=max&auto=format"
                   />
                 ) : level < 31 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/f8cf6a118ab5c937763289890beb462071486665-3072x1414.png?w=2000&fit=max&auto=format"
                   />
                 ) : level < 41 ? (
                   <img
@@ -487,8 +498,32 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
               {filteredNotes.map((note) => (
                 <>
+                  <Dialog isOpen={showModal} onClose={setShowModal}>
+                    <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
+                      <div className=" md:h-[43px] text-white md:text-3xl  text-sm font-semibold">
+                        {selectedNote}
+                      </div>
+                      <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
+                      <div className="scale-75 md:scale-100 w-full h-full text-sm">
+                        <ReactQuill
+                          theme="snow"
+                          className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                          value={text || selectedNoteData}
+                          onChange={(e) => {
+                            setText(e);
+                            handleNoteChange(note._id!);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </Dialog>
                   <div
-                    onClick={() => setShowModal(true)}
+                    onClick={() => {
+                      setShowModal(true);
+                      console.log("note.topic", note.topic);
+                      setSelectedNote(note.topic);
+                      setSelectedNoteData(note.note);
+                    }}
                     className="bg-[#212121] p-4 space-y-5 w-full rounded-lg"
                   >
                     <div>
@@ -498,23 +533,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       <div dangerouslySetInnerHTML={{ __html: note.note }} />
                     </div>
                   </div>
-                  <Dialog isOpen={showModal} onClose={setShowModal}>
-                    <div className="rounded-xl bg-[#101010] p-16">
-                      <div className="w-[139px] h-[43px] text-white text-3xl font-semibold">
-                        {note.topic}
-                      </div>
-                      <div className="w-44 h-[0px] border border-neutral-400"></div>
-                      <ReactQuill
-                        theme="snow"
-                        className="h-64 mt-5 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                        value={text || note?.note}
-                        onChange={(e) => {
-                          setText(e);
-                          handleNoteChange(note._id!);
-                        }}
-                      />
-                    </div>
-                  </Dialog>
                 </>
               ))}
             </div>
@@ -525,6 +543,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   setNotes={setNotesList}
                   setDummyNote={setDummyNote}
                   notes={notes}
+                  close={setShowAddNotesModal}
                 />
               }
             </Dialog>

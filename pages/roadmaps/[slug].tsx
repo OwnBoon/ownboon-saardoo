@@ -129,7 +129,7 @@ const Post = ({ roadmap }: Props) => {
             <div className=" relative space-y-10 flex w-full items-center py-10 flex-col justify-center">
               <div className="absolute border z-0 border-zinc-700/20 w-1 rounded-3xl bg-zinc-700 bg-opacity-20 h-full"></div>
               {roadmapdata.roadmap.map((roadmap: any, index: number) => (
-                <div>
+                <div className="z-20 flex items-center gap-[0.65rem]">
                   <Tooltip
                     content={`click to know more`}
                     color="invert"
@@ -143,21 +143,23 @@ const Post = ({ roadmap }: Props) => {
                     </div>
                   </Tooltip>
                   <div>
-                    <div
-                      // @ts-ignore
-                      onClick={() => setGoal(deafult, roadmap.title, index)}
-                      className="text-lg hover:cursor-pointer"
-                    >
-                      +
-                    </div>
+                    <Tooltip content={`add current goal`} >
+                      <div
+                        // @ts-ignore
+                        onClick={() => setGoal(deafult, roadmap.title, index)}
+                        className="text-lg font-sans hover:cursor-pointer"
+                      >
+                        +
+                      </div>
+                    </Tooltip>
                   </div>
                 </div>
               ))}
             </div>
           </div>
           {/* Info */}
-          <div className="h-full w-full -my-10 p-10 ">
-            <div className="h-full w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
+          <div className="h-screen w-full -my-10 p-10 ">
+            <div className="h-screen w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
               <div className="space-y-5">
                 <h1 className="text-xl text-white font-semibold">
                   Block Title: {!blockSelected ? <div></div> : blockSelected}
@@ -198,12 +200,15 @@ const Post = ({ roadmap }: Props) => {
                   Recommended Blog
                 </h1>
                 {infotext ? (
-                  // @ts-ignore
-                  <Link className="" href={infotext.blog}>
-                    <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
-                      Open in web
-                    </div>
-                  </Link>
+                  <>
+                    {/*  @ts-ignore */}
+                    <Link className="" href={infotext.blog}>
+                      <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
+                        Open in web
+                      </div>
+                    </Link>
+                    <div>{/* @ts-ignore */}</div>
+                  </>
                 ) : null}
               </div>
               <div>

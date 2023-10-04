@@ -3,9 +3,12 @@ import Head from "next/head";
 
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
+import { Goals, User } from "../../typings";
 interface Props {
   children?: ReactNode;
   bgColor: string;
+  users?: User[];
+  goals?: Goals[];
   icon: string;
   text: string;
   border: string;
@@ -13,14 +16,24 @@ interface Props {
   setLoading?: (value: boolean) => void;
 }
 
-const Layout = ({ children, bgColor, icon, text, border, hasBg, setLoading }: Props) => {
+const Layout = ({
+  children,
+  bgColor,
+  icon,
+  text,
+  border,
+  hasBg,
+  users,
+  goals,
+  setLoading,
+}: Props) => {
   const [showsidebar, setShowsidebar] = useState(false);
 
   const selectRandomBg = () => {
-    const bgImages = ['lofi_1.png', 'lofi_2.png', 'lofi_3.png', 'lofi_4.png']
+    const bgImages = ["lofi_1.png", "lofi_2.png", "lofi_3.png", "lofi_4.png"];
     const random = Math.floor(Math.random() * bgImages.length);
-    return bgImages[random]
-  }
+    return bgImages[random];
+  };
 
   return (
     <div
@@ -39,10 +52,10 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg, setLoading }: Pr
         setShowsidebar={setShowsidebar}
         border={border}
       />
-      <div
-        className="max-[500px]:w-[84vw] w-[88vw] md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto"
-      >
+      <div className="max-[500px]:w-[84vw] w-[88vw] md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
         <Navbar
+          goals={goals}
+          users={users}
           setLoading={setLoading}
           showsidebar={showsidebar}
           icon={icon}
@@ -51,7 +64,9 @@ const Layout = ({ children, bgColor, icon, text, border, hasBg, setLoading }: Pr
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] p-1 py-24 pb-24 ml-[16px] ${!showsidebar ? "" : ""}`}
+          className={`text-[#DDDDDD] p-1 py-24 pb-24 ml-[16px] ${
+            !showsidebar ? "" : ""
+          }`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}
