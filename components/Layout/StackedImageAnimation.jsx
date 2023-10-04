@@ -5,7 +5,7 @@ const images = ["/exploreimg1.png", "/exploreimg2.png", "/exploreimg3.png"];
 
 export const StackedImageAnimation = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const timer = (useRef < NodeJS.Timeout) | (number > -1);
+  const timer =  (number > -1);
   const size = useMemo(() => images.length, []);
   const [iphone, setIphone] = useState(false);
   useEffect(() => {
