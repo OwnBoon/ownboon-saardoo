@@ -1,11 +1,11 @@
-import { Box } from "@mui/material";
+import { Box } from "@chakra-ui/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const images = ["/exploreimg1.png", "/exploreimg2.png", "/exploreimg3.png"];
 
 export const StackedImageAnimation = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const timer =  (number > -1);
+  const timer = useRef<NodeJS.Timeout | number>(-1);
   const size = useMemo(() => images.length, []);
   const [iphone, setIphone] = useState(false);
   useEffect(() => {
@@ -22,11 +22,11 @@ export const StackedImageAnimation = () => {
       5000
     );
     window.addEventListener("resize", check);
-    return () => clearInterval(timer.current);
+    return () => clearInterval(timer.current as number);
   }, [size]);
 
   const map = useMemo(() => {
-    const map = new Map();
+    const map = new Map<number, number>();
     const len = images.length;
     let i = len;
 
@@ -47,11 +47,10 @@ export const StackedImageAnimation = () => {
       position="relative"
     >
       {images.map((image, i) => {
-        const factor = size - 1 - map.get(i);
+        const factor = size - 1 - map.get(i)!;
         const isPreviousActiveIndex = (activeIndex + size - 1) % size === i;
 
         return (
-          // @ts-ignore
           <Box
             key={image}
             backgroundImage={`url(${image})`}

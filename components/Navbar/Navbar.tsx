@@ -138,7 +138,7 @@ export default function Navbar() {
             )}
           </div>
           <div
-            className={`items-center text-[0.9rem] justify-between ${
+            className={`items-center text-[0.9rem]  justify-between ${
               bugermenu === true ? "" : "hidden"
             } w-full md:flex md:w-auto md:order-1`}
             id="navbar-sticky"

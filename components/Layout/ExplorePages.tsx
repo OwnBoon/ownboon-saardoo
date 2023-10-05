@@ -58,6 +58,7 @@ export default function ExplorePages({ section }: any) {
   };
 
   useEffect(() => {
+    // @ts-ignore
     VanillaTilt.init(document.querySelectorAll(".review-card"), {
       max: 15,
       speed: 300,
