@@ -22,6 +22,8 @@ import Notess from "../components/Notes/Notes";
 import Dialog from "../components/ChapterPopup/ChapterPopup";
 import dynamic from "next/dynamic";
 
+import LofiNotes from '../components/Notes/LofiNotes'
+
 interface Props {
   users: User[];
   goals: Goals[];
@@ -196,6 +198,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
 
   const [dummyNote, setDummyNote] = useState<any>(null);
 
+
   return (
     <>
       <Layout
@@ -225,6 +228,13 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </Draggable>
 
               <Draggable>
+                <div className="top-36 right-50 absolute">
+                <LofiNotes notes={notes} user={user} setNotes={setNotesList}/>
+                </div>
+              </Draggable>
+
+
+              {/* <Draggable>
               <div className="top-36 right-10 absolute">
                 <div className="flex justify-center w-full gap-1 relative items-center">
                   <div className="flex items-center gap-2 col-span-2 justify-end w-full">
@@ -303,7 +313,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                 }
               </Dialog>
               </div>
-              </Draggable>
+              </Draggable> */}
 
               
 
