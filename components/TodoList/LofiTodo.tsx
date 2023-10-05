@@ -468,7 +468,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
             onClick={handleAddingTask}
             className="bg-opacity-30 rounded-sm w-fit bg-white flex p-2 justify-center items-center"
           >
-            <button className=" text-sm  text-[#dddddd] relative px-5">
+            <button className=" text-sm select-none  text-[#dddddd] relative px-5">
               Add Todos
             </button>
           </div>

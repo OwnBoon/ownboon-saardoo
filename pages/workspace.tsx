@@ -797,7 +797,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   <Loading className="mt-[10vw]" color={"white"} />
                 )}
 
-                <div className="flex   text-center items-center">
+                <div className="flex z-50 cursor-pointer  text-center items-center">
                   <Island
                     setShowBoonIslandModal={setShowBoonIslandModal}
                     users={users}

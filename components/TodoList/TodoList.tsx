@@ -86,7 +86,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         const newTodo = json.message.results[0].document;
         setTemptodo(null);
         setTodos([...todos, newTodo]);
-        toast.success("Successfully toasted!");
+        toast.success("todo added!");
         // toast.custom((t) => (
         //   <div
         //     className={`${t.visible ? "animate-enter" : "animate-leave"
@@ -164,13 +164,11 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
   };
 
   const handlesubmit = (e: any) => {
-    if (e.key == "Enter") {
-      e.preventDefault();
-      addGoalData();
-      setShowTask(false);
-      setTodoText("");
-      setShowTaskInput(false);
-    }
+    e.preventDefault();
+    addGoalData();
+    setShowTask(false);
+    setTodoText("");
+    setShowTaskInput(false);
   };
 
   const addDeleted = async (id: string | undefined) => {
@@ -365,9 +363,9 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
           )}
         </div>
       </div>
-      <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0" />
+      <div className="border-solid border-gray-700 self-center mb-3 w-40 relative  h-px shrink-0" />
       {!showTaskInput && (
-        <div className="overflow-auto">
+        <div className="overflow-x-scroll  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#3b3b3b]">
           <ReactSortable
             handle=".drag-handle"
             list={todos}
@@ -491,7 +489,6 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             type="text"
             placeholder="Name of the task"
             onChange={(e) => handleNewTaskChange(e)}
-            onKeyUp={handlesubmit}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker

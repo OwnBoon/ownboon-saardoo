@@ -144,23 +144,36 @@ const Navbar = ({
               </form>
             )}
             {todolist ? (
-              <Badge
-                variant={"dot"}
-                content=""
-                isSquared
-                className=""
-                placement={"top-right"}
-                size={"xs"}
-              >
-                <Image
-                  width={70}
-                  onClick={() => togglenotification()}
-                  height={70}
-                  className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
-                  src="notification.svg"
-                  alt={"notification"}
-                />
-              </Badge>
+              <>
+                {todolist.length > 0 ? (
+                  <Badge
+                    variant={"dot"}
+                    content=""
+                    isSquared
+                    className=""
+                    placement={"top-right"}
+                    size={"xs"}
+                  >
+                    <Image
+                      width={70}
+                      onClick={() => togglenotification()}
+                      height={70}
+                      className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
+                      src="notification.svg"
+                      alt={"notification"}
+                    />
+                  </Badge>
+                ) : (
+                  <Image
+                    width={70}
+                    onClick={() => togglenotification()}
+                    height={70}
+                    className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
+                    src="notification.svg"
+                    alt={"notification"}
+                  />
+                )}
+              </>
             ) : (
               <Image
                 width={70}

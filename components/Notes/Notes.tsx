@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { Notes } from "../../typings";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/router";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
 const Notes = ({ setNotes, setDummyNote, notes, close }: any) => {
@@ -12,7 +13,7 @@ const Notes = ({ setNotes, setDummyNote, notes, close }: any) => {
   const [topic, setTopic] = useState("");
   const [category, setCategory] = useState("");
   const [text, setText] = useState("");
-
+  const router = useRouter();
   const [note, setNote] = useState({ text: "", topic: "", note: "", _id: "" });
 
   const handleSubmit = async (e: any) => {
@@ -34,6 +35,7 @@ const Notes = ({ setNotes, setDummyNote, notes, close }: any) => {
 
     const json = await result.json();
     setNotes([...notes, json]);
+    router.replace(router.pathname);
     setDummyNote(null);
     return json;
   };
@@ -60,16 +62,14 @@ const Notes = ({ setNotes, setDummyNote, notes, close }: any) => {
         <div className="flex justify-center items-center">
           <div className="flex flex-col gap-5">
             <input
-              className="bg-transparent border-b border-white/40 flex justify-center  outline-none "
-              placeholder="add a nice topic"
-              defaultValue="Topic "
-              onChange={(e) => setTopic(e.target.value)}
+              className="bg-transparent border-b flex border-white/40 justify-center  outline-none "
+              placeholder="Category"
+              onChange={(e) => setCategory(e.target.value)}
             />
             <input
-              className="bg-transparent border-b flex border-white/40 justify-center  outline-none "
-              placeholder="add a category"
-              defaultValue="Category "
-              onChange={(e) => setCategory(e.target.value)}
+              className="bg-transparent border-b border-white/40 flex justify-center  outline-none "
+              placeholder="Topic"
+              onChange={(e) => setTopic(e.target.value)}
             />
           </div>
         </div>
