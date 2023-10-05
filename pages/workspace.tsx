@@ -812,7 +812,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async ({req,res}) => {
   const users = await fetchUsers();
   const goals = await fetchGoals();
   const notes = await fetchNotes();
