@@ -127,30 +127,30 @@ const Home = ({ users }: Props) => {
     } else null;
   }, [isNewUser]);
 
-  // if (session) {
-  //   router.push("/dashboard");
-  // } else
-  return (
-    <>
-      <Head>
-        <title>OwnBoon</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
-      <Navbar />
-      <section id="home">
-        <Balls />
-        <div className="flex mt-[100px] min-h-screen justify-center flex-col">
-          <Hero />
-          <Skateboard />
-        </div>
-        <Body />
-      </section>
-      <Benefits></Benefits>
-      <Reviews></Reviews>
-      <About></About>
-      <Footer></Footer>
-    </>
-  );
+  if (isSignedIn) {
+    router.push("/workspace");
+  } else
+    return (
+      <>
+        <Head>
+          <title>OwnBoon</title>
+          <link rel="icon" href="/logo.png" />
+        </Head>
+        <Navbar />
+        <section id="home">
+          <Balls />
+          <div className="flex mt-[100px] min-h-screen justify-center flex-col">
+            <Hero />
+            <Skateboard />
+          </div>
+          <Body />
+        </section>
+        <Benefits></Benefits>
+        <Reviews></Reviews>
+        <About></About>
+        <Footer></Footer>
+      </>
+    );
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();
