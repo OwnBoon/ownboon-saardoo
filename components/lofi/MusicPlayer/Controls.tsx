@@ -7,6 +7,8 @@ import {
   BsShuffle,
 } from "react-icons/bs";
 
+import "../../Clock/clock.css";
+
 const Controls = ({
   isPlaying,
   repeat,
@@ -18,50 +20,64 @@ const Controls = ({
   handlePrevSong,
   handleNextSong,
 }: any) => (
-  <div className="flex items-center justify-around md:w-36 lg:w-52 2xl:w-80">
-    <BsArrowRepeat
-      size={20}
-      color={repeat ? "red" : "white"}
-      onClick={() => setRepeat((prev: any) => !prev)}
-      className="hidden sm:block cursor-pointer"
-    />
-    {currentSongs?.length && (
-      <MdSkipPrevious
-        size={30}
-        color="#FFF"
-        className="cursor-pointer"
-        onClick={handlePrevSong}
+
+  
+  <div className="flex items-center justify-around md:w-36 lg:w-96 2xl:w-80">
+    <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+      <BsArrowRepeat
+        size={20}
+        color={repeat ? "red" : "white"}
+        onClick={() => setRepeat((prev: any) => !prev)}
+        className="hidden sm:block cursor-pointer"
       />
+    </div>
+    {currentSongs?.length && (
+      <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+        <MdSkipPrevious
+          size={30}
+          color="#FFF"
+          className="cursor-pointer"
+          onClick={handlePrevSong}
+        />
+      </div>
     )}
     {isPlaying ? (
-      <BsFillPauseFill
-        size={45}
-        color="#FFF"
-        onClick={handlePlayPause}
-        className="cursor-pointer"
-      />
+      <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+        <BsFillPauseFill
+          size={45}
+          color="#FFF"
+          onClick={handlePlayPause}
+          className="cursor-pointer"
+        />
+      </div>
     ) : (
-      <BsFillPlayFill
-        size={45}
-        color="#FFF"
-        onClick={handlePlayPause}
-        className="cursor-pointer"
-      />
+      <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+        <BsFillPlayFill
+          size={45}
+          color="#FFF"
+          onClick={handlePlayPause}
+          className="cursor-pointer"
+        />
+      </div>
     )}
     {currentSongs?.length && (
-      <MdSkipNext
-        size={30}
-        color="#FFF"
-        className="cursor-pointer"
-        onClick={handleNextSong}
-      />
+      <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+        <MdSkipNext
+          size={30}
+          color="#FFF"
+          className="cursor-pointer"
+          onClick={handleNextSong}
+        />
+      </div>
     )}
-    <BsShuffle
-      size={20}
-      color={shuffle ? "red" : "white"}
-      onClick={() => setShuffle((prev: any) => !prev)}
-      className="hidden sm:block cursor-pointer"
-    />
+    <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+      <BsShuffle
+        size={20}
+        color={shuffle ? "red" : "white"}
+        onClick={() => setShuffle((prev: any) => !prev)}
+        className="hidden sm:block cursor-pointer"
+      />
+    </div>
   </div>
 );
 

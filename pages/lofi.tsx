@@ -132,7 +132,6 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const showNote = () => {
     setShowModal(true);
   };
-  console.log(notess);
   const [showAddNotesModal, setShowAddNotesModal] = useState(false);
 
   const handleAddingNewNote = () => {
@@ -209,13 +208,14 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               <>
                 <Discover />
                 {seconds > 0 && (
-                  <div className="absolute right-6 top-20   p-4 flex items-center justify-center">
+                  <div className="absolute right-16 top-[15vh] flex items-center justify-end">
                     <Clock />
                   </div>
                 )}
               </>
             )}
-            <Clock />
+
+            {!sessionStarted && <Clock />}
 
             <Draggable>
               <div
@@ -306,18 +306,22 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </Draggable>
             <button
-              className="bg-[#D9D9D9] active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/5 rounded p-4 cursor-pointer"
+              className="bg-[#D9D9D9] z-50 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/5 rounded p-4 cursor-pointer"
               onClick={sessionStarted ? handleStop : handleStart}
             >
               {sessionStarted ? "Stop Session" : "Start Session"}
             </button>
           </div>
 
+          {/* {from-white/10  to-[#2a2a80] backdrop-blur-lg rounded-t-3xl } */}
+
           {activeSong?.title && (
-            <div className="absolute z-50 h-28 w-4/5 bottom-0  right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl ">
-              <MusicPlayer />
-            </div>
-          )}
+          
+          <div className="absolute justify-center z-40 h-1/5 w-3/5 -bottom-24 right-0 mr-56 flex animate-slideup bg-gradient-to-br">
+            <MusicPlayer sessionStarted={sessionStarted}/>
+          </div>)}
+
+          
         </div>
       }
     />
