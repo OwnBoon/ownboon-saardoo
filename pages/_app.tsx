@@ -20,25 +20,25 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const handleRouteChangeStart = () => {
-      setLoading(true);
-    };
+  // useEffect(() => {
+  //   const handleRouteChangeStart = () => {
+  //     setLoading(true);
+  //   };
 
-    const handleRouteChangeEnd = () => {
-      setLoading(false);
-    };
+  //   const handleRouteChangeEnd = () => {
+  //     setLoading(false);
+  //   };
 
-    router.events.on("routeChangeStart", handleRouteChangeStart);
-    router.events.on("routeChangeComplete", handleRouteChangeEnd);
-    router.events.on("routeChangeError", handleRouteChangeEnd);
+  //   router.events.on("routeChangeStart", handleRouteChangeStart);
+  //   router.events.on("routeChangeComplete", handleRouteChangeEnd);
+  //   router.events.on("routeChangeError", handleRouteChangeEnd);
 
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChangeStart);
-      router.events.off("routeChangeComplete", handleRouteChangeEnd);
-      router.events.off("routeChangeError", handleRouteChangeEnd);
-    };
-  }, [router]);
+  //   return () => {
+  //     router.events.off("routeChangeStart", handleRouteChangeStart);
+  //     router.events.off("routeChangeComplete", handleRouteChangeEnd);
+  //     router.events.off("routeChangeError", handleRouteChangeEnd);
+  //   };
+  // }, [router]);
 
   return (
     <Provider store={store}>

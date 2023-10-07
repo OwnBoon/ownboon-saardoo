@@ -37,6 +37,7 @@ import SkeletonLoading from "../components/SkeletonLoading";
 import TodoList from "../components/TodoList/TodoList";
 import CustomLoader from "../components/CustomLoader";
 import Notes from "../components/Notes/Notes";
+import { DeleteIcon, XIcon } from "lucide-react";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
@@ -308,6 +309,29 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setTemptodos(items);
   };
 
+  const addDeleted = async (id: string | undefined) => {
+    try {
+      const noteInfo = {
+        // @ts-ignore
+        _id: id,
+      };
+      //@ts-ignore
+      setNotes(notes.filter((t: any) => t._id != id));
+
+      fetch(`/api/deleteNote`, {
+        body: JSON.stringify(noteInfo),
+        method: "POST",
+      }).then(async (res) => {
+        const json = await res.json();
+        router.replace("/lofi");
+        setShowModal(false);
+        return json;
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const [userprompt, setUserprompt] = useState({
     mood: "",
     objective: "",
@@ -343,6 +367,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       method: "POST",
     });
     const json = result.json();
+    setShowModal(false);
+    router.replace("/workspace");
     return json;
   };
 
@@ -500,8 +526,18 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 <>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
                     <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
-                      <div className=" md:h-[43px] text-white md:text-3xl  text-sm font-semibold">
+                      <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
                         {selectedNote}
+                        <button
+                          className="text-white flex"
+                          onClick={(e) => {
+                            addDeleted(note._id);
+                          }}
+                        >
+                          <Tooltip content="delete the note">
+                            <DeleteIcon className="text-sm text-red-200" />
+                          </Tooltip>
+                        </button>
                       </div>
                       <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
                       <div className="scale-75 md:scale-100 w-full h-full text-sm">
@@ -511,9 +547,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           value={text || selectedNoteData}
                           onChange={(e) => {
                             setText(e);
-                            handleNoteChange(note._id!);
                           }}
                         />
+
+                        <div
+                          onClick={(e) => handleNoteChange(note._id!)}
+                          className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                        >
+                          <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                            Update Note
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </Dialog>
@@ -524,10 +568,12 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       setSelectedNote(note.topic);
                       setSelectedNoteData(note.note);
                     }}
-                    className="bg-[#212121] p-4 space-y-5 w-full rounded-lg"
+                    className="bg-[#212121] w-80 h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
                   >
                     <div>
-                      <h1 className="border-b w-fit">{note.topic}</h1>
+                      <h1 className="border-b w-fit font-semibold text-lg">
+                        {note.topic}
+                      </h1>
                     </div>
                     <div>
                       <div dangerouslySetInnerHTML={{ __html: note.note }} />
@@ -543,6 +589,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   setNotes={setNotesList}
                   setDummyNote={setDummyNote}
                   notes={notes}
+                  categories={categories}
                   close={setShowAddNotesModal}
                 />
               }

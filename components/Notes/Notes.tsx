@@ -6,7 +6,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
-const Notes = ({ setNotes, setDummyNote, notes, close }: any) => {
+const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
