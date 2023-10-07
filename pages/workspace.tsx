@@ -568,7 +568,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       setSelectedNote(note.topic);
                       setSelectedNoteData(note.note);
                     }}
-                    className="bg-[#212121] w-80 h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
+                    className="bg-[#212121] w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
                   >
                     <div>
                       <h1 className="border-b w-fit font-semibold text-lg">

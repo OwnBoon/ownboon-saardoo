@@ -1,7 +1,7 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import "react-quill/dist/quill.snow.css";
+import "../styles/react-quill.css";
 import "../styles/prism.css";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";

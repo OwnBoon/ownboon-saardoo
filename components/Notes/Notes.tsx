@@ -58,7 +58,7 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
   return (
     <div>
       {" "}
-      <div className="border border-white/50  bg-[#212121] space-y-5 overflow-y-scroll h-fit   w-full px-2 rounded-xl py-2">
+      <div className="border border-white/30 overflow-hidden bg-[#212121] space-y-5  h-fit   w-full px-2 rounded-xl py-2">
         <div className="flex justify-center items-center">
           <div className="flex flex-col gap-5">
             <input
@@ -80,20 +80,22 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
                 <div className="flex space-x-5 items-center justify-center"></div>
                 <ReactQuill
                   theme="snow"
-                  className="h-36 w-full   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                  className="h-36 w-full !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
                   value={text || note?.note}
                   onChange={setText}
                 />
                 {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
-                <button
+                <div
                   onClick={(e) => {
                     handleSubmit(e);
                     close();
                   }}
-                  className="mt-16 px-5 border py-2 rounded-xl"
+                  className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
                 >
-                  Save
-                </button>
+                  <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                    Update Note
+                  </button>
+                </div>
               </div>
             </div>
           ) : null}
