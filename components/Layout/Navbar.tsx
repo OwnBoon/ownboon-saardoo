@@ -9,6 +9,7 @@ import { fetchUsers } from "../../utils/fetchUsers";
 import { fetchGoals } from "../../utils/fetchGoals";
 import { fetchNotes } from "../../utils/fetchNotes";
 import { Goals, User } from "../../typings";
+import Link from "next/link";
 
 interface Props {
   icon: string;
@@ -18,6 +19,7 @@ interface Props {
   showsidebar: boolean;
   setLoading?: (value: boolean) => void;
   users?: User[];
+  todo?: Goals[];
   goals?: Goals[];
 }
 
@@ -43,6 +45,20 @@ const Navbar = ({
   const [todolist, setTodoList] = useState<any[]>([]);
 
   const todos = goals?.filter((goal) => goal.username == user?.username);
+  const filteredTodos =
+    search === "todos" ||
+    search === "goals" ||
+    search === "tod" ||
+    search === "todo" ||
+    search === "todos" ||
+    search === "goa" ||
+    search === "goal" ||
+    search === "goals"
+      ? todos
+      : // @ts-ignore
+        todos.filter((todos) =>
+          todos.title?.toLowerCase().includes(search.toLowerCase())
+        );
   const now = new Date();
   useEffect(() => {
     if (isLoaded) {
@@ -133,6 +149,27 @@ const Navbar = ({
                   placeholder="Search..."
                   className="w-[10vw] h-[2vw] active:border-gray-400  text-md text-white bg-transparent backdrop-blur-3xl font-poppins pageentry  border-b border-t-0 border-r-0 border-l-0 border-gray-400 "
                 ></input>
+
+                {search.length > 1 && (
+                  <div className=" absolute top-14 mt-2 w-56 rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5">
+                    <div className="py-2 gap-4 flex flex-col">
+                      {/* @ts-ignore */}
+                      {filteredTodos.map((todo, index) => (
+                        <Link href={"/workspace"}>
+                          <h1
+                            key={index}
+                            className="block px-4  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200"
+                          >
+                            {todo.title} <span className="font-sans">-</span>{" "}
+                            <span className="text-white/20 font-light">
+                              todos
+                            </span>
+                          </h1>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <Image
                   width={45}
                   height={45}

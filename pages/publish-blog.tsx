@@ -1,7 +1,7 @@
 import Link from "next/link";
 import groq from "groq";
 import { sanityClient } from "../sanity";
-import { Posts, User } from "../typings";
+import { Goals, Posts, User } from "../typings";
 import PostCard from "../components/PostCard";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
@@ -19,12 +19,14 @@ import { BsImage } from "react-icons/bs";
 import Head from "next/head";
 import { categories } from "../utils/constants";
 import Layout from "../components/Layout/Layout";
+import { fetchGoals } from "../utils/fetchGoals";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
+  goals: Goals[];
 }
 
-function BlogPost({ users }: Props) {
+function BlogPost({ users, goals }: Props) {
   const { isLoaded, isSignedIn, user } = useUser();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
@@ -176,6 +178,7 @@ function BlogPost({ users }: Props) {
       icon="socials.svg"
       text="Socials"
       border="gray-500"
+      goals={goals}
       children={
         <div className=" ">
           <div className="container mx-auto col-span-9  py-8 mt ">
@@ -314,10 +317,12 @@ function BlogPost({ users }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();
+  const goals = await fetchGoals();
 
   return {
     props: {
       users,
+      goals,
     },
   };
 };

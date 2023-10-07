@@ -200,6 +200,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       hasBg={true}
       bgColor={"#121212"}
       icon="workspace.svg"
+      goals={goals}
       text="Lofi"
       border={"#ccc"}
       children={

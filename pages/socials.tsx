@@ -1,7 +1,7 @@
 import Link from "next/link";
 import groq from "groq";
 import { sanityClient } from "../sanity";
-import { Comment, CommentBody, Posts, User, Videos } from "../typings";
+import { Comment, CommentBody, Goals, Posts, User, Videos } from "../typings";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
 import { useSession } from "next-auth/react";
@@ -32,6 +32,7 @@ import { fetchComments } from "../utils/fetchComments";
 import FeedCard from "../components/FeedCard";
 import Layout from "../components/Layout/Layout";
 import { useRouter } from "next/router";
+import { fetchGoals } from "../utils/fetchGoals";
 interface Video {
   id: {
     videoId: string;
@@ -52,9 +53,10 @@ interface Props {
   users: User[];
   videoData: Video[];
   feed: Videos[];
+  goals: Goals[];
 }
 
-function Socials({ posts, users, videoData, feed }: Props) {
+function Socials({ posts, users, videoData, feed, goals }: Props) {
   const { isLoaded, isSignedIn, user } = useUser();
 
   const today = new Date();
@@ -180,6 +182,7 @@ function Socials({ posts, users, videoData, feed }: Props) {
         bgColor={"#121212"}
         icon="socials.svg"
         text="Socials"
+        goals={goals}
         border="gray-500"
         children={
           <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-8  ">
@@ -275,7 +278,7 @@ function Socials({ posts, users, videoData, feed }: Props) {
                         </div>
                       ) : (
                         <div className=" z-50 ml-56 lg-flex lg:justify-items-end px-2 ">
-                          <Link href="/blogpost">
+                          <Link href="/publish-blog">
                             <Tooltip content="Publish a blog">
                               <div className="hidden lg:flex"></div>
                               <Button
@@ -421,6 +424,7 @@ function Socials({ posts, users, videoData, feed }: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await fecthBlogs();
   const users = await fetchUsers();
+  const goals = await fetchGoals();
   const feed = await fetchVideos();
 
   return {
@@ -428,6 +432,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       posts,
       users,
       feed,
+      goals,
     },
   };
 };

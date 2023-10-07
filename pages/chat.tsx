@@ -6,9 +6,10 @@ import "../styles/chat.css";
 import styles from "../styles/Home.module.css";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
-import { User } from "../typings";
+import { Goals, User } from "../typings";
 import { useUser } from "@clerk/nextjs";
 import { Button, Checkbox, Modal, Text } from "@nextui-org/react";
+import { fetchGoals } from "../utils/fetchGoals";
 const Chat = dynamic(() => import("../components/Chat/Chat"), {
   ssr: false,
   loading: () => <p>...</p>,
@@ -16,13 +17,14 @@ const Chat = dynamic(() => import("../components/Chat/Chat"), {
 
 interface Props {
   users: User[];
+  goals: Goals[];
 }
 const categories = [
   "sendbird_group_channel_196366427_00ef971c0f88f6dd06389fd19a2871818c2954c1",
   "Economics",
   "Category 3",
 ];
-const chat = ({ users }: Props) => {
+const chat = ({ users, goals }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
   const [showModal, setShowModal] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -73,6 +75,7 @@ const chat = ({ users }: Props) => {
         bgColor={"#121212"}
         icon="chat.svg"
         text="Chats"
+        goals={goals}
         border="gray-500"
         children={
           <main className="min-h-screen overflow-hidden  scrollbar-none scrollbar">
@@ -105,10 +108,12 @@ const chat = ({ users }: Props) => {
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();
+  const goals = await fetchGoals();
 
   return {
     props: {
       users,
+      goals,
     },
   };
 };
