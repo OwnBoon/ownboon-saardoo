@@ -25,6 +25,7 @@ export default async function handler(
           verified: data.verified,
           profileImage: data.profileImage,
           follow: data.follow,
+          chatid: data.chatid,
           slug: data.slug
         },
       },

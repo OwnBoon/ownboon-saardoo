@@ -194,13 +194,14 @@ function BlogPost({ users }: Props) {
               <p>Add New Goal</p>
             </div> */}
                 <div className="flex gap-5 items-center ">
-                  <div
+                  <button
+                    disabled={title ? false : true}
                     onClick={handleSubmit}
-                    className="bg-cyan-800/40  p-2 rounded-full text-white text-sm
+                    className="bg-[#494949]/40 active:scale-105 transition-all duration-100  px-4 py-2  rounded-md text-white text-sm
                cursor-pointer"
                   >
                     <p>Publish</p>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -220,7 +221,7 @@ function BlogPost({ users }: Props) {
                 </div>
                 <div className=" mr-44 mt-5">
                   <input
-                    className="  text font-light bg-transparent  placeholder:text-gray-400 outline-none"
+                    className="  text font-light bg-transparent font-sans  placeholder:text-gray-400 outline-none"
                     placeholder="Write up to 4 tags"
                     value={category}
                     onChange={(e) => handleInputChange(e.target.value)}
@@ -246,7 +247,7 @@ function BlogPost({ users }: Props) {
                 {category.length > 12 && (
                   <div className="flex items-center  mr-9 px-3 w-96 border-l-2 mt-5">
                     <input
-                      className=" cursor-pointer  text font-extralight select-none w-full bg-transparent  placeholder:text-gray-400 outline-none"
+                      className=" cursor-pointer  text font-extralight font-sans select-none w-full bg-transparent  placeholder:text-gray-400 outline-none"
                       placeholder="Didn't add your cover image?"
                       disabled={true}
                     />

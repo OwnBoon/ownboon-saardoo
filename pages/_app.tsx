@@ -1,7 +1,7 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import "react-quill/dist/quill.snow.css";
+import "../styles/react-quill.css";
 import "../styles/prism.css";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
@@ -9,9 +9,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { RecoilRoot } from "recoil";
 import "reactflow/dist/style.css";
 import { useSSR } from "@nextui-org/react";
-import "../styles/chats.scss";
 import { createTheme, NextUIProvider, Text } from "@nextui-org/react";
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from "@vercel/analytics/react";
 import { useEffect, useState } from "react";
 import CustomLoader from "../components/CustomLoader";
 import { useRouter } from "next/router";
@@ -21,25 +20,25 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const handleRouteChangeStart = () => {
-      setLoading(true);
-    };
-    
-    const handleRouteChangeEnd = () => {
-      setLoading(false);
-    };
+  // useEffect(() => {
+  //   const handleRouteChangeStart = () => {
+  //     setLoading(true);
+  //   };
 
-    router.events.on("routeChangeStart", handleRouteChangeStart);
-    router.events.on("routeChangeComplete", handleRouteChangeEnd);
-    router.events.on("routeChangeError", handleRouteChangeEnd);
+  //   const handleRouteChangeEnd = () => {
+  //     setLoading(false);
+  //   };
 
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChangeStart);
-      router.events.off("routeChangeComplete", handleRouteChangeEnd);
-      router.events.off("routeChangeError", handleRouteChangeEnd);
-    };
-  }, [router]);
+  //   router.events.on("routeChangeStart", handleRouteChangeStart);
+  //   router.events.on("routeChangeComplete", handleRouteChangeEnd);
+  //   router.events.on("routeChangeError", handleRouteChangeEnd);
+
+  //   return () => {
+  //     router.events.off("routeChangeStart", handleRouteChangeStart);
+  //     router.events.off("routeChangeComplete", handleRouteChangeEnd);
+  //     router.events.off("routeChangeError", handleRouteChangeEnd);
+  //   };
+  // }, [router]);
 
   return (
     <Provider store={store}>

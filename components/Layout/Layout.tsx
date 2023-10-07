@@ -37,7 +37,7 @@ const Layout = ({
 
   return (
     <div
-      className={`w-full flex h-screen`}
+      className={`w-full flex min-h-screen`}
       style={{
         backgroundColor: bgColor,
       }}

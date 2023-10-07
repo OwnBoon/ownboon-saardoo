@@ -13,8 +13,12 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }: any) => {
   };
 
   const handlePlayClick = () => {
-    const filteredSongs = data?.tracks.filter((song: any) => song.hub?.actions && song.hub?.actions?.length === 2);
-    dispatch(setActiveSong({ song, data: { ...data, tracks: filteredSongs }, i }));
+    const filteredSongs = data?.tracks.filter(
+      (song: any) => song.hub?.actions && song.hub?.actions?.length === 2
+    );
+    dispatch(
+      setActiveSong({ song, data: { ...data, tracks: filteredSongs }, i })
+    );
     dispatch(playPause(true));
   };
 
@@ -43,23 +47,22 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }: any) => {
           />
         </PlayPause>
       </div>
-
-      <div className="mt-4 flex flex-col">
-        <p className="font-semibold text-sm text-white truncate">
-          <Link href={`/songs/${song?.key}`}>{song.title}</Link>
-        </p>
-        <p className="text-sm truncate text-gray-300 mt-1">
-          <Link
-            href={
-              song.artists
-                ? `/artists/${song?.artists[0]?.adamid}`
-                : "/top-artists"
-            }
-          >
-            {song.subtitle}
-          </Link>
-        </p>
-      </div>
+      <PlayPause
+        isPlaying={isPlaying}
+        activeSong={activeSong}
+        song={song}
+        handlePause={handlePauseClick}
+        handlePlay={handlePlayClick}
+      >
+        <div className="mt-4 flex flex-col">
+          <p className="font-semibold text-sm text-white truncate">
+            <h1>{song.title}</h1>
+          </p>
+          <p className="text-sm truncate text-gray-300 mt-1">
+            <h2 className="font-sans">{song.subtitle}</h2>
+          </p>
+        </div>
+      </PlayPause>
     </div>
 
   );

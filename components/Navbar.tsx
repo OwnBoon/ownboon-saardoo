@@ -26,7 +26,7 @@ export default function Navbar() {
           </span>
         </a>
         <div className="flex md:order-2">
-          {user ? (
+          {isSignedIn ? (
             <UserButton />
           ) : (
             <button

@@ -417,13 +417,15 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
               </Modal.Footer>
             </Modal>
             <div
-              className="first w-1/2 bg-[#191919] flex items-center justify-between p-4 rounded-md"
+              className="first w-1/2  bg-[#191919]  inline-block md:inline-flex items-center justify-between p-4 rounded-md"
               style={{
                 border: "1px solid #585858",
               }}
             >
-              <div className="flex flex-col gap-1">
-                <span>Self Improvement Roadmap</span>
+              <div className="flex text-sm md:text-base flex-col gap-1">
+                <span className="font-light font-sans md:font-medium">
+                  Self Improvement Roadmap
+                </span>
                 <span
                   className="w-1/2"
                   style={{
@@ -432,7 +434,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 ></span>
               </div>
               <button
-                className="bg-[#474747] py-2 px-3 rounded-md"
+                className="bg-[#474747] md:py-2 font-sans md:px-3 mt-2 md:mt-0 text-sm px-2  md:font-semibold hover:bg-[#555555] transition-all duration-75 !hover:border-[#505050] font-extralight rounded-md"
                 style={{
                   border: "1px solid #585858",
                 }}
@@ -443,13 +445,15 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
             </div>
 
             <div
-              className="first w-1/2 bg-[#191919] flex items-center justify-between p-4 rounded-md"
+              className="first w-1/2 bg-[#191919] inline-block md:inline-flex items-center justify-between p-4 rounded-md"
               style={{
                 border: "1px solid #585858",
               }}
             >
-              <div className="flex flex-col gap-1">
-                <span>Skill Improvement Roadmap</span>
+              <div className="flex flex-col text-sm md:text-base gap-1">
+                <span className="font-light font-sans md:font-medium">
+                  Skill Improvement Roadmap
+                </span>
                 <span
                   className="w-1/2"
                   style={{
@@ -458,11 +462,11 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 ></span>
               </div>
               <button
-                className="bg-[#474747] py-2 px-3 rounded-md"
+                className="bg-[#474747] font-sans md:py-2 md:px-3 mt-2 md:mt-0 text-sm px-2 md:font-semibold hover:bg-[#555555] transition-all duration-75 !hover:border-[#505050] font-extralight rounded-md"
                 style={{
                   border: "1px solid #585858",
                 }}
-                onClick={() => handleOpen("skill")}
+                onClick={() => handleOpen("self")}
               >
                 Generate Now
               </button>
@@ -481,14 +485,14 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
           {userroadmap && (
             <div className="w-full mt-8 flex flex-col gap-8">
               {userroadmap.map((roadmap: Roadmaps) => (
-                <div className="flex relative bg-gradient-to-r overflow-hidden from-[#585858] via-[#121212]  to-[#121212] rounded-tl-[10px] rounded-bl-[10px]     rounded-lg   ">
+                <div className="flex relative bg-gradient-to-r overflow-hidden from-[#585858] via-[#2b2b2b] md:via-[#121212]  to-[#121212] rounded-tl-[10px] rounded-bl-[10px]     rounded-lg   ">
                   <div className="absolute z-0 opacity-25 overflow-hidden flex justify-center items-center mt-10">
                     <RoadComp roadmap={roadmap} />
                   </div>
 
                   <div className=" top-0 left-0 w-full z-10 h-full flex flex-col py-8 pl-8 text-white">
                     <div className="flex justify-between">
-                      <p className="flex items-center tracking-[1px] text-lg gap-6 my-1 bold font-light">
+                      <p className="flex items-center font-sans  tracking-[1px] md:text-lg gap-3 md:gap-6 my-1 bold font-light">
                         Total Progress <ArrowRightIcon width={"12px"} />{" "}
                         {/* @ts-ignore */}
                         {Math.round(roadmap.progress)}%
@@ -514,11 +518,13 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                         </Dropdown>
                       </div>
                     </div>
-                    <p className="flex items-center gap-6 my-1  tracking-[1px] text-lg font-light bold ">
+                    <p className="flex items-center font-sans md:gap-6 gap-3 my-1  tracking-[1px] md:text-lg font-light bold ">
                       Current Goal <ArrowRightIcon width={"12px"} />{" "}
-                      {roadmap.goal}
+                      <span className="font-extralight md:font-light md:text-lg text-sm font-sans">
+                        {roadmap.goal}
+                      </span>
                     </p>
-                    <p className="flex items-center tracking-[1px] text-lg font-light gap-6 my-1 bold ">
+                    <p className="flex items-center font-sans tracking-[1px] md:text-lg font-light md:gap-6 gap-3 my-1 bold ">
                       Days Spent <ArrowRightIcon width={"12px"} />{" "}
                       {/* @ts-ignore */}
                       <ReactTimeago date={roadmap._createdAt} />
@@ -528,21 +534,21 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                         onClick={() =>
                           router.push(`/roadmaps/${roadmap.slug?.current}`)
                         }
-                        className=" bg-neutral-800   rounded-[5px] flex  border border-zinc-700  text-white/80 w-fit py-2 px-3  mt-4"
+                        className=" bg-neutral-800   rounded-[5px] flex  border border-zinc-700  text-white/80 w-fit md:py-2 md:px-3 px-2   mt-4"
                         style={{
                           border: "none",
                           outline: "none",
                           // color: "#585858",
                         }}
                       >
-                        <p className="text-neutral-200 text-sm font-semibold">
+                        <p className="text-neutral-200  font-sans text-sm md:font-semibold ">
                           Explore more
                         </p>
                       </button>
                       <Button
                         // @ts-ignore
                         onPress={() => deleteRoadmap(roadmap._id)}
-                        className="!mx-4"
+                        className="!mx-4 mt-2 scale-[0.8] md:scale-100 font-sans"
                         color="error"
                         size={"sm"}
                       >

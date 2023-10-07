@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Body from "../components/Home/Body";
 import Spline from "@splinetool/react-spline";
@@ -13,10 +12,14 @@ import { currentUser } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import CryptoJS from "crypto-js";
 import axios from "axios";
-
+import { Balls, Skateboard } from "../components/ext";
+import Benefits from "../components/Home/Benefits";
+import Reviews from "../components/Home/Reviews";
+import About from "../components/Home/About";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Home/Footer";
 interface Props {
   users: User[];
-
 }
 const Home = ({ users }: Props) => {
   const router = useRouter();
@@ -60,6 +63,7 @@ const Home = ({ users }: Props) => {
       leaderboard: users.length + 1,
       secret: secret,
       verified: false,
+      chatid: slug.current,
       profileImage: user?.profileImageUrl,
       slug: slug,
     };
@@ -68,6 +72,27 @@ const Home = ({ users }: Props) => {
       method: "POST",
     });
 
+    const json = await result.json();
+    return json;
+  };
+
+  const sendbirdUser = async (slug: { type: string; current: string }) => {
+    const userInfo = {
+      user_id: slug.current,
+      nickname: user?.username,
+      profile_url: user?.profileImageUrl,
+    };
+    const result = await fetch(
+      `https://api-7FB154A3-C967-45D0-90B7-6A63E5F0E3EB.sendbird.com/v3/users`,
+      {
+        method: "POST",
+        headers: {
+          "Api-Token": "41d1f2713e9ae9eae6144731df5c5d84e2392124",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      }
+    );
     const json = await result.json();
     return json;
   };
@@ -93,29 +118,39 @@ const Home = ({ users }: Props) => {
         };
         const createUser = async () => {
           console.log("posting user");
+
           postUser(slugtype);
+          sendbirdUser(slugtype);
         };
         createUser();
       }
     } else null;
   }, [isNewUser]);
 
-  // if (session) {
-  //   router.push("/dashboard");
-  // } else
-  return (
-    <>
-      <Head>
-        <title>OwnBoon</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
-      <Navbar />
-      <div className="mx-auto my-auto">
-        <Hero />
-        <Body />
-      </div>  
-    </>
-  );
+  if (isSignedIn) {
+    router.push("/workspace");
+  } else
+    return (
+      <>
+        <Head>
+          <title>OwnBoon</title>
+          <link rel="icon" href="/logo.png" />
+        </Head>
+        <Navbar />
+        <section id="home">
+          <Balls />
+          <div className="flex mt-[100px] min-h-screen justify-center flex-col">
+            <Hero />
+            <Skateboard />
+          </div>
+          <Body />
+        </section>
+        <Benefits></Benefits>
+        <Reviews></Reviews>
+        <About></About>
+        <Footer></Footer>
+      </>
+    );
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();

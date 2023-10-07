@@ -37,6 +37,7 @@ import SkeletonLoading from "../components/SkeletonLoading";
 import TodoList from "../components/TodoList/TodoList";
 import CustomLoader from "../components/CustomLoader";
 import Notes from "../components/Notes/Notes";
+import { DeleteIcon, XIcon } from "lucide-react";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
@@ -88,6 +89,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     return <div>Loading</div>;
   }
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedNote, setSelectedNote] = useState("");
+  const [selectedNoteData, setSelectedNoteData] = useState("");
   setLoading ? setLoading(true) : "";
   const [goal, setGoal] = useState<Goals[]>(goals);
   const router = useRouter();
@@ -306,6 +309,29 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setTemptodos(items);
   };
 
+  const addDeleted = async (id: string | undefined) => {
+    try {
+      const noteInfo = {
+        // @ts-ignore
+        _id: id,
+      };
+      //@ts-ignore
+      setNotes(notes.filter((t: any) => t._id != id));
+
+      fetch(`/api/deleteNote`, {
+        body: JSON.stringify(noteInfo),
+        method: "POST",
+      }).then(async (res) => {
+        const json = await res.json();
+        router.replace("/lofi");
+        setShowModal(false);
+        return json;
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const [userprompt, setUserprompt] = useState({
     mood: "",
     objective: "",
@@ -341,6 +367,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       method: "POST",
     });
     const json = result.json();
+    setShowModal(false);
+    router.replace("/workspace");
     return json;
   };
 
@@ -435,24 +463,24 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 {level < 5 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
                   />
                 ) : level < 10 ? (
                   <div>
                     <img
                       className="group-hover:brightness-110 transition-all duration-150"
-                      src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                      src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
                     />
                   </div>
                 ) : level < 21 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/996a064b91c927a0fceec73bc265112d1207822f-3072x1414.png?w=2000&fit=max&auto=format"
                   />
                 ) : level < 31 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    src="https://cdn.sanity.io/images/mrfd4see/production/f8cf6a118ab5c937763289890beb462071486665-3072x1414.png?w=2000&fit=max&auto=format"
                   />
                 ) : level < 41 ? (
                   <img
@@ -496,36 +524,61 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
               {filteredNotes.map((note) => (
                 <>
-                  <div
-                    onClick={() => setShowModal(true)}
-                    className="bg-[#212121] p-4 space-y-5 w-full rounded-lg"
-                  >
-                    <div>
-                      <h1 className="border-b w-fit">{note.topic}</h1>
-                    </div>
-                    <div>
-                      <div dangerouslySetInnerHTML={{ __html: note.note }} />
-                    </div>
-                  </div>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
                     <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
-                      <div className="md:w-[139px] md:h-[43px] text-white md:text-3xl  text-sm font-semibold">
-                        {note.topic}
+                      <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
+                        {selectedNote}
+                        <button
+                          className="text-white flex"
+                          onClick={(e) => {
+                            addDeleted(note._id);
+                          }}
+                        >
+                          <Tooltip content="delete the note">
+                            <DeleteIcon className="text-sm text-red-200" />
+                          </Tooltip>
+                        </button>
                       </div>
                       <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
                       <div className="scale-75 md:scale-100 w-full h-full text-sm">
                         <ReactQuill
                           theme="snow"
                           className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                          value={text || note?.note}
+                          value={text || selectedNoteData}
                           onChange={(e) => {
                             setText(e);
-                            handleNoteChange(note._id!);
                           }}
                         />
+
+                        <div
+                          onClick={(e) => handleNoteChange(note._id!)}
+                          className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                        >
+                          <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                            Update Note
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </Dialog>
+                  <div
+                    onClick={() => {
+                      setShowModal(true);
+                      console.log("note.topic", note.topic);
+                      setSelectedNote(note.topic);
+                      setSelectedNoteData(note.note);
+                    }}
+                    className="bg-[#212121] w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
+                  >
+                    <div>
+                      <h1 className="border-b w-fit font-semibold text-lg">
+                        {note.topic}
+                      </h1>
+                    </div>
+                    <div>
+                      <div dangerouslySetInnerHTML={{ __html: note.note }} />
+                    </div>
+                  </div>
                 </>
               ))}
             </div>
@@ -536,6 +589,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   setNotes={setNotesList}
                   setDummyNote={setDummyNote}
                   notes={notes}
+                  categories={categories}
+                  close={setShowAddNotesModal}
                 />
               }
             </Dialog>
@@ -789,7 +844,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   <Loading className="mt-[10vw]" color={"white"} />
                 )}
 
-                <div className="flex   text-center items-center">
+                <div className="flex z-50 cursor-pointer  text-center items-center">
                   <Island
                     setShowBoonIslandModal={setShowBoonIslandModal}
                     users={users}
