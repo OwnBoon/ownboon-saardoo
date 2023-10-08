@@ -23,8 +23,8 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }: any) => {
   };
 
   return (
-    <div className="flex flex-row w-[300px] h-[100px] items-center justify-start gap-3 p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer">
-      <div className="relative w-fit h-[100px] group flex items-center justify-center">
+    <div className="flex flex-row w-[300px] h-[90px]  bg-transparent   items-center justify-start gap-3 p-3   cursor-pointer  animate-slideup  ">
+      <div className="relative w-fit h-fit btn group flex items-center justify-center ">
         {/* <div
           className={`absolute justify-center items-center bg-black bg-opacity-50 group-hover:flex ${activeSong?.title === song.title
             ? "flex bg-black bg-opacity-70"
@@ -55,7 +55,7 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }: any) => {
         handlePlay={handlePlayClick}
       >
         <div className="mt-4 flex flex-col">
-          <p className="font-semibold text-sm text-white truncate">
+          <p className="font-semibold font-sans text-sm text-white truncate">
             <h1>{song.title}</h1>
           </p>
           <p className="text-sm truncate text-gray-300 mt-1">

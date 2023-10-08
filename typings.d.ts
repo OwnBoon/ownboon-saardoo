@@ -16,6 +16,7 @@ export interface User extends SanityBody {
     chatid?: string
     focus: string
     leaderboard?: number
+    onboard?: boolean
     categories?: string
     verified?: boolean
     follow?: User[]
@@ -33,6 +34,7 @@ export interface UserBody {
     name?: string
     email?: string
     focus?: string
+    onboard?: boolean
     secret?: string
     chatid?: string
     profileImage?: string

@@ -63,6 +63,7 @@ const Home = ({ users }: Props) => {
       leaderboard: users.length + 1,
       secret: secret,
       verified: false,
+      onboard: false,
       chatid: slug.current,
       profileImage: user?.profileImageUrl,
       slug: slug,

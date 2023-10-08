@@ -23,6 +23,8 @@ import { fetchGoals } from "../utils/fetchGoals";
 import LofiTodo from "../components/TodoList/LofiTodo";
 import Draggable, { DraggableCore } from "react-draggable";
 import { Tooltip } from "@nextui-org/react";
+import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
+import { Poppins } from "next/font/google";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -49,6 +51,12 @@ function CategoryDropdown({ categories, handleCategoryChange }: any) {
     </select>
   );
 }
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "100",
+});
+
 const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const dispatch = useDispatch();
   const [goal, setGoal] = useState<Goals[]>(goals);
@@ -68,6 +76,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const [todos, setTodos] = useState<any[]>([]);
   const [seconds, setSeconds] = useState(0);
   const [time, setTime] = useState("");
+  const [resume, setResume] = useState(true);
   useEffect(() => {
     setTodos(
       goals
@@ -199,6 +208,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       hasBg={true}
       bgColor={"#121212"}
       icon="workspace.svg"
+      goals={goals}
       text="Lofi"
       border={"#ccc"}
       children={
@@ -208,19 +218,50 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               <>
                 <Discover />
                 {seconds > 0 && (
-                  <div className="absolute right-6 top-20   p-4 flex items-center justify-center">
+                  <div className="absolute hidden md:inline-flex right-16 top-[15vh]  items-center justify-end">
                     <Clock />
                   </div>
                 )}
               </>
             )}
-            <Clock />
 
-            <Draggable>
+            {sessionStarted ? (
+              <div className="relative flex items-center justify-center">
+                <div
+                  className={`w-[212px] h-[212px] bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
+                >
+                  {resume ? (
+                    <div className="absolute z-50">
+                      <BsFillPauseFill
+                        size={65}
+                        color="#FFF"
+                        onClick={() => setResume(false)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                  ) : (
+                    <div className="absolute z-50">
+                      <BsFillPlayFill
+                        size={65}
+                        color="#FFF"
+                        onClick={() => setResume(true)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className="spinner"></div>
+              </div>
+            ) : (
+              <Clock />
+            )}
+            {/* <Clock /> */}
+
+            <Draggable cancel=".btn">
               <div
                 className={
                   showTodo
-                    ? "top-36 right-10 absolute inline transition-opacity  opacity-100 duration-150 "
+                    ? "top-36 right-10 absolute inline transition-opacity   opacity-100 duration-150 "
                     : "top-36 right-10 absolute opacity-0 "
                 }
               >
@@ -240,13 +281,13 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               )}
             </div>
 
-            <Draggable>
+            <Draggable cancel=".btn">
               <div className="w-fit cursor-pointer absolute bottom-10 right-4 h-fit space-y-5 px-5 py-3 bg-white bg-opacity-30 rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]">
                 <div className="flex gap-4 justify-center items-center ">
-                  <div
+                  <button
                     className={
                       toolbar
-                        ? "bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
+                        ? "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
                         : "hidden opacity-0"
                     }
                   >
@@ -258,12 +299,12 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                       className="w-7 h-7 relative select-none"
                       src="https://cdn.discordapp.com/attachments/1045236840220860468/1158382223075065937/image.png?ex=651c0b03&is=651ab983&hm=e0c1b35db7758a487d8540e5c4fe76725ff42c4491b3d40cc75d01c819657b95&"
                     />
-                  </div>
+                  </button>
                   <div
                     className={
                       toolbar
-                        ? "bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
-                        : "hidden opacity-0"
+                        ? "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
+                        : "hidden opacity-0 "
                     }
                   >
                     <img
@@ -277,7 +318,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                   </div>
                   <div
                     className={
-                      "bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg   flex items-center justify-center h-[3.6rem] w-[3.6rem]"
+                      "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg   flex items-center justify-center h-[3.6rem] w-[3.6rem]"
                     }
                     onClick={() => {
                       toolbar ? setToolbar(false) : setToolbar(true);
@@ -291,7 +332,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                     <div
                       className={
                         toolbar
-                          ? "bg-white bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100 transition-opacity duration-100"
+                          ? "bg-white bg-opacity-30 btn p-4 rounded backdrop-blur-lg opacity-100 transition-opacity duration-100"
                           : "hidden opacity-0"
                       }
                     >
@@ -305,16 +346,16 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </Draggable>
             <button
-              className="bg-[#D9D9D9] active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/5 rounded p-4 cursor-pointer"
+              className="bg-[#D9D9D9] z-50 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/5 rounded p-4 cursor-pointer"
               onClick={sessionStarted ? handleStop : handleStart}
             >
-              {sessionStarted ? "Stop Session" : "Start Session"}
+              {sessionStarted ? "Stop Session" : "Start Session"}{" "}
             </button>
           </div>
 
           {activeSong?.title && (
-            <div className="absolute z-50 h-28 w-4/5 bottom-0  right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl ">
-              <MusicPlayer />
+            <div className="absolute justify-center z-40 h-1/5 w-3/5 -bottom-24 right-0 mr-56 flex animate-slideup bg-gradient-to-br">
+              <MusicPlayer sessionStarted={sessionStarted} />
             </div>
           )}
         </div>

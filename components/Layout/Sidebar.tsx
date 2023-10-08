@@ -21,11 +21,13 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
   const [showSocialsModal, setShowSocialsModal] = useState(false);
 
   return (
-    <>
+    <div
+      onMouseEnter={() => setShowsidebar(true)}
+      onMouseLeave={() => setShowsidebar(false)}
+      className="w-0"
+    >
       <div
-        onMouseEnter={() => setShowsidebar(true)}
-        onMouseLeave={() => setShowsidebar(false)}
-        className={`h-screen transition-all fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-3 border-r-2  border-[#3a3a3b] mr-[2px] ${
+        className={`h-screen transition-all fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${
           !showsidebar
             ? "w-[60px] md:w-[80px] lg:w-[90px]"
             : "w-[240px] bg-[#101010]"
@@ -202,7 +204,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
           </div>
         </div>
       </div>
-      <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>
+      {/* <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>
         <div className="rounded-xl bg-[#101010] p-16">
           <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
             <div className="flex flex-col p-5 items-center justify-center">
@@ -219,45 +221,8 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
             </button>
           </div>
         </div>
-      </Dialog>
-      <Dialog isOpen={showSocialsModal} onClose={setShowSocialsModal}>
-        <div className="rounded-xl bg-[#101010] p-16">
-          <div className="flex items-center  w-[30vw] h-full justify-center flex-col ">
-            <div className="flex flex-col p-5 items-center justify-center">
-              <h1 className="text-[3vw] my-2  text-white text-center ">
-                Healthy Social Media
-              </h1>
-              <div className="w-44 h-[0px] border border-neutral-400"></div>
-              <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
-                The Only Healthy Social Media for your self improvement journey
-                with the use of ai
-              </h2>
-            </div>
-            <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
-              Coming Soon
-            </button>
-          </div>
-        </div>
-      </Dialog>
-      <Dialog isOpen={showChatsModal} onClose={setShowChatsModal}>
-        <div className="rounded-xl bg-[#101010] p-16">
-          <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
-            <div className="flex flex-col p-5 items-center justify-center">
-              <h1 className="text-[3vw] my-2  text-white text-center ">
-                Tailored Group Chats
-              </h1>
-              <div className="w-44 h-[0px] border border-neutral-400"></div>
-              <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
-                Learn, Grow and Share your Experience with the world
-              </h2>
-            </div>
-            <button className="py-2 px-4 my-2 bg-white rounded-3xl text-[0.9vw]">
-              Coming Soon
-            </button>
-          </div>
-        </div>
-      </Dialog>
-    </>
+      </Dialog> */}
+    </div>
   );
 };
 

@@ -96,7 +96,7 @@ const PostCard = ({ post, match, users }: Props) => {
       }
     };
     return (
-      <div className="grid  bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50 text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+      <div className="grid  bg-[#29292b]/40 rounded-[10px] border border-zinc-700 border-opacity-50 text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
         <div className="  col-span-1 lg:col-span-4  rounded-lg ">
           <div className="relative flex justify-between overflow-hidden shadow-md pb-80 mb-6">
             <img

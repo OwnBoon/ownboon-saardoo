@@ -128,7 +128,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
         <div
           className={`${
             t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full  bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          } max-w-md w-full  bg-white shadow-lg btn rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -151,7 +151,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
             <div className="flex border-l border-gray-200">
               <button
                 onClick={() => toast.dismiss(t.id)}
-                className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full border border-transparent btn  rounded-none rounded-r-lg p-4 flex items-center justify-center text-[15px] font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 Close
               </button>
@@ -318,7 +318,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 relative bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl h-fit shrink-0 w-fit    rounded-lg">
+    <div className="flex flex-col  gap-2 relative bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl h-fit shrink-0 w-fit    rounded-lg">
       <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0" />
       {!showTaskInput && (
         <div className="overflow-auto">
@@ -337,7 +337,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
                   alt={""}
                   width={30}
                   height={30}
-                  className=" fade transition-all h-1   opacity-0 rounded  drag-handle"
+                  className=" fade transition-all h-1 btn  opacity-0 rounded  drag-handle"
                 />
                 <input
                   id="default-checkbox"
@@ -345,9 +345,9 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
                   value=""
                   checked={t.completed}
                   onChange={(e) => changeTodoState(t._id, e)}
-                  className="border-solid border-white bg-transparent mb-px relative w-6 shrink-0 h-6 border rounded checked:bg-white/20 focus:ring-transparent focus:border-none"
+                  className="border-solid border-white btn bg-transparent mb-px relative w-6 shrink-0 h-6 border rounded checked:bg-white/20 focus:ring-transparent focus:border-none"
                 />
-                <div className="whitespace-nowrap   font-sans text-white relative">
+                <div className="whitespace-nowrap btn  font-sans text-white relative">
                   {t.title}
                 </div>
 
@@ -369,10 +369,10 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
                 alt={""}
                 width={30}
                 height={30}
-                className="p-2 fade transition-all  rounded  drag-handle"
+                className="p-2 fade transition-all btn  rounded  drag-handle"
               />
               <div className="border-solid border-gray-700 mb-px relative w-6 shrink-0 h-6 border-2 rounded" />
-              <div className="whitespace-nowrap  font-sans text-white relative">
+              <div className="whitespace-nowrap btn  font-sans text-white relative">
                 {tempTodo.title}
               </div>
               <Image
@@ -380,14 +380,14 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
                 alt={""}
                 width={30}
                 height={30}
-                className="p-2 fade transition-all  rounded  drag-handle ml-auto"
+                className="p-2 fade transition-all btn  rounded  drag-handle ml-auto"
               />
               <Image
                 src="calendar.svg"
                 alt={""}
                 width={30}
                 height={30}
-                className="p-2 fade transition-all  rounded  drag-handle"
+                className="p-2 fade transition-all btn  rounded  drag-handle"
               />
             </div>
           )}
@@ -398,12 +398,12 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
         <div className="flex flex-col mb-3 gap-4 px-3 relative">
           <div
             onClick={() => setShowTaskInput(false)}
-            className="font-serif cursor-pointer select-none hover:text-white/80  text-white duration-50 transition-colors"
+            className="font-serif cursor-pointer select-none btn hover:text-white/80  text-white duration-50 transition-colors"
           >
             {"<-"}
           </div>
           <input
-            className="whitespace-nowrap w-40 rounded text-white  bg-transparent border border-white placeholder-white/40 focus:ring-transparent focus:outline-none  border-opacity-30"
+            className="whitespace-nowrap w-40 rounded text-white btn  bg-transparent border border-white placeholder-white/40 focus:ring-transparent focus:outline-none  border-opacity-30"
             id="username"
             type="text"
             placeholder="Name of the task"
@@ -455,9 +455,9 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
           <div className="flex justify-end">
             <div
               onClick={handlesubmit}
-              className="text-white hover:text-white/80 transition-colors duration-200 cursor-pointer"
+              className="text-white hover:text-white/80 btn transition-colors duration-200 cursor-pointer"
             >
-              <MdAddCircle className="h-6 w-6" />
+              <MdAddCircle className="h-6 w-6 btn" />
             </div>
           </div>
         </div>
@@ -468,7 +468,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
             onClick={handleAddingTask}
             className="bg-opacity-30 rounded-sm w-fit bg-white flex p-2 justify-center items-center"
           >
-            <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+            <button className=" text-sm select-none  btn text-[#dddddd] relative px-5">
               Add Todos
             </button>
           </div>

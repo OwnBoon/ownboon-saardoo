@@ -373,6 +373,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       bgColor={"#121212"}
       icon="roadmap.svg"
       text="Roadmap"
+      goals={goals}
       border="gray-500"
       children={
         <div>

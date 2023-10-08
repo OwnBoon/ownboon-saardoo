@@ -30,8 +30,8 @@ const Layout = ({
   const [showsidebar, setShowsidebar] = useState(false);
 
   const selectRandomBg = () => {
-    const bgImages = ["lofi_1.png", "lofi_2.png", "lofi_3.png", "lofi_4.png"];
-    const random = Math.floor(Math.random() * bgImages.length);
+    const bgImages = ["lofi_1.png", "lofi_2.png", "lofi_3.png", "bg-6.png"];
+    const random = 3;
     return bgImages[random];
   };
 
@@ -64,7 +64,7 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] p-1 py-24 pb-24 ml-[16px] ${
+          className={`text-[#DDDDDD]    py-24 pb-24 bg-cover  ${
             !showsidebar ? "" : ""
           }`}
           style={{
