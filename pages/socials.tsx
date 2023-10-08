@@ -186,9 +186,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         goals={goals}
         border="gray-500"
       >
-        <div className="container overflow-y-hidden col-span-11 w-full">
-          <div className="grid grid-cols-1 w-full lg:grid-cols-12 overflow-y-hidden h-screen">
-            <div className="lg:col-span-8 col-span-1 ">
+        <div className="overflow-y-hidden w-full">
+          <div className="flex flex-col w-full lg:flex-row overflow-y-hidden h-screen">
+            <div className="lg:w-3/4 ">
               <div className="flex lg:text-md h-fit overflow-y-auto  gap-10 justify-between w-full items-center">
                 <div className="flex justify-between w-auto gap-10 items-center bg-[#121212] ">
                   <div className="lg:hidden items-center">
@@ -305,7 +305,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                   </div>
                 </div>
               </div>
-              <div className="lg:col-span-8 sm:col-span-12 transition-all w-auto duration-500 flex flex-col-reverse mt-2 h-[calc(100vh-180px)] overflow-y-auto no-scrollbar col-span-1">
+              <div className="transition-all w-auto duration-500 flex flex-col-reverse mt-2 h-[calc(100vh-80px)] overflow-y-auto no-scrollbar col-span-1">
                 {showVideo ? (
                   <>
                     <div className="justify-center flex flex-col items-center gap-5 ">
@@ -368,15 +368,14 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                 )}
               </div>
             </div>
-            <div className="border-r-2 border-gray-600 mt-0 py-0 mr-20 h-full"></div>
-            <div className="lg:col-span-4 col-span-1">
-              <div className="lg:sticky relative top-8">
-                Test2
-                {/* <PostWidget /> */}
-
-                {/* <Categories /> */}
+            <div className="border-r-2 border-gray-600 mt-0 py-0 h-full"></div>
+            <div className="h-[calc(100vh-80px)] w-1/4 overflow-y-auto no-scrollbar">
+              <div className="md:flex flex-col ">
+                <div className="h-[600px] rounded-md border border-slate-500 m-5">Weekly recommendation goes here</div>
+                <div className="h-[600px] rounded-md border border-slate-300 m-5">Who to follow goes here</div>
               </div>
             </div>
+
           </div>
         </div>
       </Layout>
