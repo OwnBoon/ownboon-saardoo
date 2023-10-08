@@ -182,11 +182,11 @@ function Socials({ posts, users, videoData, feed }: Props) {
         text="Socials"
         border="gray-500"
         children={
-          <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-8  ">
+          <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-5  ">
             <div className="grid grid-cols-1 w-full  lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
               <div className="lg:col-span-8 col-span-1 ">
                 <div className="flex  lg:text-md  gap-10 justify-between w-full items-center">
-                  <div className="flex justify-between w-auto mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
+                  <div className="flex justify-between w-auto mt-0 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
                     <div className="lg:hidden items-center">
                       <button
                         onClick={() => setShowFilter(!showFilter)}

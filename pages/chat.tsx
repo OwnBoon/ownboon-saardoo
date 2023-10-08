@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import ComingSoonCard from "../components/ComingSoonCard";
 import dynamic from "next/dynamic";
-import "../styles/chat.css";
+import "../styles/chat.css"
 import styles from "../styles/Home.module.css";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
 import { User } from "../typings";
 import { useUser } from "@clerk/nextjs";
-import { Button, Checkbox, Modal, Text } from "@nextui-org/react";
+import { Button, Checkbox, Modal, Row, Text } from "@nextui-org/react";
+import { Bold } from "lucide-react";
 const Chat = dynamic(() => import("../components/Chat/Chat"), {
   ssr: false,
   loading: () => <p>...</p>,
@@ -76,24 +77,41 @@ const chat = ({ users }: Props) => {
         border="gray-500"
         children={
           <main className="min-h-screen overflow-hidden  scrollbar-none scrollbar">
-            <Modal open={showModal} onClose={() => setShowModal(false)}>
-              <Modal.Header>
-                <Text>Welcome!</Text>
+            <Modal open={showModal} onClose={() => setShowModal(false)} closeButton blur
+        aria-labelledby="modal-title" preventClose scroll css={{background:'$gray900'}}
+       >
+              <Modal.Header  >
+                <Text id="modal-title" size={19} h1 weight="bold" css={{
+          textGradient: "45deg, $blue600 -20%, $pink600 50%",
+        }} > Welcome to  {' '}  
+                <Text b size={20}>
+                  Chats!
+                </Text>
+                </Text>
               </Modal.Header>
-              <Modal.Body>
-                <p>Select the categories you want to follow:</p>
+              <Modal.Body autoMargin>
+                <Text size={16} h4 weight='semibold'  css={{
+          textGradient: "45deg, $blue600 -20%, $pink600 50%",
+        }}>Please Select the categories you want to follow:</Text>
                 {categories.map((category) => (
                   <Checkbox
+                  lineThrough 
+                  color="gradient"
+                  labelColor="primary"
+                  isRounded
                     key={category}
                     onChange={() => handleCategoryChange(category)}
+                    size="sm"
                   >
                     {category}
                   </Checkbox>
                 ))}
               </Modal.Body>
               <Modal.Footer onClick={() => setShowModal(false)}>
-                <Button onPress={() => setShowModal(false)}>Cancel</Button>
-                <Button onPress={handleSubmit}>Submit</Button>
+                <Row justify="space-between">
+                <Button auto  onPress={handleSubmit}>Submit</Button>
+                <Button auto  color="error" onPress={() => setShowModal(false)}>Cancel</Button>
+                </Row>
               </Modal.Footer>
             </Modal>
             <Chat user={match} />
