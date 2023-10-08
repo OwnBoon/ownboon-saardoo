@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
           {isBrowser && (
-            <div className="fade">
+            <div className="fade overflow-hidden">
               {loading && <CustomLoader />}
               <Component setLoading={setLoading} {...pageProps} />
               <Analytics />

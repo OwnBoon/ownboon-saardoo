@@ -56,7 +56,7 @@ const FeedCard = ({ feeds }: Props) => {
     refreshComments();
   };
   return (
-    <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+    <div className="grid shadow-lg h-fit  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
       <div className=" col-span-4  rounded-lg ">
         <div className="relative overflow-hidden shadow-md pb-80 mb-6">
           {feeds.video ? (

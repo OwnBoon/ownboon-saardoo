@@ -157,8 +157,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
     const minutes = Math.floor(rm / 60);
     const _seconds = seconds % 60;
     setTime(
-      `${hours > 0 ? hours + " h" : ""}  ${
-        minutes > 0 ? minutes + " m" : ""
+      `${hours > 0 ? hours + " h" : ""}  ${minutes > 0 ? minutes + " m" : ""
       }  ${_seconds > 0 ? _seconds + " s" : ""}`
     );
   }, [seconds]);
