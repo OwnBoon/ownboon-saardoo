@@ -318,7 +318,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
   };
 
   return (
-    <div className="flex flex-col btn gap-2 relative bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl h-fit shrink-0 w-fit    rounded-lg">
+    <div className="flex flex-col  gap-2 relative bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl h-fit shrink-0 w-fit    rounded-lg">
       <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0" />
       {!showTaskInput && (
         <div className="overflow-auto">

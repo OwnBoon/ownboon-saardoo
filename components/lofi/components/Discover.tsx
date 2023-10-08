@@ -28,26 +28,28 @@ const Discover = () => {
     (song: any) => song.hub?.actions && song.hub?.actions?.length === 2
   );
 
-  const play = "opacity-100 transition-all duration-2000 ease-in-out mr-4";
+  const play = "opacity-100 transition-all duration-2000 btn ease-in-out mr-4";
 
   return (
-    <div className="w-full flex flex-col h-full  overflow-x-hidden">
-      <div className="flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
-        <select
-          onChange={(e) => dispatch(selectGenreListId(e.target.value))}
-          value={genreListId || "544711374"}
-          className="bg-black text-gray-300 p-3 text-sm rounded-lg outline-none sm:mt-0 mt-5"
-        >
-          {genres.map((genre) => (
-            <option key={genre.value} value={genre.value}>
-              {genre.title}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className="w-full md:left-20 md:top-20 md:absolute flex flex-col h-full  overflow-x-hidden">
+      <Draggable cancel=".btn">
+        <div className="flex justify-between btn items-center sm:flex-row flex-col mt-4 mb-10">
+          <select
+            onChange={(e) => dispatch(selectGenreListId(e.target.value))}
+            value={genreListId || "544711374"}
+            className="bg-black btn text-gray-300 p-3 text-sm rounded-lg outline-none sm:mt-0 mt-5"
+          >
+            {genres.map((genre) => (
+              <option className="btn" key={genre.value} value={genre.value}>
+                {genre.title}
+              </option>
+            ))}
+          </select>
+        </div>
+      </Draggable>
 
-      <Draggable>
-        <div className="flex     sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]  overflow-x-hidden justify-center gap-8 ">
+      <Draggable cancel=".btn">
+        <div className="flex left-20 top-20  md:h-1/2  sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]  overflow-x-hidden justify-center gap-8 ">
           <div className="flex w-fit scrollbar-none scrollbar flex-col items-start overflow-x-hidden">
             <div className="px-4 py-3 cursor-pointer">
               <h1 className="text-white font-sans text-base font-semibold">
@@ -58,14 +60,14 @@ const Discover = () => {
                 <div className="flex py-3 gap-5">
                   <img
                     className="w-[50px] h-[50px] rounded-lg"
-                    src="https://is3-ssl.mzstatic.com/image/thumb/Music4/v4/5f/48/63/5f48634a-26d5-7887-61de-141795671dc0/849926026165.jpg/400x400cc.jpg"
+                    src={activeSong.images?.coverart}
                   />
                   <div>
                     <h1 className="text-white  text-base  font-[400] font-sans">
-                      Sparkle
+                      {activeSong.title}
                     </h1>
                     <h2 className="text-neutral-200 text-sm font-[400] font-sans">
-                      Radwinps
+                      {activeSong.subtitle}
                     </h2>
                   </div>
                 </div>

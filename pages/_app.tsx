@@ -15,12 +15,11 @@ import { useEffect, useState } from "react";
 import CustomLoader from "../components/CustomLoader";
 import { useRouter } from "next/router";
 import Router from "next/router";
-import nProgress from "nprogress";
+import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css";
-Router.events.on("routeChangeStart", nProgress.start);
-Router.events.on("routeChangeError", nProgress.done);
-Router.events.on("routeChangeComplete", nProgress.done);
-
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const { isBrowser } = useSSR();
   const [loading, setLoading] = useState(false);

@@ -219,7 +219,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               <>
                 <Discover />
                 {seconds > 0 && (
-                  <div className="absolute right-16 top-[15vh] flex items-center justify-end">
+                  <div className="absolute hidden md:inline-flex right-16 top-[15vh]  items-center justify-end">
                     <Clock />
                   </div>
                 )}

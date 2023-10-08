@@ -24,7 +24,7 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }: any) => {
 
   return (
     <div className="flex flex-row w-[300px] h-[90px]  bg-transparent   items-center justify-start gap-3 p-3   cursor-pointer  animate-slideup  ">
-      <div className="relative w-fit h-fit group flex items-center justify-center ">
+      <div className="relative w-fit h-fit btn group flex items-center justify-center ">
         {/* <div
           className={`absolute justify-center items-center bg-black bg-opacity-50 group-hover:flex ${activeSong?.title === song.title
             ? "flex bg-black bg-opacity-70"
