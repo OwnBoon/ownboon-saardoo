@@ -7,7 +7,7 @@ export const SendIcon = ({
   label,
   className,
   ...props
-}) => {
+}: any) => {
   return (
     <svg
       data-name="Iconly/Curved/Lock"

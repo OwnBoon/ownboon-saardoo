@@ -1,7 +1,7 @@
 import Link from "next/link";
 import groq from "groq";
 import { sanityClient } from "../sanity";
-import { Posts, User, Videos } from "../typings";
+import { Goals, Posts, User, Videos } from "../typings";
 import PostCard from "../components/PostCard";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
@@ -18,12 +18,14 @@ import { set } from "lodash";
 import { BsImage } from "react-icons/bs";
 import Head from "next/head";
 import { Button } from "@nextui-org/react";
+import { fetchGoals } from "../utils/fetchGoals";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
+  goals: Goals[];
 }
 
-function Home({ users }: Props) {
+function Home({ users, goals }: Props) {
   const { isLoaded, isSignedIn, user } = useUser();
   const today = new Date();
   const options = { month: "long", day: "numeric", year: "numeric" };
@@ -288,10 +290,12 @@ function Home({ users }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const users = await fetchUsers();
+  const goals = await fetchGoals();
 
   return {
     props: {
       users,
+      goals,
     },
   };
 };

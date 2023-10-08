@@ -4,7 +4,7 @@ import groq from "groq";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import { sanityClient } from "../../sanity";
-import { Category, Posts, Roadmaps } from "../../typings";
+import { Category, Goals, Posts, Roadmaps } from "../../typings";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Progress from "../../components/dashboard/Progress";
 import dynamic from "next/dynamic";
@@ -15,8 +15,10 @@ import Layout from "../../components/Layout/Layout";
 import { Card, Dropdown, Text, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import { Menu } from "../../components/Roadmap/more";
+import { fetchGoals } from "../../utils/fetchGoals";
 interface Props {
   roadmap: Roadmaps;
+  goals: Goals[];
 }
 
 // const ptComponents = {
@@ -36,7 +38,7 @@ interface Props {
 //   },
 // };
 
-const Post = ({ roadmap }: Props) => {
+const Post = ({ roadmap, goals }: Props) => {
   // in the following code when you will click the div, a api req will be sent to openai and the info will come abt the information of roadmap stage.
 
   const PostDetail = dynamic(
@@ -122,6 +124,7 @@ const Post = ({ roadmap }: Props) => {
       icon="roadmap.svg"
       text="Roadmap"
       border="gray-500"
+      goals={goals}
       children={
         <div className="flex justify-between h-screen overflow-hidden p-5 gap-20 ">
           {/* Roadmaps  */}
@@ -143,7 +146,7 @@ const Post = ({ roadmap }: Props) => {
                     </div>
                   </Tooltip>
                   <div>
-                    <Tooltip content={`add current goal`} >
+                    <Tooltip content={`add current goal`}>
                       <div
                         // @ts-ignore
                         onClick={() => setGoal(deafult, roadmap.title, index)}
@@ -254,9 +257,11 @@ export async function getStaticProps(context: any) {
   // It's important to default the slug so that it doesn't return "undefined"
   const { slug = "" } = context.params;
   const roadmap = await sanityClient.fetch(query, { slug });
+  const goals = await fetchGoals();
   return {
     props: {
       roadmap,
+      goals,
     },
   };
 }

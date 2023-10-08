@@ -12,6 +12,9 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { MenuIcon } from "lucide-react";
+import { HiDotsVertical } from "react-icons/hi";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 type Props = {
   todos: any[];
@@ -86,7 +89,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         const newTodo = json.message.results[0].document;
         setTemptodo(null);
         setTodos([...todos, newTodo]);
-        toast.success("Successfully toasted!");
+        toast.success("todo added!");
         // toast.custom((t) => (
         //   <div
         //     className={`${t.visible ? "animate-enter" : "animate-leave"
@@ -164,13 +167,11 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
   };
 
   const handlesubmit = (e: any) => {
-    if (e.key == "Enter") {
-      e.preventDefault();
-      addGoalData();
-      setShowTask(false);
-      setTodoText("");
-      setShowTaskInput(false);
-    }
+    e.preventDefault();
+    addGoalData();
+    setShowTask(false);
+    setTodoText("");
+    setShowTaskInput(false);
   };
 
   const addDeleted = async (id: string | undefined) => {
@@ -296,8 +297,8 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     }
   };
 
-  const color = "#2CD3E180";
-  const border = "1px solid #2CD3E180";
+  const color = "white";
+  const border = "1px solid transparent";
 
   const handleSort = (
     newState: any[],
@@ -326,25 +327,15 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     >
       <div className="w-full flex flex-row gap-1 relative items-center justify-between">
         <div className="w-10 h-10"></div>
-        <div className="whitespace-nowrap text-[23px] font-sans text-white w-fit flex gap-2">
+        <div className="whitespace-nowrap border-b-2 border-b-white/30 md:px-5 px-3 text-[23px] font-sans text-white w-fit flex gap-2">
           To Do List
-          <img
-            src="https://file.rendit.io/n/JmNhUvsva3wm0ElTUHoF.svg"
-            className="min-h-0 min-w-0 relative w-4 shrink-0"
-          />
         </div>
         <div className="relative inline-block text-left" ref={dropdownRef}>
           <button onClick={toggleDropdown} type="button">
-            <Image
-              src="more-options.svg"
-              alt={""}
-              width={40}
-              height={40}
-              className="p-2 fade transition-all  rounded  drag-handle"
-            />
+            <BsThreeDotsVertical className=" fade h-5 w-5 transition-all  rounded  " />
           </button>
           {isOpen && (
-            <div className="absolute z-50 w-fit left-[30px] top-0 mt-2 origin-top-right bg-slate-800 divide-y rounded-md shadow-lg">
+            <div className="absolute  z-50 w-fit left-[30px] top-0 mt-2 origin-top-right bg-[#101010]/20 backdrop-blur-xl divide-y rounded-md shadow-lg">
               <div className="py-1">
                 <a
                   href="#"
@@ -365,9 +356,9 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
           )}
         </div>
       </div>
-      <div className="border-solid border-gray-700 self-center mb-3 relative w-40 h-px shrink-0" />
+      <div className="border-solid border-gray-700 self-center mb-3 w-40 relative  h-px shrink-0" />
       {!showTaskInput && (
-        <div className="overflow-auto">
+        <div className="overflow-x-scroll  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#3b3b3b]">
           <ReactSortable
             handle=".drag-handle"
             list={todos}
@@ -376,22 +367,16 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             {todos.map((t: Goals) => (
               <div
                 key={t._id}
-                className="flex flex-row  mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 "
+                className="flex flex-row group mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 "
               >
-                <Image
-                  src="draghandle.svg"
-                  alt={""}
-                  width={30}
-                  height={30}
-                  className="p-2 fade transition-all  rounded  drag-handle"
-                />
+                <MenuIcon className="p-1 font-light fade transition-all hover:cursor-pointer w-7 h-7 flex-shrink-0  rounded  drag-handle" />
                 <input
                   id="default-checkbox"
                   type="checkbox"
                   value=""
                   checked={t.completed}
                   onChange={(e) => changeTodoState(t._id, e)}
-                  className="border-solid border-gray-700 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#2CD3E1] focus:ring-transparent focus:border-none"
+                  className="border-solid border-neutral-200 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
                 />
                 <div className="whitespace-nowrap   font-sans text-white relative">
                   {t.title}
@@ -401,37 +386,39 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                   alt={""}
                   width={30}
                   height={30}
-                  className="p-2  fade transition-all  rounded  drag-handle ml-auto"
+                  className="p-2  opacity-0 group-hover:opacity-100   transition-all duration-100 hidden group-hover:inline  hover:cursor-pointer  rounded  drag-handle ml-auto"
                   onClick={() => addDeleted(t._id)}
                 />
                 <div className="mr-20">
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      disablePast
-                      sx={{
-                        svg: { color },
-                        input: { color: "white" },
-                        label: { color },
-                        border: { border },
+                    <div className="opacity-0 group-hover:opacity-100    transition-all duration-100  group-hover:inline">
+                      <DatePicker
+                        disablePast
+                        sx={{
+                          svg: { color },
+                          input: { color: "white" },
+                          label: { color },
+                          border: { border },
 
-                        width: 2,
-                        ":focus": {
-                          border: 0,
-                          outline: 0,
-                          borderColor: { color: "transparent" },
-                        },
-                      }}
-                      value={dayjs(t.duration!)}
-                      className="rounded-lg"
-                      onChange={
-                        (newValue: any) => {
-                          mutateTodo(t._id!, newValue);
-                          // setCalendar(newValue);
+                          width: 0,
+                          ":focus": {
+                            border: 0,
+                            outline: 0,
+                            borderColor: { color: "transparent" },
+                          },
+                        }}
+                        value={dayjs(t.duration!)}
+                        className="rounded-lg"
+                        onChange={
+                          (newValue: any) => {
+                            mutateTodo(t._id!, newValue);
+                            // setCalendar(newValue);
+                          }
+
+                          // console.log(e)
                         }
-
-                        // console.log(e)
-                      }
-                    />
+                      />
+                    </div>
                   </LocalizationProvider>
                 </div>
                 {/* <Image
@@ -486,12 +473,11 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             {"<-"}
           </div>
           <input
-            className="whitespace-nowrap w-40 rounded bg-transparent border border-cyan-400 border-opacity-30"
+            className="whitespace-nowrap w-40 rounded bg-transparent  placeholder-neutral-500 border-none focus:outline-none focus:ring-0 focus:border-none"
             id="username"
             type="text"
             placeholder="Name of the task"
             onChange={(e) => handleNewTaskChange(e)}
-            onKeyUp={handlesubmit}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -531,14 +517,13 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                   borderColor: { color: "transparent" },
                 },
               }}
-              disablePast
               onChange={(newValue: any) => setTime(newValue)}
             />
           </LocalizationProvider>
           <div className="flex justify-end">
             <div
               onClick={handlesubmit}
-              className="text-[#2CD3E180] hover:text-cyan-400 transition-colors duration-200 cursor-pointer"
+              className="text-neutral-300 hover:text-neutral-400 transition-colors duration-200 cursor-pointer"
             >
               Add
             </div>

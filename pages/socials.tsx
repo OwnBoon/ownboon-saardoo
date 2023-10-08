@@ -1,7 +1,7 @@
 import Link from "next/link";
 import groq from "groq";
 import { sanityClient } from "../sanity";
-import { Comment, CommentBody, Posts, User, Videos } from "../typings";
+import { Comment, CommentBody, Goals, Posts, User, Videos } from "../typings";
 import Sidebar from "../components/dashboard/Sidebar";
 import Progress from "../components/dashboard/Progress";
 import { useSession } from "next-auth/react";
@@ -32,6 +32,7 @@ import { fetchComments } from "../utils/fetchComments";
 import FeedCard from "../components/FeedCard";
 import Layout from "../components/Layout/Layout";
 import { useRouter } from "next/router";
+import { fetchGoals } from "../utils/fetchGoals";
 interface Video {
   id: {
     videoId: string;
@@ -52,9 +53,10 @@ interface Props {
   users: User[];
   videoData: Video[];
   feed: Videos[];
+  goals: Goals[];
 }
 
-function Socials({ posts, users, videoData, feed }: Props) {
+function Socials({ posts, users, videoData, feed, goals }: Props) {
   const { isLoaded, isSignedIn, user } = useUser();
 
   const today = new Date();
@@ -180,13 +182,14 @@ function Socials({ posts, users, videoData, feed }: Props) {
         bgColor={"#121212"}
         icon="socials.svg"
         text="Socials"
+        goals={goals}
         border="gray-500"
         children={
-          <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-5  ">
+          <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-8  ">
             <div className="grid grid-cols-1 w-full  lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
               <div className="lg:col-span-8 col-span-1 ">
                 <div className="flex  lg:text-md  gap-10 justify-between w-full items-center">
-                  <div className="flex justify-between w-auto mt-0 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
+                  <div className="flex justify-between w-auto mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
                     <div className="lg:hidden items-center">
                       <button
                         onClick={() => setShowFilter(!showFilter)}
@@ -275,7 +278,7 @@ function Socials({ posts, users, videoData, feed }: Props) {
                         </div>
                       ) : (
                         <div className=" z-50 ml-56 lg-flex lg:justify-items-end px-2 ">
-                          <Link href="/blogpost">
+                          <Link href="/publish-blog">
                             <Tooltip content="Publish a blog">
                               <div className="hidden lg:flex"></div>
                               <Button
@@ -289,15 +292,15 @@ function Socials({ posts, users, videoData, feed }: Props) {
                                 Create
                               </Button>
                               <div className="lg:hidden flex justify-items-end">
-                              <Button
-                                shadow
-                                bordered
-                                borderWeight="bold"
-                                size="sm" 
-                                color="gradient"
-                              >
-                                Create
-                              </Button>
+                                <Button
+                                  shadow
+                                  bordered
+                                  borderWeight="bold"
+                                  size="sm"
+                                  color="gradient"
+                                >
+                                  Create
+                                </Button>
                               </div>
                             </Tooltip>
                           </Link>
@@ -386,7 +389,7 @@ function Socials({ posts, users, videoData, feed }: Props) {
                         </div>
                       ) : (
                         <div className="">
-                          {filteredPosts.map((post, index) => (
+                          {filteredPosts!.map((post, index) => (
                             <div className="">
                               <PostCard
                                 match={match}
@@ -421,6 +424,7 @@ function Socials({ posts, users, videoData, feed }: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const posts = await fecthBlogs();
   const users = await fetchUsers();
+  const goals = await fetchGoals();
   const feed = await fetchVideos();
 
   return {
@@ -428,6 +432,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       posts,
       users,
       feed,
+      goals,
     },
   };
 };

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Comment, CommentBody, Posts, UserBody } from "../typings";
 import ReactTimeago from "react-timeago";
 import { fetchComments } from "../utils/fetchComments";
-import { Button, Grid, Input, Text, User } from "@nextui-org/react";
+import { Avatar, Button, Grid, Input, Text, User } from "@nextui-org/react";
 import { BsSend } from "react-icons/bs";
 import { useUser } from "@clerk/nextjs";
 import { User as Users } from "../typings";
@@ -96,54 +96,22 @@ const PostCard = ({ post, match, users }: Props) => {
       }
     };
     return (
-      <div className="grid bg-[#121212] text-white shadow-lg h-auto border-2 z-10 border-gray-700 rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+      <div className="grid  bg-[#29292b]/40 rounded-[10px] border border-zinc-700 border-opacity-50 text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
         <div className="  col-span-1 lg:col-span-4  rounded-lg ">
-          <div className="relative overflow-hidden shadow-md pb-80 mb-6">
+          <div className="relative flex justify-between overflow-hidden shadow-md pb-80 mb-6">
             <img
               src={post.mainImage}
-              className="object-top absolute h-80 w-screen object-cover border-2  border-gray-800 shadow-lg rounded-t-lg lg:rounded-lg"
+              className="object-top absolute h-1/2 w-1/2 object-contain border-2  border-white/10  rounded-t-lg lg:rounded-lg"
             />
+            <h1 className="transition absolute right-16 top-3 duration-700 text-center mb-6 cursor-pointer hover:text-pink-600 text-xl font-semibold">
+              <Link href={`/post/${post.slug}`}>{post.title}</Link>
+            </h1>
+            <div className="right-20 top-20 text-sm text-neutral-200 absolute">
+              {post.body.slice(0, 400)}
+            </div>
           </div>
 
-          <h1 className="transition duration-700 text-center mb-6 cursor-pointer hover:text-pink-600 text-3xl font-semibold">
-            <Link href={`/post/${post.slug}`}>{post.title}</Link>
-          </h1>
-          <div className="block lg:flex text-center items-center justify-center mb-5 w-full">
-            <div className="flex  justify-center mb-2 lg:mb-0 w-full lg:w-auto mr-8 items-center">
-              <Link
-                href={`/user/${post.author}`}
-                className="inline align-middle text-white ml-2 font-medium text-lg"
-              >
-                {post.author}
-              </Link>
-            </div>
-            <div className="font-medium text-gray-300">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 inline mr-2 text-pink-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <span className="align-middle">
-                {/* @ts-ignore */}
-                <ReactTimeago date={post._createdAt} />
-              </span>
-            </div>
-          </div>
-          <div className="text-center text-lg text-gray-400 font-normal px-4 lg:px-20 mb-5">
-            <div
-              className="blog"
-              dangerouslySetInnerHTML={{ __html: post.body.slice(0, 120) }}
-            />
-          </div>
+          <div className="text-center text-lg text-gray-400 font-normal px-4 lg:px-20 mb-5"></div>
           <div className="text-center">
             <Link href={`/blogs/${post.slug!.current}`}>
               <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-700 text-base font-medium rounded-3xl text-white px-8 py-3 cursor-pointer mt-0">
@@ -153,35 +121,30 @@ const PostCard = ({ post, match, users }: Props) => {
           </div>
         </div>
         <div className="col-span-2 border-l px-2 overflow-hidden">
-          <div className="flex items-center border-b py-1 ">
-            <User
-              name={post.author}
-              src={post.profileImage}
-              bordered
-              color="primary"
-              pointer
-              zoomed
-              css={{zIndex:0}}
-            />
-            <Button
-              onPress={() => addCategory()}
-              size={"sm"}
-              bordered
-              shadow
-              auto
-              ghost
-              css={{ marginLeft: "$2" ,zIndex:0}}
+          <div className="flex items-center gap-5 border-b py-1 ">
+            <Link
+              href={`/user/${post.author}`}
+              className="flex gap-2 font-sans items-center"
             >
+              <img
+                className="w-[33px] h-[33px] rounded-full object-contain hover:cursor-pointer hover:border-2 hover:border-white/50 transition-all duration-100 border-white/30 hover:scale-110"
+                src={post.profileImage}
+              />
+              <p className="text-neutral-200 text-base font-normal">
+                {post.author}
+              </p>
+            </Link>
+            <div onClick={() => addCategory()} className="">
               Follow
-            </Button>
+            </div>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <div className="w-6 h-6 flex items-center justify-center cursor-pointer mx-2 ">
                   <FaEllipsisV className="text-gray-400" />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent >
-                <DropdownMenuItem className='flex flex-col bg-black '>
+              <DropdownMenuContent>
+                <DropdownMenuItem className="flex flex-col bg-black ">
                   <div className="py-2">
                     <button className="text-gray-500 hover:text-gray-200 px-4 py-2 w-full text-left">
                       About
@@ -210,7 +173,6 @@ const PostCard = ({ post, match, users }: Props) => {
                 className="font-semibold"
                 css={{
                   textGradient: "45deg, $gray400 -20%, $white 80%",
-            
                 }}
               >
                 {post.title}
@@ -226,7 +188,7 @@ const PostCard = ({ post, match, users }: Props) => {
                   size={"sm"}
                   pointer
                   zoomed
-                  css={{zIndex:0}}
+                  css={{ zIndex: 0 }}
                 />
                 <Text
                   className="font-normal"
@@ -273,11 +235,11 @@ const PostCard = ({ post, match, users }: Props) => {
                   onChange={(e) => setInput(e.target.value)}
                   color="primary"
                   bordered
-                  borderWeight='bold'
-                  css={{ background: "$gray50" ,color:'$gray50'}}
+                  borderWeight="bold"
+                  css={{ background: "$gray50", color: "$gray50" }}
                   contentRight={
-                    <SendButton  >
-                      <SendIcon  onClick={() => handleSubmit(post._id)}/>
+                    <SendButton>
+                      <SendIcon onClick={() => handleSubmit(post._id!)} />
                     </SendButton>
                   }
                 />
@@ -378,16 +340,10 @@ const PostCard = ({ post, match, users }: Props) => {
         </div>
         <div className="col-span-2 border-l px-2">
           <div className="flex items-center border-b py-1">
-            <User name={post.author} src={post.profileImage} />
-            <Button
-              onPress={() => addCategory()}
-              size={"xs"}
-              bordered
-              shadow
-              auto
-            >
+            <Avatar src={post.profileImage} />
+            <div onClick={() => addCategory()} className="">
               Follow
-            </Button>
+            </div>
           </div>
           <div className="p-2">
             <Text h2 size={15} className="font-semibold">

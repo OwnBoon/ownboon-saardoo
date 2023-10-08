@@ -32,6 +32,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
       setLoading ? setLoading(false) : "";
     }, 500);
   }, []);
+  const productivity = Math.floor((focus_no * 10) / 60);
 
   return (
     <div className="h-[48vw] fade justify-center items-center w-[94.3vw] flex relative">
@@ -109,17 +110,18 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
                 {/* display the image of the current level of boon island, static image to avoid long loading */}
                 <div className="flex flex-col px-8 space-y-2 text-start items-start">
                   <li className="text-xl text-white font-poppins">
-                    You've spent more than x amount of time on your productivity
+                    You've spent more than {productivity} hours on your
+                    productivity
                   </li>
                   <li className="text-xl text-white font-poppins">
-                    You're becoming a greek god because you've solved more than
-                    x problems on ownboon
+                    You're a {level < 11 ? "Newbie" : null} because you've
+                    solved more than problems on ownboon
                   </li>
                   <li className="text-xl text-white font-poppins">
-                    You're in one of the top x% users
+                    You're in one of the top 1% users
                   </li>
                   <li className="text-xl text-white font-poppins">
-                    You've explored x% potential of ownboon
+                    You've explored 30% potential of ownboon
                   </li>
                 </div>
               </div>
