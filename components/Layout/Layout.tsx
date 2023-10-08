@@ -37,7 +37,7 @@ const Layout = ({
 
   return (
     <div
-      className={`w-full flex min-h-screen`}
+      className={`w-full flex min-h-screen overflow-hidden`}
       style={{
         backgroundColor: bgColor,
       }}
@@ -52,7 +52,7 @@ const Layout = ({
         setShowsidebar={setShowsidebar}
         border={border}
       />
-      <div className="max-[500px]:w-[84vw] w-[88vw] md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
+      <div className="max-[500px]:w-[84vw] h-screen w-[88vw] md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
         <Navbar
           goals={goals}
           users={users}
@@ -64,9 +64,8 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD]    py-24 pb-24 bg-cover  ${
-            !showsidebar ? "" : ""
-          }`}
+          className={`text-[#DDDDDD] pt-[80px] bg-cover  ${!showsidebar ? "" : ""
+            }`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}
