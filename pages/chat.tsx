@@ -48,15 +48,15 @@ const chat = ({ users, goals }: Props) => {
       // Join selected group chats
       selectedCategories.forEach(async (category) => {
         const response = await fetch(
-          `https://api-7FB154A3-C967-45D0-90B7-6A63E5F0E3EB.sendbird.com/v3/group_channels/${category}/join`,
+          `https://api-7FB154A3-C967-45D0-90B7-6A63E5F0E3EB.sendbird.com/v3/group_channels/${category}/invite`,
           {
-            method: "PUT",
+            method: "POST",
             headers: {
               "Api-Token": "41d1f2713e9ae9eae6144731df5c5d84e2392124",
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              user_id: match[0].chatid, // Replace with the user id of the current user
+              user_ids: [match[0].chatid], // Replace with the user id of the current user
             }),
           }
         );
