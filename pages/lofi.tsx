@@ -217,12 +217,12 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
 
             {!sessionStarted && <Clock />}
 
-            <Draggable>
+            <Draggable cancel=".btn">
               <div
                 className={
                   showTodo
-                    ? "top-36 right-10 absolute inline transition-opacity  opacity-100 duration-150 "
-                    : "top-36 right-10 absolute opacity-0 "
+                    ? "btn top-36 right-10 absolute inline transition-opacity  opacity-100 duration-150 "
+                    : "btn top-36 right-10 absolute opacity-0 "
                 }
               >
                 <LofiTodo todos={todos} user={user} setTodos={setTodos} />
@@ -241,8 +241,8 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               )}
             </div>
 
-            <Draggable>
-              <div className="w-fit cursor-pointer absolute bottom-10 right-4 h-fit space-y-5 px-5 py-3 bg-white bg-opacity-30 rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]">
+            <Draggable cancel=".btn">
+              <div className="btn w-fit cursor-pointer absolute bottom-10 right-4 h-fit space-y-5 px-5 py-3 bg-white bg-opacity-30 rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]">
                 <div className="flex gap-4 justify-center items-center ">
                   <div
                     className={

@@ -17,11 +17,11 @@ import { Toaster, toast } from "react-hot-toast";
 interface Props {
   users: User[];
 }
-const Home = ({ users }: Props) => {
+const Home = ({ users,next,setNext }: any) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
   const match = users.filter(
-    (userss) => userss.email == user?.emailAddresses[0].emailAddress
+    (userss:any) => userss.email == user?.emailAddresses[0].emailAddress
   );
   const [isNewUser, setIsNewUser] = useState(false);
 
@@ -102,7 +102,6 @@ const Home = ({ users }: Props) => {
         <link rel="icon" href="/logo.png" />
       </Head>
       <Toaster position="top-right" reverseOrder={false} />
-      <Navbar />
       <div className="mx-auto my-auto">
         <div className="  flex flex-col items-center gap-6   justify-center max-w-5xl mx-auto">
           <span className="flex font-semibold text-2xl">Hi There!</span>
@@ -154,13 +153,12 @@ const Home = ({ users }: Props) => {
             </div>
           </div>
           <div
-            onClick={() => router.push("/dashboard")}
+            onClick={() => {router.push("/workspace"); setNext(!next)}}
             className="bg-cyan-500 p-3 text-white font-semibold rounded-lg mt-20 cursor-pointer"
           >
             <p>Return To User Dashboard</p>
           </div>
         </div>
-        <Body />
       </div>
     </>
   );

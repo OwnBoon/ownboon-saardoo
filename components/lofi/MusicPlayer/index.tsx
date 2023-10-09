@@ -68,7 +68,8 @@ const MusicPlayer = ({ sessionStarted }) => {
   };
 
   return (
-    <div className="absolute flex flex-col items-center justify-center w-3/5 h-full ml-10">
+    // flex-col items-center justify-center w-3/5 h-full ml-[4vw] md:justify-center md:space-y-32
+    <div className="absolute flex flex-col items-center w-3/5 h-full ml-[4vw] md:justify-center md:space-y-32">
       {sessionStarted ? (
         <div className="relative flex items-center justify-center -top-80 -z-40">
           {isPlaying ? (

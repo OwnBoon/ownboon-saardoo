@@ -22,7 +22,7 @@ const Controls = ({
 }: any) => (
 
   
-  <div className="flex items-center justify-around md:w-36 lg:w-96 2xl:w-80">
+  <div className="flex items-center justify-around md:w-36 lg:w-96 2xl:w-80 md:gap-4">
     <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
       <BsArrowRepeat
         size={20}

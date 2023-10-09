@@ -39,6 +39,9 @@ import CustomLoader from "../components/CustomLoader";
 import Notes from "../components/Notes/Notes";
 import { DeleteIcon, XIcon } from "lucide-react";
 
+import Category from '../pages/select-categories'
+import { nextSong } from "../redux/features/playerSlice";
+
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -416,8 +419,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
+  const [onboard,setOnboard] = useState(false);
+  const [next,setNext] = useState(true);
   return (
     <>
+    { !onboard ? next? <h1>Welcome to Ownboon ... before going to app we woild lile u to select some categories u follow <button className="flex absolute justify-center" onClick={(e)=>{setNext(!next)}}>lets Explore</button></h1>: <Category users={users} next={next} setNext={setNext}/> :
       <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
           <section
@@ -855,6 +861,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           </div>
         </div>
       </div>
+}
     </>
   );
 };

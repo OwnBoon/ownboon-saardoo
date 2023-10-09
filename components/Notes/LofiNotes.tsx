@@ -155,9 +155,9 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
     <div className="flex flex-col justify-center   items-center gap-4">
       <div className="flex justify-center    gap-1 relative items-center">
         <div className="flex items-center gap-2  col-span-2 justify-end">
-          <Draggable>
-            <div className="flex items-center justify-between gap-2 select-none">
-              <MenuIcon className="text-neutral-200/50 cursor-pointer" />
+          <Draggable cancel=".btn">
+            <div className="flex items-center justify-between gap-2 select-none btn">
+              <MenuIcon className="text-neutral-200/50 cursor-pointer btn" />
               <CategoryDropdown
                 categories={categories}
                 handleCategoryChange={handleCategoryChange}
@@ -185,8 +185,8 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
         {filteredNotes.map((note: any) => (
           <>
             <Dialog isOpen={showModal} onClose={setShowModal}>
-              <Draggable>
-                <div className="rounded-md scale-150 md:scale-100  bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl p-2 w-full h-full  md:p-8">
+              <Draggable cancel=".btn">
+                <div className="btn rounded-md scale-150 md:scale-100  bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl p-2 w-full h-full  md:p-8">
                   <XIcon
                     onClick={() => setShowModal(false)}
                     className="flex justify-end right-2 text-white/30 text-sm font-light cursor-pointer absolute top-2"
@@ -227,14 +227,14 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
               </Draggable>
             </Dialog>
             {notesshow && (
-              <Draggable>
+              <Draggable cancel=".btn">
                 <div
                   onClick={() => {
                     setShowModal(true);
                     setSelectedNote(note.topic);
                     setSelectedNoteData(note.note);
                   }}
-                  className=" bg-white bg-opacity-30 rounded-md border w-64 h-56 overflow-y-scroll border-white border-opacity-50 backdrop-blur-xl p-4 space-y-5  text-neutral-200"
+                  className="btn bg-white bg-opacity-30 rounded-md border w-64 h-56 overflow-y-scroll border-white border-opacity-50 backdrop-blur-xl p-4 space-y-5  text-neutral-200"
                 >
                   <div>
                     <h1 className="border-b w-fit">{note.topic}</h1>
@@ -252,8 +252,8 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
       {showTaskInput && (
         <div>
           {" "}
-          <Draggable>
-            <div className=" bg-white bg-opacity-30   z-50  border border-white border-opacity-50 backdrop-blur-xl space-y-5 overflow-y-scroll h-fit   w-full px-2 rounded-xl py-2">
+          <Draggable cancel=".btn">
+            <div className="btn bg-white bg-opacity-30   z-50  border border-white border-opacity-50 backdrop-blur-xl space-y-5 overflow-y-scroll h-fit   w-full px-2 rounded-xl py-2">
               <div className="flex justify-center items-center">
                 <div className="flex flex-col gap-5">
                   <input

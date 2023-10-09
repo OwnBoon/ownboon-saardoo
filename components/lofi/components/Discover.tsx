@@ -45,9 +45,9 @@ const Discover = () => {
         </select>
       </div>
 
-      <Draggable>
+      <Draggable cancel='.btn'>
         <div className="flex flex-wrap sm:justify-start w-fit rounded-md overflow-x-hidden justify-center gap-8 bg-white bg-opacity-50 border-white border">
-          <div className="flex w-[300px] flex-col items-start overflow-x-hidden">
+          <div className="flex w-[300px] flex-col items-start overflow-x-hidden btn">
             {filteredSongs?.map((song: any, i: any) => (
               <div
                 className={play}
