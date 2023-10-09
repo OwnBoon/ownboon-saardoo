@@ -417,8 +417,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
   return (
-    <>
-      <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
+    <div className="overflow-y-scroll h-screen">
+      <div className=" bg-[#101010]  fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
           <section
             id="section-1"
@@ -496,7 +496,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </section>
-          <div className="p-2 overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible ">
+          <div className="md:p-5  overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible ">
             <div className="flex justify-center w-full  gap-1 relative items-center">
               <div className="flex items-center gap-2 col-span-2 justify-end w-full">
                 <div className="w-full"></div>
@@ -521,11 +521,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
             {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:p-5  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
               {filteredNotes.map((note) => (
                 <>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
-                    <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
+                    <div className="rounded-xl scale-150 md:scale-100 bg-[#101010]/50 backdrop-blur-2xl p-2 w-full h-full  md:p-16">
                       <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
                         {selectedNote}
                         <button
@@ -540,16 +540,29 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </button>
                       </div>
                       <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
-                      <div className="scale-75 md:scale-100 w-full h-full text-sm">
-                        <ReactQuill
-                          theme="snow"
-                          className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                          value={text || selectedNoteData}
-                          onChange={(e) => {
-                            setText(e);
-                          }}
-                        />
-
+                      <div className="scale-75 flex justify-center items-center flex-col md:scale-100 w-full h-full text-sm">
+                        <div className="hidden md:inline">
+                          <ReactQuill
+                            theme="snow"
+                            className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                            value={text || selectedNoteData}
+                            onChange={(e) => {
+                              setText(e);
+                            }}
+                          />
+                        </div>
+                        <div className="p-2">
+                          <textarea
+                            contentEditable={true}
+                            cols={16}
+                            rows={5}
+                            className="md:hidden flex bg-[#101010]/30 focus:outline-none focus:ring  border-white/20 rounded-lg backdrop-blur-lg scrollbar-thin   justify-center items-center"
+                            value={text || selectedNoteData}
+                            onChange={(e) => {
+                              setText(e.target.value);
+                            }}
+                          />
+                        </div>
                         <div
                           onClick={(e) => handleNoteChange(note._id!)}
                           className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
@@ -858,7 +871,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

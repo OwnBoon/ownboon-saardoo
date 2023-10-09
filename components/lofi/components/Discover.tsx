@@ -31,7 +31,7 @@ const Discover = () => {
   const play = "opacity-100 transition-all duration-2000 btn ease-in-out mr-4";
 
   return (
-    <div className="w-full md:left-20 md:top-20 md:absolute flex flex-col h-full  overflow-x-hidden">
+    <div className="w-full md:left-28 md:top-20 md:absolute flex flex-col h-full  overflow-x-hidden">
       <Draggable cancel=".btn">
         <div className="flex justify-between btn items-center sm:flex-row flex-col mt-4 mb-10">
           <select

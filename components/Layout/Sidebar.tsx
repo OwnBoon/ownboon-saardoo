@@ -59,7 +59,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               className={router.pathname == "/socials" ? selected : normal}
             >
               <Image
-                src="socials.svg"
+                src="/socials.svg"
                 alt={""}
                 width={55}
                 height={55}
@@ -82,7 +82,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               className={router.pathname == "/chats" ? selected : normal}
             >
               <Image
-                src="chat.svg"
+                src="/chat.svg"
                 width={55}
                 height={55}
                 alt={""}
@@ -104,7 +104,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               className={router.pathname == "/buddies" ? selected : normal}
             >
               <Image
-                src="buddies.svg"
+                src="/buddies.svg"
                 width={55}
                 height={55}
                 alt={""}
@@ -125,7 +125,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               className={router.pathname == "/workspace" ? selected : normal}
             >
               <Image
-                src="workspace.svg"
+                src="/workspace.svg"
                 width={55}
                 height={55}
                 alt={""}
@@ -146,7 +146,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               className={router.pathname == "/roadmap" ? selected : normal}
             >
               <Image
-                src="roadmap.svg"
+                src="/roadmap.svg"
                 width={55}
                 height={55}
                 alt={""}
@@ -167,7 +167,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
               className={router.pathname == "/lofi" ? selected : normal}
             >
               <Image
-                src="lofi.svg"
+                src="/lofi.svg"
                 width={55}
                 height={55}
                 alt={""}
@@ -186,7 +186,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
           </div>
           <div className={router.pathname == "/lofi" ? selected : normal}>
             <Image
-              src="feedback.svg"
+              src="/feedback.svg"
               width={55}
               height={55}
               alt={""}

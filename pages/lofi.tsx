@@ -213,7 +213,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       text="Lofi"
       border={"#ccc"}
       children={
-        <div className="w-full h-screen text-[#000000]">
+        <div className=" h-screen overflow-hidden text-[#000000]">
           <div className="flex items-center justify-center w-full h-full flex-col gap-10">
             {sessionStarted && (
               <>
@@ -229,7 +229,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
             {sessionStarted ? (
               <div className="relative flex items-center justify-center">
                 <div
-                  className={`w-[212px] h-[212px] bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
+                  className={`w-[212px] h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
                 >
                   {resume ? (
                     <div className="absolute z-50">
@@ -347,15 +347,26 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </Draggable>
             <button
-              className="bg-[#D9D9D9] z-50 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/5 rounded p-4 cursor-pointer"
-              onClick={sessionStarted ? handleStop : handleStart}
+              className="bg-[#D9D9D9] z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/5 rounded p-4 cursor-pointer"
+              // @ts-ignore
+              onClick={
+                sessionStarted
+                  ? resume
+                    ? handleStop
+                    : () => setResume(true)
+                  : handleStart
+              }
             >
-              {sessionStarted ? "Stop Session" : "Start Session"}{" "}
+              {sessionStarted
+                ? resume
+                  ? "Stop Session"
+                  : "Resume Session"
+                : "Start Session"}{" "}
             </button>
           </div>
 
-          {activeSong?.title && (
-            <div className="absolute justify-center z-40 h-1/5 w-3/5 -bottom-24 right-0 mr-56 flex animate-slideup bg-gradient-to-br">
+          {activeSong?.title && sessionStarted && (
+            <div className="absolute justify-center z-40 h-1/5 w-3/5 -bottom-8 right-0 mr-56 flex animate-slideup bg-gradient-to-br">
               <MusicPlayer sessionStarted={sessionStarted} />
             </div>
           )}
