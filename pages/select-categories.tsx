@@ -102,10 +102,10 @@ const Home = ({ users,next,setNext }: any) => {
         <link rel="icon" href="/logo.png" />
       </Head>
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="mx-auto my-auto">
-        <div className="  flex flex-col items-center gap-6   justify-center max-w-5xl mx-auto">
+      <div className="mx-auto my-auto bg-[#303030]/10 backdrop-blur-md text-white">
+        <div className="flex flex-col items-center gap-6 justify-center max-w-5xl mx-auto">
           <span className="flex font-semibold text-2xl">Hi There!</span>
-          <span className="text-base w-full ">
+          <span className="text-base w-full">
             Before You continue your experience with{" "}
             <span className="font-semibold">Ownboon</span> , we would like you
             to follow some <span className="font-semibold">categories</span>{" "}
@@ -118,7 +118,7 @@ const Home = ({ users,next,setNext }: any) => {
             placeholder="Search categories..."
             value={searchInput}
             onChange={handleSearchInputChange}
-            className="px-2 py-1 border border-gray-300 rounded"
+            className="px-2 py-1 border rounded active:border-gray-400  text-md text-white bg-transparent backdrop-blur-3xl font-poppins pageentry  border-b border-t-0 border-r-0 border-l-0 border-gray-400"
           />
           <div className="">
             <div className="flex flex-col items-center">
@@ -138,15 +138,18 @@ const Home = ({ users,next,setNext }: any) => {
               )}
             </div>
             <hr className="w-full"></hr>
-            <div className="flex  flex-col items-center gap-5 ">
+            <div className="flex flex-col items-center gap-8 mt-10">
               <p>Some of our popular categories</p>
-              <div className="flex  w-full  space-x-5">
+              {/*flex w-full space-x-5*/ }
+              <div className="flex flex-col gap-5 w-full">
                 {fiveCate.map((cateogry) => (
                   <div
                     onClick={() => addCategory(cateogry.name, cateogry.value!)}
-                    className="bg-blue-200/20  cursor-pointer px-1 rounded-lg "
+                    
+                    className="first w-full flex-col bg-[#191919] inline-block md:inline-flex items-center justify-between p-4 rounded-md"
                   >
                     <p className="text-xl">{cateogry.name}</p>
+                    <p className="text-base">some description if needed</p>
                   </div>
                 ))}
               </div>
@@ -154,9 +157,9 @@ const Home = ({ users,next,setNext }: any) => {
           </div>
           <div
             onClick={() => {router.push("/workspace"); setNext(!next)}}
-            className="bg-cyan-500 p-3 text-white font-semibold rounded-lg mt-20 cursor-pointer"
+            className="p-3 text-white font-medium rounded-lg mt-20 cursor-pointer"
           >
-            <p>Return To User Dashboard</p>
+            <p>Lets GO!</p>
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ import { fetchNotes } from "../utils/fetchNotes";
 import toast from "react-hot-toast";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Head from "next/head";
+import { Modal } from "@nextui-org/react";
 
 import {
   Button,
@@ -39,7 +40,7 @@ import CustomLoader from "../components/CustomLoader";
 import Notes from "../components/Notes/Notes";
 import { DeleteIcon, XIcon } from "lucide-react";
 
-import Category from '../pages/select-categories'
+import Category from "../pages/select-categories";
 import { nextSong } from "../redux/features/playerSlice";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
@@ -419,449 +420,493 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
-  const [onboard,setOnboard] = useState(false);
-  const [next,setNext] = useState(true);
+  const [onboard, setOnboard] = useState(false);
+  const [next, setNext] = useState(true);
+  //absolute flex justify-center gap-10 p-10 top-20 mt-2 w-[90%] h-[50%] rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-md text-white ring-1 ring-black ring-opacity-5
   return (
     <>
-    { !onboard ? next? <h1>Welcome to Ownboon ... before going to app we woild lile u to select some categories u follow <button className="flex absolute justify-center" onClick={(e)=>{setNext(!next)}}>lets Explore</button></h1>: <Category users={users} next={next} setNext={setNext}/> :
-      <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
-        <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
-          <section
-            id="section-1"
-            className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5"
+      {!onboard ? (
+        next ? (
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            className="!bg-[#191919] h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0"
+            open={true}
+            width="80%"
           >
-            <div
-              id="TodoAndGenerator-container"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 flex-col md:flex-row lg:flex-col justify-start gap-5 relative items-center"
+            <Modal.Header>
+              <Text id="modal-title" color="white" size={20}>
+                Welcome to OwnBoon
+               
+              </Text>
+            </Modal.Header>
+            <Modal.Body className="flex justify-center w-[12%] text-white">
+            <button
+                  className="flex absolute justify-center"
+                  onClick={(e) => {
+                    setNext(!next);
+                  }}
+                >
+                  lets Explore
+                </button>
+            </Modal.Body>
+            <Modal.Footer></Modal.Footer>
+          </Modal>
+        ) : (
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            className="!bg-[#191919] h-[90%] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0"
+            open={true}
+            width="80%"
+          >
+          <Category users={users} next={next} setNext={setNext} />
+          
+          </Modal>
+        )
+      ) : (
+        <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
+          <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
+            <section
+              id="section-1"
+              className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5"
             >
-              <TodoList todos={todos} user={user} setTodos={setTodos} />
+              <div
+                id="TodoAndGenerator-container"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 flex-col md:flex-row lg:flex-col justify-start gap-5 relative items-center"
+              >
+                <TodoList todos={todos} user={user} setTodos={setTodos} />
 
-              <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
-                <div className="whitespace-nowrap underline underline-offset-8 text-[23px] font-sans text-white relative">
-                  Ai Schedule Generator
-                </div>
-                <div className="mb-2 relative w-40 h-px shrink-0 " />
-                <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
-                  The AI schedule generator analyzes preferences, constraints,
-                  and resources to create optimized schedules, maximizing
-                  efficiency and productivity.
-                </div>
-                <div className=" border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
-                  <button
-                    onClick={() => setShowPromptModal(true)}
-                    className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24"
-                  >
-                    Generate Now
-                  </button>
+                <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
+                  <div className="whitespace-nowrap underline underline-offset-8 text-[23px] font-sans text-white relative">
+                    Ai Schedule Generator
+                  </div>
+                  <div className="mb-2 relative w-40 h-px shrink-0 " />
+                  <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
+                    The AI schedule generator analyzes preferences, constraints,
+                    and resources to create optimized schedules, maximizing
+                    efficiency and productivity.
+                  </div>
+                  <div className=" border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
+                    <button
+                      onClick={() => setShowPromptModal(true)}
+                      className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24"
+                    >
+                      Generate Now
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              id="boonIland-wraper "
-              className="bg-[#191919] xl:col-span-2 w-full h-full py-3 rounded-lg overflow-hidden gap-2"
-            >
-              <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
-                Boon Island
-              </div>
-              <div className="" onClick={() => load()}>
-                {/* display the image of the current level of boon island, static image to avoid long loading */}
-                <div className="opacity-100  bg-transparent hover:cursor-pointer w-full md:w-1/2 group h-full absolute "></div>
-                {level < 5 ? (
-                  <img
-                    className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
-                  />
-                ) : level < 10 ? (
-                  <div>
+              <div
+                id="boonIland-wraper "
+                className="bg-[#191919] xl:col-span-2 w-full h-full py-3 rounded-lg overflow-hidden gap-2"
+              >
+                <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
+                  Boon Island
+                </div>
+                <div className="" onClick={() => load()}>
+                  {/* display the image of the current level of boon island, static image to avoid long loading */}
+                  <div className="opacity-100  bg-transparent hover:cursor-pointer w-full md:w-1/2 group h-full absolute "></div>
+                  {level < 5 ? (
                     <img
                       className="group-hover:brightness-110 transition-all duration-150"
                       src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
                     />
+                  ) : level < 10 ? (
+                    <div>
+                      <img
+                        className="group-hover:brightness-110 transition-all duration-150"
+                        src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
+                      />
+                    </div>
+                  ) : level < 21 ? (
+                    <img
+                      className="group-hover:brightness-110 transition-all duration-150"
+                      src="https://cdn.sanity.io/images/mrfd4see/production/996a064b91c927a0fceec73bc265112d1207822f-3072x1414.png?w=2000&fit=max&auto=format"
+                    />
+                  ) : level < 31 ? (
+                    <img
+                      className="group-hover:brightness-110 transition-all duration-150"
+                      src="https://cdn.sanity.io/images/mrfd4see/production/f8cf6a118ab5c937763289890beb462071486665-3072x1414.png?w=2000&fit=max&auto=format"
+                    />
+                  ) : level < 41 ? (
+                    <img
+                      className="group-hover:brightness-110 transition-all duration-150"
+                      src="https://cdn.sanity.io/images/mrfd4see/production/914f72baf217a69b15346c9ae10db7057b1d4d12-3072x1414.png?w=2000&fit=max&auto=format"
+                    />
+                  ) : level > 51 ? (
+                    <img
+                      className="group-hover:brightness-110 transition-all duration-150"
+                      src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                    />
+                  ) : null}
+                </div>
+              </div>
+            </section>
+            <div className="p-2 overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible ">
+              <div className="flex justify-center w-full  gap-1 relative items-center">
+                <div className="flex items-center gap-2 col-span-2 justify-end w-full">
+                  <div className="w-full"></div>
+                  <div className="flex justify-between w-full">
+                    <CategoryDropdown
+                      categories={categories}
+                      handleCategoryChange={handleCategoryChange}
+                    />
                   </div>
-                ) : level < 21 ? (
-                  <img
-                    className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/996a064b91c927a0fceec73bc265112d1207822f-3072x1414.png?w=2000&fit=max&auto=format"
-                  />
-                ) : level < 31 ? (
-                  <img
-                    className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/f8cf6a118ab5c937763289890beb462071486665-3072x1414.png?w=2000&fit=max&auto=format"
-                  />
-                ) : level < 41 ? (
-                  <img
-                    className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/914f72baf217a69b15346c9ae10db7057b1d4d12-3072x1414.png?w=2000&fit=max&auto=format"
-                  />
-                ) : level > 51 ? (
-                  <img
-                    className="group-hover:brightness-110 transition-all duration-150"
-                    src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
-                  />
-                ) : null}
-              </div>
-            </div>
-          </section>
-          <div className="p-2 overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible ">
-            <div className="flex justify-center w-full  gap-1 relative items-center">
-              <div className="flex items-center gap-2 col-span-2 justify-end w-full">
-                <div className="w-full"></div>
-                <div className="flex justify-between w-full">
-                  <CategoryDropdown
-                    categories={categories}
-                    handleCategoryChange={handleCategoryChange}
-                  />
-                </div>
-                <div
-                  onClick={handleAddingNewNote}
-                  className="border-gray-500 col-span-1 bg-[#38383A] self-center flex flex-row justify-center gap-1 h-10 items-center px-[10px] py-2 border rounded m-3 ml-auto"
-                >
-                  <img
-                    src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
-                    className="min-h-0 min-w-0"
-                  />
-                  <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd]">
-                    Add Note
-                  </button>
+                  <div
+                    onClick={handleAddingNewNote}
+                    className="border-gray-500 col-span-1 bg-[#38383A] self-center flex flex-row justify-center gap-1 h-10 items-center px-[10px] py-2 border rounded m-3 ml-auto"
+                  >
+                    <img
+                      src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"
+                      className="min-h-0 min-w-0"
+                    />
+                    <button className="whitespace-nowrap text-[15px] font-sans text-[#dddddd]">
+                      Add Note
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
-              {filteredNotes.map((note) => (
-                <>
-                  <Dialog isOpen={showModal} onClose={setShowModal}>
-                    <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
-                      <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
-                        {selectedNote}
-                        <button
-                          className="text-white flex"
-                          onClick={(e) => {
-                            addDeleted(note._id);
-                          }}
-                        >
-                          <Tooltip content="delete the note">
-                            <DeleteIcon className="text-sm text-red-200" />
-                          </Tooltip>
-                        </button>
-                      </div>
-                      <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
-                      <div className="scale-75 md:scale-100 w-full h-full text-sm">
-                        <ReactQuill
-                          theme="snow"
-                          className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                          value={text || selectedNoteData}
-                          onChange={(e) => {
-                            setText(e);
-                          }}
-                        />
+              {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
+                {filteredNotes.map((note) => (
+                  <>
+                    <Dialog isOpen={showModal} onClose={setShowModal}>
+                      <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
+                        <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
+                          {selectedNote}
+                          <button
+                            className="text-white flex"
+                            onClick={(e) => {
+                              addDeleted(note._id);
+                            }}
+                          >
+                            <Tooltip content="delete the note">
+                              <DeleteIcon className="text-sm text-red-200" />
+                            </Tooltip>
+                          </button>
+                        </div>
+                        <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
+                        <div className="scale-75 md:scale-100 w-full h-full text-sm">
+                          <ReactQuill
+                            theme="snow"
+                            className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                            value={text || selectedNoteData}
+                            onChange={(e) => {
+                              setText(e);
+                            }}
+                          />
 
-                        <div
-                          onClick={(e) => handleNoteChange(note._id!)}
-                          className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
-                        >
-                          <button className=" text-sm select-none  text-[#dddddd] relative px-5">
-                            Update Note
+                          <div
+                            onClick={(e) => handleNoteChange(note._id!)}
+                            className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                          >
+                            <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                              Update Note
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </Dialog>
+                    <div
+                      onClick={() => {
+                        setShowModal(true);
+                        console.log("note.topic", note.topic);
+                        setSelectedNote(note.topic);
+                        setSelectedNoteData(note.note);
+                      }}
+                      className="bg-[#212121] w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
+                    >
+                      <div>
+                        <h1 className="border-b w-fit font-semibold text-lg">
+                          {note.topic}
+                        </h1>
+                      </div>
+                      <div>
+                        <div dangerouslySetInnerHTML={{ __html: note.note }} />
+                      </div>
+                    </div>
+                  </>
+                ))}
+              </div>
+
+              <Dialog isOpen={showAddNotesModal} onClose={setShowAddNotesModal}>
+                {
+                  <Notes
+                    setNotes={setNotesList}
+                    setDummyNote={setDummyNote}
+                    notes={notes}
+                    categories={categories}
+                    close={setShowAddNotesModal}
+                  />
+                }
+              </Dialog>
+
+              <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
+                <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+                  <div className="flex flex-col  items-center justify-center">
+                    <h1 className="text-[2vw] my-2  text-white text-center ">
+                      BoonBot
+                    </h1>
+                    <div className="w-44 h-[0px] border border-neutral-400"></div>
+                  </div>
+                  <div className="flex justify-center mt-7 text-center items-center">
+                    <div
+                      className={`${
+                        pageposition === 0 ? "pageentry " : "pageexit"
+                      } text-center`}
+                    >
+                      <h2 className="text-[1.3vw]  mt-6 my-2 font-fontspring  text-white font-medium ">
+                        How are you feeling today?
+                      </h2>
+                      <div className="p-2 flex flex-row    gap-x-5">
+                        <div className="flex items-center justify-center flex-row gap-x-3">
+                          <Checkbox
+                            className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                            isSelected={
+                              userprompt.mood &&
+                              userprompt.mood === "Unmotivated"
+                                ? true
+                                : false
+                            }
+                            onChange={() => handlechange("Unmotivated")}
+                            color="gradient"
+                            labelColor="warning"
+                          >
+                            <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                              Unmotivated
+                            </h4>
+                          </Checkbox>
+                          <Checkbox
+                            className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                            isSelected={
+                              userprompt.mood && userprompt.mood === "Great"
+                                ? true
+                                : false
+                            }
+                            onChange={() => handlechange("Great")}
+                            color="gradient"
+                            labelColor="warning"
+                          >
+                            <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                              Great
+                            </h4>
+                          </Checkbox>
+                          <Checkbox
+                            className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                            isSelected={
+                              userprompt.mood && userprompt.mood === "Stressed"
+                                ? true
+                                : false
+                            }
+                            onChange={() => handlechange("Stressed")}
+                            color="gradient"
+                            labelColor="warning"
+                          >
+                            <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                              Stressed
+                            </h4>
+                          </Checkbox>
+                          <Checkbox
+                            className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
+                            isSelected={
+                              userprompt.mood && userprompt.mood === "Normal"
+                                ? true
+                                : false
+                            }
+                            onChange={() => handlechange("Normal")}
+                            color="gradient"
+                            labelColor="warning"
+                          >
+                            <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
+                              Normal
+                            </h4>
+                          </Checkbox>
+                        </div>
+                      </div>
+                      {empty && "Please Pick one of the options"}
+                    </div>
+                    <div
+                      className={`${
+                        pageposition === 1 ? " pageentry " : "pageexit "
+                      } text-center`}
+                    >
+                      <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
+                        What do you want to get done?
+                      </h2>
+                      <div className="p-2 flex flex-row w-[30vw]   gap-x-5">
+                        <textarea
+                          name="prompt"
+                          placeholder="I want to do trignometry 1 and magnetism for AP..."
+                          id="prompt"
+                          onChange={(e) =>
+                            setUserprompt({
+                              ...userprompt,
+                              objective: e.target.value,
+                            })
+                          }
+                          className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
+                        ></textarea>
+                      </div>
+                      {empty && "Please enter atleast a sentence"}
+                    </div>
+                    <div
+                      className={`${
+                        pageposition === 2 ? " pageentry " : "pageexit "
+                      } text-center`}
+                    >
+                      <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
+                        How much time do you have?
+                      </h2>
+                      <div className="p-2 flex flex-row  w-[30vw]  gap-x-5">
+                        <textarea
+                          placeholder="I got 5 hours until i fly to las vegas..."
+                          name="prompt"
+                          id="prompt"
+                          onChange={(e) =>
+                            setUserprompt({
+                              ...userprompt,
+                              time: e.target.value,
+                            })
+                          }
+                          className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
+                        ></textarea>
+                      </div>
+                      {empty && "Please enter atleast a sentence"}
+                    </div>
+                    <div
+                      className={`${
+                        pageposition === 3 ? " pageentry " : "pageexit "
+                      } text-center`}
+                    >
+                      <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                        Generate Your Roadmap
+                      </h2>
+                      <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
+                        <div className="flex flex-row gap-x-4 items-center justify-center">
+                          <button
+                            onClick={() => setShowPromptModal(false)}
+                            className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                          >
+                            Cancel
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              fetchRoadmap(
+                                userprompt.mood,
+                                userprompt.objective,
+                                userprompt.time
+                              );
+                              handlenextpage();
+                            }}
+                            className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                          >
+                            Generate Now
                           </button>
                         </div>
                       </div>
                     </div>
-                  </Dialog>
-                  <div
-                    onClick={() => {
-                      setShowModal(true);
-                      console.log("note.topic", note.topic);
-                      setSelectedNote(note.topic);
-                      setSelectedNoteData(note.note);
-                    }}
-                    className="bg-[#212121] w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
-                  >
-                    <div>
-                      <h1 className="border-b w-fit font-semibold text-lg">
-                        {note.topic}
-                      </h1>
-                    </div>
-                    <div>
-                      <div dangerouslySetInnerHTML={{ __html: note.note }} />
+                    <div
+                      className={`${
+                        pageposition === 4 ? " pageentry " : "pageexit "
+                      } text-center`}
+                    >
+                      <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                        Here's your schedule
+                      </h2>
+                      {susdata ? (
+                        <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
+                          <div className="space-y-2">
+                            <>
+                              {/* @ts-ignore */}
+                              {susdata.roadmap.map((roadmaps: any) => (
+                                <div className="space-y-5 flex justify-start h-full">
+                                  {roadmaps.title}
+                                </div>
+                              ))}
+                            </>
+                          </div>
+                          <div
+                            onClick={() => {
+                              // @ts-ignore
+                              susdata.roadmap.map((roadmaps: any) => {
+                                addGoalDataSchedule(roadmaps.title);
+                              });
+                            }}
+                            className="mt-5 border w-fit p-2 rounded-lg cursor-pointer"
+                          >
+                            Add to todos
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
-                </>
-              ))}
-            </div>
-
-            <Dialog isOpen={showAddNotesModal} onClose={setShowAddNotesModal}>
-              {
-                <Notes
-                  setNotes={setNotesList}
-                  setDummyNote={setDummyNote}
-                  notes={notes}
-                  categories={categories}
-                  close={setShowAddNotesModal}
-                />
-              }
-            </Dialog>
-
-            <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
-              <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
-                <div className="flex flex-col  items-center justify-center">
-                  <h1 className="text-[2vw] my-2  text-white text-center ">
-                    BoonBot
-                  </h1>
-                  <div className="w-44 h-[0px] border border-neutral-400"></div>
                 </div>
-                <div className="flex justify-center mt-7 text-center items-center">
-                  <div
-                    className={`${
-                      pageposition === 0 ? "pageentry " : "pageexit"
-                    } text-center`}
-                  >
-                    <h2 className="text-[1.3vw]  mt-6 my-2 font-fontspring  text-white font-medium ">
-                      How are you feeling today?
-                    </h2>
-                    <div className="p-2 flex flex-row    gap-x-5">
-                      <div className="flex items-center justify-center flex-row gap-x-3">
-                        <Checkbox
-                          className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                          isSelected={
-                            userprompt.mood && userprompt.mood === "Unmotivated"
-                              ? true
-                              : false
-                          }
-                          onChange={() => handlechange("Unmotivated")}
-                          color="gradient"
-                          labelColor="warning"
+                {pageposition !== 4 ? (
+                  <div className="flex flex-row  items-center justify-between">
+                    <div className="flex flex-row items-start justify-start">
+                      {pageposition ? (
+                        <button
+                          onClick={() => handlepreviouspage()}
+                          className="py-2 fade px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                         >
-                          <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                            Unmotivated
-                          </h4>
-                        </Checkbox>
-                        <Checkbox
-                          className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                          isSelected={
-                            userprompt.mood && userprompt.mood === "Great"
-                              ? true
-                              : false
-                          }
-                          onChange={() => handlechange("Great")}
-                          color="gradient"
-                          labelColor="warning"
-                        >
-                          <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                            Great
-                          </h4>
-                        </Checkbox>
-                        <Checkbox
-                          className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                          isSelected={
-                            userprompt.mood && userprompt.mood === "Stressed"
-                              ? true
-                              : false
-                          }
-                          onChange={() => handlechange("Stressed")}
-                          color="gradient"
-                          labelColor="warning"
-                        >
-                          <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                            Stressed
-                          </h4>
-                        </Checkbox>
-                        <Checkbox
-                          className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
-                          isSelected={
-                            userprompt.mood && userprompt.mood === "Normal"
-                              ? true
-                              : false
-                          }
-                          onChange={() => handlechange("Normal")}
-                          color="gradient"
-                          labelColor="warning"
-                        >
-                          <h4 className="text-gray-300 md:text-[1.1vw]    text-[3vw] ">
-                            Normal
-                          </h4>
-                        </Checkbox>
-                      </div>
-                    </div>
-                    {empty && "Please Pick one of the options"}
-                  </div>
-                  <div
-                    className={`${
-                      pageposition === 1 ? " pageentry " : "pageexit "
-                    } text-center`}
-                  >
-                    <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
-                      What do you want to get done?
-                    </h2>
-                    <div className="p-2 flex flex-row w-[30vw]   gap-x-5">
-                      <textarea
-                        name="prompt"
-                        placeholder="I want to do trignometry 1 and magnetism for AP..."
-                        id="prompt"
-                        onChange={(e) =>
-                          setUserprompt({
-                            ...userprompt,
-                            objective: e.target.value,
-                          })
-                        }
-                        className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
-                      ></textarea>
-                    </div>
-                    {empty && "Please enter atleast a sentence"}
-                  </div>
-                  <div
-                    className={`${
-                      pageposition === 2 ? " pageentry " : "pageexit "
-                    } text-center`}
-                  >
-                    <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
-                      How much time do you have?
-                    </h2>
-                    <div className="p-2 flex flex-row  w-[30vw]  gap-x-5">
-                      <textarea
-                        placeholder="I got 5 hours until i fly to las vegas..."
-                        name="prompt"
-                        id="prompt"
-                        onChange={(e) =>
-                          setUserprompt({ ...userprompt, time: e.target.value })
-                        }
-                        className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
-                      ></textarea>
-                    </div>
-                    {empty && "Please enter atleast a sentence"}
-                  </div>
-                  <div
-                    className={`${
-                      pageposition === 3 ? " pageentry " : "pageexit "
-                    } text-center`}
-                  >
-                    <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
-                      Generate Your Roadmap
-                    </h2>
-                    <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
-                      <div className="flex flex-row gap-x-4 items-center justify-center">
+                          {"<-"} Back
+                        </button>
+                      ) : (
                         <button
                           onClick={() => setShowPromptModal(false)}
                           className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                         >
                           Cancel
                         </button>
-
-                        <button
-                          onClick={() => {
-                            fetchRoadmap(
-                              userprompt.mood,
-                              userprompt.objective,
-                              userprompt.time
-                            );
-                            handlenextpage();
-                          }}
-                          className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
-                        >
-                          Generate Now
-                        </button>
-                      </div>
+                      )}
                     </div>
-                  </div>
-                  <div
-                    className={`${
-                      pageposition === 4 ? " pageentry " : "pageexit "
-                    } text-center`}
-                  >
-                    <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
-                      Here's your schedule
-                    </h2>
-                    {susdata ? (
-                      <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
-                        <div className="space-y-2">
-                          <>
-                            {/* @ts-ignore */}
-                            {susdata.roadmap.map((roadmaps: any) => (
-                              <div className="space-y-5 flex justify-start h-full">
-                                {roadmaps.title}
-                              </div>
-                            ))}
-                          </>
-                        </div>
-                        <div
-                          onClick={() => {
-                            // @ts-ignore
-                            susdata.roadmap.map((roadmaps: any) => {
-                              addGoalDataSchedule(roadmaps.title);
-                            });
-                          }}
-                          className="mt-5 border w-fit p-2 rounded-lg cursor-pointer"
-                        >
-                          Add to todos
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-              {pageposition !== 4 ? (
-                <div className="flex flex-row  items-center justify-between">
-                  <div className="flex flex-row items-start justify-start">
-                    {pageposition ? (
+                    <div className="flex flex-row items-end justify-end">
                       <button
-                        onClick={() => handlepreviouspage()}
-                        className="py-2 fade px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
-                      >
-                        {"<-"} Back
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => setShowPromptModal(false)}
+                        onClick={() =>
+                          pageposition === 0 && !userprompt.mood
+                            ? setEmpty(true)
+                            : pageposition === 1 &&
+                              (!userprompt.objective ||
+                                userprompt.objective.length < 30)
+                            ? setEmpty(true)
+                            : pageposition === 2 &&
+                              (!userprompt.time || userprompt.time.length < 2)
+                            ? setEmpty(true)
+                            : handlenextpage()
+                        }
                         className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                       >
-                        Cancel
+                        Next {"->"}
                       </button>
-                    )}
+                    </div>
                   </div>
-                  <div className="flex flex-row items-end justify-end">
-                    <button
-                      onClick={() =>
-                        pageposition === 0 && !userprompt.mood
-                          ? setEmpty(true)
-                          : pageposition === 1 &&
-                            (!userprompt.objective ||
-                              userprompt.objective.length < 30)
-                          ? setEmpty(true)
-                          : pageposition === 2 &&
-                            (!userprompt.time || userprompt.time.length < 2)
-                          ? setEmpty(true)
-                          : handlenextpage()
-                      }
-                      className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
-                    >
-                      Next {"->"}
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-            </Dialog>
-            <Dialog
-              isOpen={showBoonIslandModal}
-              onClose={setShowBoonIslandModal}
-            >
-              <div className="flex w-[94.3vw] ml-[-21vw] mt-[5.2vw]  h-[48vw] items-center justify-center  rounded-xl  flex-col ">
-                {boonisland && (
-                  <Loading className="mt-[10vw]" color={"white"} />
+                ) : (
+                  ""
                 )}
+              </Dialog>
+              <Dialog
+                isOpen={showBoonIslandModal}
+                onClose={setShowBoonIslandModal}
+              >
+                <div className="flex w-[94.3vw] ml-[-21vw] mt-[5.2vw]  h-[48vw] items-center justify-center  rounded-xl  flex-col ">
+                  {boonisland && (
+                    <Loading className="mt-[10vw]" color={"white"} />
+                  )}
 
-                <div className="flex z-50 cursor-pointer  text-center items-center">
-                  <Island
-                    setShowBoonIslandModal={setShowBoonIslandModal}
-                    users={users}
-                  />
+                  <div className="flex z-50 cursor-pointer  text-center items-center">
+                    <Island
+                      setShowBoonIslandModal={setShowBoonIslandModal}
+                      users={users}
+                    />
+                  </div>
                 </div>
-              </div>
-            </Dialog>
+              </Dialog>
+            </div>
           </div>
         </div>
-      </div>
-}
+      )}
     </>
   );
 };
