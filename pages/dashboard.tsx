@@ -42,10 +42,10 @@ const Home = ({ users, goals, notes }: Props) => {
         <link rel="icon" href="/logo.png" />
       </Head>
 
-      <Sidebar />
+      {/* <Sidebar /> */}
       {/* @ts-ignore */}
-      <Main users={users} notes={notes} goals={goals} />
-      <Progress />
+      {/* <Main users={users} notes={notes} goals={goals} />
+      <Progress /> */}
     </div>
   );
 };
