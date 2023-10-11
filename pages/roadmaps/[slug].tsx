@@ -56,7 +56,7 @@ const Post = ({ roadmap, goals }: Props) => {
   const normal = roadmap.content.replace("@finish", "");
   const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
-  const [about, setAbout] = useState(false);
+  const [about, setAbout] = useState(true);
   const [blockSelected, setBlockSelected] = useState("");
   const [infotext, setInfotext] = useState();
   const roadmapdata = JSON.parse(normal);

@@ -22,6 +22,7 @@ import {
   Grid,
   Input,
   Loading,
+  Modal,
   Progress,
   Text,
   Textarea,
@@ -38,6 +39,7 @@ import TodoList from "../components/TodoList/TodoList";
 import CustomLoader from "../components/CustomLoader";
 import Notes from "../components/Notes/Notes";
 import { DeleteIcon, XIcon } from "lucide-react";
+import Category from "../pages/select-categories";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
@@ -383,6 +385,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     setEmpty(false);
   };
   const [empty, setEmpty] = useState(false);
+  const [categoryslide, setCategoryslide] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -418,6 +421,55 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   return (
     <div className="overflow-y-scroll h-screen">
+      {!match[0].categories && !categoryslide ? (
+        <>
+          <Modal
+            // closeButton
+            aria-labelledby="modal-title"
+            className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+            open={true}
+            width="80%"
+          >
+            <Modal.Header className="text-neutral-400">
+              <p className="text-neutral-400"></p>
+            </Modal.Header>
+            <Modal.Body className="flex justify-center items-center h-full w-full">
+              {" "}
+              <Text id="modal-title" color="white" size={40}>
+                <h1 className="fade  bg-transparent  text-neutral-100 brightness-125">
+                  Welcome to OwnBoon
+                </h1>
+              </Text>
+              <h2 className="text-neutral-400 fade">
+                {" "}
+                Before you access the app we would like to ask a few questions
+                from you
+              </h2>
+            </Modal.Body>
+            <Modal.Footer className="w-full p-2">
+              <div className="flex fade justify-center p-2 w-full gap-5">
+                <div className=" border-gray-500/30 bg-[#363636]/20 backdrop-blur-lg from-gray-300 w-fit flex flex-col justify-start relative hover:   items-center py-3 border rounded">
+                  <button
+                    onClick={() => setCategoryslide(true)}
+                    className="rounded-xl cursor-pointer whitespace-nowrap md:text-lg  text-sm   text-[#dddddd] relative mx-24"
+                  >
+                    Get Started
+                  </button>
+                </div>
+              </div>
+            </Modal.Footer>
+          </Modal>
+        </>
+      ) : categoryslide ? (
+        <Modal
+          aria-labelledby="modal-title"
+          className="!bg-[#191919]/40 h-[90%] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0"
+          open={true}
+          width="80%"
+        >
+          <Category users={users} />
+        </Modal>
+      ) : null}
       <div className=" bg-[#101010]  fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
           <section
@@ -432,7 +484,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
               <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
                 <div className="whitespace-nowrap underline underline-offset-8 text-[23px] font-sans text-white relative">
-                  Ai Schedule Generator
+                  AI Schedule Generator
                 </div>
                 <div className="mb-2 relative w-40 h-px shrink-0 " />
                 <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
@@ -440,14 +492,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   and resources to create optimized schedules, maximizing
                   efficiency and productivity.
                 </div>
-                <div className=" border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
-                  <button
-                    onClick={() => setShowPromptModal(true)}
-                    className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24"
-                  >
+                <button
+                  onClick={() => setShowPromptModal(true)}
+                  className="cursor-pointer border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded"
+                >
+                  <h1 className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
                     Generate Now
-                  </button>
-                </div>
+                  </h1>
+                </button>
               </div>
             </div>
             <div

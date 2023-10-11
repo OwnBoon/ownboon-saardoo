@@ -8,7 +8,7 @@ import { fetchUsers } from "../utils/fetchUsers";
 import { User, UserBody } from "../typings";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { currentUser } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import { categories } from "../utils/constants";
@@ -17,11 +17,11 @@ import { Toaster, toast } from "react-hot-toast";
 interface Props {
   users: User[];
 }
-const Home = ({ users }: Props) => {
+const Home = ({ users, next, setNext }: any) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
   const match = users.filter(
-    (userss) => userss.email == user?.emailAddresses[0].emailAddress
+    (userss: any) => userss.email == user?.emailAddresses[0].emailAddress
   );
   const [isNewUser, setIsNewUser] = useState(false);
 
@@ -36,7 +36,8 @@ const Home = ({ users }: Props) => {
 
   const fiveCate = categories.slice(0, 7);
 
-  const addCategory = async (name: string, value: string) => {
+  const addCategory = async (name: string, value: string, e: any) => {
+    e.preventDefault();
     try {
       const postInfo: UserBody = {
         id: match[0]._id,
@@ -84,6 +85,7 @@ const Home = ({ users }: Props) => {
         </div>
       ));
       const json = await result.json();
+      setSearchInput("");
       return json;
     } catch (err) {
       console.error(err);
@@ -96,73 +98,110 @@ const Home = ({ users }: Props) => {
   //   router.push("/dashboard");
   // } else
   return (
-    <>
+    <div className="w-full h-full bg-transparent ">
       <Head>
         <title>Categories @ {user?.username || user?.firstName}</title>
         <link rel="icon" href="/logo.png" />
       </Head>
       <Toaster position="top-right" reverseOrder={false} />
-      <Navbar />
-      <div className="mx-auto my-auto">
-        <div className="  flex flex-col items-center gap-6   justify-center max-w-5xl mx-auto">
-          <span className="flex font-semibold text-2xl">Hi There!</span>
-          <span className="text-base w-full ">
-            Before You continue your experience with{" "}
-            <span className="font-semibold">Ownboon</span> , we would like you
-            to follow some <span className="font-semibold">categories</span>{" "}
-            regarding which we will update you with{" "}
-            <span className="font-semibold">blogs</span> and{" "}
-            <span className="font-semibold">videos</span>
-          </span>
-          <input
-            type="text"
-            placeholder="Search categories..."
-            value={searchInput}
-            onChange={handleSearchInputChange}
-            className="px-2 py-1 border border-gray-300 rounded"
-          />
-          <div className="">
-            <div className="flex flex-col items-center">
-              {searchInput.length < 1 ? null : (
-                <>
-                  {filteredCategories.map((cateogry) => (
-                    <div
-                      onClick={() =>
-                        addCategory(cateogry.name, cateogry.value!)
-                      }
-                      className="bg-blue-200/20  cursor-pointer px-1 rounded-lg "
-                    >
-                      <p className="text-xl">{cateogry.name}</p>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-            <hr className="w-full"></hr>
-            <div className="flex  flex-col items-center gap-5 ">
-              <p>Some of our popular categories</p>
-              <div className="flex  w-full  space-x-5">
+      <div className="h-full w-full p-2">
+        <div className="flex justify-between">
+          <div className="flex justify-center text-neutral-200   items-center gap-2">
+            <img
+              className="h-10 w-10"
+              src="https://ownboon.com/_next/image?url=%2Flogo.png&w=48&q=75"
+            />
+            <h1 className="">OwnBoon</h1>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-5 justify-center ">
+          <div className="flex border-b border-white/20 justify-center text-2xl  text-white">
+            Categories
+          </div>
+          <div className="flex flex-col items-center justify-center w-fit ">
+            {/* <div className="flex flex-col items-center">
+                {searchInput.length < 1 ? null : (
+                  <>
+                    {filteredCategories.map((cateogry) => (
+                      <div
+                        onClick={() =>
+                          addCategory(cateogry.name, cateogry.value!)
+                        }
+                        className="bg-blue-200/20  cursor-pointer px-1 rounded-lg "
+                      >
+                        <p className="text-xl">{cateogry.name}</p>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div> */}
+            <div className="flex flex-col mt-20  justify-center items-center gap-10 w-full">
+              <div className="flex justify-center items-center gap-2 h-fit">
                 {fiveCate.map((cateogry) => (
                   <div
-                    onClick={() => addCategory(cateogry.name, cateogry.value!)}
-                    className="bg-blue-200/20  cursor-pointer px-1 rounded-lg "
+                    onClick={(e) =>
+                      addCategory(cateogry.name, cateogry.value!, e)
+                    }
+                    className="first w-full flex-col h-16  justify-center text-white/40 hover:text-white/70 text-sm bg-[#191919]/10 backdrop-blur-sm border-gray-400 hover:scale-105 transition-all duration-100 inline-block md:inline-flex items-center  p-4 rounded-md"
                   >
-                    <p className="text-xl">{cateogry.name}</p>
+                    <p className="text-sm">{cateogry.name}</p>
                   </div>
                 ))}
               </div>
+              <div className="flex flex-col mt-10 items-center">
+                <input
+                  type="text"
+                  placeholder="Search categories..."
+                  value={searchInput}
+                  onChange={handleSearchInputChange}
+                  className="px-2 py-1 border focus:ring-0 focus:outline-none focus:border-gray-400/10 rounded  text-md text-white bg-transparent backdrop-blur-3xl font-poppins pageentry   border-gray-400/20"
+                />
+                {searchInput.length < 1 ? null : (
+                  <>
+                    <div className=" absolute top-[23rem] mt-2 w-56 overflow-y-scroll  rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5">
+                      <div className="py-2 gap-4 flex flex-col ">
+                        {/* @ts-ignore */}
+                        {filteredCategories.map((cateogry, index) => (
+                          <div
+                            onClick={(e) =>
+                              addCategory(cateogry.name, cateogry.value!, e)
+                            }
+                          >
+                            <h1
+                              key={index}
+                              className="block px-4  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200"
+                            >
+                              {cateogry.name}{" "}
+                              <span className="font-sans">-</span>{" "}
+                              {/* <span className="text-white/20 font-light">
+                                popular
+                              </span> */}
+                            </h1>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-          <div
-            onClick={() => router.push("/dashboard")}
-            className="bg-cyan-500 p-3 text-white font-semibold rounded-lg mt-20 cursor-pointer"
-          >
-            <p>Return To User Dashboard</p>
-          </div>
         </div>
-        <Body />
+        <footer className="mt-32">
+          <div className="flex justify-center items-center">
+            <button
+              disabled={match[0].categories ? false : true}
+              onClick={() => router.reload()}
+              className=" border-gray-500/30 disabled:text-black/40 hover:scale-105 bg-[#363636]/20 backdrop-blur-lg from-gray-300 w-fit flex flex-col justify-start relative hover:   items-center py-3 border rounded"
+            >
+              <div className="rounded-xl  z-50  cursor-pointer whitespace-nowrap md:text-lg  text-sm   text-[#dddddd] relative mx-24">
+                Go to App
+              </div>
+            </button>
+          </div>
+        </footer>
       </div>
-    </>
+    </div>
   );
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {
