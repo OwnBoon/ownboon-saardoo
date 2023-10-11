@@ -21,14 +21,14 @@ const Controls = ({
   handleNextSong,
 }: any) => (
   <div className="flex items-center justify-around gap-4 md:w-36 lg:w-96 2xl:w-80">
-    <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+    {/* <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
       <BsArrowRepeat
         size={20}
         color={repeat ? "red" : "white"}
         onClick={() => setRepeat((prev: any) => !prev)}
         className="hidden sm:block cursor-pointer"
       />
-    </div>
+    </div> */}
     {currentSongs?.length && (
       <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
         <MdSkipPrevious
@@ -68,14 +68,14 @@ const Controls = ({
         />
       </div>
     )}
-    <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
+    {/* <div className="bg-white cursor-pointer hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100">
       <BsShuffle
         size={20}
         color={shuffle ? "red" : "white"}
         onClick={() => setShuffle((prev: any) => !prev)}
         className="hidden sm:block cursor-pointer"
       />
-    </div>
+    </div> */}
   </div>
 );
 

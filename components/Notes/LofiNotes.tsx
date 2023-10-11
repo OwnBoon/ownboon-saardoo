@@ -22,7 +22,7 @@ import { Tooltip } from "@nextui-org/react";
 function CategoryDropdown({ categories, handleCategoryChange }: any) {
   return (
     <select
-      className="  bg-white bg-opacity-30 text-neutral-200 ring-0 ring-transparent outline-none focus:ring-0 focus:outline-none focus:border-white/30  text-base rounded border border-white border-opacity-50 backdrop-blur-xl"
+      className="btn bg-white bg-opacity-30 text-neutral-200 ring-0 ring-transparent outline-none focus:ring-0 focus:outline-none focus:border-white/30  text-base rounded border border-white border-opacity-50 backdrop-blur-xl"
       onChange={handleCategoryChange}
     >
       {Array.from(categories).map((category: any, index) => (
@@ -152,16 +152,18 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
   };
 
   return (
-    <div className="flex flex-col justify-center   items-center gap-4">
+    <div className="flex flex-col justify-center items-center gap-4">
       <div className="flex justify-center    gap-1 relative items-center">
         <div className="flex items-center gap-2  col-span-2 justify-end">
-          <Draggable>
+          <Draggable cancel=".btn">
             <div className="flex items-center justify-between gap-2 select-none">
               <MenuIcon className="text-neutral-200/50 cursor-pointer" />
+              
               <CategoryDropdown
                 categories={categories}
                 handleCategoryChange={handleCategoryChange}
               />
+              
               {!showTaskInput && (
                 <div className="flex justify-center p-2 ">
                   <div onClick={handleAddingTask} className="">
@@ -227,7 +229,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
               </Draggable>
             </Dialog>
             {notesshow && (
-              <Draggable>
+              <Draggable >
                 <div
                   onClick={() => {
                     setShowModal(true);

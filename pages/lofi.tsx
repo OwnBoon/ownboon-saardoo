@@ -213,13 +213,13 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       text="Lofi"
       border={"#ccc"}
       children={
-        <div className=" h-screen overflow-hidden text-[#000000]">
-          <div className="flex items-center justify-center w-full h-full flex-col gap-10">
+        <div className="h-screen overflow-hidden text-[#000000]">
+          <div className="flex items-center justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
             {sessionStarted && (
               <>
                 <Discover />
                 {seconds > 0 && (
-                  <div className="absolute hidden md:inline-flex right-16 top-[15vh]  items-center justify-end">
+                  <div className="absolute hidden md:inline-flex right-16 top-[15vh] items-center justify-end">
                     <Clock />
                   </div>
                 )}
@@ -227,7 +227,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
             )}
 
             {sessionStarted ? (
-              <div className="relative flex items-center justify-center">
+              <div className="relative flex items-center justify-center md:top-0">
                 <div
                   className={`w-[212px] h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
                 >
@@ -347,7 +347,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </Draggable>
             <button
-              className="bg-[#D9D9D9] z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/5 rounded p-4 cursor-pointer"
+              className="bg-[#D9D9D9] bottom-10 z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/4 rounded p-4 cursor-pointer"
               // @ts-ignore
               onClick={
                 sessionStarted
@@ -366,7 +366,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
           </div>
 
           {activeSong?.title && sessionStarted && (
-            <div className="absolute justify-center z-40 h-1/5 w-3/5 -bottom-8 right-0 mr-56 flex animate-slideup bg-gradient-to-br">
+            <div className="absolute justify-center z-40 mr-[45vw] bottom-11 right-0 flex animate-slideup bg-gradient-to-br">
               <MusicPlayer sessionStarted={sessionStarted} />
             </div>
           )}
