@@ -367,7 +367,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             {todos.map((t: Goals) => (
               <div
                 key={t._id}
-                className="flex flex-row group mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 "
+                className="flex flex-row group mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-white/20 cursor-pointer hover:border-opacity-30 "
               >
                 <MenuIcon className="p-1 font-light fade transition-all hover:cursor-pointer w-7 h-7 flex-shrink-0  rounded  drag-handle" />
                 <input
@@ -376,9 +376,9 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                   value=""
                   checked={t.completed}
                   onChange={(e) => changeTodoState(t._id, e)}
-                  className="border-solid border-neutral-200 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
+                  className="border-solid border-neutral-200 hover:cursor-pointer bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
                 />
-                <div className="whitespace-nowrap   font-sans text-white relative">
+                <div className="whitespace-nowrap cursor-text   font-sans text-white relative">
                   {t.title}
                 </div>
                 <Image

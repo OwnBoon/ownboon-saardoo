@@ -12,10 +12,12 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import Layout from "../../components/Layout/Layout";
-import { Card, Dropdown, Text, Tooltip } from "@nextui-org/react";
+import { Card, Dropdown, Loading, Text, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import { Menu } from "../../components/Roadmap/more";
 import { fetchGoals } from "../../utils/fetchGoals";
+import { ArrowBigRightDash } from "lucide-react";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 interface Props {
   roadmap: Roadmaps;
   goals: Goals[];
@@ -53,6 +55,8 @@ const Post = ({ roadmap, goals }: Props) => {
   // @ts-ignore
   const normal = roadmap.content.replace("@finish", "");
   const [info, setInfo] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [about, setAbout] = useState(true);
   const [blockSelected, setBlockSelected] = useState("");
   const [infotext, setInfotext] = useState();
   const roadmapdata = JSON.parse(normal);
@@ -69,6 +73,7 @@ const Post = ({ roadmap, goals }: Props) => {
   const fetchInfo = async (texts: string) => {
     // setText(texts);
     setBlockSelected(texts);
+    setLoading(true);
     const result = await fetch(`/api/roadmap/info?title=${texts}`);
     const json = await result.json();
     console.log(json);
@@ -88,6 +93,7 @@ const Post = ({ roadmap, goals }: Props) => {
         info.message.choices[0].message.function_call.arguments;
       const parse = JSON.parse(infostring);
       setInfotext(parse);
+      setLoading(false);
     } else {
       null;
     }
@@ -126,13 +132,13 @@ const Post = ({ roadmap, goals }: Props) => {
       border="gray-500"
       goals={goals}
       children={
-        <div className="flex justify-between h-screen overflow-hidden p-5 gap-20 ">
+        <div className="flex justify-between h-screen overflow-x-hidden  p-5 gap-20 ">
           {/* Roadmaps  */}
-          <div className=" h-full overflow-y-scroll   w-full">
+          <div className="  overflow-y-scroll scrollbar-thin scrollbar-track-neutral-900 scrollbar-thumb-zinc-800   w-full">
             <div className=" relative space-y-10 flex w-full items-center py-10 flex-col justify-center">
               <div className="absolute border z-0 border-zinc-700/20 w-1 rounded-3xl bg-zinc-700 bg-opacity-20 h-full"></div>
               {roadmapdata.roadmap.map((roadmap: any, index: number) => (
-                <div className="z-20 flex items-center gap-[0.65rem]">
+                <div className="z-20 group flex items-center gap-[0.65rem]">
                   <Tooltip
                     content={`click to know more`}
                     color="invert"
@@ -150,7 +156,7 @@ const Post = ({ roadmap, goals }: Props) => {
                       <div
                         // @ts-ignore
                         onClick={() => setGoal(deafult, roadmap.title, index)}
-                        className="text-lg font-sans hover:cursor-pointer"
+                        className="text-lg font-sans group-hover:inline hidden opacity-0 group-hover:opacity-100 transition-all duration-200 hover:cursor-pointer"
                       >
                         +
                       </div>
@@ -161,11 +167,27 @@ const Post = ({ roadmap, goals }: Props) => {
             </div>
           </div>
           {/* Info */}
-          <div className="h-screen w-full -my-10 p-10 ">
+          <div
+            className={
+              about
+                ? "h-screen inline  w-full overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin -my-10 p-10 "
+                : "hidden transition-all duration-150 opacity-0"
+            }
+          >
             <div className="h-screen w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
               <div className="space-y-5">
-                <h1 className="text-xl text-white font-semibold">
+                <h1 className="text-xl flex justify-between items-center text-white font-semibold">
                   Block Title: {!blockSelected ? <div></div> : blockSelected}
+                  <span>
+                    {loading ? (
+                      <Loading color={"secondary"} />
+                    ) : (
+                      <ArrowRightIcon
+                        onClick={() => setAbout(false)}
+                        className="h-5 w-5 cursor-pointer"
+                      />
+                    )}
+                  </span>
                 </h1>
                 {/* data */}
                 {/* @ts-ignore */}
@@ -205,7 +227,7 @@ const Post = ({ roadmap, goals }: Props) => {
                 {infotext ? (
                   <>
                     {/*  @ts-ignore */}
-                    <Link className="" href={infotext.blog}>
+                    <Link target="_blank" className="" href={infotext.blog}>
                       <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
                         Open in web
                       </div>

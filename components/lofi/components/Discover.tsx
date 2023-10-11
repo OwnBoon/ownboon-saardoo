@@ -31,9 +31,9 @@ const Discover = () => {
   const play = "opacity-100 transition-all duration-2000 btn ease-in-out mr-4";
 
   return (
-    <div className="w-full md:left-20 md:top-20 md:absolute flex flex-col h-full  overflow-x-hidden">
+    <div className="w-fit h-[80vh] -mt-1 md:left-32 md:top-28 md:absolute flex flex-col overflow-x-hidden">
       <Draggable cancel=".btn">
-        <div className="flex justify-between btn items-center sm:flex-row flex-col mt-4 mb-10">
+        <div className="flex justify-between btn items-center sm:flex-row flex-col -mt-4 mb-10 md:mt-0">
           <select
             onChange={(e) => dispatch(selectGenreListId(e.target.value))}
             value={genreListId || "544711374"}
@@ -49,8 +49,8 @@ const Discover = () => {
       </Draggable>
 
       <Draggable cancel=".btn">
-        <div className="flex left-20 top-20  md:h-1/2  sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]  overflow-x-hidden justify-center gap-8 ">
-          <div className="flex w-fit scrollbar-none scrollbar flex-col items-start overflow-x-hidden">
+        <div className="flex left-20 md:h-1/2  sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]  overflow-x-hidden justify-center gap-8 ">
+          <div className="flex h-fit w-fit scrollbar-none scrollbar flex-col items-start overflow-x-hidden">
             <div className="px-4 py-3 cursor-pointer">
               <h1 className="text-white font-sans text-base font-semibold">
                 Currently Playing

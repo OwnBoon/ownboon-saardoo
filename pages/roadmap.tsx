@@ -404,7 +404,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
               </Modal.Body>
               <Modal.Footer>
                 <button
-                  className="bg-[#474747] py-2 px-3 rounded-md text-[#807d7d] w-full"
+                  className="bg-[#474747]  py-2 px-3 rounded-md text-[#807d7d] w-full"
                   style={{
                     border: "1px solid #585858",
                   }}
@@ -412,7 +412,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                   onClick={fetchRoadmap}
                 >
                   {userroadmap.length <= 4
-                    ? "send"
+                    ? "Send"
                     : "You can only generate upto 5 roadmaps"}
                 </button>
               </Modal.Footer>
