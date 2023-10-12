@@ -22,7 +22,7 @@ export default function Notification({
 
   useEffect(() => {
     if (match) {
-      if (Number(match[0].focus) < 250) {
+      if (Number(match[0]?.focus) < 250) {
         if (Number(match[0].focus) > 200) {
           setBoonNoti("You are 50 points from level 5");
         }
@@ -31,9 +31,8 @@ export default function Notification({
   }, [match]);
   return (
     <div
-      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-scroll ${
-        shownotifications ? "translate-y-0 top-24" : "-translate-y-[100vh] "
-      } shadow-2xl  p-1  z-30 items-center bg-[#101010]`}
+      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-scroll ${shownotifications ? "translate-y-0 top-24" : "-translate-y-[100vh] "
+        } shadow-2xl  p-1  z-30 items-center bg-[#101010]`}
     >
       <div className="flex flex-col  items-center justify-center">
         <h1 className=" cursor-pointer my-2 tracking-tight  text-white text-center ">

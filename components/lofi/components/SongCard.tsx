@@ -64,6 +64,7 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }: any) => {
         </div>
       </PlayPause>
     </div>
+
   );
 };
 
