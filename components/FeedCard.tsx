@@ -16,6 +16,13 @@ import { BsSend } from "react-icons/bs";
 import { useUser } from "@clerk/nextjs";
 import ReactPlayer from "react-player";
 import { fetchFeedComments } from "../utils/fetchFeedComments";
+import { SendIcon } from "./Postcard/SendIcon";
+import {
+  FaComments,
+  FaInfoCircle,
+  FaShareAlt,
+  FaThumbsUp,
+} from "react-icons/fa";
 
 interface Props {
   feeds: Videos;
@@ -56,92 +63,101 @@ const FeedCard = ({ feeds }: Props) => {
     refreshComments();
   };
   return (
-    <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+    <div className="grid bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50 h-full   gap-2 p-0 lg:p-4 pb-12 mb-8 grid-cols-6">
       <div className=" col-span-4  rounded-lg ">
-        <div className="relative overflow-hidden shadow-md pb-80 mb-6">
+        <div className=" overflow-hidden  ">
           {feeds.video ? (
             <ReactPlayer height={500} controls url={feeds.video} />
           ) : (
             <>
               <img
                 src={feeds.image}
-                className="object-top absolute h-80 w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+                className=" h-96 w-96  object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
               />
             </>
           )}
         </div>
-
-        <div className="block lg:flex text-center items-center justify-center mb-8 w-full">
-          <div className="flex  justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
-            <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
+      </div>
+      <div className="col-span-2 flex flex-col  w-full h-full   px-2 py-1 overflow-hidden">
+        <div className="flex flex-col  gap-5 p-2  border-b border-white/40 py-3 ">
+          <Link
+            href={`/user/${feeds.author}`}
+            className="flex gap-2 font-sans items-center"
+          >
+            <img
+              className="w-[33px] h-[33px] rounded-full object-contain hover:cursor-pointer hover:border-2 hover:border-white/50 transition-all duration-100 border-white/30 hover:scale-110"
+              src={feeds.profileImage}
+            />
+            <p className="text-neutral-200 text-base font-normal">
               {feeds.author}
             </p>
+          </Link>
+
+          <div className="p-2 ">
+            <div className="flex gap-4">
+              <h1 className="font-poppins font-[450] text-sm">
+                {feeds.author}:
+              </h1>
+              <h2 className="font-poppins text-sm text-neutral-200">
+                {feeds.title}
+              </h2>
+            </div>
           </div>
-          <div className="font-medium text-gray-700">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 inline mr-2 text-pink-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <span className="align-middle">
-              {/* @ts-ignore */}
-              <ReactTimeago date={feeds._createdAt} />
-            </span>
+          <div className="space-y-4 mt-3 overflow-y-scroll h-80 scrollbar-none   shadow-lg rounded-lg p-2 mb-1 border-b-2 border-t-2 border-white/10">
+            {comments.map((comment) => (
+              <Grid className="flex items-center gap-4 ">
+                <div className="flex justify-center items-center gap-2">
+                  <img
+                    className="h-8 object-cover rounded-full w-8"
+                    src={comment.profileImg}
+                  />
+                  <h1 className="font-poppins text-sm text-neutral-200">
+                    {comment.username}
+                  </h1>
+                </div>
+                <h1 className="!font-extralight font-poppins text-xs">
+                  {comment.comment}
+                </h1>
+              </Grid>
+            ))}
           </div>
-        </div>
-        <div className="text-center text-lg text-gray-700 font-normal px-4 lg:px-20 mb-8">
-          {feeds.desc}
-        </div>
-      </div>
-      <div className="col-span-2 border-l px-2">
-        <div className="flex items-center border-b py-1">
-          <User name={feeds.author} src={feeds.profileImage} />
-          <Button size={"xs"} bordered shadow auto>
-            Follow
-          </Button>
-        </div>
-        <div className="p-2">
-          <Text h2 size={15} className="font-semibold">
-            {feeds.author}: <Text className="font-medium">{feeds.title}</Text>
-          </Text>
-        </div>
-        <div className="space-y-4 mt-5 overflow-y-scroll h-72  shadow-lg rounded-lg p-2">
-          {comments.map((comment) => (
-            <Grid className="flex items-center ">
-              <User
-                name={comment.username}
-                src={comment.profileImg}
-                size={"sm"}
-              />
-              <Text className="text-sm">{comment.comment}</Text>
-            </Grid>
-          ))}
-        </div>
-        <div className="p-2 outline-none border-none w-full">
-          <div className=" flex justify-center gap-2  items-center w-full ">
-            <Input
-              clearable
-              label="Comment"
-              // @ts-ignore
-              width={900}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Write your comment"
-            />
-            <div
-              // @ts-ignore
-              onClick={() => handleSubmit(feeds._id)}
-              className="border rounded-full p-2 mt-5 cursor-pointer flex justify-center items-center"
-            >
-              <BsSend className=" w-4 h-4 " />
+          <div className="p-2 outline-none border-none w-full">
+            <div className="flex justify-between items-center p-2 pb-0 mt-1">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <div className="text-gray-500 hover:text-pink-500 cursor-pointer">
+                    <FaThumbsUp size={22} />
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-gray-500 hover:text-gray-100 cursor-pointer">
+                    <FaComments size={22} />
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-gray-500 hover:text-blue-500 cursor-pointer">
+                    <FaShareAlt size={22} />
+                  </div>
+                </div>
+              </div>
+              <div className="text-gray-500 hover:text-red-500 cursor-pointer">
+                <FaInfoCircle size={22} />
+              </div>
+            </div>
+
+            <div className=" flex justify-center gap-1  items-center w-full mt-0 py-3 px-0 mx-1">
+              <div className="w-full flex justify-center bg-zinc-700  h-fit px-4 py-2 bg-opacity-20 rounded-[5px] border border-zinc-700 border-opacity-50 items-center">
+                <input
+                  placeholder="Write your comment.."
+                  value={input}
+                  // aria-placeholder="looks good"
+                  onChange={(e) => setInput(e.target.value)}
+                  className="bg-transparent focus:outline-none px-2 focus:border-white/0 focus:ring-0 text-neutral-200 "
+                />
+                <div className="rotate-45 cursor-pointer text-neutral-300">
+                  <SendIcon onClick={() => handleSubmit(feeds._id!)} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

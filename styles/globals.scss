@@ -365,9 +365,15 @@ body {
 }
 
 .blog h1 {
-  font-size: 1.7rem;
   font-weight: 700;   
 }
+
+.preview pre {
+  font-size: 1.7rem;
+  font-weight: 700;   
+  background-color: transparent;
+}
+
 
 .blog h2 {
   font-size: 1.5rem;

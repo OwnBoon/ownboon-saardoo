@@ -143,6 +143,8 @@ export interface Posts extends SanityBody {
     mainImage: string
     categories: string
     email: string
+    like?: number
+    liked?: User[]
     body: string
 
 }
