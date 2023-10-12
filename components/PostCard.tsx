@@ -42,10 +42,52 @@ const PostCard = ({ post, match, users }: Props) => {
     const comments: Comment[] = await fetchComments(post._id);
     setComments(comments);
   };
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  function generateString(length: number) {
+    let result = " ";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+  }
+
+  const random = generateString(8);
+  const random2 = generateString(9);
 
   useEffect(() => {
     refreshComments();
   }, []);
+
+  const like = async (id: string) => {
+    const liked = post.liked!.map((follows) => ({
+      _key: random2,
+      _ref: follows._id,
+      _type: "reference",
+    }));
+    const mutation = {
+      id: id,
+      like: post.like! + 1,
+      liked: [
+        // ...liked, // previously liked
+        {
+          _key: random,
+          _ref: match[0]._id,
+          _type: "reference",
+        },
+      ],
+    };
+    const result = await fetch(`/api/setBlog`, {
+      body: JSON.stringify(mutation),
+      method: "POST",
+    });
+
+    const json = result.json();
+    console.log(json);
+    return json;
+  };
 
   const blogauthor = users.filter((userss) => userss.email === post.email);
 
@@ -96,32 +138,48 @@ const PostCard = ({ post, match, users }: Props) => {
       }
     };
     return (
-      <div className="grid  bg-[#29292b]/40 rounded-[10px] border border-zinc-700 border-opacity-50 text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+      <div className="grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
         <div className="  col-span-1 lg:col-span-4  rounded-lg ">
-          <div className="relative flex justify-between overflow-hidden shadow-md pb-80 mb-6">
-            <img
-              src={post.mainImage}
-              className="object-top absolute h-1/2 w-1/2 object-contain border-2  border-white/10  rounded-t-lg lg:rounded-lg"
-            />
-            <h1 className="transition absolute right-16 top-3 duration-700 text-center mb-6 cursor-pointer hover:text-pink-600 text-xl font-semibold">
-              <Link href={`/post/${post.slug}`}>{post.title}</Link>
-            </h1>
-            <div className="right-20 top-20 text-sm text-neutral-200 absolute">
-              {post.body.slice(0, 400)}
+          <div>
+            <div className="flex gap-6 ">
+              <img
+                className="h-56 object-cover w-56 rounded-md"
+                src={post.mainImage}
+              />
+              <div className="space-y-5">
+                <h1 className="text-neutral-200 text-base font-semibold">
+                  {post.title}
+                </h1>
+                <p>
+                  <div
+                    className="!bg-transparent  text-neutral-300 font-sans  font-normal"
+                    dangerouslySetInnerHTML={{
+                      __html: post.body.replace(/<[^>]+>/g, "").slice(0, 280),
+                    }}
+                  />
+                </p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <div
+                className="!bg-transparent  text-neutral-300 font-sans  font-normal"
+                dangerouslySetInnerHTML={{
+                  __html: post.body.replace(/<[^>]+>/g, "").slice(280, 2000),
+                }}
+              />
             </div>
           </div>
-
-          <div className="text-center text-lg text-gray-400 font-normal px-4 lg:px-20 mb-5"></div>
-          <div className="text-center">
-            <Link href={`/blogs/${post.slug!.current}`}>
-              <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-700 text-base font-medium rounded-3xl text-white px-8 py-3 cursor-pointer mt-0">
-                Continue Reading
-              </span>
+          <div className="flex items-bottom h-full">
+            <Link
+              href={`/blogs/${post.slug}`}
+              className="flex h-fit w-full  cursor-pointer hover:backdrop-blur-md mt-4 px-4 py-3 justify-center items-center bg-zinc-700 bg-opacity-50 rounded-[5px] border border-zinc-700"
+            >
+              <h1>Read Article</h1>
             </Link>
           </div>
         </div>
-        <div className="col-span-2 border-l px-2 overflow-hidden">
-          <div className="flex items-center gap-5 border-b py-1 ">
+        <div className="col-span-2  px-2 py-1 overflow-hidden">
+          <div className="flex items-center gap-5 p-2  border-b border-white/40 py-3 ">
             <Link
               href={`/user/${post.author}`}
               className="flex gap-2 font-sans items-center"
@@ -134,7 +192,10 @@ const PostCard = ({ post, match, users }: Props) => {
                 {post.author}
               </p>
             </Link>
-            <div onClick={() => addCategory()} className="">
+            <div
+              onClick={() => addCategory()}
+              className=" border border-white/60 border-opacity-75 text-sm  px-2 py-0.5 bg-white bg-opacity-20 cursor-pointer rounded-[3px]"
+            >
               Follow
             </div>
             <DropdownMenu>
@@ -160,43 +221,30 @@ const PostCard = ({ post, match, users }: Props) => {
             </DropdownMenu>
           </div>
           <div className="p-2 ">
-            <Text
-              h2
-              size={18}
-              className="font-semibold"
-              weight={"bold"}
-              css={{ color: "White" }}
-            >
-              {post.author}:{" "}
-              <Text
-                size={16}
-                className="font-semibold"
-                css={{
-                  textGradient: "45deg, $gray400 -20%, $white 80%",
-                }}
-              >
+            <div className="flex gap-4">
+              <h1 className="font-poppins font-[450] text-sm">
+                {post.author}:
+              </h1>
+              <h2 className="font-poppins text-sm text-neutral-200">
                 {post.title}
-              </Text>
-            </Text>
+              </h2>
+            </div>
           </div>
-          <div className="space-y-4 mt-3 overflow-y-scroll h-80  shadow-lg rounded-lg p-2 mb-1 border-2 border-gray-800">
+          <div className="space-y-4 mt-3 overflow-y-scroll h-80 scrollbar-none   shadow-lg rounded-lg p-2 mb-1 border-b-2 border-t-2 border-white/10">
             {comments.map((comment) => (
-              <Grid className="flex items-center ">
-                <User
-                  name={comment.username}
-                  src={comment.profileImg}
-                  size={"sm"}
-                  pointer
-                  zoomed
-                  css={{ zIndex: 0 }}
-                />
-                <Text
-                  className="font-normal"
-                  css={{ color: "White" }}
-                  size={13}
-                >
+              <Grid className="flex items-center gap-4 ">
+                <div className="flex justify-center items-center gap-2">
+                  <img
+                    className="h-8 object-cover rounded-full w-8"
+                    src={comment.profileImg}
+                  />
+                  <h1 className="font-poppins text-sm text-neutral-200">
+                    {comment.username}
+                  </h1>
+                </div>
+                <h1 className="!font-extralight font-poppins text-xs">
                   {comment.comment}
-                </Text>
+                </h1>
               </Grid>
             ))}
           </div>
@@ -225,25 +273,18 @@ const PostCard = ({ post, match, users }: Props) => {
             </div>
 
             <div className=" flex justify-center gap-1  items-center w-full mt-0 py-3 px-0 mx-1">
-              <Grid>
-                <Input
-                  clearable
-                  contentRightStyling={false}
+              <div className="w-full flex justify-center bg-zinc-700  h-fit px-4 py-2 bg-opacity-20 rounded-[5px] border border-zinc-700 border-opacity-50 items-center">
+                <input
                   placeholder="Write your comment.."
+                  value={input}
                   // aria-placeholder="looks good"
-                  size="lg"
                   onChange={(e) => setInput(e.target.value)}
-                  color="primary"
-                  bordered
-                  borderWeight="bold"
-                  css={{ background: "$gray50", color: "$gray50" }}
-                  contentRight={
-                    <SendButton>
-                      <SendIcon onClick={() => handleSubmit(post._id!)} />
-                    </SendButton>
-                  }
+                  className="bg-transparent focus:outline-none px-2 focus:border-white/0 focus:ring-0 text-neutral-200 "
                 />
-              </Grid>
+                <div className="rotate-45 cursor-pointer text-neutral-300">
+                  <SendIcon onClick={() => handleSubmit(post._id!)} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -251,7 +292,7 @@ const PostCard = ({ post, match, users }: Props) => {
     );
   } else if (match[0].follow?.length! > 0) {
     const follows = match[0].follow!.map((follows) => ({
-      _key: "56247242we",
+      _key: random2,
       _ref: follows._id,
       _type: "reference",
     }));
@@ -262,7 +303,7 @@ const PostCard = ({ post, match, users }: Props) => {
           follow: [
             ...follows,
             {
-              _key: "rahshasabbsaz",
+              _key: random,
               _ref: blogauthor[0]._id!,
               _type: "reference",
             },
@@ -282,103 +323,161 @@ const PostCard = ({ post, match, users }: Props) => {
       }
     };
     return (
-      <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
-        <div className=" col-span-4  rounded-lg ">
-          <div className="relative overflow-hidden shadow-md pb-80 mb-6">
-            <img
-              src={post.mainImage}
-              className="object-top absolute h-80 w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
-            />
-          </div>
-
-          <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-pink-600 text-3xl font-semibold">
-            <Link href={`/post/${post.slug}`}>{post.title}</Link>
-          </h1>
-          <div className="block lg:flex text-center items-center justify-center mb-8 w-full">
-            <div className="flex  justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
-              <Link
-                href={`/user/${post.author}`}
-                className="inline align-middle text-gray-700 ml-2 font-medium text-lg"
-              >
-                {post.author}
-              </Link>
+      <div className="grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
+        <div className="  col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
+          <div className="h-full">
+            <div className="flex gap-6 h-fit ">
+              <img
+                className="h-56 object-cover w-56 rounded-md"
+                src={post.mainImage}
+              />
+              <div className="space-y-5">
+                <h1 className="text-neutral-200 text-base font-semibold">
+                  {post.title}
+                </h1>
+                <p>
+                  <div
+                    className="!bg-transparent  text-neutral-300 font-sans  font-normal"
+                    dangerouslySetInnerHTML={{
+                      __html: post.body.replace(/<[^>]+>/g, "").slice(0, 280),
+                    }}
+                  />
+                </p>
+              </div>
             </div>
-            <div className="font-medium text-gray-700">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 inline mr-2 text-pink-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <span className="align-middle">
-                {/* @ts-ignore */}
-                <ReactTimeago date={post._createdAt} />
-              </span>
+            <div className="mt-4 font-poppins font-light">
+              <div
+                className="!bg-transparent  text-neutral-300 font-sans  font-normal"
+                dangerouslySetInnerHTML={{
+                  __html: post.body.replace(/<[^>]+>/g, "").slice(280, 2000),
+                }}
+              />
+              ...
             </div>
           </div>
-          <div className="text-center text-lg text-sky-400 font-normal px-4 lg:px-20 mb-8">
-            <div
-              className="blog"
-              dangerouslySetInnerHTML={{ __html: post.body.slice(0, 120) }}
-            />
-          </div>
-          <div className="text-center">
-            <Link href={`/blogs/${post.slug!.current}`}>
-              <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-8 py-3 cursor-pointer">
-                Continue Reading
-              </span>
+          <div className="flex justify-center mt-9 h-full">
+            <Link
+              href={`/blogs/${post.slug.current}`}
+              className="flex h-fit w-full  cursor-pointer hover:backdrop-blur-md mt-4 px-4 py-3 justify-center items-center bg-zinc-700 bg-opacity-50 rounded-[5px] border border-zinc-700"
+            >
+              <h1>Read Article</h1>
             </Link>
           </div>
         </div>
-        <div className="col-span-2 border-l px-2">
-          <div className="flex items-center border-b py-1">
-            <Avatar src={post.profileImage} />
-            <div onClick={() => addCategory()} className="">
-              Follow
+        <div className="col-span-2  px-2 py-1 overflow-hidden">
+          <div className="flex items-center gap-5 p-2  border-b border-white/20 py-3 ">
+            <Link
+              href={`/user/${post.author}`}
+              className="flex gap-2 font-sans items-center"
+            >
+              <img
+                className="w-[33px] h-[33px] rounded-full object-contain hover:cursor-pointer hover:border-2 hover:border-white/50 transition-all duration-100 border-white/30 hover:scale-110"
+                src={post.profileImage}
+              />
+              <p className="text-neutral-200 text-base font-normal">
+                {post.author}
+              </p>
+            </Link>
+            {match[0].follow.map(
+              (follow) => follow.name == post.author
+            ) ? null : (
+              <div
+                onClick={() => addCategory()}
+                className=" border border-white/60 border-opacity-75 text-xs font-poppins  px-2 py-0.5 bg-white bg-opacity-20 cursor-pointer rounded-[3px]"
+              >
+                Follow
+              </div>
+            )}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="w-6 h-6 flex items-center justify-center cursor-pointer mx-2 ">
+                  <FaEllipsisV className="text-gray-400" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem className="flex flex-col bg-black ">
+                  <div className="py-2">
+                    <button className="text-gray-500 hover:text-gray-200 px-4 py-2 w-full text-left">
+                      About
+                    </button>
+                  </div>
+                  <div className="py-2">
+                    <button className="text-gray-500 hover:text-gray-200 px-4 py-2 w-full text-left">
+                      Report
+                    </button>
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div className="p-2 ">
+            <div className="flex gap-4">
+              <h1 className="font-poppins font-[450] text-sm">
+                {post.author}:
+              </h1>
+              <h2 className="font-poppins text-xs font-light text-neutral-200">
+                {post.title}
+              </h2>
             </div>
           </div>
-          <div className="p-2">
-            <Text h2 size={15} className="font-semibold">
-              {post.author}: <Text className="font-medium">{post.title}</Text>
-            </Text>
-          </div>
-          <div className="space-y-4 mt-5 overflow-y-scroll h-72  shadow-lg rounded-lg p-2">
+          <div className="space-y-4 mt-3 overflow-y-scroll h-80 scrollbar-none   shadow-lg rounded-lg p-2 mb-1 border-b-2 rounded-b-none border-white/20">
             {comments.map((comment) => (
-              <Grid className="flex items-center ">
-                <User
-                  name={comment.username}
-                  src={comment.profileImg}
-                  size={"sm"}
-                />
-                <Text className="text-sm">{comment.comment}</Text>
+              <Grid className="flex items-center gap-4 ">
+                <div className="flex justify-center items-center gap-2">
+                  <img
+                    className="h-7 object-cover rounded-full w-7"
+                    src={comment.profileImg}
+                  />
+                  <h1 className="font-poppins text-xs text-neutral-200">
+                    {comment.username}
+                  </h1>
+                </div>
+                <h1 className="!font-extralight font-poppins text-xs">
+                  {comment.comment}
+                </h1>
               </Grid>
             ))}
           </div>
           <div className="p-2 outline-none border-none w-full">
-            <div className=" flex justify-center gap-2  items-center w-full ">
-              <Input
-                clearable
-                label="Comment"
-                aria-placeholder="Looks good"
-                // @ts-ignore
-                width={900}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Write your comment"
-              />
-              <div
-                // @ts-ignore
-                onClick={() => handleSubmit(post._id)}
-                className="border rounded-full p-2 mt-5 cursor-pointer flex justify-center items-center"
-              >
-                <BsSend className=" w-4 h-4 " />
+            <div className="flex justify-between items-center p-2 pb-0 mt-1">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <div
+                    onClick={() => like(post._id!)}
+                    className="text-gray-500 hover:text-pink-500 cursor-pointer"
+                  >
+                    <FaThumbsUp size={22} />
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-gray-500 hover:text-gray-100 cursor-pointer">
+                    <FaComments size={22} />
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-gray-500 hover:text-blue-500 cursor-pointer">
+                    <FaShareAlt size={22} />
+                  </div>
+                </div>
+              </div>
+              <div className="text-gray-500 hover:text-red-500 cursor-pointer">
+                <FaInfoCircle size={22} />
+              </div>
+            </div>
+
+            <div className=" flex justify-center gap-1  items-center w-full mt-0 py-3 px-0 mx-1">
+              <div className="w-full flex justify-center bg-zinc-700  h-fit px-4 py-2 bg-opacity-20 rounded-[5px] border border-zinc-700 border-opacity-50 items-center">
+                <input
+                  placeholder="Write your comment.."
+                  value={input}
+                  // aria-placeholder="looks good"
+                  onChange={(e) => setInput(e.target.value)}
+                  className="bg-transparent focus:outline-none px-2 focus:border-white/0 focus:ring-0 text-neutral-200 "
+                />
+                <div className="rotate-45 cursor-pointer text-neutral-300">
+                  <SendIcon onClick={() => handleSubmit(post._id!)} />
+                </div>
               </div>
             </div>
           </div>

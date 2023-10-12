@@ -20,13 +20,21 @@ interface Props {
   goals: Goals[];
 }
 const categories = [
-  "sendbird_group_channel_196366427_00ef971c0f88f6dd06389fd19a2871818c2954c1", // maths
-  "sendbird_group_channel_196293859_75bae9fbe0514d598c2cc8838911152d497d754b", // cs
-  "sendbird_group_channel_196293859_8f660b9965e1b1b7c4c2e329b853c9664f1edb9a", // english
+  {
+    name: "Maths",
+    value:
+      "sendbird_group_channel_196366427_00ef971c0f88f6dd06389fd19a2871818c2954c1",
+  },
+  {
+    name: "English",
+    value:
+      "sendbird_group_channel_196293859_8f660b9965e1b1b7c4c2e329b853c9664f1edb9a",
+  },
 ];
 const chat = ({ users, goals }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [categoryslide, setCategoryslide] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   useEffect(() => {
     if (!localStorage.getItem("visited")) {
@@ -60,7 +68,7 @@ const chat = ({ users, goals }: Props) => {
             }),
           }
         );
-        console.log(category);
+        console.log("category", category);
 
         if (!response.ok) {
           console.error("Failed to join group chat:", await response.text());
@@ -79,9 +87,13 @@ const chat = ({ users, goals }: Props) => {
         border="gray-500"
         children={
           <main className="min-h-screen overflow-hidden  scrollbar-none scrollbar">
-            <Modal open={showModal} onClose={() => setShowModal(false)}>
-              <Modal.Header>
-                <Text>Welcome!</Text>
+            {/* <Modal
+              className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+              open={showModal}
+              onClose={() => setShowModal(false)}
+            >
+              <Modal.Header className="w-full">
+                <h1>Welcome!</h1>
               </Modal.Header>
               <Modal.Body>
                 <p>Select the categories you want to follow:</p>
@@ -98,7 +110,96 @@ const chat = ({ users, goals }: Props) => {
                 <Button onPress={() => setShowModal(false)}>Cancel</Button>
                 <Button onPress={handleSubmit}>Submit</Button>
               </Modal.Footer>
-            </Modal>
+            </Modal> */}
+            {!categoryslide ? (
+              <Modal
+                closeButton
+                open={showModal}
+                onClose={() => setShowModal(false)}
+                aria-labelledby="modal-title"
+                className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-sm fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+                width="80%"
+              >
+                <Modal.Header className="text-neutral-400">
+                  <p className="text-neutral-400"></p>
+                </Modal.Header>
+                <Modal.Body className="flex justify-center items-center h-full w-full">
+                  {" "}
+                  <Text id="modal-title" color="white" size={40}>
+                    <h1 className="fade  bg-transparent  text-neutral-100 brightness-125">
+                      Welcome to Chats
+                    </h1>
+                  </Text>
+                  <h2 className="text-neutral-400 fade">
+                    {" "}
+                    Before you access the app we would like to ask a few
+                    questions from you
+                  </h2>
+                </Modal.Body>
+                <Modal.Footer className="w-full p-2">
+                  <div className="flex fade justify-center p-2 w-full gap-5">
+                    <div className=" border-gray-500/30 bg-[#363636]/20 backdrop-blur-lg from-gray-300 w-fit flex flex-col justify-start relative hover:   items-center py-3 border rounded">
+                      <button
+                        onClick={() => setCategoryslide(true)}
+                        className="rounded-xl cursor-pointer whitespace-nowrap md:text-lg  text-sm   text-[#dddddd] relative mx-24"
+                      >
+                        Get Started
+                      </button>
+                    </div>
+                  </div>
+                </Modal.Footer>
+              </Modal>
+            ) : (
+              <Modal
+                closeButton
+                open={showModal}
+                onClose={() => setShowModal(false)}
+                aria-labelledby="modal-title"
+                className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-sm fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+                width="80%"
+              >
+                <Modal.Header className="text-neutral-400">
+                  <p className="text-neutral-400"></p>
+                </Modal.Header>
+                <Modal.Body className="flex justify-center items-center h-full w-full">
+                  {" "}
+                  <Text id="modal-title" color="white" size={40}>
+                    <h1 className="fade  bg-transparent  text-neutral-100 brightness-125">
+                      Join a Group Chat
+                    </h1>
+                  </Text>
+                  <h2 className="text-neutral-400 fade">
+                    {" "}
+                    Select a category of which group chat you want to join
+                  </h2>
+                  {categories.map((category) => (
+                    <div className="flex gap-3 justify-start items-center max-w-7xl min-w-max">
+                      <input
+                        id="default-checkbox"
+                        type="checkbox"
+                        value=""
+                        onChange={(e) => handleCategoryChange(category.value)}
+                        className="border-solid border-neutral-200 hover:cursor-pointer bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
+                      />
+                      <h1 className="text-white ">{category.name}</h1>
+                    </div>
+                  ))}
+                </Modal.Body>
+                <Modal.Footer className="w-full p-2">
+                  <div className="flex fade justify-center p-2 w-full gap-5">
+                    <div className=" border-gray-500/30 bg-[#363636]/20 backdrop-blur-lg from-gray-300 w-fit flex flex-col justify-start relative hover:   items-center py-3 border rounded">
+                      <button
+                        onClick={handleSubmit}
+                        className="rounded-xl cursor-pointer whitespace-nowrap md:text-lg  text-sm   text-[#dddddd] relative mx-24"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                </Modal.Footer>
+              </Modal>
+            )}
+
             <Chat user={match} />
           </main>
         }
