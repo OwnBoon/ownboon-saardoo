@@ -422,11 +422,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
           <section
             id="section-1"
-            className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5"
+            className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5 "
           >
             <div
               id="TodoAndGenerator-container"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 flex-col md:flex-row lg:flex-col justify-start gap-5 relative items-center"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 flex-col md:flex-row lg:flex-col justify-start gap-4 relative items-center ml-6"
             >
               <TodoList todos={todos} user={user} setTodos={setTodos} />
 
@@ -440,10 +440,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   and resources to create optimized schedules, maximizing
                   efficiency and productivity.
                 </div>
-                <div className=" border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
+                <div className=" border-gray-500 bg-gradient-to-r from-[#363636] to [#3d3d3d] w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded">
                   <button
                     onClick={() => setShowPromptModal(true)}
-                    className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24"
+                    className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24 "
                   >
                     Generate Now
                   </button>
@@ -452,17 +452,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             </div>
             <div
               id="boonIland-wraper "
-              className="bg-[#191919] xl:col-span-2 w-full h-full py-3 rounded-lg overflow-hidden gap-2"
+              className="bg-[#191919] xl:col-span-2 w-fit h-full flex-grow ml-6  py-3 rounded-lg overflow-hidden gap-2  "
             >
               <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
                 Boon Island
               </div>
               <div className="" onClick={() => load()}>
                 {/* display the image of the current level of boon island, static image to avoid long loading */}
-                <div className="opacity-100  bg-transparent hover:cursor-pointer w-full md:w-1/2 group h-full absolute "></div>
+                {/* <div className="opacity-100   bg-transparent hover:cursor-pointer w-full md:w-1/2 sm:w-1/4 group h-full absolute "></div> */}
                 {level < 5 ? (
                   <img
-                    className="group-hover:brightness-110 transition-all duration-150"
+                    className="group-hover:brightness-110 transition-all duration-150 max-w-full mx-auto "
                     src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
                   />
                 ) : level < 10 ? (
@@ -496,7 +496,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </section>
-          <div className="p-2 overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible ">
+          <div className="p-2 overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-fit ml-1 items-center h-full  rounded-lg justify-center overflow-y-visible ">
             <div className="flex justify-center w-full  gap-1 relative items-center">
               <div className="flex items-center gap-2 col-span-2 justify-end w-full">
                 <div className="w-full"></div>

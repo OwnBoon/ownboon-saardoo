@@ -327,7 +327,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
     >
       <div className="w-full flex flex-row gap-1 relative items-center justify-between">
         <div className="w-10 h-10"></div>
-        <div className="whitespace-nowrap border-b-2 border-b-white/30 md:px-5 px-3 text-[23px] font-sans text-white w-fit flex gap-2">
+        <div className="whitespace-nowrap underline underline-offset-8 border-b-0 mr-5  border-b-white/30 md:px-5 px-2 text-[23px] font-sans text-white w-fit flex gap-2">
           To Do List
         </div>
         <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -367,7 +367,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             {todos.map((t: Goals) => (
               <div
                 key={t._id}
-                className="flex flex-row group mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 "
+                className="flex flex-row group mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-50 "
               >
                 <MenuIcon className="p-1 font-light fade transition-all hover:cursor-pointer w-7 h-7 flex-shrink-0  rounded  drag-handle" />
                 <input
@@ -378,20 +378,25 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                   onChange={(e) => changeTodoState(t._id, e)}
                   className="border-solid border-neutral-200 bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
                 />
-                <div className="whitespace-nowrap   font-sans text-white relative">
+                <label
+                  htmlFor="default-checkbox"
+                  className={`whitespace-nowrap font-sans relative ${
+                    t.completed ? "line-through text-gray-500" : "text-white"
+                  }`}
+                >
                   {t.title}
-                </div>
+                </label>
                 <Image
                   src="delete-icon.svg"
                   alt={""}
                   width={30}
                   height={30}
-                  className="p-2  opacity-0 group-hover:opacity-100   transition-all duration-100 hidden group-hover:inline  hover:cursor-pointer  rounded  drag-handle ml-auto"
+                  className="p-2  opacity-0 group-hover:opacity-100   transition-all duration-100  group-hover:inline  hover:cursor-pointer  rounded  drag-handle ml-auto"
                   onClick={() => addDeleted(t._id)}
                 />
                 <div className="mr-20">
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <div className="opacity-0 group-hover:opacity-100    transition-all duration-100  group-hover:inline">
+                    <div className="opacity-0 group-hover:opacity-100    transition-all duration-100  group-hover:inline hover:cursor-pointer  rounded  drag-handle ml-auto">
                       <DatePicker
                         disablePast
                         sx={{
@@ -419,7 +424,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                         }
                       />
                     </div>
-                  </LocalizationProvider>
+                  </LocalizationProvider >
                 </div>
                 {/* <Image
                   src="calendar.svg"
@@ -457,7 +462,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 alt={""}
                 width={30}
                 height={30}
-                className="p-2 fade transition-all  rounded  drag-handle"
+                className="p-2  fade transition-all  rounded  drag-handle"
               />
             </div>
           )}

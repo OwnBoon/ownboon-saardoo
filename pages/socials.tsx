@@ -189,7 +189,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
             <div className="grid grid-cols-1 w-full  lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
               <div className="lg:col-span-8 col-span-1 ">
                 <div className="flex  lg:text-md  gap-10 justify-between w-full items-center">
-                  <div className="flex justify-between w-auto mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
+                  <div className="flex justify-between w-auto mt-1 pt-2 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
                     <div className="lg:hidden items-center">
                       <button
                         onClick={() => setShowFilter(!showFilter)}
@@ -277,7 +277,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           </Link>
                         </div>
                       ) : (
-                        <div className=" z-50 ml-56 lg-flex lg:justify-items-end px-2 ">
+                        <div className=" z-50 ml-56 lg-flex lg:justify-items-end px-4 ">
                           <Link href="/publish-blog">
                             <Tooltip content="Publish a blog">
                               <div className="hidden lg:flex"></div>
