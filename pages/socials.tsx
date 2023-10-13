@@ -21,6 +21,7 @@ import {
   Grid,
   Input,
   Loading,
+  Modal,
   Spacer,
   Text,
   Tooltip,
@@ -33,6 +34,12 @@ import FeedCard from "../components/FeedCard";
 import Layout from "../components/Layout/Layout";
 import { useRouter } from "next/router";
 import { fetchGoals } from "../utils/fetchGoals";
+import {
+  CheckBadgeIcon,
+  HomeIcon,
+  DocumentIcon as DocumentIcon2,
+} from "@heroicons/react/24/solid";
+import { DocumentIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 interface Video {
   id: {
     videoId: string;
@@ -124,6 +131,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const [videos, setVideos] = useState<Video[]>();
   const [showpost, setShowPost] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
+  const [videoName, setVideoName] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [videoId, setVideoId] = useState("");
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -189,8 +199,8 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
             <div className="grid grid-cols-1 w-full  lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
               <div className="lg:col-span-8 col-span-1 ">
                 <div className="flex  lg:text-md  gap-10 justify-between w-full items-center">
-                  <div className="flex justify-between w-auto mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
-                    <div className="lg:hidden items-center">
+                  <div className="flex justify-between  overflow-x-scroll md:overflow-hidden scrollbar-thin w-fit mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
+                    <div className="lg:hidden  items-center">
                       <button
                         onClick={() => setShowFilter(!showFilter)}
                         className={`cursor-pointer rounded-lg flex items-center p-2 ${
@@ -205,19 +215,32 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                         Filter
                       </button>
                     </div>
-                    <div className="hidden lg:flex justify-between items-center gap-10">
+                    <div className="flex justify-between   items-center gap-10">
                       <button
                         onClick={() => {
                           setShowVideo(true);
                           setShowPost(true);
                         }}
-                        className={`cursor-pointer rounded-lg flex items-center p-2 ${
-                          showVideo && showpost
-                            ? "text-blue-500 bg-blue-800"
-                            : "text-white bg-black/5"
-                        }hover:bg-blue-500 hover:text-gray-400`}
+                        className={`bg-white bg-opacity-25 hover:text-gray-400  flex items-center justify-center w-32 h-8 rounded-[5px] border border-white border-opacity-50 
+                        
+                        `}
                       >
-                        <FaList className="mr-2" />
+                        <HomeIcon className="w-4 mr-2 h-4" />
+                        Home
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowVideo(true);
+                          setShowPost(true);
+                        }}
+                        className={`bg-white bg-opacity-25  flex items-center w-20 h-8 justify-center  rounded-[5px] border border-white border-opacity-50
+                          hover:text-gray-400 ${
+                            !showpost && showVideo
+                              ? "bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50"
+                              : ""
+                          }`}
+                      >
+                        <CheckBadgeIcon className="w-5 h-5 mr-2" />
                         All
                       </button>
                       <button
@@ -225,24 +248,26 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           setShowPost(false);
                           setShowVideo(false);
                         }}
-                        className={`cursor-pointer rounded-lg flex items-center p-2 ${
+                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${
                           !showpost && !showVideo
-                            ? "text-blue-500 bg-blue-100"
-                            : "text-white bg-black/5"
-                        }hover:bg-blue-500 hover:text-gray-400`}
+                            ? "!bg-white !bg-opacity-25 !border-white !border-opacity-50"
+                            : ""
+                        } hover:text-gray-400 `}
                       >
-                        <FaBlogger className="mr-2" />
+                        {!showpost && !showVideo ? (
+                          <DocumentIcon2 className="mr-2 h-4 w-4" />
+                        ) : (
+                          <DocumentIcon className="mr-2 h-4 w-4" />
+                        )}
                         Blogs
                       </button>
                       <button
                         onClick={() => setShowVideo(true)}
-                        className={`cursor-pointer rounded-lg flex items-center p-2${
-                          showVideo
-                            ? "text-blue-500 bg-blue-100"
-                            : "text-white bg-black/5"
-                        }hover:bg-blue-500 hover:text-gray-400`}
+                        className={`cursor-pointer  flex items-center  w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50${
+                          showVideo ? "" : ""
+                        } hover:text-gray-400`}
                       >
-                        <FaVideo className="mr-2" />
+                        <VideoCameraIcon className="mr-2 h-4 w-4" />
                         Videos
                       </button>
                       <button
@@ -281,16 +306,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           <Link href="/publish-blog">
                             <Tooltip content="Publish a blog">
                               <div className="hidden lg:flex"></div>
-                              <Button
-                                shadow
-                                bordered
-                                borderWeight="bold"
-                                size="md"
-                                color="gradient"
-                                className="hidden lg:inline-block"
-                              >
+                              <button className="bg-zinc-600 px-2 py-1 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50">
                                 Create
-                              </Button>
+                              </button>
                               <div className="lg:hidden flex justify-items-end">
                                 <Button
                                   shadow
@@ -323,7 +341,14 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                             : `/video/cV2gBU6hKfY`
                           }
                         > */}
-                            <Link href={`/videos/${video.id.videoId}`}>
+                            <div
+                              onClick={() => {
+                                setShowModal(true);
+
+                                setVideoName(video.snippet.title);
+                                setVideoId(video.id.videoId);
+                              }}
+                            >
                               <div className="space-y-2 flex flex-col items-start  ">
                                 <img
                                   className=" rounded-xl"
@@ -339,10 +364,32 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                                   {/* </Link> */}
                                 </div>
                               </div>
-                            </Link>
+                            </div>
                           </div>
                         ))}
                       </div>
+                      <Modal
+                        closeButton
+                        aria-labelledby="modal-title"
+                        className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+                        width="80%"
+                        // onClose={}
+                        open={showModal}
+                      >
+                        <Modal.Header className="text-neutral-400">
+                          <p className="text-neutral-400">{videoName}</p>
+                        </Modal.Header>
+                        <Modal.Body className="flex justify-center items-center h-full w-full">
+                          {" "}
+                          <ReactPlayer
+                            url={`https://www.youtube.com/watch?v=${videoId}`}
+                            className="mr-20"
+                            controls
+                            width={960}
+                            height={540}
+                          />
+                        </Modal.Body>
+                      </Modal>
                     </>
                   ) : (
                     <>

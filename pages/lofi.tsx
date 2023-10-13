@@ -214,7 +214,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       border={"#ccc"}
       children={
         <div className="h-screen overflow-hidden text-[#000000]">
-          <div className="flex items-center justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
+          <div className="flex items-center overflow-hidden justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
             {sessionStarted && (
               <>
                 <Discover />

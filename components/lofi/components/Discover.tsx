@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { setActiveSong, setIsPlaying } from "../redux/features/playerSlice";
 import Error from "./../components/Error";
@@ -8,11 +8,14 @@ import { genres } from "../../../assets/constants";
 import Loader from "./../components/Loader";
 import SongCard from "./../components/SongCard";
 import Draggable, { DraggableCore } from "react-draggable";
+import { Collapse } from "@nextui-org/react";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const Discover = () => {
   const dispatch = useDispatch();
   const { activeSong, isPlaying } = useSelector((state: any) => state.player);
   const { genreListId } = useSelector((state: any) => state.player);
+  const [songClosed, setSongClosed] = useState(true);
   // const { isPlaying } = useSelector((state: any) => state.player);
 
   const { data, isFetching, error } = useGetSongsByGenreQuery(
@@ -31,7 +34,7 @@ const Discover = () => {
   const play = "opacity-100 transition-all duration-2000 btn ease-in-out mr-4";
 
   return (
-    <div className="w-fit h-[80vh] -mt-1 md:left-32 md:top-28 md:absolute flex flex-col overflow-x-hidden">
+    <div className=" items-center md:items-baseline h-full overflow-y-hidden w-full -mt-1 md:left-32 md:top-28 md:absolute flex flex-col overflow-x-hidden">
       <Draggable cancel=".btn">
         <div className="flex justify-between btn items-center sm:flex-row flex-col -mt-4 mb-10 md:mt-0">
           <select
@@ -49,12 +52,31 @@ const Discover = () => {
       </Draggable>
 
       <Draggable cancel=".btn">
-        <div className="flex left-20 md:h-1/2  sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]  overflow-x-hidden justify-center gap-8 ">
+        <div
+          className={`flex left-20 ${
+            songClosed ? "md:h-1/2" : "md:w-fit"
+          }   sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px] scrollbar-none  overflow-x-hidden justify-center gap-8 `}
+        >
           <div className="flex h-fit w-fit scrollbar-none scrollbar flex-col items-start overflow-x-hidden">
-            <div className="px-4 py-3 cursor-pointer">
-              <h1 className="text-white font-sans text-base font-semibold">
-                Currently Playing
-              </h1>
+            <div className="px-4 py-3 cursor-pointer w-full ">
+              <div className="flex justify-between w-full">
+                <h1 className="text-white font-sans text-base font-semibold">
+                  Currently Playing
+                </h1>
+                <div>
+                  {songClosed ? (
+                    <MinusIcon
+                      onClick={() => setSongClosed(false)}
+                      className="h-6 w-6 text-neutral-200 cursor-pointer "
+                    />
+                  ) : (
+                    <PlusIcon
+                      onClick={() => setSongClosed(true)}
+                      className="h-6 w-6 cursor-pointer text-neutral-200 "
+                    />
+                  )}
+                </div>
+              </div>
               <div className="w-10 h-[0px] border border-neutral-200"></div>
               <div>
                 <div className="flex py-3 gap-5">
@@ -72,31 +94,37 @@ const Discover = () => {
                   </div>
                 </div>
               </div>
-              <div>
-                <h1 className="text-white font-sans mt-2 text-base font-semibold">
-                  Other Songs
-                </h1>
-                <div className="w-10 h-[0px] border border-neutral-200"></div>
-              </div>
+              {songClosed ? (
+                <div>
+                  <h1 className="text-white font-sans mt-2 text-base font-semibold">
+                    Other Songs
+                  </h1>
+                  <div className="w-10 h-[0px] border border-neutral-200"></div>
+                </div>
+              ) : null}
             </div>
-            {filteredSongs?.map((song: any, i: any) => (
-              <div
-                className={play}
-                key={i}
-                style={{
-                  display: "flex",
-                }}
-              >
-                <SongCard
-                  key={song.key}
-                  song={song}
-                  isPlaying={isPlaying}
-                  activeSong={null}
-                  data={data}
-                  i={i}
-                />
-              </div>
-            ))}
+            {songClosed ? (
+              <>
+                {filteredSongs?.map((song: any, i: any) => (
+                  <div
+                    className={play}
+                    key={i}
+                    style={{
+                      display: "flex",
+                    }}
+                  >
+                    <SongCard
+                      key={song.key}
+                      song={song}
+                      isPlaying={isPlaying}
+                      activeSong={null}
+                      data={data}
+                      i={i}
+                    />
+                  </div>
+                ))}
+              </>
+            ) : null}
           </div>
         </div>
       </Draggable>
