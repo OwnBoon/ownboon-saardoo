@@ -33,7 +33,7 @@ import FeedCard from "../components/FeedCard";
 import Layout from "../components/Layout/Layout";
 import { useRouter } from "next/router";
 import { fetchGoals } from "../utils/fetchGoals";
-import './styles.css'
+// import './styles.css'
 interface Video {
   id: {
     videoId: string;
@@ -55,6 +55,13 @@ interface Props {
   videoData: Video[];
   feed: Videos[];
   goals: Goals[];
+}
+
+const socialsPageTabs = {
+  all: 'all',
+  blogs: 'blogs',
+  videos: 'videos',
+  posts: 'posts'
 }
 
 function Socials({ posts, users, videoData, feed, goals }: Props) {
@@ -179,6 +186,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const [videos, setVideos] = useState<Video[]>();
   const [showpost, setShowPost] = useState(true);
   const [showFilter, setShowFilter] = useState(true);
+
+  const [selectedTab, setSelectedTab] = useState(socialsPageTabs.all)
+
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -265,16 +275,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
 
                     <button
                       onClick={() => {
-                        setShowVideo(true);
-                        setShowPost(true);
-
-                        setshowall(true)
-                        setshowblog(false)
-                        setshowposts(false)
-                        setshowvideos(false)
+                        setSelectedTab(socialsPageTabs.all)
 
                       }}
-                      className={`cursor-pointer rounded-lg flex items-center p-2  ${showall
+                      className={`cursor-pointer rounded-lg flex items-center p-2  ${selectedTab == socialsPageTabs.all
                         ? "blogfilteractive"
                         : "blogfilter"
                         } `}
@@ -284,15 +288,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                     </button>
                     <button
                       onClick={() => {
-                        setShowPost(false);
-                        setShowVideo(false);
-
-                        setshowall(false)
-                        setshowblog(true)
-                        setshowposts(false)
-                        setshowvideos(false)
+                        setSelectedTab(socialsPageTabs.blogs)
                       }}
-                      className={`cursor-pointer rounded-lg flex items-center p-2  ${showblog
+                      className={`cursor-pointer rounded-lg flex items-center p-2  ${selectedTab == socialsPageTabs.blogs
                         ? "blogfilteractive"
                         : "blogfilter"
                         } `}
@@ -302,15 +300,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                     </button>
                     <button
                       onClick={() => {
-                        setShowVideo(true);
-                        setShowPost(false);
-
-                        setshowall(false)
-                        setshowblog(false)
-                        setshowposts(false)
-                        setshowvideos(true)
+                        setSelectedTab(socialsPageTabs.videos)
                       }}
-                      className={`cursor-pointer rounded-lg flex items-center p-2  ${showvideos
+                      className={`cursor-pointer rounded-lg flex items-center p-2  ${selectedTab == socialsPageTabs.videos
                         ? "blogfilteractive"
                         : "blogfilter"
                         }`}
@@ -320,15 +312,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                     </button>
                     <button
                       onClick={() => {
-                        setShowVideo(false);
-                        setShowPost(true);
-
-                        setshowall(false)
-                        setshowblog(false)
-                        setshowposts(true)
-                        setshowvideos(false)
+                        setSelectedTab(socialsPageTabs.posts)
                       }}
-                      className={`cursor-pointer rounded-lg flex items-center p-2  ${showposts
+                      className={`cursor-pointer rounded-lg flex items-center p-2  ${selectedTab == socialsPageTabs.posts
                         ? "blogfilteractive"
                         : "blogfilter"
                         } `}
@@ -380,28 +366,28 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                 </div>
               </div>
 
-              {showblog ? <>
+              {selectedTab == socialsPageTabs.blogs ? <>
                 <div className="m-5 scrollblogdata ">
                   <div className=" blogweekly p-4 mt-5">
-                    <img src="/blogimage.png" className="img-fluid " style={{ width: "100vw", height:"22rem",borderRadius:"10px" }} />
+                    <img src="/blogimage.png" className="img-fluid " style={{ width: "100vw", height: "22rem", borderRadius: "10px" }} />
 
                     <div className="alignbetween mt-4"> <p>The Theory of Time - Codehecker</p><FaExclamationCircle className="mr-2" /></div>
-                    
+
                     <p className="mt-3 mb-3">vitae tempus. Arcu felis bibendum ut tristique et egestas quis. Lectus urna duis convallis convallis tellus id interdum. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Ultrices sagittis orci a scelerisque purus. Posuere ac ut consequat semper viverra nam libero justo laoreet. Integer enim neque volutpat ac. Velit laoreet id donec ultrices tincidunt. In pellentesque massa placerat duis ultricies lacus sed. Tristique senectus et netus et malesuada. Gravida in fermentum et sollicitudin. Commodo ullamcorper a lacus vestibulum. In cursus turpis massa tincidunt dui ut ornare. Odio euismod lacinia at quis.Erat velit scelerisque in...</p>
                     <span><FaThumbsUp className="mr-2" /> <FaShareAlt className="mr-2" /></span>
                   </div>
                   <div className=" blogweekly p-4 mt-5">
-                    <img src="/blogimage.png" className="img-fluid " style={{ width: "100vw", height:"22rem",borderRadius:"10px" }} />
+                    <img src="/blogimage.png" className="img-fluid " style={{ width: "100vw", height: "22rem", borderRadius: "10px" }} />
 
                     <div className="alignbetween mt-4"> <p>The Theory of Time - Codehecker</p><FaExclamationCircle className="mr-2" /></div>
-                    
+
                     <p className="mt-3 mb-3">vitae tempus. Arcu felis bibendum ut tristique et egestas quis. Lectus urna duis convallis convallis tellus id interdum. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Ultrices sagittis orci a scelerisque purus. Posuere ac ut consequat semper viverra nam libero justo laoreet. Integer enim neque volutpat ac. Velit laoreet id donec ultrices tincidunt. In pellentesque massa placerat duis ultricies lacus sed. Tristique senectus et netus et malesuada. Gravida in fermentum et sollicitudin. Commodo ullamcorper a lacus vestibulum. In cursus turpis massa tincidunt dui ut ornare. Odio euismod lacinia at quis.Erat velit scelerisque in...</p>
                     <span><FaThumbsUp className="mr-2" /> <FaShareAlt className="mr-2" /></span>
                   </div><div className=" blogweekly p-4 mt-5">
-                    <img src="/blogimage.png" className="img-fluid " style={{ width: "100vw", height:"22rem",borderRadius:"10px" }} />
+                    <img src="/blogimage.png" className="img-fluid " style={{ width: "100vw", height: "22rem", borderRadius: "10px" }} />
 
                     <div className="alignbetween mt-4"> <p>The Theory of Time - Codehecker</p><FaExclamationCircle className="mr-2" /></div>
-                    
+
                     <p className="mt-3 mb-3">vitae tempus. Arcu felis bibendum ut tristique et egestas quis. Lectus urna duis convallis convallis tellus id interdum. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Ultrices sagittis orci a scelerisque purus. Posuere ac ut consequat semper viverra nam libero justo laoreet. Integer enim neque volutpat ac. Velit laoreet id donec ultrices tincidunt. In pellentesque massa placerat duis ultricies lacus sed. Tristique senectus et netus et malesuada. Gravida in fermentum et sollicitudin. Commodo ullamcorper a lacus vestibulum. In cursus turpis massa tincidunt dui ut ornare. Odio euismod lacinia at quis.Erat velit scelerisque in...</p>
                     <span><FaThumbsUp className="mr-2" /> <FaShareAlt className="mr-2" /></span>
                   </div>
@@ -410,7 +396,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
               </> : ""}
 
               <div className="transition-all w-auto duration-500 flex flex-col-reverse  h-[calc(100vh-80px)] overflow-y-auto no-scrollbar col-span-1" id="postsection">
-                {showVideo ? (
+                {selectedTab == socialsPageTabs.videos || selectedTab == socialsPageTabs.all ? (
                   <>
                     <div className="justify-center flex flex-col items-center gap-5 ">
                       {/* @ts-ignore */}
@@ -446,7 +432,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                   </>
                 ) : (
                   <>
-                    {showpost ? (
+                    {selectedTab == socialsPageTabs.posts || selectedTab == socialsPageTabs.all ? (
                       <div className="p-5">
                         {feed.map((feeds, index) => (
                           <>
