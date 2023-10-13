@@ -33,6 +33,7 @@ import FeedCard from "../components/FeedCard";
 import Layout from "../components/Layout/Layout";
 import { useRouter } from "next/router";
 import { fetchGoals } from "../utils/fetchGoals";
+import PostCardDummy from "../components/PostCardDummy";
 // import './styles.css'
 interface Video {
   id: {
@@ -432,7 +433,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                   </>
                 ) : (
                   <>
-                    {selectedTab == socialsPageTabs.posts || selectedTab == socialsPageTabs.all ? (
+                    {/* {selectedTab == socialsPageTabs.posts || selectedTab == socialsPageTabs.all ? (
                       <div className="p-5">
                         {feed.map((feeds, index) => (
                           <>
@@ -453,6 +454,13 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           </div>
                         ))}
                       </div>
+                    )} */}
+
+                    {(selectedTab == socialsPageTabs.posts || selectedTab == socialsPageTabs.all) && (
+                      <PostCardDummy match={match}
+                        users={users}
+                        key={1}
+                      />
                     )}
                   </>
                 )}
