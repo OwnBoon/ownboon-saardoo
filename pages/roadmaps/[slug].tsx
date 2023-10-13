@@ -12,12 +12,19 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import Layout from "../../components/Layout/Layout";
-import { Card, Dropdown, Loading, Text, Tooltip } from "@nextui-org/react";
+import {
+  Card,
+  Dropdown,
+  Loading,
+  Modal,
+  Text,
+  Tooltip,
+} from "@nextui-org/react";
 import Link from "next/link";
 import { Menu } from "../../components/Roadmap/more";
 import { fetchGoals } from "../../utils/fetchGoals";
 import { ArrowBigRightDash } from "lucide-react";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 interface Props {
   roadmap: Roadmaps;
   goals: Goals[];
@@ -138,7 +145,7 @@ const Post = ({ roadmap, goals }: Props) => {
             <div className=" relative space-y-10 flex w-full items-center py-10 flex-col justify-center">
               <div className="absolute border z-0 border-zinc-700/20 w-1 rounded-3xl bg-zinc-700 bg-opacity-20 h-full"></div>
               {roadmapdata.roadmap.map((roadmap: any, index: number) => (
-                <div className="z-20 group flex items-center gap-[0.65rem]">
+                <div className="z-20 group active:scale-105 transition-all duration-100 flex items-center gap-[0.65rem]">
                   <Tooltip
                     content={`click to know more`}
                     color="invert"
@@ -156,7 +163,7 @@ const Post = ({ roadmap, goals }: Props) => {
                       <div
                         // @ts-ignore
                         onClick={() => setGoal(deafult, roadmap.title, index)}
-                        className="text-lg font-sans group-hover:inline hidden opacity-0 group-hover:opacity-100 transition-all duration-200 hover:cursor-pointer"
+                        className="text-lg  font-sans group-hover:inline  opacity-0 group-hover:opacity-100 transition-all duration-200 hover:cursor-pointer"
                       >
                         +
                       </div>
@@ -168,9 +175,120 @@ const Post = ({ roadmap, goals }: Props) => {
           </div>
           {/* Info */}
           <div
+            onClick={() => setAbout(true)}
             className={
               about
-                ? "h-screen inline  w-full overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin -my-10 p-10 "
+                ? "hidden opacity-0 w-0"
+                : "w-fit bg-neutral-900  h-fit py-2 cursor-pointer hidden md:inline opacity-100 rounded-[10px] px-5 border border-zinc-800"
+            }
+          >
+            <ArrowLeftIcon
+              onClick={() => setAbout(true)}
+              className="h-5 w-5 cursor-pointer"
+            />
+          </div>
+          {infotext ? (
+            <Modal
+              // closeButton
+              aria-labelledby="modal-title"
+              className="!bg-[#191919]/40 md:hidden  inline-flex z-50 h-[70vh]  justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+              open={true}
+              width="80%"
+            >
+              <Modal.Body>
+                <div className="h-screen scale-75  w-full overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin -my-10 p-10 ">
+                  <div className="h-screen w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
+                    <div className="space-y-5">
+                      <h1 className="text-xl flex justify-between items-center text-white font-semibold">
+                        Block Title:{" "}
+                        {!blockSelected ? <div></div> : blockSelected}
+                        <span>
+                          {loading ? (
+                            <Loading color={"secondary"} />
+                          ) : (
+                            <ArrowRightIcon
+                              onClick={() => setAbout(false)}
+                              className="h-5 w-5 cursor-pointer"
+                            />
+                          )}
+                        </span>
+                      </h1>
+                      {/* data */}
+                      <div>
+                        {/* @ts-ignore */}
+                        {infotext ? <p>{infotext.description}</p> : null}
+                      </div>
+                    </div>
+                    <div className="">
+                      <h1 className="text-xl text-white font-semibold">
+                        Recommended Youtube Videos
+                      </h1>
+                      <div>
+                        {infotext ? (
+                          <div className="flex gap-10 rounded-lg">
+                            {/* @ts-ignore */}
+                            <ReactPlayer
+                              width={300}
+                              height={150}
+                              controls
+                              // @ts-ignore
+                              url={infotext.link[0]}
+                            />
+                            {/* @ts-ignore */}
+                            <ReactPlayer
+                              width={300}
+                              height={150}
+                              controls
+                              // @ts-ignore
+                              url={infotext.link[1]}
+                            />
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                    <div>
+                      <h1 className="text-xl text-white font-semibold">
+                        Recommended Blog
+                      </h1>
+                      {infotext ? (
+                        <>
+                          {/*  @ts-ignore */}
+                          <Link
+                            target="_blank"
+                            className=""
+                            // @ts-ignore
+                            href={infotext.blog}
+                          >
+                            <div className="text-neutral-200 mt-5 w-fit p-3 rounded-[5px] shadow border border-zinc-800 border-opacity-75 text-base font-medium">
+                              Open in web
+                            </div>
+                          </Link>
+                          <div>{/* @ts-ignore */}</div>
+                        </>
+                      ) : null}
+                    </div>
+                    <div>
+                      <h1>3 best content creators in the field</h1>
+                      <div>
+                        {infotext ? (
+                          <div>
+                            {/* @ts-ignore */}
+                            {infotext.creators.map((creator) => (
+                              <div>{creator.name}</div>
+                            ))}
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
+          ) : null}
+          <div
+            className={
+              about
+                ? "h-screen md:inline hidden  w-full overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin -my-10 p-10 "
                 : "hidden transition-all duration-150 opacity-0"
             }
           >

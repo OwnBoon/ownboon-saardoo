@@ -421,7 +421,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   return (
     <div className="overflow-y-scroll h-screen">
-      {!match[0].categories && !categoryslide ? (
+      {match[0].categories && !categoryslide ? (
         <>
           <Modal
             // closeButton
