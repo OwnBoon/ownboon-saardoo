@@ -418,7 +418,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   return (
     <>
-      <div className="overflow-y-visible bg-[#101010] fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
+      <div className="overflow-y-visible bg-[#101010] ml-3 fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
         <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
           <section
             id="section-1"
@@ -435,7 +435,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   Ai Schedule Generator
                 </div>
                 <div className="mb-2 relative w-40 h-px shrink-0 " />
-                <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
+                <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4 sm:text-sm md:text-base lg:text-lg xl:text-[15px]">
                   The AI schedule generator analyzes preferences, constraints,
                   and resources to create optimized schedules, maximizing
                   efficiency and productivity.
@@ -522,7 +522,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             </div>
             {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
-              {filteredNotes.map((note) => (
+               {filteredNotes.map((note) => (
                 <>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
                     <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
@@ -554,7 +554,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           onClick={(e) => handleNoteChange(note._id!)}
                           className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
                         >
-                          <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                          <button className=" text-sm select-none  text-[#dddddd] relative px-5 md:px-8 p-2 md:p-4">
                             Update Note
                           </button>
                         </div>

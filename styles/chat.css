@@ -2737,12 +2737,14 @@
   .sendbird-message-input {
     display: flex;
     flex-grow: calc( );
-    width: 103%;
+    width: 100%;
     position: relative;
+    margin-left: 25px;
   }
   .sendbird-message-input .sendbird-message-input--textarea {
     position: relative;
-    width:103.20%;
+    margin-left: auto;
+    width:100%;
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;

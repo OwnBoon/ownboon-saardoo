@@ -35,12 +35,12 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
   const productivity = Math.floor((focus_no * 10) / 60);
 
   return (
-    <div className="h-[48vw] fade justify-center items-center w-[94.3vw] flex relative">
+    <div className="h-[48vw] fade justify-center items-center sm:w-[94.3vw] flex relative w-fit ">
       {user ? (
         <>
           {level < 5 ? (
             <Spline
-              className=""
+              className="sm:w-full w-fit"
               scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
             />
           ) : level < 10 ? (
@@ -73,59 +73,60 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           ) : (
             <Image src={"/boonisland.png"} fill alt={""} />
           )}
-          <div className="flex animate-floaty gap-x-8 shadow-zinc-700 shadow-2xl	 flex-row py-8 rounded-3xl  px-8 bg-[#191919a8] text-white absolute  bottom-4">
+          <div className="flex animate-floaty  items-center flex-row gap-y-4 gap-x-6 sm:gap-x-8 shadow-zinc-700 shadow-2xl py-4 sm:py-8 rounded-3xl px-8 sm:px-8 bg-[#191919a8] text-white absolute bottom-4">
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Current Level</h1>
-              <h2 className="font-poppins text-3xl">{level}</h2>
+              <h1 className="font-poppins text-sm sm:text-md">Current Level</h1>
+              <h2 className="font-poppins text-lg sm:text-3xl">{level}</h2>
             </div>
-            <div className="w-0 h-16 border border-neutral-400"></div>
+            <div className="w-0 h-8 sm:h-16 border border-neutral-400"></div>
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Points</h1>
-              <h2 className="font-poppins text-3xl">{focus}</h2>
+              <h1 className="font-poppins text-sm sm:text-md">Points</h1>
+              <h2 className="font-poppins text-lg sm:text-3xl">{focus}</h2>
             </div>
-            <div className="w-0 h-16 border border-neutral-400"></div>
+            <div className="w-0 h-8 sm:h-16 border border-neutral-400"></div>
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Next Level</h1>
-              <h2 className="font-poppins text-3xl">{level + 1} </h2>
+              <h1 className="font-poppins text-sm sm:text-md">Next Level</h1>
+              <h2 className="font-poppins text-lg sm:text-3xl">{level + 1}</h2>
             </div>
           </div>
           <div
             onClick={() =>
               setShowBoonIslandModal ? setShowBoonIslandModal(false) : null
             }
-            className="flex flex-col text-white rounded-xl fade cursor-pointer absolute shadow-2xl left-8 top-5 py-3 px-5 bg-[#191919a8] font-poppins text-xl"
+            className="flex flex-col text-white rounded-xl fade cursor-pointer absolute shadow-2xl left-6 sm:left-8 top-1 sm:top-5 py-2 sm:py-3 px-4 sm:px-5 bg-[#191919a8] font-poppins text-xl sm:text-2xl"
           >
             {"<-"}
           </div>
           <div
             onClick={() => (setShowislandinfo ? setShowislandinfo(true) : null)}
-            className="flex flex-col text-white rounded-xl fade cursor-pointer absolute shadow-2xl right-8 top-5 py-3 px-6 bg-[#191919a8] font-poppins text-xl"
+            className="flex flex-col text-white rounded-xl fade cursor-pointer absolute shadow-2xl right-6 sm:right-8 top-1 sm:top-5 py-2 sm:py-3 px-4 sm:px-6 bg-[#191919a8] font-poppins text-xl sm:text-2xl"
           >
             {"i"}
           </div>
           <Dialog isOpen={showislandinfo} onClose={setShowislandinfo}>
-            <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-              <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-              <div className="flex flex-col my-3 items-center space-y-2">
-                {/* display the image of the current level of boon island, static image to avoid long loading */}
-                <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                  <li className="text-xl text-white font-poppins">
-                    You've spent more than {productivity} hours on your
-                    productivity
-                  </li>
-                  <li className="text-xl text-white font-poppins">
-                    You're a {level < 11 ? "Newbie" : null} because you've
-                    solved more than problems on ownboon
-                  </li>
-                  <li className="text-xl text-white font-poppins">
-                    You're in one of the top 1% users
-                  </li>
-                  <li className="text-xl text-white font-poppins">
-                    You've explored 30% potential of ownboon
-                  </li>
-                </div>
-              </div>
-            </div>
+          <div className="flex w-[60vw] sm:w-[40vw] md:w-[50vw] bg-[#191919a8] h-auto md:h-[auto] sm:h-[auto] items-center rounded-xl flex-col">
+  <h1 className="font-poppins text-xl sm:text-2xl md:text-3xl mt-8 sm:mt-12">
+    Level Name
+  </h1>
+  <div className="flex flex-col my-3 items-center space-y-2">
+    {/* Display the image of the current level of boon island, static image to avoid long loading */}
+    <div className="flex flex-col px-4 sm:px-8 space-y-2 text-start items-start">
+      <li className="text-sm sm:text-xl md:text-2xl text-white font-poppins">
+        You've spent more than {productivity} hours on your productivity
+      </li>
+      <li className="text-sm sm:text-xl md:text-2xl text-white font-poppins">
+        You're a {level < 11 ? "Newbie" : null} because you've solved more than problems on ownboon
+      </li>
+      <li className="text-sm sm:text-xl md:text-2xl text-white font-poppins">
+        You're in one of the top 1% users
+      </li>
+      <li className="text-sm sm:text-xl md:text-2xl text-white font-poppins">
+        You've explored 30% potential of ownboon
+      </li>
+    </div>
+  </div>
+</div>
+
           </Dialog>
         </>
       ) : (

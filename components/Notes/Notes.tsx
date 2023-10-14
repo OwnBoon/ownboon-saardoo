@@ -58,9 +58,9 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
   return (
     <div>
       {" "}
-      <div className="border border-white/30 overflow-hidden bg-[#212121] space-y-5  h-fit   w-full px-2 rounded-xl py-2">
-        <div className="flex justify-center items-center">
-          <div className="flex flex-col gap-5">
+      <div className="border border-white/30 overflow-hidden bg-[#212121] space-y-5  sm:h-fit h-84 py-4 w-fit  px-2  sm:w-full sm:px-4 rounded-xl sm:py-4">
+        <div className="flex justify-center items-center w-min">
+          <div className=" ml-3 flex flex-col gap-5 ">
             <input
               className="bg-transparent border-b flex border-white/40 justify-center  outline-none "
               placeholder="Category"
@@ -80,7 +80,7 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
                 <div className="flex space-x-5 items-center justify-center"></div>
                 <ReactQuill
                   theme="snow"
-                  className="h-36 w-full !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                  className=" md:h-36 sm:h-fit  w-fit !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
                   value={text || note?.note}
                   onChange={setText}
                 />
@@ -90,11 +90,11 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
                     handleSubmit(e);
                     close();
                   }}
-                  className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                  className="bg-opacity-30  w-fit mt-1 mb-1 rounded-lg active:scale-105 bg-transparent flex pl-2 justify-center items-center"
                 >
-                  <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                  <Button size='sm' color='primary'auto shadow css={{padding:'$5',position:'relative'}}>
                     Update Note
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
