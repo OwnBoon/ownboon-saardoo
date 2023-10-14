@@ -358,7 +358,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
       </div>
       <div className="border-solid border-gray-700 self-center mb-3 w-40 relative  h-px shrink-0" />
       {!showTaskInput && (
-        <div className="overflow-x-scroll  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#3b3b3b]">
+        <div className="overflow-y-scroll overflow-x-hidden h-56  scrollbar-thin scrollbar-track-[#101010]/50 scrollbar-thumb-[#3b3b3b]/40 ]">
           <ReactSortable
             handle=".drag-handle"
             list={todos}
@@ -367,7 +367,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             {todos.map((t: Goals) => (
               <div
                 key={t._id}
-                className="flex flex-row group mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-white/20 cursor-pointer hover:border-opacity-30 "
+                className="flex flex-row group  mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-white/20 cursor-pointer hover:border-opacity-30 "
               >
                 <MenuIcon className="p-1 font-light fade transition-all hover:cursor-pointer w-7 h-7 flex-shrink-0  rounded  drag-handle" />
                 <input

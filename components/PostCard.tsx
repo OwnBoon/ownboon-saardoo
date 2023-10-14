@@ -127,7 +127,7 @@ const PostCard = ({ post, match, users }: Props) => {
           id: match[0]._id,
           follow: [
             {
-              _key: "5t632xwqeqx",
+              _key: random,
               _ref: blogauthor[0]._id!,
               _type: "reference",
             },

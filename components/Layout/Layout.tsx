@@ -4,6 +4,7 @@ import Head from "next/head";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Goals, User } from "../../typings";
+import SidebarMobile from "./SidebarMobile";
 interface Props {
   children?: ReactNode;
   bgColor: string;
@@ -52,7 +53,8 @@ const Layout = ({
         setShowsidebar={setShowsidebar}
         border={border}
       />
-      <div className="max-[500px]:w-[84vw] h-screen w-[88vw] md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
+      <SidebarMobile />
+      <div className="max-[500px]:w-fit pl-3 md:pl-0 h-screen  md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
         <Navbar
           goals={goals}
           users={users}
