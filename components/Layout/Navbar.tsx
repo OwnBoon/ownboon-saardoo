@@ -116,6 +116,10 @@ const Navbar = ({
       >
         <div className="flex justify-between w-full">
           <div className="flex items-center gap-2 text-white">
+            <img
+              className="md:hidden inline w-10 h-10"
+              src="https://ownboon.com/_next/image?url=%2Flogo.png&w=48&q=75"
+            />
             <Image width={30} height={30} className="" src={icon} alt={text} />
             <span className="font-fontspring text-[20px]">{text}</span>
           </div>
