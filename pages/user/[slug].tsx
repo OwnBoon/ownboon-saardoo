@@ -46,19 +46,19 @@ const User = ({ user, posts, users, goals }: Props) => {
   const blog = posts.filter((post) => post.email === user.email);
   const userss = useUser();
   const characters =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-function generateString(length: number) {
-  let result = " ";
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  function generateString(length: number) {
+    let result = " ";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
   }
 
-  return result;
-}
-
-const random = generateString(8);
-const random2 = generateString(9);
+  const random = generateString(8);
+  const random2 = generateString(9);
 
   const matchuser = userss.user;
   if (userss.user) {
@@ -103,7 +103,7 @@ const random2 = generateString(9);
           border="gray-500"
           goals={goals}
           children={
-            <div className="">
+            <div className="w-screen h-screen overflow-y-scroll">
               <div className="">
                 <Head>
                   <title> {user.name} </title>
@@ -241,7 +241,7 @@ const random2 = generateString(9);
         _ref: follows._id,
         _type: "reference",
       }));
-     
+
       const addCategory = async () => {
         try {
           const postInfo: UserBody = {
@@ -259,7 +259,7 @@ const random2 = generateString(9);
             body: JSON.stringify(postInfo),
             method: "POST",
           });
-  
+
           const json = await result.json();
           return json;
         } catch (err) {
@@ -267,7 +267,7 @@ const random2 = generateString(9);
         } finally {
           window.location.reload();
         }
-      }
+      };
       return (
         <Layout
           hasBg={false}
@@ -277,7 +277,7 @@ const random2 = generateString(9);
           border="gray-500"
           goals={goals}
           children={
-            <div className="">
+            <div className="w-screen h-screen overflow-y-scroll">
               <div className="">
                 <Head>
                   <title> {user.name} </title>

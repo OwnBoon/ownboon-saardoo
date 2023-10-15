@@ -308,71 +308,73 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                 <LofiNotes notes={notes} user={user} setNotes={setNotesList} />
               )}
             </div>
-
-            <Draggable cancel=".btn">
-              <div className="w-fit cursor-pointer absolute bottom-10 right-4 h-fit space-y-5 px-5 py-3 bg-white bg-opacity-30 rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]">
-                <div className="flex gap-4 justify-center items-center ">
-                  <button
-                    className={
-                      toolbar
-                        ? "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
-                        : "hidden opacity-0"
-                    }
-                  >
-                    <img
-                      id="todo"
-                      onClick={() => {
-                        showTodo ? setShowTodo(false) : setShowTodo(true);
-                      }}
-                      className="w-7 h-7 relative select-none"
-                      src="https://cdn.discordapp.com/attachments/1045236840220860468/1158382223075065937/image.png?ex=651c0b03&is=651ab983&hm=e0c1b35db7758a487d8540e5c4fe76725ff42c4491b3d40cc75d01c819657b95&"
-                    />
-                  </button>
-                  <div
-                    className={
-                      toolbar
-                        ? "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
-                        : "hidden opacity-0 "
-                    }
-                  >
-                    <img
-                      onClick={() => {
-                        showNotes ? setShowNotes(false) : setShowNotes(true);
-                      }}
-                      id="notes"
-                      className="w-7 h-7 relative select-none"
-                      src="https://cdn.discordapp.com/attachments/1045236840220860468/1158378707078099046/image.png?ex=651c07bd&is=651ab63d&hm=16d72c47a38143065332b826d2feb836e28bb21a330bd385d8371f14b28d8840&"
-                    />
-                  </div>
-                  <div
-                    className={
-                      "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg   flex items-center justify-center h-[3.6rem] w-[3.6rem]"
-                    }
-                    onClick={() => {
-                      toolbar ? setToolbar(false) : setToolbar(true);
-                    }}
-                  >
-                    <div className="w-5 bg-white select-none h-[3px]" />
-                  </div>
-                </div>
-                <div className="flex gap-4  items-center">
-                  <Tooltip content="coming soon">
-                    <div
+            {sessionStarted && (
+              <Draggable cancel=".btn">
+                <div className="w-fit cursor-pointer absolute bottom-10 right-4 h-fit space-y-5 px-5 py-3 bg-white bg-opacity-30 rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px]">
+                  <div className="flex gap-4 justify-center items-center ">
+                    <button
                       className={
                         toolbar
-                          ? "bg-white bg-opacity-30 btn p-4 rounded backdrop-blur-lg opacity-100 transition-opacity duration-100"
+                          ? "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
                           : "hidden opacity-0"
                       }
                     >
                       <img
+                        id="todo"
+                        onClick={() => {
+                          showTodo ? setShowTodo(false) : setShowTodo(true);
+                        }}
+                        className="w-7 h-7 relative select-none"
+                        src="https://cdn.discordapp.com/attachments/1045236840220860468/1158382223075065937/image.png?ex=651c0b03&is=651ab983&hm=e0c1b35db7758a487d8540e5c4fe76725ff42c4491b3d40cc75d01c819657b95&"
+                      />
+                    </button>
+                    <div
+                      className={
+                        toolbar
+                          ? "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg opacity-100"
+                          : "hidden opacity-0 "
+                      }
+                    >
+                      <img
+                        onClick={() => {
+                          showNotes ? setShowNotes(false) : setShowNotes(true);
+                        }}
+                        id="notes"
                         className="w-7 h-7 relative select-none"
                         src="https://cdn.discordapp.com/attachments/1045236840220860468/1158378707078099046/image.png?ex=651c07bd&is=651ab63d&hm=16d72c47a38143065332b826d2feb836e28bb21a330bd385d8371f14b28d8840&"
                       />
                     </div>
-                  </Tooltip>
+                    <div
+                      className={
+                        "bg-white cursor-pointer btn hover:bg-opacity-20 transition-all duration-100 active:scale-105 bg-opacity-30 p-4 rounded backdrop-blur-lg   flex items-center justify-center h-[3.6rem] w-[3.6rem]"
+                      }
+                      onClick={() => {
+                        toolbar ? setToolbar(false) : setToolbar(true);
+                      }}
+                    >
+                      <div className="w-5 bg-white select-none h-[3px]" />
+                    </div>
+                  </div>
+                  <div className="flex gap-4  items-center">
+                    <Tooltip content="coming soon">
+                      <div
+                        className={
+                          toolbar
+                            ? "bg-white bg-opacity-30 btn p-4 rounded backdrop-blur-lg opacity-100 transition-opacity duration-100"
+                            : "hidden opacity-0"
+                        }
+                      >
+                        <img
+                          className="w-7 h-7 relative select-none"
+                          src="https://cdn.discordapp.com/attachments/1045236840220860468/1158378707078099046/image.png?ex=651c07bd&is=651ab63d&hm=16d72c47a38143065332b826d2feb836e28bb21a330bd385d8371f14b28d8840&"
+                        />
+                      </div>
+                    </Tooltip>
+                  </div>
                 </div>
-              </div>
-            </Draggable>
+              </Draggable>
+            )}
+
             <button
               className="bg-[#D9D9D9] hidden md:inline bottom-10 z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/4 rounded p-4 cursor-pointer"
               // @ts-ignore

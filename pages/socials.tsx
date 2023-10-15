@@ -34,12 +34,19 @@ import FeedCard from "../components/FeedCard";
 import Layout from "../components/Layout/Layout";
 import { useRouter } from "next/router";
 import { fetchGoals } from "../utils/fetchGoals";
+import { categories } from "../utils/constants";
 import {
   CheckBadgeIcon,
   HomeIcon,
   DocumentIcon as DocumentIcon2,
 } from "@heroicons/react/24/solid";
 import { DocumentIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+
+import { Dropdown } from "@nextui-org/react";
+
+import { AiOutlineStar } from "react-icons/ai";
+import PostCardMobile from "../components/PostCardMobile";
+
 interface Video {
   id: {
     videoId: string;
@@ -73,6 +80,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
 
   const id = posts.map((post) => post._id);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [categoryselected, setcategoryselected] = useState("");
   console.log(comments);
 
   const refreshComments = async () => {
@@ -121,15 +129,56 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
     }
   };
 
+  const dropdownLogic = (category: string) => {
+    if (match[0] && match[0].categories) {
+      const dynamicCategoriesArray = category;
+
+      const filteredPosts = posts.filter((post) => {
+        const postCategories = post.categories
+          .split(",")
+          .map((category) => category.trim().toLowerCase());
+        return postCategories.includes(category);
+      });
+
+      filteredPosts.sort((a, b) => {
+        const dateA = a._createdAt ? new Date(a._createdAt) : null;
+        const dateB = b._createdAt ? new Date(b._createdAt) : null;
+
+        if (dateA && dateB) {
+          // @ts-ignore
+          return dateB - dateA; // Sort in descending order
+        } else if (dateA) {
+          return -1; // DateB is undefined or invalid, so dateA should come first
+        } else if (dateB) {
+          return 1; // DateA is undefined or invalid, so dateB should come first
+        } else {
+          return 0; // Both dates are undefined or invalid, no change in order
+        }
+      });
+
+      return filteredPosts;
+    } else {
+      // Handle the case where match[0] or match[0].categories is undefined
+      console.error("match[0] or match[0].categories is undefined");
+    }
+  };
+
   const filteredPosts = logic();
   console.log(filteredPosts);
+
+  const dropDownBlogs = dropdownLogic(categoryselected);
+  // @ts-ignore
 
   useEffect(() => {
     refreshComments();
   }, []);
   const [showVideo, setShowVideo] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
+  const [showdropfeed, setshowdropfeed] = useState(false);
   const [videos, setVideos] = useState<Video[]>();
   const [showpost, setShowPost] = useState(false);
+  const [showAll, setShowAll] = useState(true);
+  const [showBlog, setShowBlog] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const [videoName, setVideoName] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -195,32 +244,107 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         goals={goals}
         border="gray-500"
         children={
-          <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-8  ">
-            <div className="grid grid-cols-1 w-full  lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
-              <div className="lg:col-span-8 col-span-1 ">
-                <div className="flex  lg:text-md  gap-10 justify-between w-full items-center">
-                  <div className="flex justify-between  overflow-x-scroll md:overflow-hidden scrollbar-thin w-fit mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
-                    <div className="lg:hidden  items-center">
-                      <button
-                        onClick={() => setShowFilter(!showFilter)}
-                        className={`cursor-pointer rounded-lg flex items-center p-2 ${
-                          showFilter
-                            ? " text-blue-500 bg-blue-300"
-                            : " text-white bg-black/5"
-                        }
-                        hover:bg-blue-500 hover:text-gray-50
-                      `}
-                      >
-                        <FaFilter className="mr-2" />
-                        Filter
-                      </button>
+          <div className="container overflow-y-hidden mx-auto col-span-11  w-full py-8">
+            <div className="grid grid-cols-1 w-full lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
+              {dropdown && (
+                <div
+                  onMouseEnter={() => setDropdown(true)}
+                  onMouseLeave={() => setDropdown(false)}
+                  className=" absolute  z-50 top-36 mt-2 w-56 rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5"
+                >
+                  <div className="py-2 gap-4 flex items-start w-full flex-col">
+                    {/* @ts-ignore */}
+
+                    <div
+                      onClick={() => {
+                        setcategoryselected("Computer Science");
+                        setshowdropfeed(true);
+                      }}
+                      className="z-50 cursor-pointer "
+                    >
+                      <h1 className=" gap-2 items-center justify-center px-4 flex  w-full py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
+                        <img
+                          className="h-7 w-7 rounded-full object-contain"
+                          loading="lazy"
+                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                        />
+                        Computers
+                        <span className="font-sans">-</span>{" "}
+                        <span className="text-white/20 font-light">
+                          science
+                        </span>
+                      </h1>
                     </div>
-                    <div className="flex justify-between   items-center gap-10">
+                    <div
+                      onClick={() => {
+                        setcategoryselected("Finance");
+                        setshowdropfeed(true);
+                      }}
+                      className="z-50 cursor-pointer "
+                    >
+                      <h1 className=" gap-2 items-center justify-center px-4 flex w-full py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
+                        <img
+                          className="h-7 w-7 rounded-full object-contain"
+                          loading="lazy"
+                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                        />
+                        Finance
+                        <span className="font-sans">-</span>{" "}
+                        <span className="text-white/20 font-light">
+                          economy
+                        </span>
+                      </h1>
+                    </div>
+                    <div
+                      onClick={() => {
+                        setcategoryselected("Art");
+                        setshowdropfeed(true);
+                      }}
+                      className="z-50 cursor-pointer "
+                    >
+                      <h1 className=" gap-2 items-center justify-center px-4 flex  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
+                        <img
+                          className="h-7 w-7 rounded-full object-contain"
+                          loading="lazy"
+                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                        />
+                        Arts
+                        <span className="font-sans">-</span>{" "}
+                        <span className="text-white/20 font-light">
+                          creativity
+                        </span>
+                      </h1>
+                    </div>
+                    <div
+                      onClick={() => {
+                        setcategoryselected("Artificial Intelligence");
+                        setshowdropfeed(true);
+                      }}
+                      className="z-50 cursor-pointer "
+                    >
+                      <h1 className=" gap-2 items-center justify-center px-4 flex  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
+                        <img
+                          className="h-7 w-7 rounded-full object-contain"
+                          loading="lazy"
+                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                        />
+                        AI
+                        <span className="font-sans">-</span>{" "}
+                        <span className="text-white/20 font-light">
+                          comp.sci
+                        </span>
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="lg:col-span-8 col-span-1  ">
+                <div className="flex lg:text-md gap-10  justify-between w-[100vw] items-center">
+                  <div className="flex justify-between overflow-x-scroll  w-full lg:overflow-hidden scrollbar-thin  mt-4 pt-5 pb-5 fixed  gap-10 items-center bg-[#121212] ">
+                    <div className="flex justify-between    items-center gap-10">
                       <button
-                        onClick={() => {
-                          setShowVideo(true);
-                          setShowPost(true);
-                        }}
+                        onMouseLeave={() => setDropdown(false)}
+                        onClick={() => setDropdown(true)}
                         className={`bg-white bg-opacity-25 hover:text-gray-400  flex items-center justify-center w-32 h-8 rounded-[5px] border border-white border-opacity-50 
                         
                         `}
@@ -228,16 +352,19 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                         <HomeIcon className="w-4 mr-2 h-4" />
                         Home
                       </button>
+
                       <button
                         onClick={() => {
-                          setShowVideo(true);
-                          setShowPost(true);
+                          setShowVideo(false);
+                          setShowPost(false);
+                          setshowdropfeed(false);
+                          setShowAll(true);
                         }}
                         className={`bg-white bg-opacity-25  flex items-center w-20 h-8 justify-center  rounded-[5px] border border-white border-opacity-50
                           hover:text-gray-400 ${
-                            !showpost && showVideo
-                              ? "bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50"
-                              : ""
+                            showAll
+                              ? "bg-zinc-600 bg-opacity-10 rounded-[5px] border !border-zinc-700 border-opacity-50"
+                              : "bg-white bg-opacity-25"
                           }`}
                       >
                         <CheckBadgeIcon className="w-5 h-5 mr-2" />
@@ -247,14 +374,16 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                         onClick={() => {
                           setShowPost(false);
                           setShowVideo(false);
+                          setShowBlog(true);
+                          setShowAll(false);
                         }}
                         className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${
-                          !showpost && !showVideo
+                          showBlog
                             ? "!bg-white !bg-opacity-25 !border-white !border-opacity-50"
                             : ""
                         } hover:text-gray-400 `}
                       >
-                        {!showpost && !showVideo ? (
+                        {showBlog ? (
                           <DocumentIcon2 className="mr-2 h-4 w-4" />
                         ) : (
                           <DocumentIcon className="mr-2 h-4 w-4" />
@@ -262,9 +391,16 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                         Blogs
                       </button>
                       <button
-                        onClick={() => setShowVideo(true)}
+                        onClick={() => {
+                          setShowVideo(true);
+                          setShowBlog(false);
+                          setShowAll(false);
+                          setShowPost(false);
+                        }}
                         className={`cursor-pointer  flex items-center  w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50${
-                          showVideo ? "" : ""
+                          showVideo
+                            ? "!bg-white !bg-opacity-50 !border-white !border-opacity-50"
+                            : ""
                         } hover:text-gray-400`}
                       >
                         <VideoCameraIcon className="mr-2 h-4 w-4" />
@@ -274,52 +410,37 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                         onClick={() => {
                           setShowVideo(false);
                           setShowPost(true);
+                          setShowAll(false);
+                          setShowBlog(false);
                         }}
-                        className={`cursor-pointer rounded-lg flex items-center p-2 ${
-                          showpost
-                            ? "text-blue-500 bg-blue-100"
-                            : "text-white bg-black/5"
-                        }hover:bg-blue-500 hover:text-gray-400`}
+                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${
+                          showpost && !showVideo
+                            ? "!bg-white !bg-opacity-25 !border-white !border-opacity-50"
+                            : ""
+                        } hover:text-gray-400 `}
                       >
                         <FaEdit className="mr-2" />
                         Posts
                       </button>
                       <div className="flex-grow"></div>
                       {showpost ? (
-                        <div className="z-50 ml-10 right-8">
+                        <div className="z-50 mr-20 right-8">
                           <Link href="/publishpost">
                             <Tooltip content="Publish a post">
-                              <Button
-                                shadow
-                                bordered
-                                borderWeight="bold"
-                                size="md"
-                                color="gradient"
-                              >
+                              <button className="bg-zinc-600 px-2 py-1 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50">
                                 Create
-                              </Button>
+                              </button>
                             </Tooltip>
                           </Link>
                         </div>
                       ) : (
-                        <div className=" z-50 ml-56 lg-flex lg:justify-items-end px-2 ">
+                        <div className="ml-[50vw] z-50 md:flex md:-ml-10 md:w-1 ">
                           <Link href="/publish-blog">
                             <Tooltip content="Publish a blog">
-                              <div className="hidden lg:flex"></div>
-                              <button className="bg-zinc-600 px-2 py-1 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50">
+                              <div className=""></div>
+                              <button className=" sm:bg-zinc-600 sm:px-2 sm:py-1 sm:bg-opacity-10 sm:rounded-[5px] sm:border sm:border-zinc-700 sm:border-opacity-50">
                                 Create
                               </button>
-                              <div className="lg:hidden flex justify-items-end">
-                                <Button
-                                  shadow
-                                  bordered
-                                  borderWeight="bold"
-                                  size="sm"
-                                  color="gradient"
-                                >
-                                  Create
-                                </Button>
-                              </div>
                             </Tooltip>
                           </Link>
                         </div>
@@ -393,10 +514,33 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                     </>
                   ) : (
                     <>
+                      {showAll && (
+                        <>
+                          {" "}
+                          {filteredPosts!.map((post, index) => (
+                            <div className="z-10">
+                              <PostCard
+                                match={match}
+                                users={users}
+                                key={index}
+                                post={post}
+                              />
+                              {/* @ts-ignore */}
+
+                              <PostCardMobile
+                                match={match}
+                                users={users}
+                                key={index}
+                                post={post}
+                              />
+                            </div>
+                          ))}
+                        </>
+                      )}
                       {showpost ? (
                         <div className="p-5  space-y-4">
                           {feed.map((feeds, index) => (
-                            <>
+                            <div className="z-10">
                               {/* <>
                               <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
                               <div className="flex items-center justify-between w-full  gap-10">
@@ -431,33 +575,76 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                               </div>
                             </> */}
                               <FeedCard feeds={feeds} key={index} />
-                            </>
+                            </div>
                           ))}
                         </div>
                       ) : (
                         <div className="">
-                          {filteredPosts!.map((post, index) => (
-                            <div className="">
-                              <PostCard
-                                match={match}
-                                users={users}
-                                key={index}
-                                post={post}
-                              />
+                          {!showdropfeed ? (
+                            <div>
+                              {filteredPosts!.map((post, index) => (
+                                <div className="z-10">
+                                  <PostCard
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                  {/* @ts-ignore */}
+                                  <PostCardMobile
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          ) : (
+                            <div>
+                              {dropDownBlogs!.map((post, index) => (
+                                <div className="z-10">
+                                  <PostCard
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                  {/* @ts-ignore */}
+
+                                  <PostCardMobile
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       )}
                     </>
                   )}
                 </div>
               </div>
-              <div className=" border-r-2 border-gray-600 h-full mt-0 py-0 mr-20 "></div>
-              <div className="lg:col-span-4 col-span-1">
-                <div className="lg:sticky relative top-8">
-                  {/* <PostWidget /> */}
-
-                  {/* <Categories /> */}
+              <div className="col-span-3 hidden w-full  h-fit lg:inline z-50 text-white mt-14">
+                <div className=" bg-zinc-600 p-3 py-5 mr-3 flex h-fit flex-col items-center gap-5 justify-center w-full bg-opacity-20 rounded-[10px] border border-zinc-700 border-opacity-50">
+                  <h1>Top Interests</h1>
+                  <div className="flex flex-col gap-3 items-start">
+                    {filteredPosts?.map((blogs) => (
+                      <Link
+                        href={`/user/${blogs.author}`}
+                        className="gap-3 flex items-center"
+                      >
+                        <img
+                          className="h-10 w-10 rounded-full object-cover"
+                          src={blogs.profileImage}
+                        />
+                        <h1>{blogs.author}</h1>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

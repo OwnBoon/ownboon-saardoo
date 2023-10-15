@@ -21,7 +21,7 @@ export default function About() {
     <section id="about">
       <div className="p-5 py-[8vh]   text-[#2E2E2E]   flex-wrap flex flex-row  font-poppins align-center items-center  justify-center  ">
         <div className="flex flex-col  md:w-[60vw] heading py-10 text-center md:text-left align-center justify-center mr-0 md:mr-5">
-          <h1 className="revealtitle md:mt-[-115px]  mt-[-10px] text-center md:text-left text-[2.5rem] md:text-[3vw]  font-bold">
+          <h1 className=" md:mt-[-115px] mt-[-10px] text-center md:text-left text-[2.5rem] md:text-[3vw]  font-bold">
             About Us
           </h1>
           <p className="text-[1rem] text-justify mt-3 md:text-[1.2vw] break-words ">

@@ -45,7 +45,7 @@ const Post = ({ post, goals }: Props) => {
     <Layout
       hasBg={false}
       bgColor={"#121212"}
-      icon="chat.svg"
+      icon="/chat.svg"
       goals={goals}
       text="Chats"
       border="gray-500"

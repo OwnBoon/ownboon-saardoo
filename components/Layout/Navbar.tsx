@@ -131,7 +131,7 @@ const Navbar = ({
               className={`p-2 ${
                 showsearch ? "hidden" : ""
               } rounded hover:brightness-150 fade hidden md:inline transition-all cursor-pointer`}
-              src="search.svg"
+              src="/search.svg"
               alt={"search"}
             />
             {showsearch && (
@@ -175,7 +175,7 @@ const Navbar = ({
                   height={45}
                   onClick={() => setshowsearch(false)}
                   className={`p-2  fade rounded hover:brightness-150 transition-all cursor-pointer`}
-                  src="cancel.svg"
+                  src="/cancel.svg"
                   alt={"cancel"}
                 />
               </form>
@@ -196,7 +196,7 @@ const Navbar = ({
                       onClick={() => togglenotification()}
                       height={70}
                       className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
-                      src="notification.svg"
+                      src="/notification.svg"
                       alt={"notification"}
                     />
                   </Badge>
@@ -206,7 +206,7 @@ const Navbar = ({
                     onClick={() => togglenotification()}
                     height={70}
                     className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
-                    src="notification.svg"
+                    src="/notification.svg"
                     alt={"notification"}
                   />
                 )}
@@ -217,7 +217,7 @@ const Navbar = ({
                 onClick={() => togglenotification()}
                 height={70}
                 className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
-                src="notification.svg"
+                src="/notification.svg"
                 alt={"notification"}
               />
             )}

@@ -573,7 +573,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
             {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
-            <div className="grid grid-cols-1 md:grid-cols-2 md:p-5  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
+            <div className="grid grid-cols-1 pl-5 px-3 md:grid-cols-2 md:p-5  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
               {filteredNotes.map((note) => (
                 <>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
@@ -661,24 +661,31 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               }
             </Dialog>
 
-            <Dialog isOpen={showPromptModal} onClose={setShowPromptModal}>
-              <div className="flex w-[50vw]  p-5 h-[30vw] mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+            <Modal
+              closeButton
+              open={showPromptModal}
+              // color="black"
+              className="md:h-[60vh] w-fit md:w-full !bg-[#101010] p-3"
+              width="80%"
+              // onClose={setShowPromptModal}
+            >
+              <div className="flex w-full h-full  p-10  mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
                 <div className="flex flex-col  items-center justify-center">
-                  <h1 className="text-[2vw] my-2  text-white text-center ">
+                  <h1 className="md:text-[2vw] text-lg  my-2  text-white text-center ">
                     BoonBot
                   </h1>
                   <div className="w-44 h-[0px] border border-neutral-400"></div>
                 </div>
-                <div className="flex justify-center mt-7 text-center items-center">
+                <div className="flex justify-center mt-7  text-center items-center">
                   <div
                     className={`${
                       pageposition === 0 ? "pageentry " : "pageexit"
                     } text-center`}
                   >
-                    <h2 className="text-[1.3vw]  mt-6 my-2 font-fontspring  text-white font-medium ">
+                    <h2 className="md:text-[1.3vw] text-md  mt-6 my-2 font-fontspring  text-white font-medium ">
                       How are you feeling today?
                     </h2>
-                    <div className="p-2 flex flex-row    gap-x-5">
+                    <div className="p-2 flex flex-row overflow-x-scroll scrollbar-none w-64 md:w-full   gap-x-5">
                       <div className="flex items-center justify-center flex-row gap-x-3">
                         <Checkbox
                           className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
@@ -749,10 +756,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       pageposition === 1 ? " pageentry " : "pageexit "
                     } text-center`}
                   >
-                    <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
+                    <h2 className="md:text-[1.3vw] text-md  my-2 font-fontspring  text-white font-medium ">
                       What do you want to get done?
                     </h2>
-                    <div className="p-2 flex flex-row w-[30vw]   gap-x-5">
+                    <div className="p-2 flex flex-row md:w-[30vw] w-full   gap-x-5">
                       <textarea
                         name="prompt"
                         placeholder="I want to do trignometry 1 and magnetism for AP..."
@@ -763,7 +770,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             objective: e.target.value,
                           })
                         }
-                        className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
+                        className="border-none text-sm  md:text-xl text-neutral-200 font-poppins md:w-[30vw] w-full  bg-[#232222]"
                       ></textarea>
                     </div>
                     {empty && "Please enter atleast a sentence"}
@@ -773,10 +780,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       pageposition === 2 ? " pageentry " : "pageexit "
                     } text-center`}
                   >
-                    <h2 className="text-[1.3vw]  my-2 font-fontspring  text-white font-medium ">
+                    <h2 className="md:text-[1.3vw] text-md  my-2 font-fontspring  text-white font-medium ">
                       How much time do you have?
                     </h2>
-                    <div className="p-2 flex flex-row  w-[30vw]  gap-x-5">
+                    <div className="p-2 flex flex-row  md:w-[30vw] w-full  gap-x-5">
                       <textarea
                         placeholder="I got 5 hours until i fly to las vegas..."
                         name="prompt"
@@ -784,7 +791,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         onChange={(e) =>
                           setUserprompt({ ...userprompt, time: e.target.value })
                         }
-                        className="border-none  text-xl font-poppins w-[30vw]  bg-[#232222]"
+                        className="border-none text-sm  text-neutral-200  md:text-lg font-poppins w-full md:w-[30vw]  bg-[#232222]"
                       ></textarea>
                     </div>
                     {empty && "Please enter atleast a sentence"}
@@ -794,14 +801,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       pageposition === 3 ? " pageentry " : "pageexit "
                     } text-center`}
                   >
-                    <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                    <h2 className="md:text-[1.3vw] text-md mt-6 my-2 font-fontspring  text-white font-medium ">
                       Generate Your Roadmap
                     </h2>
                     <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
                       <div className="flex flex-row gap-x-4 items-center justify-center">
                         <button
                           onClick={() => setShowPromptModal(false)}
-                          className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                          className="py-2 px-4  my-2  bg-[#101010] text-neutral-500 text-xs rounded-3xl font-poppins md:text-[0.9vw]"
                         >
                           Cancel
                         </button>
@@ -815,7 +822,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             );
                             handlenextpage();
                           }}
-                          className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                          className="md:spy-2 px-2 py-1 md:px-4 my-2 md:text-lg  text-xs bg-white text-black rounded-lg md:rounded-3xl font-poppins md:text-[0.9vw]"
                         >
                           Generate Now
                         </button>
@@ -827,11 +834,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       pageposition === 4 ? " pageentry " : "pageexit "
                     } text-center`}
                   >
-                    <h2 className="text-[1.3vw] mt-6 my-2 font-fontspring  text-white font-medium ">
+                    <h2 className="md:text-[1.3vw] text-md font-sans mt-6 my-2 font-fontspring  text-white font-medium ">
                       Here's your schedule
                     </h2>
                     {susdata ? (
-                      <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
+                      <div className="p-2 flex flex-row text-neutral-200 mt-10  w-[30vw] justify-center items-center">
                         <div className="space-y-2">
                           <>
                             {/* @ts-ignore */}
@@ -849,7 +856,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                               addGoalDataSchedule(roadmaps.title);
                             });
                           }}
-                          className="mt-5 border w-fit p-2 rounded-lg cursor-pointer"
+                          className="mt-5 border ml-5  w-fit p-2 rounded-lg cursor-pointer"
                         >
                           Add to todos
                         </div>
@@ -859,7 +866,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 </div>
               </div>
               {pageposition !== 4 ? (
-                <div className="flex flex-row  items-center justify-between">
+                <div className="flex flex-row  bg-[#101010] items-center justify-between">
                   <div className="flex flex-row items-start justify-start">
                     {pageposition ? (
                       <button
@@ -900,7 +907,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               ) : (
                 ""
               )}
-            </Dialog>
+            </Modal>
             <Dialog
               isOpen={showBoonIslandModal}
               onClose={setShowBoonIslandModal}

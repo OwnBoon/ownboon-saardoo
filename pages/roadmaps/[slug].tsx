@@ -134,12 +134,12 @@ const Post = ({ roadmap, goals }: Props) => {
     <Layout
       hasBg={false}
       bgColor={"#121212"}
-      icon="roadmap.svg"
+      icon="/roadmap.svg"
       text="Roadmap"
       border="gray-500"
       goals={goals}
       children={
-        <div className="flex justify-between h-screen overflow-x-hidden  p-5 gap-20 ">
+        <div className="flex justify-between  w-screen md:w-full h-screen overflow-x-hidden  p-5 gap-20 ">
           {/* Roadmaps  */}
           <div className="  overflow-y-scroll scrollbar-thin scrollbar-track-neutral-900 scrollbar-thumb-zinc-800   w-full">
             <div className=" relative space-y-10 flex w-full items-center py-10 flex-col justify-center">
@@ -189,15 +189,15 @@ const Post = ({ roadmap, goals }: Props) => {
           </div>
           {infotext ? (
             <Modal
-              // closeButton
+              closeButton
               aria-labelledby="modal-title"
-              className="!bg-[#191919]/40 md:hidden  inline-flex z-50 h-[70vh]  justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+              className="!bg-[#191919]/40 md:hidden w-screen  inline-flex z-50 h-[100vh] scale-75  justify-center items-center  backdrop-blur-md fixed top-0 left-0 right-0   overflow-x-hidden overflow-y-auto md:inset-0"
               open={true}
-              width="80%"
+              width="100%"
             >
               <Modal.Body>
-                <div className="h-screen scale-75  w-full overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin -my-10 p-10 ">
-                  <div className="h-screen w-full bg-neutral-900 rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
+                <div className="h-screen    w-screen overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin  p-10  ">
+                  <div className="h-screen w-full bg-neutral-900/40 backdrop-blur-lg rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
                     <div className="space-y-5">
                       <h1 className="text-xl flex justify-between items-center text-white font-semibold">
                         Block Title:{" "}
@@ -215,8 +215,12 @@ const Post = ({ roadmap, goals }: Props) => {
                       </h1>
                       {/* data */}
                       <div>
-                        {/* @ts-ignore */}
-                        {infotext ? <p>{infotext.description}</p> : null}
+                        {infotext ? (
+                          <p className="text-neutral-300">
+                            {/* @ts-ignore */}
+                            {infotext.description}
+                          </p>
+                        ) : null}
                       </div>
                     </div>
                     <div className="">
@@ -268,7 +272,9 @@ const Post = ({ roadmap, goals }: Props) => {
                       ) : null}
                     </div>
                     <div>
-                      <h1>3 best content creators in the field</h1>
+                      <h1 className="text-neutral-200">
+                        3 best content creators in the field
+                      </h1>
                       <div>
                         {infotext ? (
                           <div>

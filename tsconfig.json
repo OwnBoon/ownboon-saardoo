@@ -33,7 +33,7 @@
     "components/DraggableRoadmap.jsx",
     ".next/types/**/*.ts",
     "node_modules/@sendbird/uikit-react/index.d.ts"
-  ],
+, "components/Navbar.jsx", "pages/[slug].jsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -17,7 +17,7 @@ export const categories = [
   { name: "Biology", value: "biology videos" },
   { name: "Literature", value: "how to get better in literature" },
   { name: "Arts", value: "" },
-  { name: "Crpyto", value: "" },
+  { name: "Finance", value: "finance short videos" },
   { name: "Dropshipping", value: "" },
   { name: "Nextjs", value: "Josh Likes coding videos" },
   { name: "React", value: "javascript mastery" },

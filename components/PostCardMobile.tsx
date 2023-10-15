@@ -41,7 +41,7 @@ interface Props {
   users: Users[];
 }
 
-const PostCard = ({ post, match, users }: Props) => {
+const PostCardMobile = ({ post, match, users }: Props) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const { isLoaded, isSignedIn, user } = useUser();
   const refreshComments = async () => {
@@ -120,6 +120,7 @@ const PostCard = ({ post, match, users }: Props) => {
     setInput("");
     refreshComments();
   };
+  //
   if (match[0].follow == null || post.liked == null) {
     const addCategory = async () => {
       try {
@@ -147,16 +148,16 @@ const PostCard = ({ post, match, users }: Props) => {
       }
     };
     return (
-      <div className=" z-10 hidden lg:inline-grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto     gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
-        <div className="  col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
-          <div className="h-full">
-            <div className="flex gap-6 h-fit ">
+      <div className="grid lg:hidden grid-cols-2 bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 ">
+        <div className="col-span-4 lg:col-span-4 w-full flex flex-col justify-end rounded-lg ">
+          <div className="h-full w-full">
+            <div className="gap-6 h-fit flex flex-col items-center w-full justify-center">
               <img
-                className="h-56 object-cover w-56 rounded-md"
+                className="h-40 w-40 object-cover rounded-md"
                 src={post.mainImage}
               />
-              <div className="space-y-5">
-                <h1 className="text-neutral-200 text-base font-semibold">
+              <div className="space-y-10 flex flex-col items-center justify-center">
+                <h1 className="text-neutral-200 text-base font-semibold ml-10">
                   {post.title}
                 </h1>
                 <p>
@@ -169,7 +170,8 @@ const PostCard = ({ post, match, users }: Props) => {
                 </p>
               </div>
             </div>
-            <div className="mt-4 font-poppins font-light">
+
+            <div className="font-poppins font-light">
               <div
                 className="!bg-transparent  text-neutral-300 font-sans  font-normal"
                 dangerouslySetInnerHTML={{
@@ -188,9 +190,13 @@ const PostCard = ({ post, match, users }: Props) => {
             </Link>
           </div>
         </div>
+
         <div className="col-span-2  px-2 py-1 overflow-hidden">
-          <div className="flex items-center gap-5 p-2  border-b border-white/20 py-3 ">
-            <div className="flex gap-2 font-sans items-center">
+          <div className="flex items-center justify-center gap-5 p-2  border-b border-white/20 py-3 ">
+            <Link
+              href={`/user/${post.author}`}
+              className="flex gap-2 font-sans items-center"
+            >
               <img
                 className="w-[33px] h-[33px] rounded-full object-contain hover:cursor-pointer hover:border-2 hover:border-white/50 transition-all duration-100 border-white/30 hover:scale-110"
                 src={post.profileImage}
@@ -198,8 +204,8 @@ const PostCard = ({ post, match, users }: Props) => {
               <p className="text-neutral-200 text-base font-normal">
                 {post.author}
               </p>
-            </div>
-            {match[0].follow!.map(
+            </Link>
+            {/* {match[0].follow!.map(
               (follow) => follow.name == post.author
             ) ? null : (
               <div
@@ -208,7 +214,7 @@ const PostCard = ({ post, match, users }: Props) => {
               >
                 Follow
               </div>
-            )}
+            )} */}
 
             <Dropdown>
               <Dropdown.Button
@@ -223,7 +229,7 @@ const PostCard = ({ post, match, users }: Props) => {
               </Dropdown.Button>
               <Dropdown.Menu className="!" aria-label="Static Actions">
                 <Dropdown.Item className="" key="new">
-                  <Link href={`/user/${post.author}`}>Profile</Link>
+                  Profile
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -240,7 +246,7 @@ const PostCard = ({ post, match, users }: Props) => {
           </div>
           <div className="space-y-4 mt-3 overflow-y-scroll h-80 scrollbar-none   shadow-lg rounded-lg p-2 mb-1 border-b-2 rounded-b-none border-white/20">
             {comments.map((comment) => (
-              <Grid className="flex items-center gap-4 ">
+              <Grid className="flex justify-start items-c gap-4 ">
                 <div className="flex justify-center items-center gap-2">
                   <img
                     className="h-7 object-cover rounded-full w-7"
@@ -341,6 +347,7 @@ const PostCard = ({ post, match, users }: Props) => {
         </div>
       </div>
     );
+    //@ts-ignore
   } else if (match[0].follow?.length! > 0 || post.liked.length! > 0) {
     const follows = match[0].follow!.map((follows) => ({
       _key: random2,
@@ -400,17 +407,18 @@ const PostCard = ({ post, match, users }: Props) => {
         window.location.reload();
       }
     };
+
     return (
-      <div className=" hidden lg:inline-grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
-        <div className="  col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
-          <div className="h-full">
-            <div className="flex gap-6 h-fit ">
+      <div className="grid lg:hidden grid-cols-2 bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 ">
+        <div className="col-span-4 lg:col-span-4 w-full flex flex-col justify-end rounded-lg ">
+          <div className="h-full w-full">
+            <div className="gap-6 h-fit flex flex-col items-center w-full justify-center">
               <img
-                className="h-56 object-cover w-56 rounded-md"
+                className="h-40 w-40 object-cover rounded-md"
                 src={post.mainImage}
               />
-              <div className="space-y-5">
-                <h1 className="text-neutral-200 text-base font-semibold">
+              <div className="space-y-10 flex flex-col items-center justify-center">
+                <h1 className="text-neutral-200 text-base font-semibold ml-10">
                   {post.title}
                 </h1>
                 <p>
@@ -423,7 +431,8 @@ const PostCard = ({ post, match, users }: Props) => {
                 </p>
               </div>
             </div>
-            <div className="mt-4 font-poppins font-light">
+
+            <div className="font-poppins font-light">
               <div
                 className="!bg-transparent  text-neutral-300 font-sans  font-normal"
                 dangerouslySetInnerHTML={{
@@ -442,8 +451,9 @@ const PostCard = ({ post, match, users }: Props) => {
             </Link>
           </div>
         </div>
+
         <div className="col-span-2  px-2 py-1 overflow-hidden">
-          <div className="flex items-center gap-5 p-2  border-b border-white/20 py-3 ">
+          <div className="flex items-center justify-center gap-5 p-2  border-b border-white/20 py-3 ">
             <Link
               href={`/user/${post.author}`}
               className="flex gap-2 font-sans items-center"
@@ -456,7 +466,7 @@ const PostCard = ({ post, match, users }: Props) => {
                 {post.author}
               </p>
             </Link>
-            {match[0].follow.map(
+            {/* {match[0].follow!.map(
               (follow) => follow.name == post.author
             ) ? null : (
               <div
@@ -465,7 +475,7 @@ const PostCard = ({ post, match, users }: Props) => {
               >
                 Follow
               </div>
-            )}
+            )} */}
 
             <Dropdown>
               <Dropdown.Button
@@ -480,7 +490,7 @@ const PostCard = ({ post, match, users }: Props) => {
               </Dropdown.Button>
               <Dropdown.Menu className="!" aria-label="Static Actions">
                 <Dropdown.Item className="" key="new">
-                  <Link href={`/user/${post.author}`}>Profile</Link>
+                  Profile
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -497,7 +507,7 @@ const PostCard = ({ post, match, users }: Props) => {
           </div>
           <div className="space-y-4 mt-3 overflow-y-scroll h-80 scrollbar-none   shadow-lg rounded-lg p-2 mb-1 border-b-2 rounded-b-none border-white/20">
             {comments.map((comment) => (
-              <Grid className="flex items-center gap-4 ">
+              <Grid className="flex justify-start items-c gap-4 ">
                 <div className="flex justify-center items-center gap-2">
                   <img
                     className="h-7 object-cover rounded-full w-7"
@@ -601,4 +611,4 @@ const PostCard = ({ post, match, users }: Props) => {
   }
 };
 
-export default PostCard;
+export default PostCardMobile;

@@ -35,7 +35,7 @@ export default function Benefits() {
   return (
     <section id="benefit" className="mb-10 pt-[100px] px-5">
       <div className="heading  justify-center align-center ">
-        <h1 className="revealtitle md:text-[4rem] text-[2.5rem] benefit-heading ">
+        <h1 className=" md:text-[4rem] text-[2.5rem] benefit-heading ">
           Benefits
         </h1>
         <h3 className="md:text-[1.5rem]  text-[15px] py-1 ">

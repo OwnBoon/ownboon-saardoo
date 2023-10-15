@@ -54,9 +54,11 @@ body {
 @font-face {
   font-family: "fontspring";
   src: url("../public/Fontspring.otf") format("truetype");
-  font-weight: 100;
+  // font-weight: 100;
   font-style: normal;
 }
+
+
 /* Utility */
 .navbarhide{
   transform: translateY(0);

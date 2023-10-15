@@ -1,8 +1,6 @@
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const router = useRouter();
   const [pc, setPc] = useState(true);
   useEffect(() => {
     function setInitialPositions() {
@@ -33,10 +31,12 @@ export default function Hero() {
         <div className="circle green" id="green2"></div>
       </div>
       <div className="flex  justify-center text-[#2E2E2E] flex-col  mx-0 items-center align-center ">
-        <div className=" font-fontspring md:text-[3.75rem] lg:text-[4vw] text-3xl  text-center">
-          <h1 className="slideup py-[30px]">
+        <div className=" font-bold md:text-[3.75rem] lg:text-[4vw] text-3xl  text-center">
+          <h1 className="z-0 font-bold  py-[30px]">
             Ignite your{" "}
-            <span className="md:tracking-[12px] tracking-[3px]">GROWTH</span>
+            <span className="md:tracking-[12px] font-fontspring tracking-[3px]">
+              GROWTH
+            </span>
             {pc && (
               <>
                 <br />
