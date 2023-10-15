@@ -40,6 +40,11 @@ import {
   DocumentIcon as DocumentIcon2,
 } from "@heroicons/react/24/solid";
 import { DocumentIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+
+import { Dropdown } from "@nextui-org/react";
+
+import { AiOutlineStar } from "react-icons/ai";
+
 interface Video {
   id: {
     videoId: string;
@@ -195,11 +200,11 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         goals={goals}
         border="gray-500"
         children={
-          <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-8  ">
-            <div className="grid grid-cols-1 w-full  lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
-              <div className="lg:col-span-8 col-span-1 ">
-                <div className="flex  lg:text-md  gap-10 justify-between w-full items-center">
-                  <div className="flex justify-between  overflow-x-scroll md:overflow-hidden scrollbar-thin w-fit mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
+          <div className="container overflow-y-hidden mx-auto col-span-11 w-full py-8">
+            <div className="grid grid-cols-1 w-full lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
+              <div className="lg:col-span-8 col-span-1">
+                <div className="flex lg:text-md gap-10 justify-between w-[100vw] items-center">
+                  <div className="flex justify-between overflow-x-scroll w-full lg:overflow-hidden scrollbar-thin w-fit mt-4 pt-5 pb-5 fixed z-10 gap-10 items-center bg-[#121212] ">
                     <div className="lg:hidden  items-center">
                       <button
                         onClick={() => setShowFilter(!showFilter)}
@@ -216,18 +221,154 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                       </button>
                     </div>
                     <div className="flex justify-between   items-center gap-10">
-                      <button
-                        onClick={() => {
-                          setShowVideo(true);
-                          setShowPost(true);
-                        }}
-                        className={`bg-white bg-opacity-25 hover:text-gray-400  flex items-center justify-center w-32 h-8 rounded-[5px] border border-white border-opacity-50 
+                      <Dropdown placement="bottom-left">
+                        <Dropdown.Trigger>
+                          <button
+                            onClick={() => {
+                              setShowVideo(true);
+                              setShowPost(true);
+                            }}
+                            className={`bg-white bg-opacity-25 hover:text-gray-400  flex items-center justify-center w-32 h-8 rounded-[5px] border border-white border-opacity-50 
                         
                         `}
-                      >
-                        <HomeIcon className="w-4 mr-2 h-4" />
-                        Home
-                      </button>
+                          >
+                            <HomeIcon className="w-4 mr-2 h-4" />
+                            Home
+                          </button>
+                        </Dropdown.Trigger>
+                        <Dropdown.Menu
+                          aria-label="Avatar Actions"
+                          css={{ background: "Black" }}
+                          className="flex flex-col gap-1"
+                        >
+                          <Dropdown.Item
+                            css={{ height: "$18" }}
+                            className="relative bg-black hover:bg-black flex flex-col justify-between items-center"
+                          >
+                            <div className="w-fit absolute left-0 top-5 ">
+                              <Text
+                                css={{
+                                  d: "flex",
+                                  color: "White",
+                                  width: "fit-content",
+                                }}
+                              >
+                                Computers{" "}
+                              </Text>
+                            </div>
+
+                            <div className="w-fit absolute right-0 top-5 ">
+                              <AiOutlineStar className=" text-white h-5 w-5" />
+                            </div>
+                          </Dropdown.Item>
+
+                          <Dropdown.Item
+                            css={{ height: "$18" }}
+                            className="relative bg-black hover:bg-black flex flex-col justify-between items-center"
+                          >
+                            <div className="w-fit absolute left-0 top-5 ">
+                              <Text
+                                css={{
+                                  d: "flex",
+                                  color: "White",
+                                  width: "fit-content",
+                                }}
+                              >
+                                Design{" "}
+                              </Text>
+                            </div>
+
+                            <div className="w-fit absolute right-0 top-5 ">
+                              <AiOutlineStar className=" text-white h-5 w-5" />
+                            </div>
+                          </Dropdown.Item>
+
+                          <Dropdown.Item
+                            css={{ height: "$18" }}
+                            className="relative bg-black hover:bg-black flex flex-col justify-between items-center"
+                          >
+                            <div className="w-fit absolute left-0 top-5 ">
+                              <Text
+                                css={{
+                                  d: "flex",
+                                  color: "White",
+                                  width: "fit-content",
+                                }}
+                              >
+                                Finance{" "}
+                              </Text>
+                            </div>
+
+                            <div className="w-fit absolute right-0 top-5 ">
+                              <AiOutlineStar className=" text-white h-5 w-5" />
+                            </div>
+                          </Dropdown.Item>
+                          
+                          <Dropdown.Item
+                            css={{ height: "$18" }}
+                            className="relative bg-black hover:bg-black flex flex-col justify-between items-center"
+                          >
+                            <div className="w-fit absolute left-0 top-5 ">
+                              <Text
+                                css={{
+                                  d: "flex",
+                                  color: "White",
+                                  width: "fit-content",
+                                }}
+                              >
+                                Economist{" "}
+                              </Text>
+                            </div>
+
+                            <div className="w-fit absolute right-0 top-5 ">
+                              <AiOutlineStar className=" text-white h-5 w-5" />
+                            </div>
+                          </Dropdown.Item>
+
+                          <Dropdown.Item
+                            css={{ height: "$18" }}
+                            className="relative bg-black hover:bg-black flex flex-col justify-between items-center"
+                          >
+                            <div className="w-fit absolute left-0 top-5 ">
+                              <Text
+                                css={{
+                                  d: "flex",
+                                  color: "White",
+                                  width: "fit-content",
+                                }}
+                              >
+                                Business{" "}
+                              </Text>
+                            </div>
+
+                            <div className="w-fit absolute right-0 top-5 ">
+                              <AiOutlineStar className=" text-white h-5 w-5" />
+                            </div>
+                          </Dropdown.Item>
+
+                          <Dropdown.Item
+                            css={{ height: "$18" }}
+                            className="relative bg-black hover:bg-black flex flex-col justify-between items-center"
+                          >
+                            <div className="w-fit absolute left-0 top-5 ">
+                              <Text
+                                css={{
+                                  d: "flex",
+                                  color: "White",
+                                  width: "fit-content",
+                                }}
+                              >
+                                Marketing{" "}
+                              </Text>
+                            </div>
+
+                            <div className="w-fit absolute right-0 top-5 ">
+                              <AiOutlineStar className=" text-white h-5 w-5" />
+                            </div>
+                          </Dropdown.Item>
+                          
+                        </Dropdown.Menu>
+                      </Dropdown>
                       <button
                         onClick={() => {
                           setShowVideo(true);
@@ -286,7 +427,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                       </button>
                       <div className="flex-grow"></div>
                       {showpost ? (
-                        <div className="z-50 ml-10 right-8">
+                        <div className="z-50 mr-20 right-8">
                           <Link href="/publishpost">
                             <Tooltip content="Publish a post">
                               <Button
@@ -302,14 +443,14 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           </Link>
                         </div>
                       ) : (
-                        <div className=" z-50 ml-56 lg-flex lg:justify-items-end px-2 ">
+                        <div className="ml-[50vw] z-50 md:flex md:-ml-10 md:w-1 ">
                           <Link href="/publish-blog">
                             <Tooltip content="Publish a blog">
                               <div className="hidden lg:flex"></div>
-                              <button className="bg-zinc-600 px-2 py-1 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50">
+                              <button className="hidden sm:bg-zinc-600 sm:px-2 sm:py-1 sm:bg-opacity-10 sm:rounded-[5px] sm:border sm:border-zinc-700 sm:border-opacity-50">
                                 Create
                               </button>
-                              <div className="lg:hidden flex justify-items-end">
+                              <div className="mr-20">
                                 <Button
                                   shadow
                                   bordered
@@ -455,9 +596,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
               <div className=" border-r-2 border-gray-600 h-full mt-0 py-0 mr-20 "></div>
               <div className="lg:col-span-4 col-span-1">
                 <div className="lg:sticky relative top-8">
-                  {/* <PostWidget /> */}
+                  {/* <PostWidget />
 
-                  {/* <Categories /> */}
+                  <Categories /> */}
                 </div>
               </div>
             </div>

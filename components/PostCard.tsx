@@ -120,6 +120,7 @@ const PostCard = ({ post, match, users }: Props) => {
     setInput("");
     refreshComments();
   };
+  //
   if (match[0].follow == null || post.liked == null) {
     const addCategory = async () => {
       try {
@@ -147,16 +148,17 @@ const PostCard = ({ post, match, users }: Props) => {
       }
     };
     return (
-      <div className="grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
-        <div className="  col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
+      <div className="grid grid-cols-2 bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 ">
+        
+        <div className="col-span-1 lg:col-span-4 flex flex-col justify-end rounded-lg ">
           <div className="h-full">
-            <div className="flex gap-6 h-fit ">
+            <div className="gap-6 h-fit flex flex-col justify-center">
               <img
-                className="h-56 object-cover w-56 rounded-md"
+                className="h-fit w-fit sm:h-56 sm:w-56 object-cover rounded-md"
                 src={post.mainImage}
               />
-              <div className="space-y-5">
-                <h1 className="text-neutral-200 text-base font-semibold">
+              <div className="space-y-10">
+                <h1 className="text-neutral-200 text-base font-semibold ml-10">
                   {post.title}
                 </h1>
                 <p>
@@ -169,7 +171,8 @@ const PostCard = ({ post, match, users }: Props) => {
                 </p>
               </div>
             </div>
-            <div className="mt-4 font-poppins font-light">
+
+            <div className="font-poppins font-light">
               <div
                 className="!bg-transparent  text-neutral-300 font-sans  font-normal"
                 dangerouslySetInnerHTML={{
@@ -178,6 +181,7 @@ const PostCard = ({ post, match, users }: Props) => {
               />
               ...
             </div>
+
           </div>
           <div className="flex justify-center mt-9 h-full">
             <Link
@@ -188,6 +192,7 @@ const PostCard = ({ post, match, users }: Props) => {
             </Link>
           </div>
         </div>
+
         <div className="col-span-2  px-2 py-1 overflow-hidden">
           <div className="flex items-center gap-5 p-2  border-b border-white/20 py-3 ">
             <Link
@@ -202,7 +207,7 @@ const PostCard = ({ post, match, users }: Props) => {
                 {post.author}
               </p>
             </Link>
-            {match[0].follow!.map(
+            {/* {match[0].follow!.map(
               (follow) => follow.name == post.author
             ) ? null : (
               <div
@@ -211,7 +216,7 @@ const PostCard = ({ post, match, users }: Props) => {
               >
                 Follow
               </div>
-            )}
+            )} */}
 
             <Dropdown>
               <Dropdown.Button
@@ -343,7 +348,8 @@ const PostCard = ({ post, match, users }: Props) => {
           </div>
         </div>
       </div>
-    );
+    ); 
+    //@ts-ignore
   } else if (match[0].follow?.length! > 0 || post.liked.length! > 0) {
     const follows = match[0].follow!.map((follows) => ({
       _key: random2,
@@ -403,18 +409,21 @@ const PostCard = ({ post, match, users }: Props) => {
         window.location.reload();
       }
     };
+
     return (
-      <div className="grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
-        <div className="  col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
+      <div className="grid grid-cols-2 bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8">
+        
+        <div className="col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
           <div className="h-full">
-            <div className="flex gap-6 h-fit ">
+            <div className="flex gap-6 h-fit flex flex-col justify-center">
               <img
-                className="h-56 object-cover w-56 rounded-md"
+                className="h-fit w-fit sm:h-56 sm:w-56 object-cover rounded-md"
                 src={post.mainImage}
               />
-              <div className="space-y-5">
+              <div className="space-y-10">
                 <h1 className="text-neutral-200 text-base font-semibold">
                   {post.title}
+                  
                 </h1>
                 <p>
                   <div
@@ -445,6 +454,7 @@ const PostCard = ({ post, match, users }: Props) => {
             </Link>
           </div>
         </div>
+
         <div className="col-span-2  px-2 py-1 overflow-hidden">
           <div className="flex items-center gap-5 p-2  border-b border-white/20 py-3 ">
             <Link
@@ -599,6 +609,7 @@ const PostCard = ({ post, match, users }: Props) => {
             </div>
           </div>
         </div>
+
       </div>
     );
   }
