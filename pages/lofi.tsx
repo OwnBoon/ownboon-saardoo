@@ -213,21 +213,21 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       text="Lofi"
       border={"#ccc"}
       children={
-        <div className="h-screen overflow-hidden text-[#000000]">
-          <div className="flex items-center overflow-hidden justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
+        <div className="h-screen overflow-y-scroll md:overflow-hidden  w-screen md:w-full text-[#000000]">
+          <div className="flex items-center overflow-y-scroll   md:overflow-hidden justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
             {sessionStarted && (
               <>
                 <Discover />
                 {seconds > 0 && (
-                  <div className="absolute hidden md:inline-flex right-16 top-[15vh] items-center justify-end">
-                    <Clock />
+                  <div className="md:absolute hidden md:inline-flex md:right-16 md:top-[15vh] items-center justify-end">
+                    <Clock sessionStarted={sessionStarted} />
                   </div>
                 )}
               </>
             )}
 
             {sessionStarted ? (
-              <div className="relative flex items-center justify-center md:top-0">
+              <div className="relative hidden md:inline-flex  items-center justify-center md:top-0">
                 <div
                   className={`w-[212px] h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
                 >
@@ -251,11 +251,38 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                     </div>
                   )}
                 </div>
-                <div className="spinner"></div>
+                {sessionStarted ? <div className="spinner"></div> : null}
               </div>
             ) : (
-              <Clock />
+              <>
+                <div className="w-full md:hidden  h-full flex flex-col">
+                  <div className="w-full h-full">
+                    <Clock sessionStarted={sessionStarted} />
+                  </div>
+                  <div className=" flex justify-center mb-40 w-full h-full">
+                    <button
+                      className="bg-[#D9D9D9] md:hidden inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
+                      // @ts-ignore
+                      onClick={
+                        sessionStarted
+                          ? resume
+                            ? handleStop
+                            : () => setResume(true)
+                          : handleStart
+                      }
+                    >
+                      {sessionStarted
+                        ? resume
+                          ? "Stop Session"
+                          : "Resume Session"
+                        : "Start Session"}{" "}
+                    </button>
+                  </div>
+                </div>
+                <Clock sessionStarted={sessionStarted} />
+              </>
             )}
+
             {/* <Clock /> */}
 
             <Draggable cancel=".btn">
@@ -347,7 +374,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </Draggable>
             <button
-              className="bg-[#D9D9D9] bottom-10 z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/4 rounded p-4 cursor-pointer"
+              className="bg-[#D9D9D9] hidden md:inline bottom-10 z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/4 rounded p-4 cursor-pointer"
               // @ts-ignore
               onClick={
                 sessionStarted

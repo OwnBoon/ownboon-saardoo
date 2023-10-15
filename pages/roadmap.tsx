@@ -376,8 +376,8 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       goals={goals}
       border="gray-500"
       children={
-        <div>
-          <div className="flex w-full gap-6 ">
+        <div className="overflow-y-scroll   h-screen">
+          <div className="flex w-full   gap-6 ">
             <Modal
               closeButton
               aria-labelledby="modal-title"
@@ -484,7 +484,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
             </div>
           )}
           {userroadmap && (
-            <div className="w-full mt-8 flex flex-col gap-8">
+            <div className="w-full min-h-screen pb-10 mt-8 flex flex-col gap-8">
               {userroadmap.map((roadmap: Roadmaps) => (
                 <div className="flex relative bg-gradient-to-r overflow-hidden from-[#585858] via-[#2b2b2b] md:via-[#121212]  to-[#121212] rounded-tl-[10px] rounded-bl-[10px]     rounded-lg   ">
                   <div className="absolute z-0 opacity-25 overflow-hidden flex justify-center items-center mt-10">

@@ -22,19 +22,34 @@ interface Props {
 }
 const categories = [
   {
-    name: "Maths",
+    name: "Photography",
     value:
       "sendbird_group_channel_196366427_00ef971c0f88f6dd06389fd19a2871818c2954c1",
   },
   {
-    name: "English",
+    name: "Computer Science",
+    value:
+      "sendbird_group_channel_196366427_00ef971c0f88f6dd06389fd19a2871818c2954c1",
+  },
+  {
+    name: "Nature",
     value:
       "sendbird_group_channel_196293859_8f660b9965e1b1b7c4c2e329b853c9664f1edb9a",
+  },
+  {
+    name: "AI",
+    value:
+      "sendbird_group_channel_196293859_8f660b9965e1b1b7c4c2e329b853c9664f1edb9a",
+  },
+  {
+    name: "Music",
+    value:
+      "sendbird_group_channel_196366427_00ef971c0f88f6dd06389fd19a2871818c2954c1",
   },
 ];
 const chat = ({ users, goals }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [categoryslide, setCategoryslide] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   useEffect(() => {
@@ -87,7 +102,7 @@ const chat = ({ users, goals }: Props) => {
         goals={goals}
         border="gray-500"
         children={
-          <main className="min-h-screen overflow-hidden  scrollbar-none scrollbar">
+          <main className="min-h-screen overflow-y-scroll overflow-x-hidden  scrollbar-none scrollbar">
             {/* <Modal
               className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
               open={showModal}
@@ -118,7 +133,7 @@ const chat = ({ users, goals }: Props) => {
                 open={showModal}
                 onClose={() => setShowModal(false)}
                 aria-labelledby="modal-title"
-                className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-sm fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+                className="!bg-[#191919]/40 z-50 h-full mb-20 md:mb-0 md:h-[70vh]  flex justify-center items-center md:ml-10 backdrop-blur-sm fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
                 width="80%"
               >
                 <Modal.Header className="text-neutral-400">
@@ -156,7 +171,7 @@ const chat = ({ users, goals }: Props) => {
                 open={showModal}
                 onClose={() => setShowModal(false)}
                 aria-labelledby="modal-title"
-                className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-sm fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+                className="!bg-[#191919]/40 h-full mb-20 md:mb-0 md:h-[70vh]  flex justify-center items-center md:ml-10 z-50  ml-0 backdrop-blur-sm fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
                 width="80%"
               >
                 <Modal.Header className="text-neutral-400">
@@ -173,18 +188,20 @@ const chat = ({ users, goals }: Props) => {
                     {" "}
                     Select a category of which group chat you want to join
                   </h2>
-                  {categories.map((category) => (
-                    <div className="flex gap-3 justify-start items-center max-w-7xl min-w-max">
-                      <input
-                        id="default-checkbox"
-                        type="checkbox"
-                        value=""
-                        onChange={(e) => handleCategoryChange(category.value)}
-                        className="border-solid border-neutral-200 hover:cursor-pointer bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
-                      />
-                      <h1 className="text-white ">{category.name}</h1>
-                    </div>
-                  ))}
+                  <div className="flex flex-col justify-start gap-2">
+                    {categories.map((category) => (
+                      <div className="flex gap-3 justify-start items-center max-w-7xl min-w-max">
+                        <input
+                          id="default-checkbox"
+                          type="checkbox"
+                          value=""
+                          onChange={(e) => handleCategoryChange(category.value)}
+                          className="border-solid border-neutral-200 hover:cursor-pointer bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
+                        />
+                        <h1 className="text-white ">{category.name}</h1>
+                      </div>
+                    ))}
+                  </div>
                 </Modal.Body>
                 <Modal.Footer className="w-full p-2">
                   <div className="flex fade justify-center p-2 w-full gap-5">

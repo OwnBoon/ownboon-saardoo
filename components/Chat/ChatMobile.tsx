@@ -7,7 +7,6 @@ import SBChannelSettings from "@sendbird/uikit-react/ChannelSettings";
 // @ts-ignore
 import SBProvider from "@sendbird/uikit-react/SendbirdProvider";
 import { useState } from "react";
-import "../../styles/chat-mobile.css";
 import ChatHeader from "./ChatHeader";
 import ChannelPreview from "./ChannelPreview";
 import { User } from "../../typings";
@@ -30,13 +29,13 @@ export default function ChatMobile({ user }: Props) {
   };
 
   return (
-    <div className="App inline-flex lg:hidden p-2 -ml-3 h-[86vh] w-screen">
+    <div className=" flex lg:hidden overflow-y-scroll p-2 md:p-4 md:pr-10 -ml-3 h-[62vh] md:h-[49vh] justify-center items-center w-screen">
       <SBProvider appId={APP_ID} userId={user[0].chatid}>
         {channel ? (
           <Channel
             //   @ts-ignore
             channelUrl={channel.url}
-            renderChatHeader={({ channel, user }: any) => (
+            renderChannelHeader={() => (
               <ChatHeader channel={channel} user={user} onBack={onBack} />
             )}
           />

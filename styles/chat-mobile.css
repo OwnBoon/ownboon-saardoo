@@ -40,14 +40,15 @@ html {
   max-width: 100%;
   display: flex;
   justify-content: flex-start;
+  background: #101010/40;
   align-items: center;
   text-align: start;
   padding: 20px;
-  border-bottom: 1px solid var(--sendbird-light-background-100);
+  border-bottom: 1px solid rgb(53, 53, 53);
 }
 .channel-preview-wrapper:hover,
 .channel-preview-wrapper:active {
-  background-color: var(--sendbird-light-background-100);
+  background-color: var(--sendbird-dark-background-300);
 }
 .channel-preview-cover {
   margin-inline-end: 10px;

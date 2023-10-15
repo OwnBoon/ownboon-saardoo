@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Inter, Poppins } from "next/font/google";
 import "./clock.css";
 
-type Props = {};
+type Props = {
+  sessionStarted: boolean;
+};
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: "100",
 });
 
-const Clock = (props: Props) => {
+const Clock = ({ sessionStarted }: Props) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const Clock = (props: Props) => {
   const year = currentTime.getFullYear();
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative   flex items-center justify-center">
       <div
         className={`w-[212px] h-[212px] bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
       >
@@ -66,7 +68,7 @@ const Clock = (props: Props) => {
           <div className="text-lg ">{dayOfWeek}</div>
         </div>
       </div>
-      <div className="spinner"></div>
+      {sessionStarted && <div className="spinner"></div>}
     </div>
   );
 };
