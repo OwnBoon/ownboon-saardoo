@@ -1,0 +1,130 @@
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.App .sendbird-channel-header,
+.App .sendbird-channel-list {
+  width: 100vw;
+}
+
+.App .sendbird-message-content.incoming .sendbird-message-content__middle,
+.App .sendbird-message-content.outgoing .sendbird-message-content__middle {
+  max-width: calc(100% - 70px);
+}
+.App
+  .sendbird-message-content.outgoing
+  .sendbird-message-content__middle
+  .sendbird-message-content__middle__body-container,
+.App
+  .sendbird-message-content.incoming
+  .sendbird-message-content__middle
+  .sendbird-message-content__middle__body-container {
+  width: 100%;
+}
+.App .sendbird-og-message-item-body {
+  min-width: initial;
+  max-width: initial;
+}
+
+/* Channel list preview styles */
+.channel-preview-wrapper {
+  max-width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: start;
+  padding: 20px;
+  border-bottom: 1px solid var(--sendbird-light-background-100);
+}
+.channel-preview-wrapper:hover,
+.channel-preview-wrapper:active {
+  background-color: var(--sendbird-light-background-100);
+}
+.channel-preview-cover {
+  margin-inline-end: 10px;
+  border-radius: 50%;
+}
+.channel-preview-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.channel-preview-last-message,
+.channel-preview-last-message-date {
+  font-weight: 200;
+  color: var(--sendbird-dark-background-300);
+  font-size: 0.8em;
+}
+.channel-preview-last-message {
+  max-width: 170px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.channel-preview-last-message-date {
+  margin-left: auto;
+  flex: 1;
+  text-align: end;
+}
+
+/* Channel custom header styles */
+.custom-channel-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin: 0;
+}
+.custom-channel-header button {
+  border: none;
+  background: transparent;
+}
+
+/* Override Sendbird styles if not using custom channel list preview  */
+/* .App .sendbird-channel-list,
+.App .sendbird-channel-header,
+.App
+  .sendbird-channel-list
+  .sendbird-channel-preview
+  .sendbird-channel-preview__content__upper,
+.App
+  .sendbird-channel-list
+  .sendbird-channel-preview
+  .sendbird-channel-preview__content__lower,
+.App .sendbird-channel-list .sendbird-channel-preview {
+  width: 100%;
+}
+.App
+  .sendbird-channel-list
+  .sendbird-channel-preview.sendbird-channel-preview--active {
+  border-left: none;
+  border-bottom: solid 1px var(--sendbird-light-onlight-04);
+  background-color: inherit;
+}
+.App
+  .sendbird-channel-list
+  .sendbird-channel-preview.sendbird-channel-preview--active
+  .sendbird-channel-preview__content__upper__header__channel-name {
+  color: inherit;
+}
+.App
+  .sendbird-channel-list
+  .sendbird-channel-preview.sendbird-channel-preview--active
+  .sendbird-channel-preview__action {
+  display: none;
+}
+.App
+  .sendbird-channel-list
+  .sendbird-channel-preview.sendbird-channel-preview--active
+  .sendbird-channel-preview__content__upper__last-message-at {
+  display: block;
+} */

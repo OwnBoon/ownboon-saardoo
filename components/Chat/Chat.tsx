@@ -4,7 +4,6 @@ import { User } from "../../typings";
 import "../../styles/chat.css";
 
 const APP_ID = "7FB154A3-C967-45D0-90B7-6A63E5F0E3EB";
-const USER_ID = "astrosaard";
 // @ts-ignore
 import SBConversation from "@sendbird/uikit-react/Channel";
 // @ts-ignore
@@ -29,14 +28,14 @@ const Chat = ({ user }: Props) => {
   const [currentChannelUrl, setCurrentChannelUrl] = useState("");
   const [category, setCategory] = useState("");
   return (
-    <div className="h-[86vh] overflow-hidden ml-1 px-0 top-0 py-0 w-full scrollbar-none scrollbar">
+    <div className="h-[86vh] hidden lg:inline-flex overflow-hidden ml-1 px-0 top-0 py-0 w-full scrollbar-none scrollbar">
       {" "}
       <SBProvider
         // ColorSet={myColorSet}
         theme="dark"
         appId={APP_ID}
-        userId="ownboon"
-        // userId={user[0].chatid}
+        // userId="ownboon"
+        userId={user[0].chatid}
       >
         <div className="flex justify-between h-full w-full">
           <div className="w-fit">

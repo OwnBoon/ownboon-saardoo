@@ -136,7 +136,7 @@ const Navbar = ({
             />
             {showsearch && (
               <form
-                onSubmit={(e) => handlesearch(e)}
+                // onSubmit={(e) => handlesearch(e)}
                 className="flex flex-row items-center justify-center"
               >
                 <input

@@ -421,7 +421,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   return (
     <div className="overflow-y-scroll h-screen">
-      {match[0].categories && !categoryslide ? (
+      {!match[0].categories && !categoryslide ? (
         <>
           <Modal
             // closeButton
@@ -483,11 +483,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               <TodoList todos={todos} user={user} setTodos={setTodos} />
 
               <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
-                <div className="whitespace-nowrap underline underline-offset-8 text-[23px] font-sans text-white relative">
+                <div className="whitespace-nowrap underline underline-offset-8 text-[19px] md:text-[23px] font-sans text-white relative">
                   AI Schedule Generator
                 </div>
                 <div className="mb-2 relative w-40 h-px shrink-0 " />
-                <div className="text-center font-poppins text-[15px]  text-white mb-2 relative w-3/4">
+                <div className="text-center font-poppins text-sm md:text-[15px] text-white mb-2 relative w-3/4 sm:text-sm md:text-base lg:text-lg xl:text-[15px]">
                   The AI schedule generator analyzes preferences, constraints,
                   and resources to create optimized schedules, maximizing
                   efficiency and productivity.
@@ -593,17 +593,15 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       </div>
                       <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
                       <div className="scale-75 flex justify-center items-center flex-col md:scale-100 w-full h-full text-sm">
-                        <div className="hidden md:inline">
+                        <div className=" inline">
                           <ReactQuill
                             theme="snow"
-                            className="h-64 md:mt-5 mt-0  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                            value={text || selectedNoteData}
-                            onChange={(e) => {
-                              setText(e);
-                            }}
+                            className=" lg:h-64 md:h-32 lg:mt-5 md:mt-2 mt-0 sm:h-fit  w-fit !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                            value={text || note?.note}
+                            onChange={setText}
                           />
                         </div>
-                        <div className="p-2">
+                        {/* <div className="p-2">
                           <textarea
                             contentEditable={true}
                             cols={16}
@@ -614,7 +612,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                               setText(e.target.value);
                             }}
                           />
-                        </div>
+                        </div> */}
                         <div
                           onClick={(e) => handleNoteChange(note._id!)}
                           className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"

@@ -35,12 +35,12 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
   const productivity = Math.floor((focus_no * 10) / 60);
 
   return (
-    <div className="h-[48vw] fade justify-center items-center w-[94.3vw] flex relative">
+    <div className="h-[48vw] fade justify-center items-center sm:w-[94.3vw] flex relative w-fit ">
       {user ? (
         <>
           {level < 5 ? (
             <Spline
-              className="z-50"
+              className="sm:w-full w-fit z-50"
               scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
             />
           ) : level < 10 ? (
@@ -73,20 +73,22 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           ) : (
             <Image src={"/boonisland.png"} fill alt={""} />
           )}
-          <div className="flex animate-floaty gap-x-8 shadow-zinc-700 shadow-2xl z-20	 flex-row py-8 rounded-3xl  px-8 bg-[#191919a8] text-white absolute  bottom-4">
+          <div className="flex animate-floaty items-center z-50 flex-row gap-y-4 gap-x-6 sm:gap-x-8 shadow-zinc-700 shadow-2xl py-4 sm:py-8 rounded-3xl px-8 sm:px-8 bg-[#191919a8] text-white absolute bottom-4">
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Current Level</h1>
-              <h2 className="font-poppins text-3xl">{level}</h2>
+              <h1 className="font-poppins  text-sm sm:text-md  ">
+                Current Level
+              </h1>
+              <h2 className="font-poppins text-lg sm:text-3xl">{level}</h2>
             </div>
-            <div className="w-0 h-16 border border-neutral-400"></div>
+            <div className="w-0 h-8 sm:h-16 border border-neutral-400"></div>
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Points</h1>
-              <h2 className="font-poppins text-3xl">{focus}</h2>
+              <h1 className="font-poppins text-sm sm:text-md  ">Points</h1>
+              <h2 className="font-poppins text-lg sm:text-3xl">{focus}</h2>
             </div>
-            <div className="w-0 h-16 border border-neutral-400"></div>
+            <div className="w-0 h-16 border sm:h-16 border-neutral-400"></div>
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
-              <h1 className="font-poppins text-md  ">Next Level</h1>
-              <h2 className="font-poppins text-3xl">{level + 1} </h2>
+              <h1 className="font-poppins text-sm sm:text-md  ">Next Level</h1>
+              <h2 className="font-poppins text-lg sm:text-3xl">{level + 1} </h2>
             </div>
           </div>
           <div
@@ -105,7 +107,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           </div>
           <Dialog isOpen={showislandinfo} onClose={setShowislandinfo}>
             {level < 5 ? (
-              <div className="flex w-[40vw] bg-[#191919a8] space-y-10   h-[30vw] items-center   rounded-xl  flex-col ">
+              <div className="flex w-[60vw] sm:w-[40vw] md:w-[50vw] bg-[#191919a8] h-auto md:h-[auto] sm:h-[auto] items-center rounded-xl flex-col">
                 <h1 className="font-poppins text-3xl mt-12">Newbie</h1>
                 <div className="flex flex-col my-3  gap-5 items-center space-y-2">
                   {/* display the image of the current level of boon island, static image to avoid long loading */}

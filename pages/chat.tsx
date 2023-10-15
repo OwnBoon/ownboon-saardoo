@@ -10,6 +10,7 @@ import { Goals, User } from "../typings";
 import { useUser } from "@clerk/nextjs";
 import { Button, Checkbox, Modal, Text } from "@nextui-org/react";
 import { fetchGoals } from "../utils/fetchGoals";
+import ChatMobile from "../components/Chat/ChatMobile";
 const Chat = dynamic(() => import("../components/Chat/Chat"), {
   ssr: false,
   loading: () => <p>...</p>,
@@ -201,6 +202,7 @@ const chat = ({ users, goals }: Props) => {
             )}
 
             <Chat user={match} />
+            <ChatMobile user={match} />
           </main>
         }
       />
