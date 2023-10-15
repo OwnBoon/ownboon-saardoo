@@ -316,7 +316,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
         _id: id,
       };
       //@ts-ignore
-      setNotes(notes.filter((t: any) => t._id != id));
+      setNotesList(notes.filter((t: any) => t._id != id));
 
       fetch(`/api/deleteNote`, {
         body: JSON.stringify(noteInfo),
@@ -413,6 +413,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   const showNote = () => {
     setShowModal(true);
   };
+  const [isEditing, setIsEditing] = useState(false);
+  // const [editedTopic, setEditedTopic] = useState();
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
@@ -522,7 +524,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             </div>
             {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
-               {filteredNotes.map((note) => (
+                {filteredNotes.map((note) => (
                 <>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
                     <div className="rounded-xl scale-150 md:scale-100 bg-[#101010] p-2 w-full h-full  md:p-16">
@@ -570,7 +572,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     }}
                     className="bg-[#212121] cursor-pointer w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
                   >
-                    <div>
+                    <div >
                       <h1 className="border-b w-fit cursor-text font-semibold text-lg">
                         {note.topic}
                       </h1>

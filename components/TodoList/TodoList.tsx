@@ -357,8 +357,14 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         </div>
       </div>
       <div className="border-solid border-gray-700 self-center mb-3 w-40 relative  h-px shrink-0" />
-      {!showTaskInput && (
+      {!showTaskInput && 
+      (
         <div className="overflow-x-scroll  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#3b3b3b]">
+          {todos.length==0 ?( 
+          <div className="w-full h-[20vh] flex items-center justify-center bg-[#343232] text-slate-400 text-2xl">
+          Add some Todos
+             </div>):
+        (
           <ReactSortable
             handle=".drag-handle"
             list={todos}
@@ -435,7 +441,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                 /> */}
               </div>
             ))}
-          </ReactSortable>
+          </ReactSortable>)}
 
           {tempTodo && (
             <div className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 opactity-50">

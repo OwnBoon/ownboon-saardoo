@@ -24,7 +24,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar }: Props) => {
     <div
       onMouseEnter={() => setShowsidebar(true)}
       onMouseLeave={() => setShowsidebar(false)}
-      className="w-0"
+      className="w-0 sm:w-auto"
     >
       <div
         className={`h-screen transition-all fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${

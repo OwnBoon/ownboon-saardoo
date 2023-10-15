@@ -8,6 +8,8 @@ import { GetServerSideProps } from "next";
 import { fetchUsers } from "../../utils/fetchUsers";
 import { fetchGoals } from "../../utils/fetchGoals";
 import { fetchNotes } from "../../utils/fetchNotes";
+import { FaBars } from 'react-icons/fa';
+import { IoMdClose } from 'react-icons/io';
 import { Goals, User } from "../../typings";
 import Link from "next/link";
 

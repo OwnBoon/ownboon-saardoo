@@ -64,7 +64,7 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD]    py-24 pb-24  ${!showsidebar ? "" : ""}`}
+          className={`text-[#DDDDDD]    py-24 pb-24  ${!showsidebar ? "" : 'translate-x-60'}`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}
