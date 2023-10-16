@@ -29,6 +29,8 @@ export default function Notification({
       }
     }
   }, [match]);
+
+
   return (
     <div
       className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-scroll ${
@@ -43,7 +45,7 @@ export default function Notification({
       </div>
       <div className="flex flex-col w-full justify-center space-y-6 my-2 text-white">
         <div className="space-y-1 flex flex-col  items-center p-2 w-full h-full">
-          {notifications ? (
+          {notifications && notifications.length ? (
             <>
               {notifications.map((notification, index) => (
                 <div
@@ -86,7 +88,7 @@ export default function Notification({
                   {boonNoti}
                 </Link>
               </div>
-            ) : null}
+            ) : <div className="flex p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4">Nothing Here! 🕑</div>}
           </div>
         </div>
       </div>
