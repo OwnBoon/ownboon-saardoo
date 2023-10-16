@@ -30,7 +30,6 @@ export default function Notification({
     }
   }, [match]);
 
-
   return (
     <div
       className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-scroll ${
@@ -88,7 +87,11 @@ export default function Notification({
                   {boonNoti}
                 </Link>
               </div>
-            ) : <div className="flex p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4">Nothing Here! 🕑</div>}
+            ) : (
+              <div className="flex p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4">
+                Nothing Here! 🕑
+              </div>
+            )}
           </div>
         </div>
       </div>

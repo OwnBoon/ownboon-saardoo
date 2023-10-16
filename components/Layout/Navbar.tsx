@@ -199,7 +199,7 @@ const Navbar = ({
                       width={70}
                       onClick={() => togglenotification()}
                       height={70}
-                      className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
+                      className="p-2 rounded hover:brightness-150 transition-all cursor-pointer"
                       src="/notification.svg"
                       alt={"notification"}
                     />
@@ -209,7 +209,7 @@ const Navbar = ({
                     width={70}
                     onClick={() => togglenotification()}
                     height={70}
-                    className=" p-2 rounded hover:brightness-150 transition-all cursor-pointer"
+                    className=" ml-12 p-2 rounded hover:brightness-150 transition-all cursor-pointer"
                     src="/notification.svg"
                     alt={"notification"}
                   />
