@@ -416,6 +416,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   const showNote = () => {
     setShowModal(true);
   };
+  const handlemodalfunction = () =>{
+    console.log("log",showPromptModal)
+    setShowPromptModal(!showPromptModal)
+  }
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
@@ -493,7 +497,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   efficiency and productivity.
                 </div>
                 <button
-                  onClick={() => setShowPromptModal(true)}
+                  onClick={() => {handlemodalfunction()}}
                   className="cursor-pointer border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded"
                 >
                   <h1 className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
@@ -667,7 +671,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               // color="black"
               className="md:h-[60vh] w-fit md:w-full !bg-[#101010] p-3"
               width="80%"
-              // onClose={setShowPromptModal}
+              onClose={()=>{handlemodalfunction()}}
             >
               <div className="flex w-full h-full  p-10  mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
                 <div className="flex flex-col  items-center justify-center">
@@ -807,7 +811,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     <div className="p-2 flex flex-row  w-[30vw] justify-center items-center">
                       <div className="flex flex-row gap-x-4 items-center justify-center">
                         <button
-                          onClick={() => setShowPromptModal(false)}
+                          onClick={() => {handlemodalfunction()}}
                           className="py-2 px-4  my-2  bg-[#101010] text-neutral-500 text-xs rounded-3xl font-poppins md:text-[0.9vw]"
                         >
                           Cancel
@@ -877,7 +881,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       </button>
                     ) : (
                       <button
-                        onClick={() => setShowPromptModal(false)}
+                        onClick={() => {handlemodalfunction()}}
                         className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                       >
                         Cancel
