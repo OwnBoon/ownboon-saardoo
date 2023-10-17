@@ -120,7 +120,7 @@ const PostCard = ({ post, match, users }: Props) => {
     refreshComments();
   };
 
-  match[0].follow = null;
+  
 
   if (match[0].follow == null) {
     const addCategory = async () => {
@@ -348,7 +348,7 @@ const PostCard = ({ post, match, users }: Props) => {
         </div>
       </div>
     );
-  } else if (match[0].follow?.length > 0 || post?.liked?.length > 0) {
+  } else if (match[0].follow?.length > 0 || post!.liked!.length > 0) {
     const follows = match[0].follow!.map((follows) => ({
       _key: random2,
       _ref: follows._id,
@@ -409,7 +409,8 @@ const PostCard = ({ post, match, users }: Props) => {
     };
 
     //@ts-ignore
-    const followedAuthors = match[0]?.follow.map((followedUser) =>
+    const followedAuthors = match[0]!.follow.map((followedUser) =>
+      // @ts-ignore
       followedUser.name.toLowerCase()
     );
 
@@ -422,6 +423,7 @@ const PostCard = ({ post, match, users }: Props) => {
       <div className=" hidden lg:inline-grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
         <div className="  col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
           <div className="h-full">
+            
             <div className="flex gap-6 h-fit ">
               <img
                 className="h-56 object-cover w-56 rounded-md"
