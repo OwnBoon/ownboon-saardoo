@@ -348,7 +348,7 @@ const PostCard = ({ post, match, users }: Props) => {
         </div>
       </div>
     );
-  } else if (match[0].follow?.length > 0 || post?.liked?.length > 0) {
+  } else if (match[0].follow?.length > 0 || post!.liked!.length > 0) {
     const follows = match[0].follow!.map((follows) => ({
       _key: random2,
       _ref: follows._id,
