@@ -81,7 +81,6 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const id = posts.map((post) => post._id);
   const [comments, setComments] = useState<Comment[]>([]);
   const [categoryselected, setcategoryselected] = useState("");
-  console.log(comments);
 
   const refreshComments = async () => {
     // @ts-ignore
@@ -164,7 +163,6 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   };
 
   const filteredPosts = logic();
-  console.log(filteredPosts);
 
   const dropDownBlogs = dropdownLogic(categoryselected);
   // @ts-ignore
