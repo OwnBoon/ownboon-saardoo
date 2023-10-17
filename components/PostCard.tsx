@@ -410,7 +410,7 @@ const PostCard = ({ post, match, users }: Props) => {
 
     //@ts-ignore
     const followedAuthors = match[0]?.follow.map((followedUser) =>
-      followedUser.name.toLowerCase()
+      followedUser!.name.toLowerCase()
     );
 
     //@ts-ignore
