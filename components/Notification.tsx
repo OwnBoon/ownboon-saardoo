@@ -32,7 +32,7 @@ export default function Notification({
 
   return (
     <div
-      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-scroll ${
+      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-hidden ${
         shownotifications ? "translate-y-0 top-24" : "-translate-y-[100vh] "
       } shadow-2xl  p-1  z-30 items-center bg-[#101010]`}
     >
@@ -72,7 +72,7 @@ export default function Notification({
 
           <div
             className={
-              "flex p-2 bg-[#212121] cursor-pointer rounded-lg w-full hover:border-b-2 transition-all duration-50 flex-row px-5   space-x-4"
+              "flex p-2 bg-[#212121] cursor-pointer rounded-lg w-full hover:border-b-2 transition-all duration-50 flex-row px-5 space-x-4"
             }
           >
             {boonNoti ? (
@@ -88,7 +88,7 @@ export default function Notification({
                 </Link>
               </div>
             ) : (
-              <div className="flex flex-col bg-cover p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4">
+              <div className="flex h-[80vh] mt-[30vh] flex-col bg-cover p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full px-5 transition-all duration-50 space-x-4">
                 <img
                   className=""
                   src="https://cdn.sanity.io/images/mrfd4see/production/a94ecfa3fd0cf934272fc5cfaa83beeffc358235-500x394.png?w=2000&fit=max&auto=format"
