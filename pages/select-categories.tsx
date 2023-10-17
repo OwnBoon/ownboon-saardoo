@@ -133,8 +133,8 @@ const Home = ({ users, next, setNext }: any) => {
                   </>
                 )}
               </div> */}
-            <div className="flex flex-col mt-20  justify-center items-center gap-10 w-full">
-              <div className="flex justify-center items-center gap-2 h-fit">
+            <div className="flex flex-col mt-20  justify-center items-center gap-10 ">
+              <div className="flex flex-row flex-wrap sm:flex-nowrap justify-center overflow-x-scroll  items-center gap-2 h-fit">
                 {fiveCate.map((cateogry) => (
                   <div
                     onClick={(e) =>
@@ -145,6 +145,7 @@ const Home = ({ users, next, setNext }: any) => {
                     <p className="text-sm">{cateogry.name}</p>
                   </div>
                 ))}
+                
               </div>
               <div className="flex flex-col mt-10 items-center">
                 <input

@@ -419,6 +419,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
+
   return (
     <div className="overflow-y-scroll h-screen">
       {!match[0].categories && !categoryslide ? (
@@ -426,7 +427,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           <Modal
             // closeButton
             aria-labelledby="modal-title"
-            className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+            className="!bg-[#191919]/40 z-50 h-[70vh]  flex justify-center items-center backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
             open={true}
             width="80%"
           >
@@ -463,9 +464,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       ) : categoryslide ? (
         <Modal
           aria-labelledby="modal-title"
-          className="!bg-[#191919]/40 h-[90%] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0"
+          className="!bg-[#191919]/40 h-[90%] w-[100vw] flex justify-center items-center backdrop-blur-md fixed top-0 left-0 right-0  overflow-x-scroll md:inset-0"
           open={true}
-          width="80%"
+          width="100%"
         >
           <Category users={users} />
         </Modal>
