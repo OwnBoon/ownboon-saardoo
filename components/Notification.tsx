@@ -89,7 +89,7 @@ export default function Notification({
               </div>
             ) : (
               <div className="flex p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full flex-row px-5  transition-all duration-50 space-x-4">
-            <img className="w-10 md:w-20 md:w-20 h-10  src="https://cdn.sanity.io/images/mrfd4see/production/a94ecfa3fd0cf934272fc5cfaa83beeffc358235-500x394.png?w=2000&fit=max&auto=format" />
+            <img className="w-10 md:w-20 md:w-20 h-10" src="https://cdn.sanity.io/images/mrfd4see/production/a94ecfa3fd0cf934272fc5cfaa83beeffc358235-500x394.png?w=2000&fit=max&auto=format" />
               </div>
             )}
           </div>
