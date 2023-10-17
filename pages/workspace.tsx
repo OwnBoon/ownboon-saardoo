@@ -669,7 +669,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               width="80%"
               // onClose={setShowPromptModal}
             >
-              <div className="flex w-full h-full  p-10  mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+              <div className="flex w-full h-full md:text-xl p-10 md:mt-[6vh]  lg:-mt-[7vh] rounded-xl bg-[#101010] flex-col ">
                 <div className="flex flex-col  items-center justify-center">
                   <h1 className="md:text-[2vw] text-lg  my-2  text-white text-center ">
                     BoonBot
@@ -749,7 +749,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </Checkbox>
                       </div>
                     </div>
-                    {empty && "Please Pick one of the options"}
+                    {empty && <div className="text-white">Please Pick one of the options</div>}
                   </div>
                   <div
                     className={`${
@@ -773,7 +773,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         className="border-none text-sm  md:text-xl text-neutral-200 font-poppins md:w-[30vw] w-full  bg-[#232222]"
                       ></textarea>
                     </div>
-                    {empty && "Please enter atleast a sentence"}
+                    {empty && <div className="text-white">Please enter atleast a sentence</div>}
                   </div>
                   <div
                     className={`${
@@ -871,14 +871,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {pageposition ? (
                       <button
                         onClick={() => handlepreviouspage()}
-                        className="py-2 fade px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                        className="text-sm py-2 fade px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                       >
                         {"<-"} Back
                       </button>
                     ) : (
                       <button
                         onClick={() => setShowPromptModal(false)}
-                        className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                        className="text-sm py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                       >
                         Cancel
                       </button>
@@ -898,7 +898,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           ? setEmpty(true)
                           : handlenextpage()
                       }
-                      className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                      className="text-sm py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                     >
                       Next {"->"}
                     </button>
