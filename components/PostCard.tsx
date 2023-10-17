@@ -120,7 +120,7 @@ const PostCard = ({ post, match, users }: Props) => {
     refreshComments();
   };
 
-  match[0].follow = null;
+  
 
   if (match[0].follow == null) {
     const addCategory = async () => {
