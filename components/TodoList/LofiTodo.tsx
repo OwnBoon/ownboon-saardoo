@@ -13,6 +13,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MdAddCircle } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 type Props = {
   todos: any[];
@@ -64,6 +65,8 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
   };
 
   const addGoalData = async () => {
+    const router = useRouter();
+
     try {
       const postInfo: GoalBody = {
         // @ts-ignore
@@ -87,6 +90,8 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
         const newTodo = json.message.results[0].document;
         setTemptodo(null);
         setTodos([...todos, newTodo]);
+        router.refresh();
+
         toast.success("Successfully toasted!");
         // toast.custom((t) => (
         //   <div
@@ -224,9 +229,12 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
         </div>
       ));
       return json;
+      const router = useRouter();
+      router.refresh();
     } catch (err) {
       console.error(err);
     }
+
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -253,18 +261,23 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
 
   const deleteAllTodos = () => {
     setIsOpen(false);
+    const router = useRouter();
+      
     if (user) {
       fetch(`/api/deleteAllGoals`, {
         body: JSON.stringify(user?.username),
         method: "POST",
       }).then(async (res) => {
         setTodos([]);
+        router.refresh();
       });
     }
   };
 
   const deleteAllCompletedTodos = () => {
     setIsOpen(false);
+    const router = useRouter();
+      
     if (user) {
       setTodos(todos.filter((t) => t.completed != true));
 
@@ -272,12 +285,15 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
         body: JSON.stringify(user?.username),
         method: "POST",
       }).then(async (res) => {
+        router.refresh();
         console.log("deleted");
       });
     }
   };
 
   const changeTodoState = (id: any, e: any) => {
+    const router = useRouter();
+      
     if (user) {
       setTodos(
         todos.map((t) => {
@@ -292,6 +308,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
         body: JSON.stringify({ _id: id, state: e.target.checked }),
         method: "POST",
       }).then(async (res) => {
+        router.refresh();
         console.log("updated");
       });
     }

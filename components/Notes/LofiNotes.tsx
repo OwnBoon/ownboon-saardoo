@@ -19,6 +19,7 @@ import Draggable, { DraggableCore } from "react-draggable";
 import { useRouter } from "next/router";
 import { Tooltip } from "@nextui-org/react";
 
+
 function CategoryDropdown({ categories, handleCategoryChange }: any) {
   return (
     <select
@@ -128,9 +129,13 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
       method: "POST",
     }).then(async (res) => {
       const json = await res.json();
+      const router = useRouter();
+      
       const newNote = json.message.results[0].document;
       setNotes([...notes, newNote]);
       setTempNote(null);
+      //@ts-ignore
+      router.refresh();
     });
   };
 
