@@ -100,6 +100,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
   const [todos, setTodos] = useState<any[]>([]);
+  const [note, setNote] = useState<any[]>([]);
 
   const [tempTodo, setTemptodo] = useState<any>(null);
 
@@ -115,6 +116,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             : 0
         )
     );
+    const notesez = notes.filter(
+      (notess) => notess.email == user?.emailAddresses[0].emailAddress
+    );
+    setNote(notesez);
+
     if (user && !match[0]?.categories) {
       // router.push("/categories");
     } else {
@@ -256,7 +262,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   console.log("selected", selectedCategory);
 
-  const filteredNotes = notess.filter(
+  const filteredNotes = note.filter(
     (note) => selectedCategory === "" || note.category === selectedCategory
   );
   const [desc, setDesc] = useState("");
@@ -652,7 +658,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             <Dialog isOpen={showAddNotesModal} onClose={setShowAddNotesModal}>
               {
                 <Notes
-                  setNotes={setNotesList}
+                  setNotes={setNote}
                   setDummyNote={setDummyNote}
                   notes={notes}
                   categories={categories}
