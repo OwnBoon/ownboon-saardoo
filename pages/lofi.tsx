@@ -77,7 +77,9 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const [seconds, setSeconds] = useState(0);
   const [time, setTime] = useState("");
   const [resume, setResume] = useState(true);
+  const [innerwidth,setinnerwidth] = useState(window.innerWidth)
   useEffect(() => {
+    setinnerwidth(window.innerWidth)
     setTodos(
       goals
         .filter((goal) => goal.username == user?.username)
@@ -255,11 +257,11 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             ) : (
               <>
-                <div className="w-full md:hidden  h-full flex flex-col">
-                  <div className="w-full h-full">
-                    <Clock sessionStarted={sessionStarted} />
+                <div className="w-full md:hidden  h-85 flex flex-col">
+                  <div className="w-full h-85">
+                    {innerwidth<820?<Clock sessionStarted={sessionStarted} />:""}
                   </div>
-                  <div className=" flex justify-center mb-40 w-full h-full">
+                  <div className=" flex justify-center mb-40 w-full h-85">
                     <button
                       className="bg-[#D9D9D9] md:hidden inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
                       // @ts-ignore
@@ -279,7 +281,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                     </button>
                   </div>
                 </div>
-                <Clock sessionStarted={sessionStarted} />
+                {innerwidth>820?<Clock sessionStarted={sessionStarted} />:""}
               </>
             )}
 
