@@ -28,16 +28,27 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
 
     setDummyNote(mutations);
 
-    const result = await fetch(`/api/addNotes`, {
+    // const result = await fetch(`/api/addNotes`, {
+    //   body: JSON.stringify(mutations),
+    //   method: "POST",
+    // });
+    fetch(`/api/addNotes`, {
       body: JSON.stringify(mutations),
       method: "POST",
+    }).then(async (res) => {
+      const json = await res.json();
+      console.log(json.message.results[0].document);
+      const newTodo = json.message.results[0].document;
+      setNotes([...notes, newTodo]);
     });
 
-    const json = await result.json();
-    setNotes([...notes, json]);
     router.replace(router.pathname);
-    setDummyNote(null);
-    return json;
+
+    // const json = await result.json();
+    // setNotes([...notes, json]);
+    // router.replace(router.pathname);
+    // setDummyNote(null);
+    // return json;
   };
   const handleSet = async (id: string, topic: string) => {
     // e.preventDefault();
