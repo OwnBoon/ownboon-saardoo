@@ -23,7 +23,7 @@ import { Tooltip } from "@nextui-org/react";
 function CategoryDropdown({ categories, handleCategoryChange }: any) {
   return (
     <select
-      className="  bg-white bg-opacity-30 text-neutral-200 ring-0 ring-transparent outline-none focus:ring-0 focus:outline-none focus:border-white/30  text-base rounded border border-white border-opacity-50 backdrop-blur-xl"
+      className="btn  bg-white bg-opacity-30 text-neutral-200 ring-0 ring-transparent outline-none focus:ring-0 focus:outline-none focus:border-white/30  text-base rounded border border-white border-opacity-50 backdrop-blur-xl"
       onChange={handleCategoryChange}
     >
       {Array.from(categories).map((category: any, index) => (
@@ -169,7 +169,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
               />
               {!showTaskInput && (
                 <div className="flex justify-center p-2 ">
-                  <div onClick={handleAddingTask} className="">
+                  <div onClick={handleAddingTask} className="btn">
                     <PlusCircle className=" cursor-pointer bg-clip-text bg-opacity-30 bg-white text-white " />
                   </div>
                 </div>
