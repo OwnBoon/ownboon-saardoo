@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, Dropdown, Modal, Text } from "@nextui-org/react";
+import { useRouter } from 'next/router'
 
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, Roadmaps, User } from "../typings";
@@ -11,7 +12,6 @@ import Layout from "../components/Layout/Layout";
 import handler from "../pages/api/roadmap/generate";
 import { fetchRoadmaps } from "../utils/fetchRoadmap";
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/router";
 import RoadComp from "../components/Roadmap/roadmaps";
 import ReactTimeago from "react-timeago";
 interface datatype {
@@ -106,7 +106,9 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       method: "POST",
     });
     const json2 = await result2.json();
+    router.replace(router.asPath); 
     return json;
+
   };
   // console.log("data is", data);
   const handleOpen = (category: any) => {
@@ -136,6 +138,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     console.log("completing roadmap");
     const json = await result.json();
     console.log(json);
+    router.reload();
     return json;
   };
   const deleteRoadmap = async (id: string) => {
@@ -150,6 +153,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     const json = await result.json();
     console.log(json);
     router.replace(router.asPath);
+    
     return json;
   };
 
