@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, Dropdown, Modal, Text } from "@nextui-org/react";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, Roadmaps, User } from "../typings";
@@ -51,6 +51,8 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     (roadmap) => roadmap.email === user?.emailAddresses[0].emailAddress
   );
 
+  const [modal, setModal] = useState(false);
+
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("self");
@@ -75,6 +77,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     setVisible(false);
     console.log(desc);
     setDesc("");
+    setModal(true);
     setLoading(true);
     const result = await fetch(
       `https://nodejs-sms.saard00vfx.repl.co/api?title=${desc}`
@@ -106,9 +109,9 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       method: "POST",
     });
     const json2 = await result2.json();
-    router.replace(router.asPath); 
+    router.replace(router.asPath);
+    setModal(false);
     return json;
-
   };
   // console.log("data is", data);
   const handleOpen = (category: any) => {
@@ -153,7 +156,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
     const json = await result.json();
     console.log(json);
     router.replace(router.asPath);
-    
+
     return json;
   };
 
@@ -380,8 +383,8 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       goals={goals}
       border="gray-500"
       children={
-        <div className="overflow-y-scroll   h-screen">
-          <div className="flex w-full   gap-6 ">
+        <div className="overflow-y-scroll h-screen">
+          <div className="flex w-full gap-6 ">
             <Modal
               closeButton
               aria-labelledby="modal-title"
@@ -421,6 +424,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 </button>
               </Modal.Footer>
             </Modal>
+
             <div
               className="first w-1/2  bg-[#191919]  inline-block md:inline-flex items-center justify-between p-4 rounded-md"
               style={{
@@ -478,6 +482,24 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
             </div>
           </div>
 
+          {modal && (
+            <div className="w-full h-[80vh] flex mt-10">
+              {" "}
+              <Modal
+                noPadding
+                open={true}
+                onClose={closeHandler}
+                className="!bg-[#191919] w-[30vw] h-[15vh] flex justify-center z-50"
+              >
+                <div className="flex justify-center ml-[13vw]">
+                  <Modal.Body>
+                    <Text color="#FFFFFF">Generating</Text>
+                  </Modal.Body>
+                </div>
+              </Modal>
+            </div>
+          )}
+
           {/* road map data */}
 
           {!userroadmap && (
@@ -487,6 +509,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
               </span>
             </div>
           )}
+
           {userroadmap && (
             <div className="w-full min-h-screen pb-10 mt-8 flex flex-col gap-8">
               {userroadmap.map((roadmap: Roadmaps) => (
