@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import "../styles/react-quill.css";
 import "../styles/prism.css";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store } from "../redux/store";
 import { ClerkProvider } from "@clerk/nextjs";
 import { RecoilRoot } from "recoil";
@@ -17,6 +17,8 @@ import { useRouter } from "next/router";
 import Router from "next/router";
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css";
+import MusicPlayer from "../components/lofi/MusicPlayer";
+import MusicPlayerContainer from "../components/lofi/MusicPlayerContainer";
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
@@ -24,6 +26,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const { isBrowser } = useSSR();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+
 
   // useEffect(() => {
   //   const handleRouteChangeStart = () => {
@@ -56,6 +60,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
               {loading && <CustomLoader />}
               <Component setLoading={setLoading} {...pageProps} />
               <Analytics />
+
+              <MusicPlayerContainer />
             </div>
           )}
         </ClerkProvider>
