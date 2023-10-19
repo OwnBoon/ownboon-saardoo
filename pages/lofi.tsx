@@ -69,7 +69,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const router = useRouter();
   const [toolbar, setToolbar] = useState(true);
 
-  const [sessionStarted, setSessionStarted] = useState(false);
+  const { sessionStarted } = useSelector((state: any) => state.lofi)
   const { activeSong, isPlaying } = useSelector((state: any) => state.player);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -178,14 +178,14 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   // @ts-ignore
 
   const handleStart = () => {
-    setSessionStarted(true);
+    // setSessionStarted(true);
     dispatch(setSessionStartedState(true));
     // @ts-ignore
 
     setStartTime(new Date());
   };
   const handleStop = () => {
-    setSessionStarted(false);
+    // setSessionStarted(false);
 
     dispatch(setSessionStartedState(false));
 
