@@ -5,6 +5,8 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Goals, User } from "../../typings";
 import SidebarMobile from "./SidebarMobile";
+import { useSelector } from "react-redux";
+import MusicPlayer from "../lofi/MusicPlayer";
 interface Props {
   children?: ReactNode;
   bgColor: string;
@@ -66,14 +68,18 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD]    py-24 pb-24 bg-cover  ${
-            !showsidebar ? "" : ""
-          }`}
+          className={`text-[#DDDDDD]    py-24 pb-24 bg-cover  ${!showsidebar ? "" : ""
+            }`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}
         >
           {children}
+          {/* {activeSong?.title && sessionStarted && (
+            <div className={`absolute justify-center z-40 mr-[45vw] bottom-11 right-0 flex animate-slideup bg-gradient-to-br ${activeSong?.title && sessionStarted ? 'block' : 'none'}`}>
+              <MusicPlayer sessionStarted={sessionStarted} />
+            </div>
+          )} */}
         </div>
       </div>
     </div>

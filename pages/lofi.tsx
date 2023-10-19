@@ -25,6 +25,7 @@ import Draggable, { DraggableCore } from "react-draggable";
 import { Tooltip } from "@nextui-org/react";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 import { Poppins } from "next/font/google";
+import { setSessionStartedState } from "../redux/features/lofiSlice";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -77,7 +78,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const [seconds, setSeconds] = useState(0);
   const [time, setTime] = useState("");
   const [resume, setResume] = useState(true);
-  const [innerwidth,setinnerwidth] = useState(window.innerWidth)
+  const [innerwidth, setinnerwidth] = useState(window.innerWidth)
   useEffect(() => {
     setinnerwidth(window.innerWidth)
     setTodos(
@@ -159,8 +160,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
     const minutes = Math.floor(rm / 60);
     const _seconds = seconds % 60;
     setTime(
-      `${hours > 0 ? hours + " h" : ""}  ${
-        minutes > 0 ? minutes + " m" : ""
+      `${hours > 0 ? hours + " h" : ""}  ${minutes > 0 ? minutes + " m" : ""
       }  ${_seconds > 0 ? _seconds + " s" : ""}`
     );
   }, [seconds]);
@@ -179,11 +179,16 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
 
   const handleStart = () => {
     setSessionStarted(true);
+    dispatch(setSessionStartedState(true));
     // @ts-ignore
+
     setStartTime(new Date());
   };
   const handleStop = () => {
     setSessionStarted(false);
+
+    dispatch(setSessionStartedState(false));
+
     // @ts-ignore
     setEndTime(new Date());
     const earnedPoints = calculatePoints(seconds);
@@ -259,7 +264,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               <>
                 <div className="w-full md:hidden  h-85 flex flex-col">
                   <div className="w-full h-85">
-                    {innerwidth<820?<Clock sessionStarted={sessionStarted} />:""}
+                    {innerwidth < 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
                   </div>
                   <div className=" flex justify-center mb-40 w-full h-85">
                     <button
@@ -281,7 +286,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                     </button>
                   </div>
                 </div>
-                {innerwidth>820?<Clock sessionStarted={sessionStarted} />:""}
+                {innerwidth > 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
               </>
             )}
 
@@ -396,11 +401,11 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
             </button>
           </div>
 
-          {activeSong?.title && sessionStarted && (
+          {/* {activeSong?.title && sessionStarted && (
             <div className="absolute justify-center z-40 mr-[45vw] bottom-11 right-0 flex animate-slideup bg-gradient-to-br">
               <MusicPlayer sessionStarted={sessionStarted} />
             </div>
-          )}
+          )} */}
         </div>
       }
     />
