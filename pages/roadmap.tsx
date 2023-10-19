@@ -483,17 +483,17 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
           </div>
 
           {modal && (
-            <div className="w-full h-[80vh] flex mt-10">
+            <div className="w-[30vw] h-[80vh] flex">
               {" "}
               <Modal
                 noPadding
                 open={true}
                 onClose={closeHandler}
-                className="!bg-[#191919] w-[30vw] h-[15vh] flex justify-center z-50"
+                className="!bg-[#191919] w-[50vw] h-[15vh] flex justify-center z-50 ml-[25vw] md:ml-[1vw]"
               >
-                <div className="flex justify-center ml-[13vw]">
+                <div className="flex justify-center ml-[8vw] md:ml-[16vw] lg:ml-[12vw] xl:ml-[10vw] 2xl:ml-[5vw]">
                   <Modal.Body>
-                    <Text color="#FFFFFF">Generating</Text>
+                    <Text color="#FFFFFF">Generating roadmap</Text>
                   </Modal.Body>
                 </div>
               </Modal>
