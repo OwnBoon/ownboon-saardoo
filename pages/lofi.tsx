@@ -266,9 +266,14 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                   <div className="w-full h-85">
                     {innerwidth < 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
                   </div>
-                  <div className=" flex justify-center mb-40 w-full h-85">
-                    <button
-                      className="bg-[#D9D9D9] md:hidden inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
+                 
+                </div>
+                {innerwidth > 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
+              </>
+            )}
+             <div className=" flex justify-center mb-40 w-full ">
+                   <button
+                      className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
                       // @ts-ignore
                       onClick={
                         sessionStarted
@@ -285,10 +290,6 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                         : "Start Session"}{" "}
                     </button>
                   </div>
-                </div>
-                {innerwidth > 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
-              </>
-            )}
 
             {/* <Clock /> */}
 
@@ -382,8 +383,8 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </Draggable>
             )}
 
-            <button
-              className="bg-[#D9D9D9] hidden md:inline bottom-10 z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/4 rounded p-4 cursor-pointer"
+            {/* <button
+              className="bg-[#D9D9D9] hidden  md:inline bottom-10 z-0 mb-40 active:scale-105 transition-all Z-10 select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white w-1/4 rounded p-4 cursor-pointer"
               // @ts-ignore
               onClick={
                 sessionStarted
@@ -398,7 +399,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                   ? "Stop Session"
                   : "Resume Session"
                 : "Start Session"}{" "}
-            </button>
+            </button> */}
           </div>
 
           {/* {activeSong?.title && sessionStarted && (
