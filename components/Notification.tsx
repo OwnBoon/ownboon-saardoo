@@ -32,12 +32,12 @@ export default function Notification({
 
   return (
     <div
-      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-hidden ${
-        shownotifications ? "translate-y-0 top-24" : "-translate-y-[100vh] "
-      } shadow-2xl  p-1  z-30 items-center bg-[#101010]`}
+      className={`flex flex-col fade fixed md:right-0 rounded-b-2xl w-full px-2 md:w-[300px] max-h-screen transition-all duration-[2000] overflow-y-hidden ${
+        shownotifications ? "translate-y-0 top-[80px]" : "-translate-y-[100vh] "
+      } shadow-2xl    z-30 items-center bg-[#101010]`}
     >
       <div className="flex flex-col  items-center justify-center">
-        <h1 className=" cursor-pointer my-2 tracking-tight  text-white text-center ">
+        <h1 className=" cursor-pointer my-2  text-[5vw] md:text-[1.5vw]  tracking-tight  text-white text-center ">
           Notifications
         </h1>
         <div className="w-44 h-[0px] border border-neutral-400 mb-1"></div>
@@ -89,11 +89,7 @@ export default function Notification({
               </div>
             ) : (
               <div className="flex h-[80vh] mt-[30vh] flex-col bg-cover p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full px-5 transition-all duration-50 space-x-4">
-                <img
-                  className=""
-                  src="https://cdn.sanity.io/images/mrfd4see/production/a94ecfa3fd0cf934272fc5cfaa83beeffc358235-500x394.png?w=2000&fit=max&auto=format"
-                />
-                <div className="text-white">Nothing to show here</div>
+                <img src="/empty.svg" className="w-full h-[40vw] md:h-[10vw] " />
               </div>
             )}
           </div>

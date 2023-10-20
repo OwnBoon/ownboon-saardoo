@@ -66,7 +66,7 @@ const Layout = ({
       )}
 
       <SidebarMobile />
-      <div className="max-[500px]:w-fit pl-3 md:pl-0 h-screen  md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
+      <div className="h-screen w-full md:ml-[94px]">
         <Navbar
           goals={goals}
           users={users}
@@ -80,7 +80,7 @@ const Layout = ({
         <div
           className={`text-[#DDDDDD] ${
             text == "lofi" ? "overflow-y-hidden" : "overflow-y-scroll"
-          }  h-full   py-24 pb-24 bg-cover  ${!showsidebar ? "" : ""}`}
+          }  h-full   py-24  bg-cover  ${!showsidebar ? "" : ""}`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}

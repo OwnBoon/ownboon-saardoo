@@ -17,7 +17,6 @@ import { HiDotsVertical } from "react-icons/hi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { background } from "@chakra-ui/react";
 
-
 type Props = {
   todos: any[];
   user: any;
@@ -330,14 +329,14 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
       <div className="w-full flex flex-row gap-1 relative items-center justify-between">
         <div className="w-10 h-10"></div>
         <div className="whitespace-nowrap border-b-2 border-b-white/30 md:px-5 px-3 text-[23px] font-sans text-white w-fit flex gap-2">
-          To Do List
+          Tasks
         </div>
         <div className="relative inline-block text-left" ref={dropdownRef}>
           <button onClick={toggleDropdown} type="button">
             <BsThreeDotsVertical className=" fade h-5 w-5 transition-all  rounded  " />
           </button>
           {isOpen && (
-            <div className="absolute  z-50 w-fit left-[30px] top-0 mt-2 origin-top-right bg-[#101010]/20 backdrop-blur-xl divide-y rounded-md shadow-lg">
+            <div className="absolute  z-50 w-fit right-[30px] md:left-[30px] top-0 mt-2 origin-top-left md:origin-top-right bg-[#101010]/20 backdrop-blur-xl divide-y rounded-md shadow-lg">
               <div className="py-1">
                 <a
                   href="#"
@@ -360,90 +359,92 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
       </div>
       <div className="border-solid border-gray-700 self-center mb-3 w-40 relative  h-px shrink-0" />
       {!showTaskInput && (
-        <div className="overflow-y-scroll overflow-x-hidden h-56  scrollbar-thin scrollbar-track-[#101010]/50 scrollbar-thumb-[#3b3b3b]/40 ]">
+        <div className="overflow-y-scroll scrollbar-none overflow-x-hidden h-56   ">
           <ReactSortable
             handle=".drag-handle"
             list={todos}
             setList={handleSort}
           >
-            
-            {
-            todos.length > 0 ? (
-            todos.map((t: Goals) => (
-              <div
-                key={t._id}
-                className="flex flex-row group  mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-white/20 cursor-pointer hover:border-opacity-30 "
-              >
-                <MenuIcon className="p-1 font-light fade transition-all hover:cursor-pointer w-7 h-7 flex-shrink-0  rounded  drag-handle" />
-                <input
-                  id="default-checkbox"
-                  type="checkbox"
-                  value=""
-                  checked={t.completed}
-                  onChange={(e) => changeTodoState(t._id, e)}
-                  className="border-solid border-neutral-200 hover:cursor-pointer bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
-                />
-                <div className="whitespace-nowrap cursor-text   font-sans text-white relative">
-                  {t.title}
-                </div>
-                <Image
-                  src="delete-icon.svg"
-                  alt={""}
-                  width={30}
-                  height={30}
-                  className="p-2  opacity-0 group-hover:opacity-100   transition-all duration-100 hidden group-hover:inline  hover:cursor-pointer  rounded  drag-handle ml-auto"
-                  onClick={() => addDeleted(t._id)}
-                />
-                <div className="mr-20">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <div className="opacity-0 group-hover:opacity-100    transition-all duration-100  group-hover:inline">
-                      <DatePicker
-                        disablePast
-                        sx={{
-                          svg: { color },
-                          input: { color: "white" },
-                          label: { color },
-                          border: { border },
+            {todos.length > 0 ? (
+              todos.map((t: Goals) => (
+                <div
+                  key={t._id}
+                  className="flex flex-row group  mb-1 gap-4 relative items-center rounded-[5px] w-full   cursor-pointer "
+                >
+                  <MenuIcon className="p-1 font-light fade transition-all hover:cursor-pointer w-7 h-7 flex-shrink-0  rounded  drag-handle" />
+                  <input
+                    id="default-checkbox"
+                    type="checkbox"
+                    value=""
+                    checked={t.completed}
+                    onChange={(e) => changeTodoState(t._id, e)}
+                    className="border-solid  hover:cursor-pointer bg-transparent mb-px relative w-6 shrink-0 h-6 border-2 rounded checked:bg-[#6d8383] focus:ring-transparent focus:border-none"
+                  />
+                  <div className="whitespace-nowrap cursor-text   font-sans text-white relative">
+                    {!t.completed ? (
+                      t.title
+                    ) : (
+                      <s className={"text-[#898989]"}>{t.title}</s>
+                    )}
+                  </div>
+                  <Image
+                    src="delete-icon.svg"
+                    alt={"Delete Task"}
+                    width={30}
+                    height={30}
+                    className="p-2  opacity-0 group-hover:opacity-100   transition-all duration-100 hidden group-hover:inline  hover:cursor-pointer  rounded  drag-handle ml-auto"
+                    onClick={() => addDeleted(t._id)}
+                  />
+                  <div className="mr-20">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <div className="opacity-0 group-hover:opacity-100    transition-all duration-100  group-hover:inline">
+                        <DatePicker
+                          disablePast
+                          sx={{
+                            svg: { color },
+                            input: { color: "white" },
+                            label: { color },
+                            border: { border },
 
-                          width: 0,
-                          ":focus": {
-                            border: 0,
-                            outline: 0,
-                            borderColor: { color: "transparent" },
-                          },
-                        }}
-                        value={dayjs(t.duration!)}
-                        className="rounded-lg"
-                        onChange={
-                          (newValue: any) => {
-                            mutateTodo(t._id!, newValue);
-                            // setCalendar(newValue);
+                            width: 0,
+                            ":focus": {
+                              border: 0,
+                              outline: 0,
+                              borderColor: { color: "transparent" },
+                            },
+                          }}
+                          value={dayjs(t.duration!)}
+                          className="rounded-lg"
+                          onChange={
+                            (newValue: any) => {
+                              mutateTodo(t._id!, newValue);
+                              // setCalendar(newValue);
+                            }
+
+                            // console.log(e)
                           }
-
-                          // console.log(e)
-                        }
-                      />
-                    </div>
-                  </LocalizationProvider>
-                </div>
-                {/* <Image
+                        />
+                      </div>
+                    </LocalizationProvider>
+                  </div>
+                  {/* <Image
                   src="calendar.svg"
                   alt={""}
                   width={30}
                   height={30}
                   className="p-2 fade transition-all  rounded  drag-handle"
                 /> */}
+                </div>
+              ))
+            ) : (
+              <div className="">
+                <img className="w-full h-52 " src="/empty.svg"></img>
               </div>
-            ))) : <div className=""><img className="w-full h-52 " src="https://cdn.discordapp.com/attachments/1150393240860762143/1163879929415483482/5928293_2953962.jpg?ex=65412ea7&is=652eb9a7&hm=f4bda36c3502b100c22a37d470c078335b9b7b36905772f1a3ab4b85a938653c&"></img></div>
-            
-            
-            } 
-             
-            
+            )}
           </ReactSortable>
 
           {tempTodo && (
-            <div className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-cyan-400 hover:border-opacity-30 opactity-50">
+            <div className="flex flex-row mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border   opactity-50">
               <Image
                 src="draghandle.svg"
                 alt={""}
@@ -478,12 +479,12 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
         <div className="flex flex-col mb-3 gap-4 relative">
           <div
             onClick={() => setShowTaskInput(false)}
-            className="font-serif cursor-pointer select-none hover:text-cyan-600 duration-50 transition-colors"
+            className="font-serif cursor-pointer select-none  duration-50 transition-colors"
           >
             {"<-"}
           </div>
           <input
-            className="whitespace-nowrap w-40 rounded bg-transparent  placeholder-neutral-500 border-none focus:outline-none focus:ring-0 focus:border-none"
+            className="whitespace-nowrap w-40 rounded bg-transparent border border-black  placeholder-neutral-500 border-none focus:outline-none focus:ring-0 "
             id="username"
             type="text"
             placeholder="Name of the task"
@@ -543,7 +544,7 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
       {!showTaskInput && (
         <div
           onClick={handleAddingTask}
-          className=" border-gray-500 bg-[#38383A] self-center flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded"
+          className=" border-gray-500 bg-[#38383A] self-center w-full flex flex-row justify-center gap-1 relative h-10 shrink-0 items-center px-[10vw] py-2 border rounded"
         >
           <img
             src="https://file.rendit.io/n/xqvQ4cl5AoJGfD7albqE.png"

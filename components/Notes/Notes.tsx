@@ -69,32 +69,31 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
   return (
     <div>
       {" "}
-      <div className="w-[70vw] -ml-[15vw] h-fit md:w-full md:-ml-[0vw] border border-white/30 overflow-hidden bg-[#212121] space-y-5  px-2 rounded-xl py-2">
+      <div className="md:min-h-[35vw] min-h-[80vw] w-full flex items-start flex-col p-8  !bg-[#101010]      overflow-hidden  space-y-5   rounded-xl">
         <div className="flex justify-center items-center">
           <div className="flex flex-col gap-5">
             <input
-              className="bg-transparent border-b flex border-white/40 justify-center  outline-none "
+              className="bg-transparent text-[7vw] md:text-[2.5vw]  border-b flex border-white/40 justify-center  outline-none "
               placeholder="Category"
               minLength={2}
               // type="text"
               onChange={(e) => setCategory(e.target.value)}
             />
             <input
-              className="bg-transparent border-b border-white/40 flex justify-center  outline-none "
+              className="bg-transparent text-[7vw] md:text-[2.5vw]  border-b border-white/40 flex justify-center  outline-none "
               placeholder="Topic"
               minLength={3}
               onChange={(e) => setTopic(e.target.value)}
             />
           </div>
         </div>
-        <div className="space-y-20 flex   flex-col items-center">
+        <div className="space-y-12 flex  w-full flex-col items-start">
           {user ? (
-            <div>
+            
               <div>
-                <div className="flex space-x-5 items-center justify-center"></div>
                 <ReactQuill
                   theme="snow"
-                  className="h-36 w-full !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                  className="md:h-[30vw] h-[60vw] md:w-[30vw] w-[70vw]     "
                   value={text || note?.note}
                   onChange={setText}
                 />
@@ -106,14 +105,13 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
                       close();
                     }
                   }}
-                  className=" mt-28 bg-opacity-30  w-fit  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                  className=" mt-14 bg-opacity-30  w-full  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
                 >
                   <button className=" text-sm select-none  text-[#dddddd] relative px-5">
-                    Update Note
+                    Done
                   </button>
                 </div>
               </div>
-            </div>
           ) : null}
         </div>
       </div>

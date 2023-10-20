@@ -109,19 +109,19 @@ const Navbar = ({
         />
       ) : null}
       <div
-        className={`  w-full md:-ml-3 lg:-ml-4 xl:-ml-8 -ml-2  max-w-full  border-b-2 border-gray-700 flex items-center transition-all  justify-center    pl-8 pr-12 py-1 fixed z-40`}
+        className={`  w-full  max-w-full  border-b-2 border-gray-700 flex items-center transition-all  justify-center    md:pl-8 px-4 md:pr-12 py-1 fixed z-40`}
         style={{
           backgroundColor: bgColor,
         }}
       >
         <div className="flex justify-between gap-7 md:gap-0 w-full">
-          <div className="flex items-center gap-2 text-white">
+          <div className="flex items-center space-x-3 text-white">
             <img
               className="md:hidden inline w-10 h-10 "
-              src="https://ownboon.com/_next/image?url=%2Flogo.png&w=48&q=75"
+              src="/slideright.svg"
             />
-            <Image width={30} height={30} className="" src={icon} alt={text} />
-            <span className="font-fontspring text-base md:text-[20px]">
+            <Image width={30} height={30} className=" inline w-10 h-10" src={icon} alt={text} />
+            <span className="font-fontspring text-[28px] md:text-[20px]">
               {text}
             </span>
           </div>
