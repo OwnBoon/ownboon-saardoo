@@ -102,7 +102,7 @@ const chat = ({ users, goals }: Props) => {
         goals={goals}
         border="gray-500"
         children={
-          <main className="min-h-screen overflow-y-scroll overflow-x-hidden  scrollbar-none scrollbar">
+          <main className=" overflow-y-hidden overflow-x-hidden  scrollbar-none scrollbar">
             {/* <Modal
               className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
               open={showModal}

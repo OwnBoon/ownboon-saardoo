@@ -170,13 +170,11 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
   };
 
   const handlesubmit = (e: any) => {
-    if (e.key == "Enter") {
-      e.preventDefault();
-      addGoalData();
-      setShowTask(false);
-      setTodoText("");
-      setShowTaskInput(false);
-    }
+    e.preventDefault();
+    addGoalData();
+    setShowTask(false);
+    setTodoText("");
+    setShowTaskInput(false);
   };
 
   const addDeleted = async (id: string | undefined) => {
@@ -425,7 +423,6 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
             type="text"
             placeholder="Name of the task"
             onChange={(e) => handleNewTaskChange(e)}
-            onKeyUp={handlesubmit}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker

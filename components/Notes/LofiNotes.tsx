@@ -176,7 +176,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
               )}
               {showTaskInput && (
                 <div className="flex justify-center p-2 ">
-                  <div onClick={() => setShowTaskInput(false)} className="">
+                  <div onClick={() => setShowTaskInput(false)} className="btn">
                     <ArrowUp className=" cursor-pointer bg-clip-text bg-opacity-30 bg-white text-white " />
                   </div>
                 </div>

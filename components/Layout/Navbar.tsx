@@ -109,7 +109,7 @@ const Navbar = ({
         />
       ) : null}
       <div
-        className={`  w-full md:-ml-3 -ml-2  max-w-full  border-b-2 border-gray-700 flex items-center transition-all  justify-center    pl-8 pr-12 py-1 fixed z-40`}
+        className={`  w-full md:-ml-3 lg:-ml-4 xl:-ml-8 -ml-2  max-w-full  border-b-2 border-gray-700 flex items-center transition-all  justify-center    pl-8 pr-12 py-1 fixed z-40`}
         style={{
           backgroundColor: bgColor,
         }}

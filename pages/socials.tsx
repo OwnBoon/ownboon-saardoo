@@ -136,8 +136,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         const postCategories = post.categories
           .split(",")
           .map((category) => category.trim().toLowerCase());
-        return postCategories.includes(category);
+        return postCategories.includes(category.toLocaleLowerCase());
       });
+
+      console.log("filtered", filteredPosts);
 
       filteredPosts.sort((a, b) => {
         const dateA = a._createdAt ? new Date(a._createdAt) : null;
