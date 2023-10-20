@@ -66,7 +66,7 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD]    py-24 pb-24 bg-cover  ${
+          className={`text-[#DDDDDD] overflow-y-scroll h-full   py-24 pb-24 bg-cover  ${
             !showsidebar ? "" : ""
           }`}
           style={{

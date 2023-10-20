@@ -20,6 +20,7 @@ export default async function handler(
           title: data.title,
           slug: data.slug,
           author: data.author,
+          like: 0,
           mainImage: data.mainImage,
           profileImage: data.profileImage,
           body: data.body,

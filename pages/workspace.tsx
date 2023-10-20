@@ -318,20 +318,21 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   const addDeleted = async (id: string | undefined) => {
+    console.log("hello");
     try {
       const noteInfo = {
         // @ts-ignore
         _id: id,
       };
       //@ts-ignore
-      setNotes(notes.filter((t: any) => t._id != id));
+      setNote(notes.filter((t: any) => t._id != id));
 
       fetch(`/api/deleteNote`, {
         body: JSON.stringify(noteInfo),
         method: "POST",
       }).then(async (res) => {
         const json = await res.json();
-        router.replace("/lofi");
+        router.replace(router.pathname);
         setShowModal(false);
         return json;
       });
@@ -426,7 +427,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
   return (
-    <div className="overflow-y-scroll h-screen">
+    <div className=" h-screen">
       {!match[0].categories && !categoryslide ? (
         <>
           <Modal
@@ -554,7 +555,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </section>
-          <div className="md:p-5  overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-3 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible ">
+          <div className="md:px-5  overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-2 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible overflow-x-hidden ">
             <div className="flex justify-center w-full  gap-1 relative items-center">
               <div className="flex items-center gap-2 col-span-2 justify-end w-full">
                 <div className="w-full"></div>
@@ -579,7 +580,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
             {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
-            <div className="grid grid-cols-1 pl-5 px-3 md:grid-cols-2 md:p-5  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
+            <div className="grid grid-cols-1 pl-5 px-3 md:grid-cols-2 md:px-5 md:py-2  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
               {filteredNotes.map((note) => (
                 <>
                   <Dialog isOpen={showModal} onClose={setShowModal}>
@@ -621,7 +622,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </div> */}
                         <div
                           onClick={(e) => handleNoteChange(note._id!)}
-                          className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                          className="bg-opacity-30  w-fit mt-16  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
                         >
                           <button className=" text-sm select-none  text-[#dddddd] relative px-5">
                             Update Note

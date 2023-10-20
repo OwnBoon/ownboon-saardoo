@@ -75,6 +75,7 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
             <input
               className="bg-transparent border-b flex border-white/40 justify-center  outline-none "
               placeholder="Category"
+              // type="text"
               onChange={(e) => setCategory(e.target.value)}
             />
             <input

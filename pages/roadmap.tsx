@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { Button, Dropdown, Modal, Text } from "@nextui-org/react";
+import { Button, Dropdown, Loading, Modal, Text } from "@nextui-org/react";
 
 import { fetchUsers } from "../utils/fetchUsers";
 import { Goals, Notes, Roadmaps, User } from "../typings";
@@ -72,7 +72,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
 
   const fetchRoadmap = async () => {
     // e.preventDefault();
-    setVisible(false);
+    // setVisible(false);
     console.log(desc);
     setDesc("");
     setLoading(true);
@@ -105,7 +105,10 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       body: JSON.stringify(mutations),
       method: "POST",
     });
+    setLoading(false);
+    setVisible(false);
     const json2 = await result2.json();
+    router.replace(router.pathname);
     return json;
   };
   // console.log("data is", data);
@@ -376,7 +379,7 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
       goals={goals}
       border="gray-500"
       children={
-        <div className="overflow-y-scroll   h-screen">
+        <div className="w-screen md:w-full   h-screen">
           <div className="flex w-full   gap-6 ">
             <Modal
               closeButton
@@ -403,18 +406,24 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 />
               </Modal.Body>
               <Modal.Footer>
-                <button
-                  className="bg-[#474747]  py-2 px-3 rounded-md text-[#807d7d] w-full"
-                  style={{
-                    border: "1px solid #585858",
-                  }}
-                  disabled={userroadmap.length <= 4 ? false : true}
-                  onClick={fetchRoadmap}
-                >
-                  {userroadmap.length <= 4
-                    ? "Send"
-                    : "You can only generate upto 5 roadmaps"}
-                </button>
+                {!loading ? (
+                  <button
+                    className="bg-[#474747]  py-2 px-3 rounded-md text-[#807d7d] w-full"
+                    style={{
+                      border: "1px solid #585858",
+                    }}
+                    disabled={userroadmap.length <= 4 ? false : true}
+                    onClick={fetchRoadmap}
+                  >
+                    {userroadmap.length <= 4
+                      ? "Send"
+                      : "You can only generate upto 5 roadmaps"}
+                  </button>
+                ) : (
+                  <>
+                    <Loading />
+                  </>
+                )}
               </Modal.Footer>
             </Modal>
             <div

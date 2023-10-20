@@ -976,7 +976,7 @@
   color: var(--sendbird-light-onlight-01);
 }
 .sendbird-theme--dark .sendbird-label--color-onbackground-1 {
-  color: var(--sendbird-dark-ondark-01);
+  color: white
 }
 
 .sendbird-theme--light .sendbird-label--color-onbackground-2 {
@@ -1018,7 +1018,7 @@
   color: var(--sendbird-light-primary-300);
 }
 .sendbird-theme--dark .sendbird-label--color-primary {
-  color: var(--sendbird-dark-primary-200);
+  color: white
 }
 
 .sendbird-theme--light .sendbird-label--color-error {
@@ -3269,8 +3269,8 @@
   border: solid 1px var(--sendbird-light-primary-100);
 }
 .sendbird-theme--dark .sendbird-reaction-badge--selected {
-  background-color: var(--sendbird-dark-primary-400);
-  border: solid 1px var(--sendbird-dark-primary-400);
+  background-color: rgba(168, 168, 168, 0.486);
+  border: solid 1px rgb(126, 124, 124)
 }
 .sendbird-reaction-badge--selected:hover {
   cursor: pointer;
@@ -3512,7 +3512,7 @@ div.sendbird-text-message-item-body {
   color: var(--sendbird-light-onlight-01);
 }
 .sendbird-theme--dark .sendbird-link-label .sendbird-label--color-onbackground-1 {
-  color: var(--sendbird-dark-ondark-01);
+  color: black
 }
 
 .sendbird-theme--light .sendbird-link-label .sendbird-label--color-onbackground-2 {
