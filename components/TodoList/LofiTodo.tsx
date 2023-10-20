@@ -441,7 +441,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
                 },
               }}
               disablePast
-              className="rounded-lg"
+              className="rounded-lg btn"
               onChange={(newValue: any) =>
                 // setCalendar(
                 //   e.$D.toString() +
@@ -467,6 +467,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
               }}
               disablePast
               onChange={(newValue: any) => setTime(newValue)}
+              className="btn"
             />
           </LocalizationProvider>
           <div className="flex justify-end">

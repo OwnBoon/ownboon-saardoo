@@ -160,7 +160,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
     <div className="flex flex-col justify-center   items-center gap-4">
       <div className="flex justify-center    gap-1 relative items-center">
         <div className="flex items-center gap-2  col-span-2 justify-end">
-          <Draggable>
+          <Draggable cancel=".btn">
             <div className="flex items-center justify-between gap-2 select-none">
               <MenuIcon className="text-neutral-200/50 cursor-pointer" />
               <CategoryDropdown
@@ -190,8 +190,8 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
         {filteredNotes.map((note: any) => (
           <>
             <Dialog isOpen={showModal} onClose={setShowModal}>
-              <Draggable>
-                <div className="rounded-md scale-150 md:scale-100  bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl p-2 w-full h-full  md:p-8">
+              <Draggable cancel=".btn">
+                <div className="btn rounded-md scale-150 md:scale-100  bg-white bg-opacity-30  border border-white border-opacity-50 backdrop-blur-xl p-2 w-full h-full  md:p-8">
                   <XIcon
                     onClick={() => setShowModal(false)}
                     className="flex justify-end right-2 text-white/30 text-sm font-light cursor-pointer absolute top-2"
@@ -199,7 +199,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
                   <div className=" md:h-[43px] flex gap-6 items-center text-white md:text-3xl  text-sm font-semibold">
                     {selectedNote}
                     <button
-                      className="text-white flex"
+                      className="text-white flex btn"
                       onClick={(e) => {
                         addDeleted(note._id);
                       }}
@@ -210,7 +210,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
                     </button>
                   </div>
                   <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
-                  <div className="scale-75 md:scale-100 -mb-5 w-full h-full text-sm">
+                  <div className="btn scale-75 md:scale-100 -mb-5 w-full h-full text-sm">
                     <ReactQuill
                       theme="snow"
                       className="h-52  md:mt-5 mt-0 !text-white  !border-none !outline-none  !text-xs  scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
@@ -232,14 +232,14 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
               </Draggable>
             </Dialog>
             {notesshow && (
-              <Draggable>
+              <Draggable cancel=".btn">
                 <div
                   onClick={() => {
                     setShowModal(true);
                     setSelectedNote(note.topic);
                     setSelectedNoteData(note.note);
                   }}
-                  className=" bg-white bg-opacity-30 rounded-md border w-64 h-56 overflow-y-scroll border-white border-opacity-50 backdrop-blur-xl p-4 space-y-5  text-neutral-200"
+                  className="btn bg-white bg-opacity-30 rounded-md border w-64 h-56 overflow-y-scroll border-white border-opacity-50 backdrop-blur-xl p-4 space-y-5  text-neutral-200"
                 >
                   <div>
                     <h1 className="border-b w-fit">{note.topic}</h1>
@@ -257,8 +257,8 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
       {showTaskInput && (
         <div>
           {" "}
-          <Draggable>
-            <div className=" bg-white bg-opacity-30   z-50  border border-white border-opacity-50 backdrop-blur-xl space-y-5 overflow-y-scroll h-fit   w-full px-2 rounded-xl py-2">
+          <Draggable cancel=".btn">
+            <div className="btn bg-white bg-opacity-30   z-50  border border-white border-opacity-50 backdrop-blur-xl space-y-5 overflow-y-scroll h-fit   w-full px-2 rounded-xl py-2">
               <div className="flex justify-center items-center">
                 <div className="flex flex-col gap-5">
                   <input
@@ -273,7 +273,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
                   />
                 </div>
               </div>
-              <div className="space-y-20 flex   flex-col items-center">
+              <div className="btn space-y-20 flex   flex-col items-center">
                 {user ? (
                   <div>
                     <div>
@@ -291,7 +291,7 @@ const LofiNotes = ({ notes, user, setNotes }: any) => {
                           // close();
                           setShowTaskInput(false);
                         }}
-                        className="mt-16 px-5 border py-2 text-neutral-300 rounded-xl"
+                        className="btn mt-16 px-5 border py-2 text-neutral-300 rounded-xl"
                       >
                         Save
                       </button>
