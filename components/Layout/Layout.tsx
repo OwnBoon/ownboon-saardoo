@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Goals, User } from "../../typings";
 import SidebarMobile from "./SidebarMobile";
+import Sidebarfix from "./Sidebarfix";
 interface Props {
   children?: ReactNode;
   bgColor: string;
@@ -48,11 +49,22 @@ const Layout = ({
         <link rel="icon" href="/logo.png" />
       </Head>
 
-      <Sidebar
-        showsidebar={showsidebar}
-        setShowsidebar={setShowsidebar}
-        border={border}
-      />
+      {text == "Users" ? (
+        <div className="!md:inline-flex  ">
+          <Sidebarfix
+            showsidebar={showsidebar}
+            setShowsidebar={setShowsidebar}
+            border={border}
+          />
+        </div>
+      ) : (
+        <Sidebar
+          showsidebar={showsidebar}
+          setShowsidebar={setShowsidebar}
+          border={border}
+        />
+      )}
+
       <SidebarMobile />
       <div className="max-[500px]:w-fit pl-3 md:pl-0 h-screen  md:w-[90vw] lg:w-[92vw] xl:w-[93vw] ml-auto">
         <Navbar
@@ -66,9 +78,9 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] overflow-y-scroll h-full   py-24 pb-24 bg-cover  ${
-            !showsidebar ? "" : ""
-          }`}
+          className={`text-[#DDDDDD] ${
+            text == "lofi" ? "overflow-y-hidden" : "overflow-y-scroll"
+          }  h-full   py-24 pb-24 bg-cover  ${!showsidebar ? "" : ""}`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}

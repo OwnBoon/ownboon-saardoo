@@ -29,30 +29,32 @@ export default function ChatMobile({ user }: Props) {
   };
 
   return (
-    <div className="min-h-screen overflow-hidden w-screen flex md:hidden -mx-2 lg:hidden xl:hidden">
+    <div className="h-full overflow-hidden w-screen flex justify-center -mx-2 lg:hidden xl:hidden">
       <SBProvider appId={APP_ID} userId={user[0].chatid}>
-        {channel ? (
-          <div className="h-screen w-fit">
-            <Channel
-              //   @ts-ignore
-              channelUrl={channel.url}
-              renderChannelHeader={() => (
-                <ChatHeader channel={channel} user={user} onBack={onBack} />
-              )}
-            />
-          </div>
-        ) : (
-          <div className="h-screen">
-            <SBChannelList
-              renderChannelPreview={({ channel }: any) => (
-                <ChannelPreview
-                  channel={channel}
-                  onChannelSelect={onChannelSelect}
-                />
-              )}
-            />
-          </div>
-        )}
+        <div className="flex  w-full">
+          {channel ? (
+            <div className="h-screen w-screen ">
+              <Channel
+                //   @ts-ignore
+                channelUrl={channel.url}
+                renderChannelHeader={() => (
+                  <ChatHeader channel={channel} user={user} onBack={onBack} />
+                )}
+              />
+            </div>
+          ) : (
+            <div className="h-screen flex justify-center w-full ">
+              <SBChannelList
+                renderChannelPreview={({ channel }: any) => (
+                  <ChannelPreview
+                    channel={channel}
+                    onChannelSelect={onChannelSelect}
+                  />
+                )}
+              />
+            </div>
+          )}
+        </div>
       </SBProvider>
     </div>
   );

@@ -75,12 +75,14 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
             <input
               className="bg-transparent border-b flex border-white/40 justify-center  outline-none "
               placeholder="Category"
+              minLength={2}
               // type="text"
               onChange={(e) => setCategory(e.target.value)}
             />
             <input
               className="bg-transparent border-b border-white/40 flex justify-center  outline-none "
               placeholder="Topic"
+              minLength={3}
               onChange={(e) => setTopic(e.target.value)}
             />
           </div>
@@ -99,8 +101,10 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
                 {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
                 <div
                   onClick={(e) => {
-                    handleSubmit(e);
-                    close();
+                    if (topic.length > 1 && category.length > 1) {
+                      handleSubmit(e);
+                      close();
+                    }
                   }}
                   className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
                 >
