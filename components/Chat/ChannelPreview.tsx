@@ -1,7 +1,7 @@
 const ChannelPreview = ({ channel, onChannelSelect }: any) => {
   return (
     <div
-      className="channel-preview-wrapper"
+      className="channel-preview-wrapper  "
       onClick={() => onChannelSelect(channel)}
     >
       <img

@@ -220,8 +220,8 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       text="Lofi"
       border={"#ccc"}
       children={
-        <div className="h-screen overflow-y-scroll md:overflow-hidden  w-screen md:w-full text-[#000000]">
-          <div className="flex items-center overflow-y-scroll   md:overflow-hidden justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
+        <div className="h-screen overflow-y-scroll md:overflow-hidden scrollbar-none  w-screen md:w-full text-[#000000]">
+          <div className="flex items-center overflow-y-scroll scrollbar-none   md:overflow-hidden justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
             {sessionStarted && (
               <>
                 <Discover />

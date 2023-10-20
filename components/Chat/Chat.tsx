@@ -28,7 +28,7 @@ const Chat = ({ user }: Props) => {
   const [currentChannelUrl, setCurrentChannelUrl] = useState("");
   const [category, setCategory] = useState("");
   return (
-    <div className="h-[86vh] hidden lg:inline-flex overflow-hidden ml-1 px-0 top-0 py-0 w-full scrollbar-none scrollbar">
+    <div className="md:h-[86vh] overflow-y-hidden hidden lg:inline-flex overflow-hidden ml-1 px-0 top-0 py-0 w-full scrollbar-none scrollbar">
       {" "}
       <SBProvider
         // ColorSet={myColorSet}
