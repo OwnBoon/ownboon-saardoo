@@ -81,7 +81,6 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const id = posts.map((post) => post._id);
   const [comments, setComments] = useState<Comment[]>([]);
   const [categoryselected, setcategoryselected] = useState("");
-  console.log(comments);
 
   const refreshComments = async () => {
     // @ts-ignore
@@ -164,7 +163,6 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   };
 
   const filteredPosts = logic();
-  console.log(filteredPosts);
 
   const dropDownBlogs = dropdownLogic(categoryselected);
   // @ts-ignore
@@ -517,24 +515,46 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                       {showAll && (
                         <>
                           {" "}
-                          {filteredPosts!.map((post, index) => (
-                            <div className="z-10">
-                              <PostCard
-                                match={match}
-                                users={users}
-                                key={index}
-                                post={post}
-                              />
-                              {/* @ts-ignore */}
+                          {
+                            //@ts-ignore
+                            filteredPosts?.length > 0
+                              ? filteredPosts!.map((post, index) => (
+                                  <div className="z-10">
+                                    <PostCard
+                                      match={match}
+                                      users={users}
+                                      key={index}
+                                      post={post}
+                                    />
+                                    {/* @ts-ignore */}
 
-                              <PostCardMobile
-                                match={match}
-                                users={users}
-                                key={index}
-                                post={post}
-                              />
-                            </div>
-                          ))}
+                                    <PostCardMobile
+                                      match={match}
+                                      users={users}
+                                      key={index}
+                                      post={post}
+                                    />
+                                  </div>
+                                ))
+                              : posts!.map((post, index) => (
+                                  <div className="z-10">
+                                    <PostCard
+                                      match={match}
+                                      users={users}
+                                      key={index}
+                                      post={post}
+                                    />
+                                    {/* @ts-ignore */}
+
+                                    <PostCardMobile
+                                      match={match}
+                                      users={users}
+                                      key={index}
+                                      post={post}
+                                    />
+                                  </div>
+                                ))
+                          }
                         </>
                       )}
                       {showpost ? (
@@ -582,23 +602,44 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                         <div className="">
                           {!showdropfeed ? (
                             <div>
-                              {filteredPosts!.map((post, index) => (
-                                <div className="z-10">
-                                  <PostCard
-                                    match={match}
-                                    users={users}
-                                    key={index}
-                                    post={post}
-                                  />
-                                  {/* @ts-ignore */}
-                                  <PostCardMobile
-                                    match={match}
-                                    users={users}
-                                    key={index}
-                                    post={post}
-                                  />
-                                </div>
-                              ))}
+                              {
+                                //@ts-ignore
+                                filteredPosts?.length > 0
+                                  ? filteredPosts!.map((post, index) => (
+                                      <div className="z-10">
+                                        <PostCard
+                                          match={match}
+                                          users={users}
+                                          key={index}
+                                          post={post}
+                                        />
+                                        {/* @ts-ignore */}
+                                        <PostCardMobile
+                                          match={match}
+                                          users={users}
+                                          key={index}
+                                          post={post}
+                                        />
+                                      </div>
+                                    ))
+                                  : posts!.map((post, index) => (
+                                      <div className="z-10">
+                                        <PostCard
+                                          match={match}
+                                          users={users}
+                                          key={index}
+                                          post={post}
+                                        />
+                                        {/* @ts-ignore */}
+                                        <PostCardMobile
+                                          match={match}
+                                          users={users}
+                                          key={index}
+                                          post={post}
+                                        />
+                                      </div>
+                                    ))
+                              }
                             </div>
                           ) : (
                             <div>
@@ -632,7 +673,8 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                 <div className=" bg-zinc-600 p-3 py-5 mr-3 flex h-fit flex-col items-center gap-5 justify-center w-full bg-opacity-20 rounded-[10px] border border-zinc-700 border-opacity-50">
                   <h1>Top Interests</h1>
                   <div className="flex flex-col gap-3 items-start">
-                    {filteredPosts?.map((blogs) => (
+                    {//@ts-ignore
+                      filteredPosts?.length > 0 ? filteredPosts?.map((blogs) => (
                       <Link
                         href={`/user/${blogs.author}`}
                         className="gap-3 flex items-center"
@@ -643,7 +685,21 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                         />
                         <h1>{blogs.author}</h1>
                       </Link>
-                    ))}
+                    )) : posts?.map((blogs) => (
+                      <Link
+                        href={`/user/${blogs.author}`}
+                        className="gap-3 flex items-center"
+                      >
+                        <img
+                          className="h-10 w-10 rounded-full object-cover"
+                          src={blogs.profileImage}
+                        />
+                        <h1>{blogs.author}</h1>
+                      </Link>
+                    ))
+                    
+                    
+                    }
                   </div>
                 </div>
               </div>

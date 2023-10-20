@@ -15,6 +15,8 @@ import { XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MenuIcon } from "lucide-react";
 import { HiDotsVertical } from "react-icons/hi";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { background } from "@chakra-ui/react";
+
 
 type Props = {
   todos: any[];
@@ -364,7 +366,10 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
             list={todos}
             setList={handleSort}
           >
-            {todos.map((t: Goals) => (
+            
+            {
+            todos.length > 0 ? (
+            todos.map((t: Goals) => (
               <div
                 key={t._id}
                 className="flex flex-row group  mb-1 gap-4 relative items-center rounded-[5px] w-full hover:border hover:border-white/20 cursor-pointer hover:border-opacity-30 "
@@ -429,7 +434,12 @@ const TodoList = ({ todos, user, setTodos }: Props) => {
                   className="p-2 fade transition-all  rounded  drag-handle"
                 /> */}
               </div>
-            ))}
+            ))) : <div className=""><img className="w-full h-52 " src="https://cdn.discordapp.com/attachments/1150393240860762143/1163879929415483482/5928293_2953962.jpg?ex=65412ea7&is=652eb9a7&hm=f4bda36c3502b100c22a37d470c078335b9b7b36905772f1a3ab4b85a938653c&"></img></div>
+            
+            
+            } 
+             
+            
           </ReactSortable>
 
           {tempTodo && (

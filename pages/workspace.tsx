@@ -426,6 +426,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
 
+
   return (
     <div className=" h-screen">
       {!match[0].categories && !categoryslide ? (
@@ -433,7 +434,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           <Modal
             // closeButton
             aria-labelledby="modal-title"
-            className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
+            className="!bg-[#191919]/40 z-50 h-[70vh]  flex justify-center items-center backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
             open={true}
             width="80%"
           >
@@ -470,9 +471,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       ) : categoryslide ? (
         <Modal
           aria-labelledby="modal-title"
-          className="!bg-[#191919]/40 h-[90%] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0"
+          className="!bg-[#191919]/40 h-[90%] w-[100vw] flex justify-center items-center backdrop-blur-md fixed top-0 left-0 right-0  overflow-x-scroll md:inset-0"
           open={true}
-          width="80%"
+          width="100%"
         >
           <Category users={users} />
         </Modal>
@@ -676,7 +677,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               width="80%"
               // onClose={setShowPromptModal}
             >
-              <div className="flex w-full h-full  p-10  mt-[-10vw] rounded-xl bg-[#101010] flex-col ">
+              <div className="flex w-full h-full md:text-xl p-10 md:mt-[6vh]  lg:-mt-[7vh] rounded-xl bg-[#101010] flex-col ">
                 <div className="flex flex-col  items-center justify-center">
                   <h1 className="md:text-[2vw] text-lg  my-2  text-white text-center ">
                     BoonBot
@@ -756,7 +757,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </Checkbox>
                       </div>
                     </div>
-                    {empty && "Please Pick one of the options"}
+                    {empty && <div className="text-white">Please Pick one of the options</div>}
                   </div>
                   <div
                     className={`${
@@ -780,7 +781,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         className="border-none text-sm  md:text-xl text-neutral-200 font-poppins md:w-[30vw] w-full  bg-[#232222]"
                       ></textarea>
                     </div>
-                    {empty && "Please enter atleast a sentence"}
+                    {empty && <div className="text-white">Please enter atleast a sentence</div>}
                   </div>
                   <div
                     className={`${
@@ -878,14 +879,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     {pageposition ? (
                       <button
                         onClick={() => handlepreviouspage()}
-                        className="py-2 fade px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                        className="text-sm py-2 fade px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                       >
                         {"<-"} Back
                       </button>
                     ) : (
                       <button
                         onClick={() => setShowPromptModal(false)}
-                        className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                        className="text-sm py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                       >
                         Cancel
                       </button>
@@ -905,7 +906,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           ? setEmpty(true)
                           : handlenextpage()
                       }
-                      className="py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
+                      className="text-sm py-2 px-4 my-2 bg-white text-black rounded-3xl font-poppins text-[0.9vw]"
                     >
                       Next {"->"}
                     </button>

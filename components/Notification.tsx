@@ -29,9 +29,10 @@ export default function Notification({
       }
     }
   }, [match]);
+
   return (
     <div
-      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-scroll ${
+      className={`flex flex-col fade fixed right-3 rounded-b-2xl  w-[300px] max-h-[90vh] transition-all duration-[2000] overflow-y-hidden ${
         shownotifications ? "translate-y-0 top-24" : "-translate-y-[100vh] "
       } shadow-2xl  p-1  z-30 items-center bg-[#101010]`}
     >
@@ -43,7 +44,7 @@ export default function Notification({
       </div>
       <div className="flex flex-col w-full justify-center space-y-6 my-2 text-white">
         <div className="space-y-1 flex flex-col  items-center p-2 w-full h-full">
-          {notifications ? (
+          {notifications && notifications.length ? (
             <>
               {notifications.map((notification, index) => (
                 <div
@@ -71,7 +72,7 @@ export default function Notification({
 
           <div
             className={
-              "flex p-2 bg-[#212121] cursor-pointer rounded-lg w-full hover:border-b-2 transition-all duration-50 flex-row px-5   space-x-4"
+              "flex p-2 bg-[#212121] cursor-pointer rounded-lg w-full hover:border-b-2 transition-all duration-50 flex-row px-5 space-x-4"
             }
           >
             {boonNoti ? (
@@ -86,7 +87,15 @@ export default function Notification({
                   {boonNoti}
                 </Link>
               </div>
-            ) : null}
+            ) : (
+              <div className="flex h-[80vh] mt-[30vh] flex-col bg-cover p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full px-5 transition-all duration-50 space-x-4">
+                <img
+                  className=""
+                  src="https://cdn.sanity.io/images/mrfd4see/production/a94ecfa3fd0cf934272fc5cfaa83beeffc358235-500x394.png?w=2000&fit=max&auto=format"
+                />
+                <div className="text-white">Nothing to show here</div>
+              </div>
+            )}
           </div>
         </div>
       </div>

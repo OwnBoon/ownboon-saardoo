@@ -69,7 +69,7 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
   return (
     <div>
       {" "}
-      <div className="border border-white/30 overflow-hidden bg-[#212121] space-y-5  h-fit   w-full px-2 rounded-xl py-2">
+      <div className="w-[70vw] -ml-[15vw] h-fit md:w-full md:-ml-[0vw] border border-white/30 overflow-hidden bg-[#212121] space-y-5  px-2 rounded-xl py-2">
         <div className="flex justify-center items-center">
           <div className="flex flex-col gap-5">
             <input
@@ -102,7 +102,7 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
                     handleSubmit(e);
                     close();
                   }}
-                  className="bg-opacity-30  w-fit mt-16 rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                  className=" mt-28 bg-opacity-30  w-fit  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
                 >
                   <button className=" text-sm select-none  text-[#dddddd] relative px-5">
                     Update Note

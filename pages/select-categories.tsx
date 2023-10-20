@@ -6,7 +6,7 @@ import Body from "../components/Home/Body";
 import Spline from "@splinetool/react-spline";
 import { fetchUsers } from "../utils/fetchUsers";
 import { User, UserBody } from "../typings";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { MouseEvent, useEffect, useState } from "react";
 import { currentUser } from "@clerk/nextjs";
@@ -89,9 +89,7 @@ const Home = ({ users, next, setNext }: any) => {
       return json;
     } catch (err) {
       console.error(err);
-    } finally {
-      window.location.reload();
-    }
+    } 
   };
 
   // if (session) {
@@ -135,8 +133,8 @@ const Home = ({ users, next, setNext }: any) => {
                   </>
                 )}
               </div> */}
-            <div className="flex flex-col mt-20  justify-center items-center gap-10 w-full">
-              <div className="flex justify-center items-center gap-2 h-fit">
+            <div className="flex flex-col mt-20  justify-center items-center gap-10 ">
+              <div className="flex flex-row flex-wrap sm:flex-nowrap justify-center overflow-x-scroll  items-center gap-2 h-fit">
                 {fiveCate.map((cateogry) => (
                   <div
                     onClick={(e) =>
@@ -147,6 +145,7 @@ const Home = ({ users, next, setNext }: any) => {
                     <p className="text-sm">{cateogry.name}</p>
                   </div>
                 ))}
+                
               </div>
               <div className="flex flex-col mt-10 items-center">
                 <input
@@ -191,7 +190,7 @@ const Home = ({ users, next, setNext }: any) => {
           <div className="flex justify-center items-center">
             <button
               disabled={match[0].categories ? false : true}
-              onClick={() => router.reload()}
+              onClick={() => router.refresh()}
               className=" border-gray-500/30 disabled:text-black/40 hover:scale-105 bg-[#363636]/20 backdrop-blur-lg from-gray-300 w-fit flex flex-col justify-start relative hover:   items-center py-3 border rounded"
             >
               <div className="rounded-xl  z-50  cursor-pointer whitespace-nowrap md:text-lg  text-sm   text-[#dddddd] relative mx-24">
