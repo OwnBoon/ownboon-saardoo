@@ -67,7 +67,7 @@ const FeedCard = ({ feeds }: Props) => {
     setLoading(false);
   };
   return (
-    <div className="grid bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50 h-full   gap-2 p-0 lg:p-4 pb-12 mb-8 grid-cols-6">
+    <div className="lg:w-[60vw] grid bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50 h-full   gap-2 p-0 lg:p-4 pb-12 mb-8 grid-cols-1 md:grid-cols-6">
       <div className=" col-span-4  rounded-lg ">
         <div className=" overflow-hidden  ">
           {feeds.image ? (
@@ -159,21 +159,21 @@ const FeedCard = ({ feeds }: Props) => {
                   </div>
                 </div>
               </div>
-              <div className="text-gray-500 hover:text-red-500 cursor-pointer">
+              <div className="text-gray-500 hover:text-red-500 cursor-pointer lg:ml-4">
                 <FaInfoCircle size={22} />
               </div>
             </div>
 
-            <div className=" flex justify-center gap-1  items-center w-full mt-0 py-3 px-0 mx-1">
-              <div className="w-full flex justify-center bg-zinc-700  h-fit px-4 py-2 bg-opacity-20 rounded-[5px] border border-zinc-700 border-opacity-50 items-center">
+            <div className=" flex justify-center gap-1 items-center w-full mt-0 py-3 px-0 mx-1">
+              <div className="w-full md:w-[50vw] lg:w-[60vw] flex justify-center bg-zinc-700  h-fit py-2 bg-opacity-20 rounded-[5px] border border-zinc-700 border-opacity-50 items-center">
                 <input
                   placeholder="Write your comment.."
                   value={input}
                   // aria-placeholder="looks good"
                   onChange={(e) => setInput(e.target.value)}
-                  className="bg-transparent focus:outline-none px-2 focus:border-white/0 focus:ring-0 text-neutral-200 "
+                  className="bg-transparent focus:outline-none ml-2 md:ml-6 lg:px-0 px-2 focus:border-white/0 focus:ring-0 text-neutral-200 "
                 />
-                <div className="rotate-45 cursor-pointer text-neutral-300">
+                <div className="rotate-45 cursor-pointer text-neutral-300 md:mr-10">
                   <SendIcon onClick={() => handleSubmit(feeds._id!)} />
                 </div>
               </div>
