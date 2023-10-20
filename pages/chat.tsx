@@ -49,7 +49,7 @@ const categories = [
 ];
 const chat = ({ users, goals }: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [categoryslide, setCategoryslide] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   useEffect(() => {

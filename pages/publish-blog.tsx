@@ -20,6 +20,7 @@ import Head from "next/head";
 import { categories } from "../utils/constants";
 import Layout from "../components/Layout/Layout";
 import { fetchGoals } from "../utils/fetchGoals";
+import { useRouter } from "next/router";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -48,6 +49,7 @@ function BlogPost({ users, goals }: Props) {
   const formattedDate = today.toLocaleDateString("en-US", options);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const router = useRouter();
   const [imageSrc, setImageSrc] = useState("");
   const [uploadData, setUploadData] = useState();
 
@@ -116,6 +118,7 @@ function BlogPost({ users, goals }: Props) {
       author: user?.username,
       profileImage: user?.profileImageUrl,
       mainImage: imageSrc,
+      like: 0,
       categories: category,
       // @ts-ignore
       body: editorRef.current.getContent() || "null",
@@ -133,6 +136,7 @@ function BlogPost({ users, goals }: Props) {
     setImage("");
     setBody("");
     setCategory("");
+    router.replace(router.pathname);
     return json;
   };
   const [filteredCategories, setFilteredCategories] = useState<
@@ -303,6 +307,20 @@ function BlogPost({ users, goals }: Props) {
                         "undo redo | blocks  | bold italic underline codesample | link image media  | align  | numlist bullist  |",
                       content_style:
                         "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                      setup: function (editor) {
+                        editor.on("init", function () {
+                          var doc = editor.getDoc();
+                          var head = doc.head;
+                          var style = doc.createElement("style");
+                          style.innerHTML = `
+                                body {
+                                  background-color: #191919 !important;
+                                  color: white !important;
+                                }
+                              `;
+                          head.appendChild(style);
+                        });
+                      },
                     }}
                   />
                 </div>

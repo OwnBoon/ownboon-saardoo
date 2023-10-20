@@ -66,14 +66,14 @@ const FeedCard = ({ feeds }: Props) => {
     <div className="grid bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50 h-full   gap-2 p-0 lg:p-4 pb-12 mb-8 grid-cols-6">
       <div className=" col-span-4  rounded-lg ">
         <div className=" overflow-hidden  ">
-          {feeds.video ? (
-            <ReactPlayer height={500} controls url={feeds.video} />
+          {feeds.image ? (
+            <img
+              src={feeds.image}
+              className=" h-96 w-96  object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+            />
           ) : (
             <>
-              <img
-                src={feeds.image}
-                className=" h-96 w-96  object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
-              />
+              <ReactPlayer height={500} controls url={feeds.video} />
             </>
           )}
         </div>
