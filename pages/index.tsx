@@ -106,6 +106,11 @@ const Home = ({ users }: Props) => {
       if (!match) {
         setIsNewUser(true);
       }
+      if (match) {
+        setTimeout(() => {
+          router.push("/workspace");
+        }, 10);
+      }
     }
   }, [user]);
 
@@ -127,9 +132,6 @@ const Home = ({ users }: Props) => {
         const match = users.find(
           (userss) => userss.email === user.emailAddresses[0].emailAddress
         );
-        if (match) {
-          router.push("/workspace");
-        }
       }
     } else null;
   }, [isNewUser]);

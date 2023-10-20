@@ -34,6 +34,7 @@ import { SendButton } from "./Postcard/SendButton";
 import { SendIcon } from "./Postcard/SendIcon";
 
 import css from "styled-jsx/css";
+import { useRouter } from "next/router";
 
 interface Props {
   post: Posts;
@@ -93,13 +94,17 @@ const PostCard = ({ post, match, users }: Props) => {
     });
 
     const json = result.json();
+    router.replace(router.pathname);
+    console.log(json);
     return json;
   };
 
   const blogauthor = users.filter((userss) => userss.email === post.email);
-
+  const router = useRouter();
   const [input, setInput] = useState("");
   const [showComment, setShowComment] = useState(false);
+
+  const isfollowing = match[0].follow?.map((followers) => followers.name);
 
   const handleSubmit = async (id: string) => {
     // Comment logic
@@ -119,10 +124,7 @@ const PostCard = ({ post, match, users }: Props) => {
     setInput("");
     refreshComments();
   };
-
-  
-
-  if (match[0].follow == null) {
+  if (match[0].follow == null || post.liked == null) {
     const addCategory = async () => {
       try {
         const postInfo: UserBody = {
@@ -147,6 +149,7 @@ const PostCard = ({ post, match, users }: Props) => {
       } finally {
         window.location.reload();
       }
+      router.replace(router.pathname);
     };
 
     return (
@@ -203,20 +206,14 @@ const PostCard = ({ post, match, users }: Props) => {
               </p>
             </div>
 
-            {
-              //@ts-ignore
-              match[0].follow?.map(
-                (follow: any) => follow.name == post.author
-              ) ? null : (
-                <div
-                  onClick={() => addCategory()}
-                  className=" border border-white/60 border-opacity-75 text-xs font-poppins  px-2 py-0.5 bg-white bg-opacity-20 cursor-pointer rounded-[3px]"
-                >
-                  Follow
-                </div>
-              )
-            }
-
+            {isfollowing?.includes(post.author) && (
+              <div
+                onClick={() => addCategory()}
+                className=" border border-white/60 border-opacity-75 text-xs font-poppins  px-2 py-0.5 bg-white bg-opacity-20 cursor-pointer rounded-[3px]"
+              >
+                Follow
+              </div>
+            )}
             <Dropdown>
               <Dropdown.Button
                 className="!bg-transparent"
@@ -272,7 +269,7 @@ const PostCard = ({ post, match, users }: Props) => {
                       users.email == user?.emailAddresses[0].emailAddress
                   ) ? (
                     <div className="text-pink-500 hover:text-pink-500 transition-all duration-100 flex flex-col justify-center items-center space-y-2 cursor-pointer">
-                      <FaThumbsUp onClick={() => like(post._id!)} size={22} />
+                      <FaThumbsUp size={22} />
                       <h1 className="text-xs font-sans">{post.like || 0}</h1>
                     </div>
                   ) : (
@@ -348,7 +345,7 @@ const PostCard = ({ post, match, users }: Props) => {
         </div>
       </div>
     );
-  } else if (match[0].follow?.length > 0 || post!.liked!.length > 0) {
+  } else if (match[0].follow?.length! > 0 || post.liked.length! > 0) {
     const follows = match[0].follow!.map((follows) => ({
       _key: random2,
       _ref: follows._id,
@@ -378,7 +375,8 @@ const PostCard = ({ post, match, users }: Props) => {
       });
 
       const json = result.json();
-      console.log(json);
+      // console.log(json);
+      router.replace(router.pathname);
       return json;
     };
     const addCategory = async () => {
@@ -389,7 +387,7 @@ const PostCard = ({ post, match, users }: Props) => {
             ...follows,
             {
               _key: random,
-              _ref: blogauthor[0]._id,
+              _ref: blogauthor[0]._id!,
               _type: "reference",
             },
           ],
@@ -406,24 +404,13 @@ const PostCard = ({ post, match, users }: Props) => {
       } finally {
         window.location.reload();
       }
+      router.replace(router.pathname);
     };
-
-    //@ts-ignore
-    const followedAuthors = match[0]!.follow.map((followedUser) =>
-      // @ts-ignore
-      followedUser.name.toLowerCase()
-    );
-
-    //@ts-ignore
-    const isPostAuthorFollowed = followedAuthors.includes(post.author);
-
-    
 
     return (
       <div className=" hidden lg:inline-grid   bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50  text-white shadow-lg h-auto  z-10   gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
         <div className="  col-span-1 lg:col-span-4 flex flex-col justify-end  rounded-lg ">
           <div className="h-full">
-            
             <div className="flex gap-6 h-fit ">
               <img
                 className="h-56 object-cover w-56 rounded-md"
@@ -476,27 +463,15 @@ const PostCard = ({ post, match, users }: Props) => {
                 {post.author}
               </p>
             </Link>
-            
-            {
-              isPostAuthorFollowed ? (null):(<div
+
+            {isfollowing?.includes(post.author) && (
+              <div
                 onClick={() => addCategory()}
                 className=" border border-white/60 border-opacity-75 text-xs font-poppins  px-2 py-0.5 bg-white bg-opacity-20 cursor-pointer rounded-[3px]"
               >
                 Follow
-              </div>)
-            }
-           
-
-            {/* {match[0].follow.map(
-              (f) => f.name !== post.author
-            ) ? (<div
-              onClick={() => addCategory()}
-              className=" border border-white/60 border-opacity-75 text-xs font-poppins  px-2 py-0.5 bg-white bg-opacity-20 cursor-pointer rounded-[3px]"
-            >
-              Follow
-            </div>): null
-              
-            } */}
+              </div>
+            )}
 
             <Dropdown>
               <Dropdown.Button

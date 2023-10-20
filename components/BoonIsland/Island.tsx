@@ -106,235 +106,237 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
             {"i"}
           </div>
           <Dialog isOpen={showislandinfo} onClose={setShowislandinfo}>
-            {level < 5 ? (
-              <div className="flex w-[60vw] sm:w-[40vw] md:w-[50vw] bg-[#191919a8] h-auto md:h-[auto] sm:h-[auto] items-center rounded-xl flex-col">
-                <h1 className="font-poppins text-3xl mt-12">Newbie</h1>
-                <div className="flex flex-col my-3  gap-5 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've just started exploring the wilderness of OwnBoon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 60% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 1% potential of ownboon
-                    </li>
+            <div className="w-screen md:w-full  flex justify-start">
+              {level < 5 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Newbie</h1>
+                  <div className="flex flex-col my-3  gap-5 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've just started exploring the wilderness of OwnBoon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 60% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 1% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level < 10 ? (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Seeker</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're slowly coming in track with the pace of life
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 30% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 5% potential of ownboon
-                    </li>
+              ) : level < 10 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Seeker</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're slowly coming in track with the pace of life
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 30% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 5% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level < 16 ? (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're a {level < 11 ? "Newbie" : null} because you've
-                      solved more than problems on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 1% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 30% potential of ownboon
-                    </li>
+              ) : level < 16 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're a {level < 11 ? "Newbie" : null} because you've
+                        solved more than problems on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 1% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 30% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level < 20 ? (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're a {level < 11 ? "Newbie" : null} because you've
-                      solved more than problems on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 1% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 30% potential of ownboon
-                    </li>
+              ) : level < 20 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're a {level < 11 ? "Newbie" : null} because you've
+                        solved more than problems on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 1% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 30% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level < 25 ? (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're a {level < 11 ? "Newbie" : null} because you've
-                      solved more than problems on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 1% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 30% potential of ownboon
-                    </li>
+              ) : level < 25 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're a {level < 11 ? "Newbie" : null} because you've
+                        solved more than problems on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 1% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 30% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level < 30 ? (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're a {level < 11 ? "Newbie" : null} because you've
-                      solved more than problems on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 1% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 30% potential of ownboon
-                    </li>
+              ) : level < 30 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're a {level < 11 ? "Newbie" : null} because you've
+                        solved more than problems on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 1% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 30% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level < 40 ? (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're a {level < 11 ? "Newbie" : null} because you've
-                      solved more than problems on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 1% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 30% potential of ownboon
-                    </li>
+              ) : level < 40 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're a {level < 11 ? "Newbie" : null} because you've
+                        solved more than problems on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 1% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 30% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level < 50 ? (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're a {level < 11 ? "Newbie" : null} because you've
-                      solved more than problems on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 1% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 30% potential of ownboon
-                    </li>
+              ) : level < 50 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're a {level < 11 ? "Newbie" : null} because you've
+                        solved more than problems on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 1% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 30% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : level > 199 ? (
-              <div className="flex w-[40vw] bg-[#191919a8] space-y-10   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">SaarDOO</h1>
-                <div className="flex flex-col my-3  gap-5 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're becoming a Greek God because you've solved more
-                      than problems 100 on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 0.000001% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 100% potential of ownboon
-                    </li>
+              ) : level > 199 ? (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">SaarDOO</h1>
+                  <div className="flex flex-col my-3  gap-5 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're becoming a Greek God because you've solved more
+                        than problems 100 on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 0.000001% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 100% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex w-[40vw] bg-[#191919a8]   h-[30vw] items-center   rounded-xl  flex-col ">
-                <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
-                <div className="flex flex-col my-3 items-center space-y-2">
-                  {/* display the image of the current level of boon island, static image to avoid long loading */}
-                  <div className="flex flex-col px-8 space-y-2 text-start items-start">
-                    <li className="text-xl text-white font-poppins">
-                      You've spent more than {productivity} hours on your
-                      productivity
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're becoming a Greek God because you've solved more
-                      than problems 100 on ownboon
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You're in one of the top 0.1% users
-                    </li>
-                    <li className="text-xl text-white font-poppins">
-                      You've explored 30% potential of ownboon
-                    </li>
+              ) : (
+                <div className="flex justify-center items-center bg-[#191919a8] space-y-10 md:h-[30vw] -mx-40 md:-mx-0 md:scale-105 scale-75 h-screen   w-screen    rounded-xl  flex-col ">
+                  <h1 className="font-poppins text-3xl mt-12">Level Name</h1>
+                  <div className="flex flex-col my-3 items-center space-y-2">
+                    {/* display the image of the current level of boon island, static image to avoid long loading */}
+                    <div className="flex flex-col px-8 space-y-2 text-start items-start">
+                      <li className="text-xl text-white font-poppins">
+                        You've spent more than {productivity} hours on your
+                        productivity
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're becoming a Greek God because you've solved more
+                        than problems 100 on ownboon
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You're in one of the top 0.1% users
+                      </li>
+                      <li className="text-xl text-white font-poppins">
+                        You've explored 30% potential of ownboon
+                      </li>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </Dialog>
         </>
       ) : (

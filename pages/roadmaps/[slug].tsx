@@ -195,8 +195,8 @@ const Post = ({ roadmap, goals }: Props) => {
               open={true}
               width="100%"
             >
-              <Modal.Body>
-                <div className="h-screen    w-screen overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin  p-10  ">
+              <Modal.Body className="md:hidden">
+                <div className="h-screen md:hidden   w-screen overflow-y-scroll opacity-100 transition-all duration-150 scrollbar-thin  p-10  ">
                   <div className="h-screen w-full bg-neutral-900/40 backdrop-blur-lg rounded-[10px] px-5 space-y-10 py-10 border border-zinc-800">
                     <div className="space-y-5">
                       <h1 className="text-xl flex justify-between items-center text-white font-semibold">

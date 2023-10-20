@@ -19,6 +19,10 @@ import { BsImage } from "react-icons/bs";
 import Head from "next/head";
 import { Button } from "@nextui-org/react";
 import { fetchGoals } from "../utils/fetchGoals";
+import { categories } from "../utils/constants";
+import Layout from "../components/Layout/Layout";
+import { useRouter } from "next/router";
+// import { Layout } from "lucide-react";
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -40,13 +44,48 @@ function Home({ users, goals }: Props) {
 
     return result;
   }
+  const [filteredCategories, setFilteredCategories] = useState<
+    { name: string; value?: string }[]
+  >([]);
 
+  const handleInputChange = (input: any) => {
+    const userInput = input;
+    setCategory(userInput);
+
+    // Filter the categories based on the user input
+    const words = userInput.split(" ");
+    const filtered = [];
+
+    // Filter the categories for each word and concatenate with commas
+    for (let word of words) {
+      const filteredForWord = categories
+        .filter(
+          (category) =>
+            category.name.toLowerCase().indexOf(word.toLowerCase()) !== -1
+        )
+        .slice(0, 5);
+      filtered.push(...filteredForWord);
+    }
+
+    // Set the filtered categories to be displayed in autocomplete suggestions
+    setFilteredCategories(filtered);
+  };
+
+  const handleSuggestionClick = (suggestion: any) => {
+    // Set the clicked suggestion as the value of the input field
+    setCategory((prevCategory) =>
+      prevCategory ? prevCategory + ", " + suggestion.name : suggestion.name
+    );
+    // Clear the suggestions list after selecting a suggestion
+    setFilteredCategories([]);
+  };
   const random = generateString(8);
 
   // @ts-ignore
   const formattedDate = today.toLocaleDateString("en-US", options);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const router = useRouter();
   const [imageSrc, setImageSrc] = useState("");
   const [uploadData, setUploadData] = useState();
 
@@ -94,6 +133,8 @@ function Home({ users, goals }: Props) {
 
     setImageSrc(data.secure_url);
     setUploadData(data);
+    handleSubmit(event);
+    router.replace(router.pathname);
   }
   async function handleOnSubmitVideo(event: any) {
     event.preventDefault();
@@ -112,7 +153,7 @@ function Home({ users, goals }: Props) {
     formData.append("upload_preset", "ownboon-uploads");
 
     const data = await fetch(
-      "https://api.cloudinary.com/v1_1/dwminkjmp/file/upload",
+      "https://api.cloudinary.com/v1_1/dwminkjmp/image/upload",
       {
         method: "POST",
         body: formData,
@@ -121,6 +162,8 @@ function Home({ users, goals }: Props) {
 
     setImageSrc(data.secure_url);
     setUploadData(data);
+    handleSubmit(event);
+    router.replace(router.pathname);
   }
 
   const [body, setBody] = useState("");
@@ -160,131 +203,123 @@ function Home({ users, goals }: Props) {
     return json;
   };
   return (
-    <div className="grid grid-cols-12 overflow-hidden bg-[#f4f1eb]/50">
-      <Head>
-        <title>Blog @ {user?.firstName || user?.username}</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
-      <Sidebar />
-      <div className="container mx-auto col-span-9  py-8 mt ">
-        {/* <Header /> */}
-        <div className="flex px-5  justify-between items-center">
-          {/* <div className="flex gap-4 font-bold text-lg">
-            <UserButton />
-            <p>Hi {user?.firstName || user?.username}, welcome Back!</p>
-          </div> */}
-          <div className="font-semibold text-xl">Socials</div>
-          <div className="items-center flex gap-5">
-            {/* <p className="text-sm font-semibold text-black/50">
-              {formattedDate}
-            </p>
-            <div className="bg-black/5 p-2 text-black/80 cursor-pointer hover:text-black hover:bg-black/30 transition-all duration-150  rounded-lg">
-              <p>Add New Goal</p>
-            </div> */}
-            <div className="flex gap-5 items-center ">
-              <div
-                onClick={handleSubmit}
-                className="bg-cyan-500  p-2 rounded-full text-white text-sm
-               cursor-pointer"
-              >
-                <p>Publish</p>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <p>{user?.firstName || user?.username}</p>
-                <UserButton />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="flex flex-col bg-white h-full overflow-y-scroll  mt-5 p-10
+    <Layout
+      hasBg={false}
+      bgColor={"#121212"}
+      icon="socials.svg"
+      text="Socials"
+      border="gray-500"
+      goals={goals}
+      children={
+        <div className="flex w-full bg-[#212121] h-screen overflow-hidden ">
+          <div className="container mx-auto col-span-9  py-8 mt ">
+            <div
+              className="flex flex-col bg-[#212121] h-full overflow-y-scroll  mt-5 p-10
           "
-          // onSubmit={handleSubmit}
-        >
-          <div className="flex flex-col   mx-auto items-center w-full justify-center">
-            <div className="px-3  border-l-2 ">
-              <input
-                className=" text-4xl w-full  font-light placeholder:text-gray-400 outline-none  h-full"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className=" mr-44 mt-5">
-              <input
-                className="  text font-light  placeholder:text-gray-400 outline-none"
-                placeholder="Write up to 4 tags"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              />
-            </div>
-            <div className="mt-5">
-              <video
-                className={imageSrc ? "inline rounded-lg" : "hidden"}
-                src={imageSrc}
-              />
-              <img
-                className={imageSrc ? "inline rounded-lg" : "hidden"}
-                src={imageSrc}
-              />
-            </div>
-            {category.length > 12 && (
-              <div className="flex items-center  mr-9 px-3 w-96 border-l-2 mt-5">
-                <input
-                  className="   text font-extralight cursor-text  w-full  placeholder:text-gray-400 outline-none"
-                  placeholder="add video or image"
-                  disabled={true}
-                />
-
-                <form
-                  method="post"
-                  onChange={handleOnChange}
-                  onSubmit={videos ? handleOnSubmit : handleOnSubmitVideo}
-                >
-                  <label htmlFor="file-input">
-                    <BsImage className="text-gray-400 hover:text-gray-800 transition-all duration-150 cursor-pointer" />
-                  </label>
-                  <div className="flex items-center justify-center">
-                    <input
-                      id="file-input"
-                      type="file"
-                      accept="image/"
-                      className="hidden"
-                      name="file"
-                    />
-                    <div>
-                      {imageSrc && !uploadData && (
-                        <p>
-                          <div className="flex gap-5">
-                            <Button
-                              onPress={() => setVideos(true)}
-                              bordered
-                              color="success"
-                            >
-                              Videos
-                            </Button>
-                            <Button
-                              onPress={() => setVideos(false)}
-                              bordered
-                              color={"warning"}
-                            >
-                              Images
-                            </Button>
-                          </div>
-
-                          <button>Upload Files</button>
-                        </p>
-                      )}
+              // onSubmit={handleSubmit}
+            >
+              <div className="flex flex-col bg-[#212121]  mx-auto items-center w-full justify-center">
+                <div className="px-3 border-l-white/20 border-l-2 ">
+                  <input
+                    className=" text-4xl w-fullc bg-transparent  font-light placeholder:text-neutral-400 outline-none  h-full"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                <div className=" mr-44 mt-5 ">
+                  <input
+                    className="  text font-light bg-transparent  placeholder:text-neutral-400 outline-none"
+                    placeholder="Write up to 4 tags"
+                    value={category}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                  />
+                  {category && (
+                    <div className="space-y-2 mt-1 px-5">
+                      {filteredCategories.map((item) => (
+                        <h1
+                          key={item.name}
+                          className="cursor-pointer"
+                          onClick={() => handleSuggestionClick(item)}
+                        >
+                          {item.name}
+                        </h1>
+                      ))}
                     </div>
+                  )}
+                </div>
+                <div className="mt-5 mr-96 md:mr-96 flex justify-center w-full">
+                  <video
+                    className={imageSrc ? "inline rounded-lg" : "hidden"}
+                    src={imageSrc}
+                  />
+                  <img
+                    className={
+                      imageSrc ? "inline h-56 w-56 rounded-lg" : "hidden"
+                    }
+                    src={imageSrc}
+                  />
+                </div>
+                {category.length > 12 && (
+                  <div className="flex items-center  mr-9 px-3 w-96 border-l-2 border-l-white/20 mt-5">
+                    <input
+                      className="   text font-extralight cursor-text bg-transparent  w-full  placeholder:text-gray-400 outline-none"
+                      placeholder="add video or image"
+                      disabled={true}
+                    />
+
+                    <form
+                      method="post"
+                      onChange={handleOnChange}
+                      onSubmit={videos ? handleOnSubmit : handleOnSubmitVideo}
+                    >
+                      <label htmlFor="file-input">
+                        <BsImage className="text-gray-400 hover:text-gray-800 transition-all duration-150 cursor-pointer" />
+                      </label>
+                      <div className="flex items-center justify-center">
+                        <input
+                          id="file-input"
+                          type="file"
+                          accept="image/"
+                          className="hidden"
+                          name="file"
+                        />
+                        <div className="mt-5">
+                          {imageSrc && !uploadData && (
+                            <p>
+                              <div className="flex gap-5">
+                                <div
+                                  onClick={() => setVideos(true)}
+                                  className="bg-zinc-600 bg-opacity-10 flex px-14 active:scale-105 transition-all duration-150 py-1 justify-center w-full items-center flex-col rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50"
+                                >
+                                  Videos
+                                </div>
+                                <div
+                                  onClick={() => setVideos(false)}
+                                  className="bg-zinc-600 bg-opacity-10 flex   px-16 active:scale-105 transition-all duration-150 py-1 justify-center w-full items-center flex-col rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50"
+                                >
+                                  Image
+                                </div>
+                              </div>
+
+                              <button className="bg-white bg-opacity-30 mt-5 py-2 flex items-start gap-1 px-10 rounded-md border-[0.75px] border-solid border-white border-opacity-50">
+                                <h1 className="text-white text-sm font-medium self-center my-auto">
+                                  Upload
+                                </h1>
+                              </button>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </form>
                   </div>
-                </form>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
-      </div>
-      <Progress />
-    </div>
+      }
+    />
   );
 }
 
