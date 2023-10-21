@@ -35,11 +35,10 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
     <div
       onMouseEnter={() => setShowsidebar(true)}
       onMouseLeave={() => setShowsidebar(false)}
-      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${
-        !showsidebar
+      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${!showsidebar
           ? "w-[60px] md:w-[80px] lg:w-[90px]"
           : "w-[240px] bg-[#101010]"
-      }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
+        }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
     >
       <div className="logo flex flex-col transition-all   gap-y-8">
         <div className="flex flex-row transition-all gap-4 items-center">
@@ -213,6 +212,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
         </Dialog>
       </div>
       <div
+        onClick={() => router.push("/feedback")}
         className={
           router.pathname == "/feedback"
             ? `${selected}  pb-3`
