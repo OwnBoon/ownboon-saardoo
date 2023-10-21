@@ -274,32 +274,32 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
 
             {sessionStarted ? (
               <div className="relative hidden md:inline-flex  items-center justify-center md:top-0">
-                {!hideElements && (
-                  <div
-                    className={`w-[212px] h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
-                  >
-                    {resume ? (
-                      <div className="absolute z-50">
-                        <BsFillPauseFill
-                          size={65}
-                          color="#FFF"
-                          onClick={() => setResume(false)}
-                          className="cursor-pointer"
-                        />
-                      </div>
-                    ) : (
-                      <div className="absolute z-50">
-                        <BsFillPlayFill
-                          size={65}
-                          color="#FFF"
-                          onClick={() => setResume(true)}
-                          className="cursor-pointer"
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-                {sessionStarted && !hideElements ? <div className="spinner"></div> : null}
+
+                <div
+                  className={`w-[212px] ${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-150 duration-300 h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
+                >
+                  {resume ? (
+                    <div className="absolute z-50">
+                      <BsFillPauseFill
+                        size={65}
+                        color="#FFF"
+                        onClick={() => setResume(false)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                  ) : (
+                    <div className="absolute z-50">
+                      <BsFillPlayFill
+                        size={65}
+                        color="#FFF"
+                        onClick={() => setResume(true)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {sessionStarted && <div className={`spinner ${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-150 duration-300`}></div>}
               </div>
             ) : (
               <>
@@ -312,28 +312,27 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                 {innerwidth > 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
               </>
             )}
-            {!hideElements && (
-              <div className=" flex justify-center mb-40 w-full "
-                onClick={
-                  sessionStarted
-                    ? resume
-                      ? handleStop
-                      : () => setResume(true)
-                    : handleStart
-                }>
-                <button
-                  className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
-                // @ts-ignore
 
-                >
-                  {sessionStarted
-                    ? resume
-                      ? "Stop Session"
-                      : "Resume Session"
-                    : "Start Session"}{" "}
-                </button>
-              </div>
-            )}
+            <div className={`${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-150 duration-300 flex justify-center mb-40 w-full`}
+              onClick={
+                sessionStarted
+                  ? resume
+                    ? handleStop
+                    : () => setResume(true)
+                  : handleStart
+              }>
+              <button
+                className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
+              // @ts-ignore
+
+              >
+                {sessionStarted
+                  ? resume
+                    ? "Stop Session"
+                    : "Resume Session"
+                  : "Start Session"}{" "}
+              </button>
+            </div>
 
             {/* <Clock /> */}
 
