@@ -15,7 +15,7 @@ import Discover from "../components/lofi/components/Discover";
 import { Goals, Notes, User } from "../typings";
 import { fetchUsers } from "../utils/fetchUsers";
 import MusicPlayer from "../components/lofi/MusicPlayer";
-import { setActiveSong, setIsPlaying } from "../redux/features/playerSlice";
+import { playPause, setActiveSong, setIsPlaying } from "../redux/features/playerSlice";
 import Clock from "../components/Clock/Clock";
 import TodoList from "../components/TodoList/TodoList";
 import { fetchNotes } from "../utils/fetchNotes";
@@ -144,7 +144,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const showNote = () => {
     setShowModal(true);
   };
-  console.log(notess);
+
   const [showAddNotesModal, setShowAddNotesModal] = useState(false);
 
   const handleAddingNewNote = () => {
@@ -179,6 +179,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
 
   const handleStart = () => {
     // setSessionStarted(true);
+    dispatch(playPause(true));
     dispatch(setSessionStartedState(true));
     // @ts-ignore
 
@@ -266,30 +267,30 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                   <div className="w-full h-85">
                     {innerwidth < 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
                   </div>
-                 
+
                 </div>
                 {innerwidth > 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
               </>
             )}
-             <div className=" flex justify-center mb-40 w-full ">
-                   <button
-                      className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
-                      // @ts-ignore
-                      onClick={
-                        sessionStarted
-                          ? resume
-                            ? handleStop
-                            : () => setResume(true)
-                          : handleStart
-                      }
-                    >
-                      {sessionStarted
-                        ? resume
-                          ? "Stop Session"
-                          : "Resume Session"
-                        : "Start Session"}{" "}
-                    </button>
-                  </div>
+            <div className=" flex justify-center mb-40 w-full ">
+              <button
+                className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
+                // @ts-ignore
+                onClick={
+                  sessionStarted
+                    ? resume
+                      ? handleStop
+                      : () => setResume(true)
+                    : handleStart
+                }
+              >
+                {sessionStarted
+                  ? resume
+                    ? "Stop Session"
+                    : "Resume Session"
+                  : "Start Session"}{" "}
+              </button>
+            </div>
 
             {/* <Clock /> */}
 
