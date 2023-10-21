@@ -255,7 +255,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       bgColor={"#121212"}
       icon="workspace.svg"
       goals={goals}
-      text="Lofi"
+      text="lofi"
       border={"#ccc"}
       children={
         <div className="h-screen overflow-y-scroll md:overflow-hidden scrollbar-none  w-screen md:w-full text-[#000000]">

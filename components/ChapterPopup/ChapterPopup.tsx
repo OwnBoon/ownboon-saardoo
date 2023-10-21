@@ -19,7 +19,7 @@ const Dialog = ({ isOpen, onClose, children }: any) => {
       <div className="fixed inset-0 bg-black opacity-50"></div>
       <div
         ref={dialogRef}
-        className="showmodal  z-50   p-6 mx-auto  rounded-xl  shadow-lg"
+        className="showmodal  z-50 flex items-center  justify-center  p-3 mx-auto  rounded-xl  shadow-lg"
       >
         {children}
       </div>

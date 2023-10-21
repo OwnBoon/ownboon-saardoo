@@ -32,8 +32,8 @@ export default function Notification({
 
   return (
     <div
-      className={`flex flex-col fade fixed md:right-0 rounded-b-2xl w-full px-2 md:w-[300px] max-h-screen transition-all duration-[2000] overflow-y-hidden ${
-        shownotifications ? "translate-y-0 top-[80px]" : "-translate-y-[100vh] "
+      className={`flex flex-col fade fixed md:right-0 rounded-b-2xl w-full px-2 md:w-[350px] max-h-screen transition-all duration-[2000] overflow-y-hidden ${
+        shownotifications ? "translate-y-0 top-[75px]" : "-translate-y-[100vh] "
       } shadow-2xl    z-30 items-center bg-[#101010]`}
     >
       <div className="flex flex-col  items-center justify-center">
@@ -89,7 +89,10 @@ export default function Notification({
               </div>
             ) : (
               <div className="flex h-[80vh] mt-[30vh] flex-col bg-cover p-2 bg-[#212121] cursor-pointer rounded-t-2xl w-full px-5 transition-all duration-50 space-x-4">
-                <img src="/empty.svg" className="w-full h-[40vw] md:h-[10vw] " />
+                <img
+                  src="/empty.svg"
+                  className="w-full h-[40vw] md:h-[10vw] "
+                />
               </div>
             )}
           </div>

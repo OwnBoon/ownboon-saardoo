@@ -426,7 +426,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
-  console.log(categories);
+  const [showdeleteicon, setShowdeleteicon] = useState(false);
 
   return (
     <div className=" ">
@@ -518,7 +518,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
                 Boon Island
               </div>
-              <div className="flex items-center w-full  justify-center" onClick={() => load()}>
+              <div
+                className="flex items-center w-full  justify-center"
+                onClick={() => load()}
+              >
                 {/* display the image of the current level of boon island, static image to avoid long loading */}
                 {/* <div className="opacity-100  bg-transparent hover:cursor-pointer w-full md:w-1/2 group h-full absolute "></div> */}
                 {level < 5 ? (
@@ -588,49 +591,41 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 {filteredNotes.map((note) => (
                   <>
                     <Dialog isOpen={showModal} onClose={setShowModal}>
-                      <div className="rounded-xl scale-150 md:scale-100 bg-[#101010]/50 backdrop-blur-2xl p-2 w-full h-full  md:p-16">
-                        <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
-                          {selectedNote}
-                          <button
-                            className="text-white flex"
-                            onClick={(e) => {
-                              addDeleted(note._id);
-                            }}
-                          >
-                            <Tooltip content="delete the note">
-                              <DeleteIcon className="text-sm text-red-200" />
-                            </Tooltip>
-                          </button>
+                      <div className="md:min-h-[35vw] min-h-[80vw] w-full flex items-left flex-col p-3  !bg-[#101010]      overflow-hidden  space-y-5   rounded-xl">
+                        <div className="flex justify-center items-center">
+                          <div className="flex flex-col gap-5">
+                            <input
+                              className="bg-transparent text-[7vw] md:text-[2.5vw] text-white  border-b border-white/40 flex justify-center  outline-none "
+                              placeholder={note.topic}
+                              minLength={3}
+                              // onChange={(e) => setTopic(e.target.value)}
+                            />
+                            <input
+                              className="bg-transparent text-[6vw] md:text-[2vw] text-white border-b flex border-white/40 justify-center  outline-none "
+                              placeholder="Category"
+                              minLength={2}
+                              // type="text"
+                              // onChange={(e) => setCategory(e.target.value)}
+                            />
+                          </div>
                         </div>
-                        <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
-                        <div className="scale-75 flex justify-center items-center flex-col md:scale-100 w-full h-full text-sm">
-                          <div className=" inline">
+                        <div className="space-y-12 flex  w-full flex-col items-start">
+                          <div>
                             <ReactQuill
                               theme="snow"
-                              className=" lg:h-64 md:h-32 lg:mt-5 md:mt-2 mt-0 sm:h-fit  w-fit !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                              className="md:h-[30vw] h-[60vw] md:w-[30vw] w-[70vw]     "
                               value={text || note?.note}
                               onChange={setText}
                             />
-                          </div>
-                          {/* <div className="p-2">
-                           <textarea
-                             contentEditable={true}
-                             cols={16}
-                             rows={5}
-                             className="md:hidden flex bg-[#101010]/30 focus:outline-none focus:ring  border-white/20 rounded-lg backdrop-blur-lg scrollbar-thin   justify-center items-center"
-                             value={text || selectedNoteData}
-                             onChange={(e) => {
-                               setText(e.target.value);
-                             }}
-                           />
-                         </div> */}
-                          <div
-                            onClick={(e) => handleNoteChange(note._id!)}
-                            className="bg-opacity-30  w-fit mt-16  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
-                          >
-                            <button className=" text-sm select-none  text-[#dddddd] relative px-5">
-                              Update Note
-                            </button>
+
+                            <div
+                              onClick={() => handleNoteChange(note._id!)}
+                              className="t-14 bg-opacity-30  w-full  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                            >
+                              <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                                Update Note
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -638,20 +633,30 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                     <div
                       onClick={() => {
                         setShowModal(true);
-                        console.log("note.topic", note.topic);
                         setSelectedNote(note.topic);
                         setSelectedNoteData(note.note);
                       }}
-                      className="bg-[#212121] cursor-pointer w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
+                      onMouseEnter={() => setShowdeleteicon(true)}
+                      onMouseLeave={() => setShowdeleteicon(false)}
+                      className="bg-[#212121]  cursor-pointer w-full h-40 flex flex-col overflow-hidden p-4 space-y-5  rounded-lg"
                     >
-                      <div>
-                        <h1 className="border-b w-fit cursor-text font-semibold text-lg">
-                          {note.topic}
-                        </h1>
+                      <div className="flex flex-row justify-between ">
+                        <div className="flex ">
+                          <h1 className="border-b w-fit cursor-text text-[#fff] font-semibold text-lg">
+                            {note.topic}
+                          </h1>
+                        </div>
+                        <div className="flex  flex-col">
+                          <Tooltip content="delete the note">
+                            {showdeleteicon && (
+                              <DeleteIcon className="text-sm deleteicon text-red-200" />
+                            )}
+                          </Tooltip>
+                        </div>
                       </div>
                       <div>
                         <div
-                          className="cursor-text"
+                          className="cursor-text text-[#a6a6a6]"
                           dangerouslySetInnerHTML={{ __html: note.note }}
                         />
                       </div>
@@ -661,10 +666,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             ) : (
               <div className="  flex  justify-center items-center w-full h-full p-7">
-                <img
-                  src="/empty.svg"
-                  className="w-full h-[40vw] md:h-[10vw] "
-                />
+                <img src="/empty.svg" className="w-full h-[40vw] md:h-[8vw] " />
               </div>
             )}
 
@@ -686,7 +688,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               // color="black"
               className="md:min-h-[35vw] min-h-[80vw]  justify-between !bg-[#101010] p-3"
               width="100%"
-              
+
               // onClose={setShowPromptModal}
             >
               <div className="flex w-full h-full md:text-xl p-10 md:mt-[3vw]  rounded-xl bg-[#101010] flex-col ">
@@ -944,7 +946,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               isOpen={showBoonIslandModal}
               onClose={setShowBoonIslandModal}
             >
-              <div className="flex w-[94.3vw] ml-[-21vw] mt-[5.2vw]  h-[48vw] items-center justify-center  rounded-xl  flex-col ">
+              <div className="flex w-full   h-full items-center justify-center  rounded-xl  flex-col ">
                 {boonisland && (
                   <Loading className="mt-[10vw]" color={"white"} />
                 )}

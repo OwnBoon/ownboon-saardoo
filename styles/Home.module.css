@@ -36,6 +36,13 @@
   font-weight: 700;
   font-family: var(--font-mono);
 }
+.ql-container.ql-snow{
+  border: none !important;
+}
+
+.ql-toolbar.ql-snow {
+  border: none !important;
+}
 
 .grid {
   display: grid;
