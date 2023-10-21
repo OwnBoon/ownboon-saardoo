@@ -129,7 +129,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   useEffect(() => {
-    if (sessionStarted) {
+    if (sessionStarted && resume) {
       document.addEventListener('mousemove', handleMouseMove);
     } else {
       dispatch(setHideElements(false))
@@ -142,7 +142,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       document.removeEventListener('mousemove', handleMouseMove);
       clearTimeout(timeout);
     };
-  }, [sessionStarted]);
+  }, [sessionStarted, resume]);
 
   const notess = notes.filter(
     (note) => note.email === user?.emailAddresses[0].emailAddress
