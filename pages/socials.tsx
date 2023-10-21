@@ -250,7 +250,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         goals={goals}
         border="gray-500"
         children={
-          <div className="container overflow-y-hidden mx-auto col-span-11  w-full py-8 pl-5">
+          <div className="container overflow-y-hidden mx-auto col-span-11  w-full py-8 pl-5" >
             <div className="grid grid-cols-1 w-full lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
               {dropdown && (
                 <div
@@ -344,7 +344,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                   </div>
                 </div>
               )}
-              <div className="lg:col-span-8 col-span-1  ">
+              <div className="lg:col-span-8 col-span-1  " style={{borderRight: "1.8px solid #374151",paddingRight:"32px"}}>
                 <div className="flex lg:text-md gap-10  justify-between w-[100vw] items-center">
                   <div className="flex justify-between overflow-x-scroll  w-full lg:overflow-hidden scrollbar-thin  mt-4 pt-5 pb-5 fixed  gap-10 items-center bg-[#121212] ">
                     <div className="flex justify-between    items-center gap-10">
@@ -426,7 +426,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                       </button>
                       <div className="flex-grow"></div>
                       {showpost ? (
-                        <div className="z-50 mr-20 right-8">
+                        <div className="z-50 mr-20 right-8" style={{position: "fixed", bottom: "3rem",right:" 0rem"}}>
                           <Link href="/publishpost">
                             <Tooltip content="Publish a post">
                               <button className="bg-zinc-600 px-2 py-1 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50">
@@ -436,7 +436,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           </Link>
                         </div>
                       ) : (
-                        <div className="ml-[50vw] z-50 md:flex md:-ml-10 md:w-1 ">
+                        <div className="ml-[50vw] z-50 md:flex md:-ml-10 md:w-1 " style={{position: "fixed", bottom: "3rem",right:" 0rem"}}>
                           <Link href="/publish-blog">
                             <Tooltip content="Publish a blog">
                               <div className=""></div>
@@ -686,7 +686,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                   )}
                 </div>
               </div>
-              <div className="col-span-3 hidden w-full  h-fit lg:inline z-50 text-white mt-14 ">
+              <div className="col-span-3 hidden w-full  h-fit lg:inline z-50 text-white mt-14 " style={{paddingLeft: "5px",paddingRight: "40px"}}>
                 <div className=" bg-zinc-600 p-3 py-5 mr-3 flex h-fit flex-col items-center gap-5 justify-center w-full bg-opacity-20 rounded-[10px] border border-zinc-700 border-opacity-50">
                   <h1>Top Interests</h1>
                   <div className="flex flex-col gap-3 items-start">
