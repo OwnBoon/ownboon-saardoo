@@ -675,32 +675,33 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                 <div className=" bg-zinc-600 p-3 py-5 mr-3 flex h-fit flex-col items-center gap-5 justify-center w-full bg-opacity-20 rounded-[10px] border border-zinc-700 border-opacity-50">
                   <h1>Top Interests</h1>
                   <div className="flex flex-col gap-3 items-start">
-                    {//@ts-ignore
-                      filteredPosts?.length > 0 ? filteredPosts?.map((blogs) => (
-                      <Link
-                        href={`/user/${blogs.author}`}
-                        className="gap-3 flex items-center"
-                      >
-                        <img
-                          className="h-10 w-10 rounded-full object-cover"
-                          src={blogs.profileImage}
-                        />
-                        <h1>{blogs.author}</h1>
-                      </Link>
-                    )) : posts?.map((blogs) => (
-                      <Link
-                        href={`/user/${blogs.author}`}
-                        className="gap-3 flex items-center"
-                      >
-                        <img
-                          className="h-10 w-10 rounded-full object-cover"
-                          src={blogs.profileImage}
-                        />
-                        <h1>{blogs.author}</h1>
-                      </Link>
-                    ))
-                    
-                    
+                    {
+                      //@ts-ignore
+                      filteredPosts?.length > 0
+                        ? filteredPosts?.map((blogs) => (
+                            <Link
+                              href={`/user/${blogs.author}`}
+                              className="gap-3 flex items-center"
+                            >
+                              <img
+                                className="h-10 w-10 rounded-full object-cover"
+                                src={blogs.profileImage}
+                              />
+                              <h1>{blogs.author}</h1>
+                            </Link>
+                          ))
+                        : posts?.map((blogs) => (
+                            <Link
+                              href={`/user/${blogs.author}`}
+                              className="gap-3 flex items-center"
+                            >
+                              <img
+                                className="h-10 w-10 rounded-full object-cover"
+                                src={blogs.profileImage}
+                              />
+                              <h1>{blogs.author}</h1>
+                            </Link>
+                          ))
                     }
                   </div>
                 </div>

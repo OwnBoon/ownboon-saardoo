@@ -103,30 +103,6 @@ const chat = ({ users, goals }: Props) => {
         border="gray-500"
         children={
           <main className=" overflow-y-hidden overflow-x-hidden  scrollbar-none scrollbar">
-            {/* <Modal
-              className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
-              open={showModal}
-              onClose={() => setShowModal(false)}
-            >
-              <Modal.Header className="w-full">
-                <h1>Welcome!</h1>
-              </Modal.Header>
-              <Modal.Body>
-                <p>Select the categories you want to follow:</p>
-                {categories.map((category) => (
-                  <Checkbox
-                    key={category}
-                    onChange={() => handleCategoryChange(category)}
-                  >
-                    {category}
-                  </Checkbox>
-                ))}
-              </Modal.Body>
-              <Modal.Footer onClick={() => setShowModal(false)}>
-                <Button onPress={() => setShowModal(false)}>Cancel</Button>
-                <Button onPress={handleSubmit}>Submit</Button>
-              </Modal.Footer>
-            </Modal> */}
             {!categoryslide ? (
               <Modal
                 closeButton
@@ -178,14 +154,12 @@ const chat = ({ users, goals }: Props) => {
                   <p className="text-neutral-400"></p>
                 </Modal.Header>
                 <Modal.Body className="flex justify-center items-center h-full w-full">
-                  {" "}
                   <Text id="modal-title" color="white" size={40}>
                     <h1 className="fade  bg-transparent  text-neutral-100 brightness-125">
                       Join a Group Chat
                     </h1>
                   </Text>
                   <h2 className="text-neutral-400 fade">
-                    {" "}
                     Select a category of which group chat you want to join
                   </h2>
                   <div className="flex flex-col justify-start gap-2">

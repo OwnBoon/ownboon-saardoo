@@ -1204,7 +1204,7 @@
   background-color: var(--sendbird-dark-background-700);
 }
 .sendbird-channel-list {
-  width: 249px;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1238,9 +1238,9 @@
 }
 .sendbird-channel-header {
   position: relative;
-  height: 84px;
+  height: 100%;
   min-height: 64px;
-  width: 220px;
+  width: 100%;
   padding: 4px 64px 8px 8px;
   box-sizing: border-box;
 }
@@ -2495,12 +2495,13 @@
 }
 
 .sendbird-conversation__footer {
-  position: relative;
+  position: fixed;
   box-sizing: border-box;
+  bottom: 8px;
   margin-top: 6px;
 }
 .sendbird-conversation__footer .sendbird-conversation__footer__typing-indicator {
-  position: absolute;
+  position: fixed;
   display: inline-flex;
   bottom: 8px;
 }
