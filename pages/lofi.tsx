@@ -122,18 +122,26 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
     dispatch(setHideElements(false))
 
     timeout = setTimeout(() => {
-      dispatch(setHideElements(true))
+      if (sessionStarted) {
+        dispatch(setHideElements(true))
+      }
     }, 1000); // Adjust the time in milliseconds as needed (1000ms = 1 second)
   };
 
   useEffect(() => {
     if (sessionStarted) {
       document.addEventListener('mousemove', handleMouseMove);
-
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-      };
+    } else {
+      dispatch(setHideElements(false))
+      timeout = setTimeout(() => {
+        dispatch(setHideElements(false))
+      }, 1000);
     }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timeout);
+    };
   }, [sessionStarted]);
 
   const notess = notes.filter(
