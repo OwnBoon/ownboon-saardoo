@@ -36,11 +36,10 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
     <div
       onMouseEnter={() => setShowsidebar(true)}
       onMouseLeave={() => setShowsidebar(false)}
-      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${
-        !showsidebar
-          ? "w-[60px] md:w-[80px] lg:w-[90px]"
-          : "w-[240px] bg-[#101010]"
-      }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
+      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${!showsidebar
+        ? "w-[60px] md:w-[80px] lg:w-[90px]"
+        : "w-[240px] bg-[#101010]"
+        }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
     >
       <div className="logo flex flex-col transition-all   gap-y-8">
         <div className="flex flex-row transition-all gap-4 items-center">
@@ -204,7 +203,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
                 <div className="w-44 h-[0px] border border-neutral-400"></div>
                 <div className="flex flex-row space-x-4 p-4 justify-between">
                   <div className="flex flex-col">
-                  <iframe src="https://discord.com/widget?id=1100319628984598548&theme=dark" width="350" height="500" allowTransparency={true} frameBorder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                    <iframe src="https://discord.com/widget?id=1100319628984598548&theme=dark" width="350" height="500" allowTransparency={true} frameBorder={0} sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                   </div>
                   <div className="flex flex-col  ">
                     <p className="md:text-[1.6vw] text-[2vw]">
