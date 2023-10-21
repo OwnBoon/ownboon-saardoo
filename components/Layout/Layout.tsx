@@ -40,7 +40,7 @@ const Layout = ({
       }}
     >
       <Head>
-        <title>{text} | OwnBoon</title>
+        <title>{text.charAt(0).toUpperCase() + text.slice(1)} | OwnBoon</title>
         <link rel="icon" href="/logo.png" />
       </Head>
 

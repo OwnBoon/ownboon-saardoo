@@ -122,7 +122,7 @@ const Navbar = ({
             />
             <Image width={30} height={30} className="hidden md:inline w-10 h-10" src={icon} alt={text} />
             <span className="font-fontspring text-center text-[25px] md:text-[20px]">
-              {text}
+             {text.charAt(0).toUpperCase() + text.slice(1)}
             </span>
           </div>
           <div
