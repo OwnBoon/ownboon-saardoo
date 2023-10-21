@@ -47,18 +47,18 @@ const Navbar = ({
   const todos = goals?.filter((goal) => goal.username == user?.username);
   const filteredTodos =
     search === "todos" ||
-    search === "goals" ||
-    search === "tod" ||
-    search === "todo" ||
-    search === "todos" ||
-    search === "goa" ||
-    search === "goal" ||
-    search === "goals"
+      search === "goals" ||
+      search === "tod" ||
+      search === "todo" ||
+      search === "todos" ||
+      search === "goa" ||
+      search === "goal" ||
+      search === "goals"
       ? todos
       : // @ts-ignore
-        todos.filter((todos) =>
-          todos.title?.toLowerCase().includes(search.toLowerCase())
-        );
+      todos?.filter((todos) =>
+        todos.title?.toLowerCase().includes(search.toLowerCase())
+      );
   const now = new Date();
   useEffect(() => {
     if (isLoaded) {
@@ -126,17 +126,15 @@ const Navbar = ({
             </span>
           </div>
           <div
-            className={` ${
-              showsidebar ? "translate-x-[0vw]" : "translate-x-0"
-            } flex md:mr-20  mr-10 items-center transition-all gap-5 md:gap-10 relative`}
+            className={` ${showsidebar ? "translate-x-[0vw]" : "translate-x-0"
+              } flex md:mr-20  mr-10 items-center transition-all gap-5 md:gap-10 relative`}
           >
             <Image
               width={55}
               height={55}
               onClick={() => setshowsearch(true)}
-              className={`p-2 ${
-                showsearch ? "hidden" : ""
-              } rounded hover:brightness-150 fade hidden md:inline transition-all cursor-pointer`}
+              className={`p-2 ${showsearch ? "hidden" : ""
+                } rounded hover:brightness-150 fade hidden md:inline transition-all cursor-pointer`}
               src="/search.svg"
               alt={"search"}
             />

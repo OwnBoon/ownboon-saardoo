@@ -28,6 +28,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
   const normal =
     "w-fit cursor-pointer sidebar brightness-[-50] flex items-center text-gray-400 gap-y-8 gap-x-4";
   const [showBuddyModal, setShowBuddyModal] = React.useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
   const [showChatsModal, setShowChatsModal] = useState(false);
   const [showSocialsModal, setShowSocialsModal] = useState(false);
 
@@ -35,11 +36,10 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
     <div
       onMouseEnter={() => setShowsidebar(true)}
       onMouseLeave={() => setShowsidebar(false)}
-      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${
-        !showsidebar
-          ? "w-[60px] md:w-[80px] lg:w-[90px]"
-          : "w-[240px] bg-[#101010]"
-      }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
+      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${!showsidebar
+        ? "w-[60px] md:w-[80px] lg:w-[90px]"
+        : "w-[240px] bg-[#101010]"
+        }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
     >
       <div className="logo flex flex-col transition-all   gap-y-8">
         <div className="flex flex-row transition-all gap-4 items-center">
@@ -193,6 +193,25 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
           </div>
         </div>
 
+        <Dialog isOpen={showFeedbackModal} onClose={setShowFeedbackModal}>
+          <div className="rounded-xl bg-[#101010] p-16">
+            <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
+              <div className="flex flex-col p-5 items-center justify-center">
+                <h1 className="text-[3vw] my-2  text-white text-center ">
+                  Feedback
+                </h1>
+                <div className="w-44 h-[0px] border border-neutral-400"></div>
+                <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
+                  Join our discord server
+                </h2>
+              </div>
+              <a href="https://discord.gg/Aje9uqBMvr" className="py-2 px-4 my-2 bg-[#7289da] text-black rounded-3xl text-[0.9vw]">
+                Open Discord
+              </a>
+            </div>
+          </div>
+        </Dialog>
+
         <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>
           <div className="rounded-xl bg-[#101010] p-16">
             <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
@@ -213,6 +232,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
         </Dialog>
       </div>
       <div
+        onClick={() => setShowFeedbackModal(true)}
         className={
           router.pathname == "/feedback"
             ? `${selected}  pb-3`
