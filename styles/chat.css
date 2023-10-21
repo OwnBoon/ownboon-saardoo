@@ -2586,9 +2586,14 @@
   position: relative;
   color: white !important
 }
+.sendbird-conversation__messages::selection {
+  color: white !important;
+  background: none;
+}
 .sendbird-conversation__messages .sendbird-conversation__messages-padding {
   position: relative;
   padding-left: 24px;
+  
   padding-right: 24px;
   margin-bottom: 50px;
   color: white;
