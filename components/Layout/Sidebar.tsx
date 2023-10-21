@@ -204,7 +204,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
                 <div className="w-44 h-[0px] border border-neutral-400"></div>
                 <div className="flex flex-row space-x-4 p-4 justify-between">
                   <div className="flex flex-col">
-                  <iframe src="https://discord.com/widget?id=1100319628984598548&theme=dark" width="350" height="500" allowTransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                  <iframe src="https://discord.com/widget?id=1100319628984598548&theme=dark" width="350" height="500" allowTransparency={true} frameBorder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                   </div>
                   <div className="flex flex-col  ">
                     <p className="md:text-[1.6vw] text-[2vw]">
