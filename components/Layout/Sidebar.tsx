@@ -205,7 +205,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
                   Join our discord server
                 </h2>
               </div>
-              <a href="https://discord.gg/AhU8NTpx" className="py-2 px-4 my-2 bg-[#7289da] text-black rounded-3xl text-[0.9vw]">
+              <a href="https://discord.gg/Aje9uqBMvr" className="py-2 px-4 my-2 bg-[#7289da] text-black rounded-3xl text-[0.9vw]">
                 Open Discord
               </a>
             </div>
