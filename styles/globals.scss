@@ -189,6 +189,13 @@ h2.slideup{
   padding-left: 0rem;
   padding-right: 2rem;
 }
+.videowidth{
+  width: 100% !important;
+  height: 28rem !important;
+}
+.videocontainer{
+  width: 100% !important;
+}
 @keyframes slideup {
   0%{
     opacity: 0;
@@ -988,6 +995,10 @@ canvas {
 @media (max-width: 768px) {
   .h-85{
     height: 85%;
+  }
+  .videowidth{
+    width: 100% !important;
+    height: 100% !important;
   }
  
   .bottom-11 {
