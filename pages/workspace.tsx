@@ -40,6 +40,7 @@ import CustomLoader from "../components/CustomLoader";
 import Notes from "../components/Notes/Notes";
 import { DeleteIcon, XIcon } from "lucide-react";
 import Category from "../pages/select-categories";
+import Image from "next/image";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
@@ -425,10 +426,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   };
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
-
+  console.log(categories);
 
   return (
-    <div className=" h-screen">
+    <div className=" ">
       {!match[0].categories && !categoryslide ? (
         <>
           <Modal
@@ -478,11 +479,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
           <Category users={users} />
         </Modal>
       ) : null}
-      <div className=" bg-[#101010]  fade flex mt-[40px] flex-row justify-end relative font-sans w-full items-start">
-        <div className="flex font-fontspring flex-col justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
+      <div className=" bg-[#101010]  fade flex  flex-row justify-end relative font-sans w-full items-start">
+        <div className="flex font-fontspring flex-col justify-center md:justify-start  gap-x-4 gap-y-5 relative w-full  items-end">
           <section
             id="section-1"
-            className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center mr-5"
+            className="grid gird-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-start gap-5 relative w-full items-center md:mr-5 mr-3"
           >
             <div
               id="TodoAndGenerator-container"
@@ -490,7 +491,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             >
               <TodoList todos={todos} user={user} setTodos={setTodos} />
 
-              <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full h-fit shrink-0 items-center pt-4 pb-3  rounded-lg">
+              <div className=" bg-[#191919] flex flex-col justify-start gap-2 relative w-full min-h-[13vw] flex-grow shrink-0 items-center pt-4 pb-3  rounded-lg">
                 <div className="whitespace-nowrap underline underline-offset-8 text-[19px] md:text-[23px] font-sans text-white relative">
                   AI Schedule Generator
                 </div>
@@ -512,14 +513,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             </div>
             <div
               id="boonIland-wraper "
-              className="bg-[#191919] xl:col-span-2 w-full h-full py-3 rounded-lg overflow-hidden gap-2"
+              className="bg-[#191919] xl:col-span-2 w-full h-full flex flex-col items-center justify-start py-3 rounded-lg overflow-hidden gap-2"
             >
               <div className="whitespace-nowrap text-[23px] text-center font-sans text-white relative">
                 Boon Island
               </div>
-              <div className="" onClick={() => load()}>
+              <div className="flex items-center w-full  justify-center" onClick={() => load()}>
                 {/* display the image of the current level of boon island, static image to avoid long loading */}
-                <div className="opacity-100  bg-transparent hover:cursor-pointer w-full md:w-1/2 group h-full absolute "></div>
+                {/* <div className="opacity-100  bg-transparent hover:cursor-pointer w-full md:w-1/2 group h-full absolute "></div> */}
                 {level < 5 ? (
                   <img
                     className="group-hover:brightness-110 transition-all duration-150"
@@ -556,15 +557,16 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
           </section>
-          <div className="md:px-5  overflow-scroll bg-[#191919] flex flex-col mr-5 gap-y-2 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible overflow-x-hidden ">
+          <div className="md:px-5  overflow-scroll bg-[#191919] flex flex-col mr-3 md:mr-5 gap-y-2 relative w-full items-center h-full  rounded-lg justify-center overflow-y-visible overflow-x-hidden ">
             <div className="flex justify-center w-full  gap-1 relative items-center">
-              <div className="flex items-center gap-2 col-span-2 justify-end w-full">
-                <div className="w-full"></div>
-                <div className="flex justify-between w-full">
-                  <CategoryDropdown
-                    categories={categories}
-                    handleCategoryChange={handleCategoryChange}
-                  />
+              <div className="flex justify-end items-center gap-2 col-span-2  w-full">
+                <div className="flex justify-center w-full">
+                  {categories.size !== 0 && (
+                    <CategoryDropdown
+                      categories={categories}
+                      handleCategoryChange={handleCategoryChange}
+                    />
+                  )}
                 </div>
                 <div
                   onClick={handleAddingNewNote}
@@ -581,81 +583,90 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             </div>
             {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
-            <div className="grid grid-cols-1 pl-5 px-3 md:grid-cols-2 md:px-5 md:py-2  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
-              {filteredNotes.map((note) => (
-                <>
-                  <Dialog isOpen={showModal} onClose={setShowModal}>
-                    <div className="rounded-xl scale-150 md:scale-100 bg-[#101010]/50 backdrop-blur-2xl p-2 w-full h-full  md:p-16">
-                      <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
-                        {selectedNote}
-                        <button
-                          className="text-white flex"
-                          onClick={(e) => {
-                            addDeleted(note._id);
-                          }}
-                        >
-                          <Tooltip content="delete the note">
-                            <DeleteIcon className="text-sm text-red-200" />
-                          </Tooltip>
-                        </button>
-                      </div>
-                      <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
-                      <div className="scale-75 flex justify-center items-center flex-col md:scale-100 w-full h-full text-sm">
-                        <div className=" inline">
-                          <ReactQuill
-                            theme="snow"
-                            className=" lg:h-64 md:h-32 lg:mt-5 md:mt-2 mt-0 sm:h-fit  w-fit !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
-                            value={text || note?.note}
-                            onChange={setText}
-                          />
-                        </div>
-                        {/* <div className="p-2">
-                          <textarea
-                            contentEditable={true}
-                            cols={16}
-                            rows={5}
-                            className="md:hidden flex bg-[#101010]/30 focus:outline-none focus:ring  border-white/20 rounded-lg backdrop-blur-lg scrollbar-thin   justify-center items-center"
-                            value={text || selectedNoteData}
-                            onChange={(e) => {
-                              setText(e.target.value);
+            {categories.size !== 0 ? (
+              <div className="grid grid-cols-1 pl-5 px-3 md:grid-cols-2 md:px-5 md:py-2  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
+                {filteredNotes.map((note) => (
+                  <>
+                    <Dialog isOpen={showModal} onClose={setShowModal}>
+                      <div className="rounded-xl scale-150 md:scale-100 bg-[#101010]/50 backdrop-blur-2xl p-2 w-full h-full  md:p-16">
+                        <div className=" md:h-[43px] text-white md:text-3xl flex items-center gap-5  text-sm font-semibold">
+                          {selectedNote}
+                          <button
+                            className="text-white flex"
+                            onClick={(e) => {
+                              addDeleted(note._id);
                             }}
-                          />
-                        </div> */}
-                        <div
-                          onClick={(e) => handleNoteChange(note._id!)}
-                          className="bg-opacity-30  w-fit mt-16  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
-                        >
-                          <button className=" text-sm select-none  text-[#dddddd] relative px-5">
-                            Update Note
+                          >
+                            <Tooltip content="delete the note">
+                              <DeleteIcon className="text-sm text-red-200" />
+                            </Tooltip>
                           </button>
                         </div>
+                        <div className="md:w-44 h-[0px] w-full border border-neutral-400"></div>
+                        <div className="scale-75 flex justify-center items-center flex-col md:scale-100 w-full h-full text-sm">
+                          <div className=" inline">
+                            <ReactQuill
+                              theme="snow"
+                              className=" lg:h-64 md:h-32 lg:mt-5 md:mt-2 mt-0 sm:h-fit  w-fit !border !border-white/10   scrollbar scrollbar-track-white scrollbar-thumb-blue-50"
+                              value={text || note?.note}
+                              onChange={setText}
+                            />
+                          </div>
+                          {/* <div className="p-2">
+                           <textarea
+                             contentEditable={true}
+                             cols={16}
+                             rows={5}
+                             className="md:hidden flex bg-[#101010]/30 focus:outline-none focus:ring  border-white/20 rounded-lg backdrop-blur-lg scrollbar-thin   justify-center items-center"
+                             value={text || selectedNoteData}
+                             onChange={(e) => {
+                               setText(e.target.value);
+                             }}
+                           />
+                         </div> */}
+                          <div
+                            onClick={(e) => handleNoteChange(note._id!)}
+                            className="bg-opacity-30  w-fit mt-16  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+                          >
+                            <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                              Update Note
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </Dialog>
+                    <div
+                      onClick={() => {
+                        setShowModal(true);
+                        console.log("note.topic", note.topic);
+                        setSelectedNote(note.topic);
+                        setSelectedNoteData(note.note);
+                      }}
+                      className="bg-[#212121] cursor-pointer w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
+                    >
+                      <div>
+                        <h1 className="border-b w-fit cursor-text font-semibold text-lg">
+                          {note.topic}
+                        </h1>
+                      </div>
+                      <div>
+                        <div
+                          className="cursor-text"
+                          dangerouslySetInnerHTML={{ __html: note.note }}
+                        />
                       </div>
                     </div>
-                  </Dialog>
-                  <div
-                    onClick={() => {
-                      setShowModal(true);
-                      console.log("note.topic", note.topic);
-                      setSelectedNote(note.topic);
-                      setSelectedNoteData(note.note);
-                    }}
-                    className="bg-[#212121] cursor-pointer w-full h-40 overflow-y-auto p-4 space-y-5  rounded-lg"
-                  >
-                    <div>
-                      <h1 className="border-b w-fit cursor-text font-semibold text-lg">
-                        {note.topic}
-                      </h1>
-                    </div>
-                    <div>
-                      <div
-                        className="cursor-text"
-                        dangerouslySetInnerHTML={{ __html: note.note }}
-                      />
-                    </div>
-                  </div>
-                </>
-              ))}
-            </div>
+                  </>
+                ))}
+              </div>
+            ) : (
+              <div className="  flex  justify-center items-center w-full h-full p-7">
+                <img
+                  src="/empty.svg"
+                  className="w-full h-[40vw] md:h-[10vw] "
+                />
+              </div>
+            )}
 
             <Dialog isOpen={showAddNotesModal} onClose={setShowAddNotesModal}>
               {
@@ -673,11 +684,12 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               closeButton
               open={showPromptModal}
               // color="black"
-              className="md:h-[60vh] w-fit md:w-full !bg-[#101010] p-3"
-              width="80%"
+              className="md:min-h-[35vw] min-h-[80vw]  justify-between !bg-[#101010] p-3"
+              width="100%"
+              
               // onClose={setShowPromptModal}
             >
-              <div className="flex w-full h-full md:text-xl p-10 md:mt-[6vh]  lg:-mt-[7vh] rounded-xl bg-[#101010] flex-col ">
+              <div className="flex w-full h-full md:text-xl p-10 md:mt-[3vw]  rounded-xl bg-[#101010] flex-col ">
                 <div className="flex flex-col  items-center justify-center">
                   <h1 className="md:text-[2vw] text-lg  my-2  text-white text-center ">
                     BoonBot
@@ -688,13 +700,13 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   <div
                     className={`${
                       pageposition === 0 ? "pageentry " : "pageexit"
-                    } text-center`}
+                    } text-center `}
                   >
                     <h2 className="md:text-[1.3vw] text-md  mt-6 my-2 font-fontspring  text-white font-medium ">
                       How are you feeling today?
                     </h2>
-                    <div className="p-2 flex flex-row overflow-x-scroll scrollbar-none w-64 md:w-full   gap-x-5">
-                      <div className="flex items-center justify-center flex-row gap-x-3">
+                    <div className="p-2 flex flex-row md:flex-nowrap flex-wrap w-full items-center     gap-x-5">
+                      <div className="flex items-center md:flex-nowrap flex-wrap justify-center flex-row md:gap-x-3">
                         <Checkbox
                           className="mb-5  mt-5 px-5 rounded-3xl bg-[#1212136c]  py-5"
                           isSelected={
@@ -757,7 +769,11 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </Checkbox>
                       </div>
                     </div>
-                    {empty && <div className="text-white">Please Pick one of the options</div>}
+                    {empty && (
+                      <div className="text-white">
+                        Please Pick one of the options
+                      </div>
+                    )}
                   </div>
                   <div
                     className={`${
@@ -778,10 +794,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             objective: e.target.value,
                           })
                         }
-                        className="border-none text-sm  md:text-xl text-neutral-200 font-poppins md:w-[30vw] w-full  bg-[#232222]"
+                        className="border-none text-sm  md:text-xl text-neutral-200 font-poppins md:w-[30vw] w-[60vw] min-h-[30vw] md:min-h-[10vw]  bg-[#232222]"
                       ></textarea>
                     </div>
-                    {empty && <div className="text-white">Please enter atleast a sentence</div>}
+                    {empty && (
+                      <div className="text-white">
+                        Please enter atleast a sentence
+                      </div>
+                    )}
                   </div>
                   <div
                     className={`${
@@ -799,10 +819,14 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         onChange={(e) =>
                           setUserprompt({ ...userprompt, time: e.target.value })
                         }
-                        className="border-none text-sm  text-neutral-200  md:text-lg font-poppins w-full md:w-[30vw]  bg-[#232222]"
+                        className="border-none text-sm  md:text-xl text-neutral-200 font-poppins md:w-[30vw] w-[60vw] min-h-[30vw] md:min-h-[10vw]  bg-[#232222]"
                       ></textarea>
                     </div>
-                    {empty && "Please enter atleast a sentence"}
+                    {empty && (
+                      <div className="text-white">
+                        Please enter atleast a sentence
+                      </div>
+                    )}
                   </div>
                   <div
                     className={`${
