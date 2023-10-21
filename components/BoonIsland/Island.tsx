@@ -35,12 +35,12 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
   const productivity = Math.floor((focus_no * 10) / 60);
 
   return (
-    <div className="h-[48vw] fade justify-center items-center sm:w-[94.3vw] flex relative w-fit ">
+    <div className="h-[48vw] fade justify-center items-center w-full sm:w-[94.3vw] flex relative  ">
       {user ? (
         <>
           {level < 5 ? (
             <Spline
-              className="sm:w-full w-fit z-50"
+              className="sm:w-full w-full z-50"
               scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
             />
           ) : level < 10 ? (
@@ -73,7 +73,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           ) : (
             <Image src={"/boonisland.png"} fill alt={""} />
           )}
-          <div className="flex animate-floaty items-center z-50 flex-row gap-y-4 gap-x-6 sm:gap-x-8 shadow-zinc-700 shadow-2xl py-4 sm:py-8 rounded-3xl px-8 sm:px-8 bg-[#191919a8] text-white absolute bottom-4">
+          <div className="flex animate-floaty items-center z-50 flex-row gap-y-4 gap-x-6 sm:gap-x-8 shadow-zinc-700 shadow-2xl py-4 sm:py-8 rounded-3xl px-8 sm:px-8 bg-[#191919a8] text-white absolute bottom-2">
             <div className="flex flex-col gap-y-2 justify-center items-center text-center">
               <h1 className="font-poppins  text-sm sm:text-md  ">
                 Current Level
@@ -324,7 +324,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
                       </li>
                       <li className="text-xl text-white font-poppins">
                         You're becoming a Greek God because you've solved more
-                        than problems 100 on ownboon
+                        than problems 100 on ownboon      
                       </li>
                       <li className="text-xl text-white font-poppins">
                         You're in one of the top 0.1% users

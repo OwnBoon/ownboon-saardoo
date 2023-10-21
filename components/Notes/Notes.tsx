@@ -69,11 +69,11 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
   return (
     <div>
       {" "}
-      <div className="md:min-h-[35vw] min-h-[80vw] w-full flex items-start flex-col p-8  !bg-[#101010]      overflow-hidden  space-y-5   rounded-xl">
+      <div className="md:min-h-[35vw] min-h-[80vw] w-full flex items-left flex-col p-3  !bg-[#101010]      overflow-hidden  space-y-5   rounded-xl">
         <div className="flex justify-center items-center">
           <div className="flex flex-col gap-5">
             <input
-              className="bg-transparent text-[7vw] md:text-[2.5vw]  border-b flex border-white/40 justify-center  outline-none "
+              className="bg-transparent text-[6vw] md:text-[2vw]  border-b flex border-white/40 justify-center  outline-none "
               placeholder="Category"
               minLength={2}
               // type="text"

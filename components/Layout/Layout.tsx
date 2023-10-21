@@ -80,7 +80,7 @@ const Layout = ({
         <div
           className={`text-[#DDDDDD] ${
             text == "lofi" ? "overflow-y-hidden" : "overflow-y-scroll"
-          }  h-full   py-24  bg-cover  ${!showsidebar ? "" : ""}`}
+          }  h-full   pt-24 pb-2  bg-cover  ${!showsidebar ? "" : ""}`}
           style={{
             backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
           }}

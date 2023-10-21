@@ -115,13 +115,13 @@ const Navbar = ({
         }}
       >
         <div className="flex justify-between gap-7 md:gap-0 w-full">
-          <div className="flex items-center space-x-3 text-white">
+          <div className="flex items-center justify-center space-x-3 text-white">
             <img
-              className="md:hidden inline w-10 h-10 "
+              className="md:hidden inline w-9 h-9 "
               src="/slideright.svg"
             />
-            <Image width={30} height={30} className=" inline w-10 h-10" src={icon} alt={text} />
-            <span className="font-fontspring text-[28px] md:text-[20px]">
+            <Image width={30} height={30} className="hidden md:inline w-10 h-10" src={icon} alt={text} />
+            <span className="font-fontspring text-center text-[25px] md:text-[20px]">
               {text}
             </span>
           </div>
