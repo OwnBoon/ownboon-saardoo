@@ -2401,6 +2401,8 @@
 .sendbird-conversation__footer {
   width: 60%; /* Default width for larger screens */
   order: 3;
+  margin-top: 10px;
+  z-index: 9999;
   padding: 0px 0px 24px 0px;
 }
 
@@ -2588,6 +2590,7 @@
   position: relative;
   padding-left: 24px;
   padding-right: 24px;
+  margin-bottom: 50px;
   color: white;
   height: 100%;
   overflow-x: hidden;
@@ -2757,6 +2760,7 @@
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
+  z-Index:9999;
   font-style: normal;
   line-height: 1.43;
   height: 54px;
@@ -4572,6 +4576,7 @@ div.sendbird-og-message-item-body__text-bubble {
 .sendbird-message-input-wrapper {
   position: relative;
   width: 100%;
+  z-index: 999;
 }
 .sendbird-message-input-wrapper--voice-message .sendbird-message-input-wrapper__quote-message-input,
 .sendbird-message-input-wrapper .sendbird-message-input-wrapper__quote-message-input {
