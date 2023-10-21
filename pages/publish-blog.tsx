@@ -218,22 +218,30 @@ function BlogPost({ users, goals }: Props) {
               // onSubmit={handleSubmit}
             >
               <div className="flex flex-col   mx-auto items-center w-full justify-center">
-                <div className="px-3  border-l-2 border-white/20 ">
+                <div className="flex flex-col items-start  space-y-12 justify-center">
+                   <div className="mt-5 flex flex-row ">
+                  <img
+                    className={imageSrc ? "inline rounded-lg w-40 h-40" : "hidden"}
+                    src={imageSrc}
+                  />
+                </div>
+
+                <div className="py-3 w-full border-b-2 border-gray-400 ">
                   <input
-                    className=" text-4xl w-full  font-light bg-[#212121] placeholder:text-gray-400 outline-none  h-full"
-                    placeholder="Title"
+                    className=" text-4xl w-full  font-light bg-[#212121]  placeholder:text-gray-400 outline-none  h-full"
+                    placeholder="Enter Title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
-                <div className=" mr-44 mt-5">
+                <div className="py-3 w-full border-b-2 border-gray-400">
                   <input
-                    className="  text font-light bg-transparent font-sans  placeholder:text-gray-400 outline-none"
-                    placeholder="Write up to 4 tags"
+                    className="  text-xl font-sans font-light bg-[#212121] w-[350px]  placeholder:text-gray-400 outline-none"
+                    placeholder="Add Hashtags"
                     value={category}
                     onChange={(e) => handleInputChange(e.target.value)}
                   />
-                  <div className="space-y-2 mt-1 px-5">
+                  <div className="space-y-3 text-xl  mt-2 p-2">
                     {filteredCategories.map((item) => (
                       <h1
                         key={item.name}
@@ -245,17 +253,12 @@ function BlogPost({ users, goals }: Props) {
                     ))}
                   </div>
                 </div>
-                <div className="mt-5">
-                  <img
-                    className={imageSrc ? "inline rounded-lg" : "hidden"}
-                    src={imageSrc}
-                  />
-                </div>
+               
                 {category.length > 12 && (
-                  <div className="flex items-center  mr-9 px-3 w-96 border-l-2 mt-5">
+                  <div className="flex items-center p-3 mr-9 w-full border-l-2 mt-5">
                     <input
                       className=" cursor-pointer  text font-extralight font-sans select-none w-full bg-transparent  placeholder:text-gray-400 outline-none"
-                      placeholder="Didn't add your cover image?"
+                      placeholder="Upload Images"
                       disabled={true}
                     />
                     <form
@@ -275,11 +278,7 @@ function BlogPost({ users, goals }: Props) {
                           name="file"
                         />
                         <div>
-                          {imageSrc && !uploadData && (
-                            <p>
-                              <button>Upload Files</button>
-                            </p>
-                          )}
+                         
                         </div>
                       </div>
                     </form>
@@ -293,36 +292,40 @@ function BlogPost({ users, goals }: Props) {
                       : "hidden transition-all duration-200"
                   }
                 >
-                  <Editor
-                    id="Editor"
-                    apiKey={process.env.NEXT_PUBLIC_TINY}
-                    // @ts-ignore
-                    onInit={(evt, editor) => (editorRef.current = editor)}
-                    init={{
-                      height: 500,
-                      menubar: false,
-                      plugins:
-                        "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                      toolbar:
-                        "undo redo | blocks  | bold italic underline codesample | link image media  | align  | numlist bullist  |",
-                      content_style:
-                        "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                      setup: function (editor) {
-                        editor.on("init", function () {
-                          var doc = editor.getDoc();
-                          var head = doc.head;
-                          var style = doc.createElement("style");
-                          style.innerHTML = `
-                                body {
-                                  background-color: #191919 !important;
-                                  color: white !important;
-                                }
-                              `;
-                          head.appendChild(style);
-                        });
-                      },
-                    }}
-                  />
+                 <Editor
+  id="Editor"
+  apiKey={process.env.NEXT_PUBLIC_TINY}
+  // @ts-ignore
+  onInit={(evt, editor) => (editorRef.current = editor)}
+  init={{
+    height: 500,
+    menubar: false,
+    plugins:
+      "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+    toolbar:
+      "undo redo | blocks  | bold italic underline codesample | link image media  | align  | numlist bullist  |",
+    content_style:
+      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+    setup: function (editor) {
+      editor.on("init", function () {
+        var doc = editor.getDoc();
+        var head = doc.head;
+        var style = doc.createElement("style");
+        style.innerHTML = `
+          .tox-toolbar {
+            background-color: transparent !important;
+          }
+          body {
+            background-color: transparent !important;
+            color: white !important;
+          }
+        `;
+        head.appendChild(style);
+      });
+    },
+  }}
+/>
+                </div>
                 </div>
               </div>
             </div>
