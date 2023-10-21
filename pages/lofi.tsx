@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { GetServerSideProps } from "next";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -25,7 +25,9 @@ import Draggable, { DraggableCore } from "react-draggable";
 import { Tooltip } from "@nextui-org/react";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 import { Poppins } from "next/font/google";
-import { setSessionStartedState } from "../redux/features/lofiSlice";
+import { setHideElements, setSessionStartedState } from "../redux/features/lofiSlice";
+import _ from 'lodash';
+
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface Props {
   users: User[];
@@ -69,7 +71,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const router = useRouter();
   const [toolbar, setToolbar] = useState(true);
 
-  const { sessionStarted } = useSelector((state: any) => state.lofi)
+  const { sessionStarted, hideElements } = useSelector((state: any) => state.lofi)
   const { activeSong, isPlaying } = useSelector((state: any) => state.player);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -79,6 +81,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
   const [time, setTime] = useState("");
   const [resume, setResume] = useState(true);
   const [innerwidth, setinnerwidth] = useState(window.innerWidth)
+
   useEffect(() => {
     setinnerwidth(window.innerWidth)
     setTodos(
@@ -107,6 +110,31 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       return () => clearInterval(interval);
     }
   }, [isPlaying]);
+
+  const [mouseStopped, setMouseStopped] = useState(true);
+
+  let timeout: string | number | NodeJS.Timeout | undefined;
+
+
+  const handleMouseMove = () => {
+    clearTimeout(timeout);
+
+    dispatch(setHideElements(false))
+
+    timeout = setTimeout(() => {
+      dispatch(setHideElements(true))
+    }, 1000); // Adjust the time in milliseconds as needed (1000ms = 1 second)
+  };
+
+  useEffect(() => {
+    if (sessionStarted) {
+      document.addEventListener('mousemove', handleMouseMove);
+
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+      };
+    }
+  }, [sessionStarted]);
 
   const notess = notes.filter(
     (note) => note.email === user?.emailAddresses[0].emailAddress
@@ -189,6 +217,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
     // setSessionStarted(false);
 
     dispatch(setSessionStartedState(false));
+    dispatch(setHideElements(false))
 
     // @ts-ignore
     setEndTime(new Date());
@@ -223,6 +252,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
       children={
         <div className="h-screen overflow-y-scroll md:overflow-hidden scrollbar-none  w-screen md:w-full text-[#000000]">
           <div className="flex items-center overflow-y-scroll scrollbar-none   md:overflow-hidden justify-center w-full h-full flex-col gap-10 md:justify-start md:mt-[40vh] lg:mt-[0vh] lg:justify-center">
+            {/* {hideElements ? 'Mouse stopped moving' : 'Mouse is moving'} */}
             {sessionStarted && (
               <>
                 <Discover />
@@ -236,30 +266,32 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
 
             {sessionStarted ? (
               <div className="relative hidden md:inline-flex  items-center justify-center md:top-0">
-                <div
-                  className={`w-[212px] h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
-                >
-                  {resume ? (
-                    <div className="absolute z-50">
-                      <BsFillPauseFill
-                        size={65}
-                        color="#FFF"
-                        onClick={() => setResume(false)}
-                        className="cursor-pointer"
-                      />
-                    </div>
-                  ) : (
-                    <div className="absolute z-50">
-                      <BsFillPlayFill
-                        size={65}
-                        color="#FFF"
-                        onClick={() => setResume(true)}
-                        className="cursor-pointer"
-                      />
-                    </div>
-                  )}
-                </div>
-                {sessionStarted ? <div className="spinner"></div> : null}
+                {!hideElements && (
+                  <div
+                    className={`w-[212px] h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
+                  >
+                    {resume ? (
+                      <div className="absolute z-50">
+                        <BsFillPauseFill
+                          size={65}
+                          color="#FFF"
+                          onClick={() => setResume(false)}
+                          className="cursor-pointer"
+                        />
+                      </div>
+                    ) : (
+                      <div className="absolute z-50">
+                        <BsFillPlayFill
+                          size={65}
+                          color="#FFF"
+                          onClick={() => setResume(true)}
+                          className="cursor-pointer"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+                {sessionStarted && !hideElements ? <div className="spinner"></div> : null}
               </div>
             ) : (
               <>
@@ -272,25 +304,28 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                 {innerwidth > 820 ? <Clock sessionStarted={sessionStarted} /> : ""}
               </>
             )}
-            <div className=" flex justify-center mb-40 w-full ">
-              <button
-                className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
-                // @ts-ignore
+            {!hideElements && (
+              <div className=" flex justify-center mb-40 w-full "
                 onClick={
                   sessionStarted
                     ? resume
                       ? handleStop
                       : () => setResume(true)
                     : handleStart
-                }
-              >
-                {sessionStarted
-                  ? resume
-                    ? "Stop Session"
-                    : "Resume Session"
-                  : "Start Session"}{" "}
-              </button>
-            </div>
+                }>
+                <button
+                  className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
+                // @ts-ignore
+
+                >
+                  {sessionStarted
+                    ? resume
+                      ? "Stop Session"
+                      : "Resume Session"
+                    : "Start Session"}{" "}
+                </button>
+              </div>
+            )}
 
             {/* <Clock /> */}
 
