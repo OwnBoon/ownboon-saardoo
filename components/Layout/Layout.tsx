@@ -31,11 +31,6 @@ const Layout = ({
 }: Props) => {
   const [showsidebar, setShowsidebar] = useState(false);
 
-  const selectRandomBg = () => {
-    const bgImages = ["lofi_1.png", "lofi_2.png", "lofi_3.png", "bg-6.png"];
-    const random = 3;
-    return bgImages[random];
-  };
 
   return (
     <div
@@ -80,11 +75,17 @@ const Layout = ({
         <div
           className={`text-[#DDDDDD] ${
             text == "lofi" ? "overflow-hidden " : "overflow-y-scroll"
-          }  h-full   pt-24 pb-2  bg-cover  ${!showsidebar ? "" : ""}`}
-          style={{
-            backgroundImage: hasBg ? `url(lofi_1.png)` : "none",
-          }}
+          }  h-full   pt-24 pb-2    ${!showsidebar ? "" : ""}`}
         >
+          {hasBg && (
+            <div className="fixed top-0 left-0 w-full h-screen overflow-hidden">
+            <video autoPlay loop muted className="object-cover w-full h-full">
+              <source src="/lofi.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          )}
           {children}
         </div>
       </div>
