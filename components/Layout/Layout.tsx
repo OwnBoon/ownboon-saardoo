@@ -79,10 +79,10 @@ const Layout = ({
         />
         <div
           className={`text-[#DDDDDD] ${
-            text == "lofi" ? "overflow-y-hidden" : "overflow-y-scroll"
+            text == "lofi" ? "overflow-hidden " : "overflow-y-scroll"
           }  h-full   pt-24 pb-2  bg-cover  ${!showsidebar ? "" : ""}`}
           style={{
-            backgroundImage: hasBg ? `url(${selectRandomBg()})` : "none",
+            backgroundImage: hasBg ? `url(lofi_1.png)` : "none",
           }}
         >
           {children}

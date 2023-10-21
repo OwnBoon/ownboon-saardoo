@@ -36,10 +36,11 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
     <div
       onMouseEnter={() => setShowsidebar(true)}
       onMouseLeave={() => setShowsidebar(false)}
-      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${!showsidebar
-        ? "w-[60px] md:w-[80px] lg:w-[90px]"
-        : "w-[240px] bg-[#101010]"
-        }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
+      className={`h-screen transition-all hidden md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${
+        !showsidebar
+          ? "w-[60px] md:w-[80px] lg:w-[90px]"
+          : "w-[240px] bg-[#101010]"
+      }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
     >
       <div className="logo flex flex-col transition-all   gap-y-8">
         <div className="flex flex-row transition-all gap-4 items-center">
@@ -197,17 +198,28 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
           <div className="rounded-xl bg-[#101010] p-16">
             <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
               <div className="flex flex-col p-5 items-center justify-center">
-                <h1 className="text-[3vw] my-2  text-white text-center ">
-                  Feedback
+                <h1 className="text-[2vw] my-2  text-white text-center ">
+                  Your Feedback Matters!
                 </h1>
                 <div className="w-44 h-[0px] border border-neutral-400"></div>
-                <h2 className="text-[1vw] my-2  text-white text-center italic font-semibold">
-                  Join our discord server
-                </h2>
+                <div className="flex flex-row space-x-4 p-4 justify-between">
+                  <div className="flex flex-col">
+                  <iframe src="https://discord.com/widget?id=1100319628984598548&theme=dark" width="350" height="500" allowTransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                  </div>
+                  <div className="flex flex-col  ">
+                    <p className="md:text-[1.6vw] text-[2vw]">
+                      Join our discord community to get latest updates and
+                      announcements
+                    </p>
+                    <a
+                      href="https://discord.gg/Aje9uqBMvr"
+                      className="py-2 px-4 text-center  bg-[#7289da] text-black rounded-3xl text-[2vw] md:text-[0.9vw]"
+                    >
+                      Join Discord
+                    </a>
+                  </div>
+                </div>
               </div>
-              <a href="https://discord.gg/Aje9uqBMvr" className="py-2 px-4 my-2 bg-[#7289da] text-black rounded-3xl text-[0.9vw]">
-                Open Discord
-              </a>
             </div>
           </div>
         </Dialog>
@@ -216,7 +228,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
           <div className="rounded-xl bg-[#101010] p-16">
             <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
               <div className="flex flex-col p-5 items-center justify-center">
-                <h1 className="text-[3vw] my-2  text-white text-center ">
+                <h1 className="text-[2vw] my-2  text-white text-center ">
                   Empowering Buddies
                 </h1>
                 <div className="w-44 h-[0px] border border-neutral-400"></div>
