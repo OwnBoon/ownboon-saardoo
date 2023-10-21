@@ -16,6 +16,12 @@ import { fetchUsers } from "../utils/fetchUsers";
 import { fetchFromAPI } from "../utils/fetchVideo";
 import ReactPlayer from "react-player";
 import {
+  
+  
+  FaShareAlt,
+  FaThumbsUp,
+} from "react-icons/fa";
+import {
   Button,
   Container,
   Grid,
@@ -244,7 +250,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         goals={goals}
         border="gray-500"
         children={
-          <div className="container overflow-y-hidden mx-auto col-span-11  w-full py-8">
+          <div className="container overflow-y-hidden mx-auto col-span-11  w-full py-8 pl-5">
             <div className="grid grid-cols-1 w-full lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
               {dropdown && (
                 <div
@@ -343,7 +349,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                   <div className="flex justify-between overflow-x-scroll  w-full lg:overflow-hidden scrollbar-thin  mt-4 pt-5 pb-5 fixed  gap-10 items-center bg-[#121212] ">
                     <div className="flex justify-between    items-center gap-10">
                       <button
-                        onMouseLeave={() => setDropdown(false)}
+                        // onMouseLeave={() => setDropdown(false)}
                         onClick={() => setDropdown(true)}
                         className={`bg-white bg-opacity-25 hover:text-gray-400  flex items-center justify-center w-32 h-8 rounded-[5px] border border-white border-opacity-50 
                         
@@ -361,10 +367,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           setShowAll(true);
                         }}
                         className={`bg-white bg-opacity-25  flex items-center w-20 h-8 justify-center  rounded-[5px] border border-white border-opacity-50
-                          hover:text-gray-400 ${
-                            showAll
-                              ? "bg-zinc-600 bg-opacity-10 rounded-[5px] border !border-zinc-700 border-opacity-50"
-                              : "bg-white bg-opacity-25"
+                          hover:text-gray-400 ${showAll
+                            ? "bg-zinc-600 bg-opacity-10 rounded-[5px] border !border-zinc-700 border-opacity-50"
+                            : "bg-white bg-opacity-25"
                           }`}
                       >
                         <CheckBadgeIcon className="w-5 h-5 mr-2" />
@@ -377,11 +382,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           setShowBlog(true);
                           setShowAll(false);
                         }}
-                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${
-                          showBlog
+                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${showBlog
                             ? "!bg-white !bg-opacity-25 !border-white !border-opacity-50"
                             : ""
-                        } hover:text-gray-400 `}
+                          } hover:text-gray-400 `}
                       >
                         {showBlog ? (
                           <DocumentIcon2 className="mr-2 h-4 w-4" />
@@ -397,11 +401,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           setShowAll(false);
                           setShowPost(false);
                         }}
-                        className={`cursor-pointer  flex items-center  w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50${
-                          showVideo
+                        className={`cursor-pointer   flex items-center  w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50${showVideo
                             ? "!bg-white !bg-opacity-50 !border-white !border-opacity-50"
                             : ""
-                        } hover:text-gray-400`}
+                          } hover:text-gray-400`}
                       >
                         <VideoCameraIcon className="mr-2 h-4 w-4" />
                         Videos
@@ -413,11 +416,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                           setShowAll(false);
                           setShowBlog(false);
                         }}
-                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${
-                          showpost && !showVideo
+                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${showpost && !showVideo
                             ? "!bg-white !bg-opacity-25 !border-white !border-opacity-50"
                             : ""
-                        } hover:text-gray-400 `}
+                          } hover:text-gray-400 `}
                       >
                         <FaEdit className="mr-2" />
                         Posts
@@ -451,10 +453,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                 <div className="lg:col-span-8 sm:col-span-12 transition-all w-auto duration-500 flex flex-col-reverse mt-12 col-span-1 z-5">
                   {showVideo ? (
                     <>
-                      <div className="justify-center flex flex-col items-center gap-5 ">
+                      <div className="justify-center flex flex-col items-center gap-5 w-100">
                         {/* @ts-ignore */}
-                        {videos.map((video: Video) => (
-                          <div className="bg-black/5 border-b p-5 px-10 rounded-lg">
+                        {videos.map((video: Video, index: any) => (
+                          <div className="bg-black/5 border-b p-5 px-10 rounded-lg videocontainer" key={index} >
                             {/* <Link
                           href={
                             video.id.videoId
@@ -472,7 +474,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                             >
                               <div className="space-y-2 flex flex-col items-start  ">
                                 <img
-                                  className=" rounded-xl"
+                                  className=" rounded-xl w-100 rounded-lg videowidth"
                                   src={
                                     video.snippet.thumbnails.high.url ||
                                     "https://images5.alphacoders.com/587/thumbbig-587597.webp"
@@ -482,6 +484,19 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                                   <h1 className="font-semibold">
                                     {video.snippet?.title.slice(0, 60)}
                                   </h1>
+                                  <div className="flex items-center space-x-4">
+                                    <div className="flex items-center space-x-2">
+                                      <div className="text-gray-500 hover:text-pink-500 cursor-pointer">
+                                        <FaThumbsUp size={22} />
+                                      </div>
+                                    </div>
+                                  
+                                    <div className="flex items-center space-x-2">
+                                      <div className="text-gray-500 hover:text-blue-500 cursor-pointer">
+                                        <FaShareAlt size={22} />
+                                      </div>
+                                    </div>
+                                  </div>
                                   {/* </Link> */}
                                 </div>
                               </div>
@@ -521,41 +536,41 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                             //@ts-ignore
                             filteredPosts?.length > 0
                               ? filteredPosts!.map((post, index) => (
-                                  <div className="z-10">
-                                    <PostCard
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                    {/* @ts-ignore */}
+                                <div className="z-10">
+                                  <PostCard
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                  {/* @ts-ignore */}
 
-                                    <PostCardMobile
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                  </div>
-                                ))
+                                  <PostCardMobile
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                </div>
+                              ))
                               : posts!.map((post, index) => (
-                                  <div className="z-10">
-                                    <PostCard
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                    {/* @ts-ignore */}
+                                <div className="z-10">
+                                  <PostCard
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                  {/* @ts-ignore */}
 
-                                    <PostCardMobile
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                  </div>
-                                ))
+                                  <PostCardMobile
+                                    match={match}
+                                    users={users}
+                                    key={index}
+                                    post={post}
+                                  />
+                                </div>
+                              ))
                           }
                         </>
                       )}
@@ -608,39 +623,39 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                                 //@ts-ignore
                                 filteredPosts?.length > 0
                                   ? filteredPosts!.map((post, index) => (
-                                      <div className="z-10">
-                                        <PostCard
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                        {/* @ts-ignore */}
-                                        <PostCardMobile
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                      </div>
-                                    ))
+                                    <div className="z-10">
+                                      <PostCard
+                                        match={match}
+                                        users={users}
+                                        key={index}
+                                        post={post}
+                                      />
+                                      {/* @ts-ignore */}
+                                      <PostCardMobile
+                                        match={match}
+                                        users={users}
+                                        key={index}
+                                        post={post}
+                                      />
+                                    </div>
+                                  ))
                                   : posts!.map((post, index) => (
-                                      <div className="z-10">
-                                        <PostCard
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                        {/* @ts-ignore */}
-                                        <PostCardMobile
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                      </div>
-                                    ))
+                                    <div className="z-10">
+                                      <PostCard
+                                        match={match}
+                                        users={users}
+                                        key={index}
+                                        post={post}
+                                      />
+                                      {/* @ts-ignore */}
+                                      <PostCardMobile
+                                        match={match}
+                                        users={users}
+                                        key={index}
+                                        post={post}
+                                      />
+                                    </div>
+                                  ))
                               }
                             </div>
                           ) : (
@@ -671,10 +686,11 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                   )}
                 </div>
               </div>
-              <div className="col-span-3 hidden w-full  h-fit lg:inline z-50 text-white mt-14">
+              <div className="col-span-3 hidden w-full  h-fit lg:inline z-50 text-white mt-14 ">
                 <div className=" bg-zinc-600 p-3 py-5 mr-3 flex h-fit flex-col items-center gap-5 justify-center w-full bg-opacity-20 rounded-[10px] border border-zinc-700 border-opacity-50">
                   <h1>Top Interests</h1>
                   <div className="flex flex-col gap-3 items-start">
+
                     {
                       //@ts-ignore
                       filteredPosts?.length > 0
@@ -702,7 +718,8 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                               <h1>{blogs.author}</h1>
                             </Link>
                           ))
-                    }
+
+                        }
                   </div>
                 </div>
               </div>

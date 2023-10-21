@@ -30,7 +30,7 @@ interface Props {
 
 const FeedCard = ({ feeds }: Props) => {
   const [comments, setComments] = useState<FeedComment[]>([]);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { isLoaded, isSignedIn, user } = useUser();
   const refreshComments = async () => {
@@ -41,6 +41,7 @@ const FeedCard = ({ feeds }: Props) => {
   };
 
   useEffect(() => {
+    console.log(feeds)
     refreshComments();
   }, []);
 
@@ -66,20 +67,65 @@ const FeedCard = ({ feeds }: Props) => {
     refreshComments();
     setLoading(false);
   };
+  // const like = async (id: string) => {
+  //   const liked = post.liked!.map((follows) => ({
+  //     _key: random2,
+  //     _ref: follows._id,
+  //     _type: "reference",
+  //   }));
+  //   const mutation = {
+  //     _id: id,
+  //     like: post.like! + 1,
+  //     liked: [
+  //       ...liked, // previously liked
+  //       {
+  //         _key: random,
+  //         _ref: match[0]._id,
+  //         _type: "reference",
+  //       },
+  //     ],
+  //   };
+  //   const result = await fetch(`/api/setBlog`, {
+  //     body: JSON.stringify(mutation),
+  //     method: "POST",
+  //   });
+
+  //   const json = result.json();
+  //   // console.log(json);
+  //   router.replace(router.pathname);
+  //   return json;
+  // };
   return (
     <div className="lg:w-[60vw] grid bg-zinc-600 bg-opacity-10 rounded-[10px] border border-zinc-700 border-opacity-50 h-full   gap-2 p-0 lg:p-4 pb-12 mb-8 grid-cols-1 md:grid-cols-6">
       <div className=" col-span-4  rounded-lg ">
         <div className=" overflow-hidden  ">
-          {feeds.image ? (
+          {feeds.video ? (
             <img
               src={feeds.image}
-              className=" h-96 w-96  object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+              className=" h-96 w-96  object-cover  shadow-lg rounded-t-lg lg:rounded-lg" style={{ width: "100%" }}
             />
           ) : (
             <>
               <ReactPlayer height={500} controls url={feeds.video} />
             </>
           )}
+        </div>
+        <div className="space-y-2 flex flex-col items-start pt-4 ">
+          <div className="pl-3">
+            <h1 className="font-semibold">
+              {feeds.title}
+            </h1>
+          </div>
+
+        </div>
+
+        <div className="flex justify-center mt-10 h-full">
+          <Link
+            href={`javascript:void(0)`}
+            className="flex h-fit w-full  cursor-pointer hover:backdrop-blur-md mt-4 px-4 py-3 justify-center items-center bg-zinc-700 bg-opacity-50 rounded-[5px] border border-zinc-700"
+          >
+            <h1>Read Article</h1>
+          </Link>
         </div>
       </div>
       <div className="col-span-2 flex flex-col  w-full h-full   px-2 py-1 overflow-hidden">
@@ -108,8 +154,9 @@ const FeedCard = ({ feeds }: Props) => {
             </div>
           </div>
 
-          <div className="space-y-4 mt-3 overflow-y-scroll h-80 scrollbar-none  shadow-lg rounded-lg p-2 mb-1 border-b-2 border-t-2 border-white/10">
-            
+
+          <div className="space-y-4 mt-3 overflow-y-scroll h-80 scrollbar-none  shadow-lg rounded-lg p-2 border-b-2 border-t-2 border-white/10">
+
             {loading && <div aria-label="Loading..." role="status" className="ml-[6vw] md:ml-[8vw] lg:ml-[6vw]">
               <svg
                 className="animate-spin w-6 h-6 fill-blue-500"
@@ -140,7 +187,7 @@ const FeedCard = ({ feeds }: Props) => {
               </Grid>
             ))}
           </div>
-          <div className="p-2 outline-none border-none w-full">
+          <div className="p-1 outline-none border-none w-full">
             <div className="flex justify-between items-center p-2 pb-0 mt-1">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">

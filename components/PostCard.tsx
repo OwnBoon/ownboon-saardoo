@@ -67,6 +67,7 @@ const PostCard = ({ post, match, users }: Props) => {
   const random2 = generateString(9);
 
   useEffect(() => {
+    console.log(post)
     refreshComments();
   }, []);
 
@@ -268,7 +269,7 @@ const PostCard = ({ post, match, users }: Props) => {
                     (users) =>
                       users.email == user?.emailAddresses[0].emailAddress
                   ) ? (
-                    <div className="text-pink-500 hover:text-pink-500 transition-all duration-100 flex flex-col justify-center items-center space-y-2 cursor-pointer">
+                    <div   onClick={() => like(post._id!)} className="text-pink-500 hover:text-pink-500 transition-all duration-100 flex flex-col justify-center items-center space-y-2 cursor-pointer">
                       <FaThumbsUp size={22} />
                       <h1 className="text-xs font-sans">{post.like || 0}</h1>
                     </div>
