@@ -211,55 +211,77 @@ function Home({ users, goals }: Props) {
       border="gray-500"
       goals={goals}
       children={
-        <div className="flex w-full bg-[#212121] h-screen overflow-hidden ">
-          <div className="container mx-auto col-span-9  py-8 mt ">
-            <div
-              className="flex flex-col bg-[#212121] h-full overflow-y-scroll  mt-5 p-10
-          "
-              // onSubmit={handleSubmit}
-            >
-              <div className="flex flex-col bg-[#212121]  mx-auto items-center w-full justify-center">
-                <div className="px-3 border-l-white/20 border-l-2 ">
-                  <input
-                    className=" text-4xl w-fullc bg-transparent  font-light placeholder:text-neutral-400 outline-none  h-full"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                </div>
-                <div className=" mr-44 mt-5 ">
-                  <input
-                    className="  text font-light bg-transparent  placeholder:text-neutral-400 outline-none"
-                    placeholder="Write up to 4 tags"
-                    value={category}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                  />
-                  {category && (
-                    <div className="space-y-2 mt-1 px-5">
-                      {filteredCategories.map((item) => (
-                        <h1
-                          key={item.name}
-                          className="cursor-pointer"
-                          onClick={() => handleSuggestionClick(item)}
-                        >
-                          {item.name}
-                        </h1>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="mt-5 mr-96 md:mr-96 flex justify-center w-full">
-                  <video
+        <div className=" ">
+        <div className="container mx-auto col-span-9  py-8 mt ">
+          {/* <Header /> */}
+          <div className="flex px-5  justify-between items-center">
+            {/* <div className="flex gap-4 font-bold text-lg">
+          <UserButton />
+          <p>Hi {user?.firstName || user?.username}, welcome Back!</p>
+        </div> */}
+            <div className="font-semibold text-xl">Publish your Post</div>
+            <div className="items-center flex gap-5">
+              {/* <p className="text-sm font-semibold text-black/50">
+            {formattedDate}
+          </p>
+          <div className="bg-black/5 p-2 text-black/80 cursor-pointer hover:text-black hover:bg-black/30 transition-all duration-150  rounded-lg">
+            <p>Add New Goal</p>
+          </div> */}
+              <div className="flex gap-5 items-center ">
+                <button
+                  disabled={title ? false : true}
+                  onClick={handleSubmit}
+                  className="bg-[#494949]/40 active:scale-105 transition-all duration-100  px-4 py-2  rounded-md text-white text-sm
+             cursor-pointer"
+                >
+                  <p>Publish</p>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col   mx-auto items-center w-full justify-center">
+                <div className="flex flex-col items-start  space-y-12 justify-center">
+                   <div className="mt-5 flex flex-row ">
+                   {/* <video
                     className={imageSrc ? "inline rounded-lg" : "hidden"}
                     src={imageSrc}
-                  />
+                  /> */}
                   <img
                     className={
-                      imageSrc ? "inline h-56 w-56 rounded-lg" : "hidden"
+                      imageSrc ? "inline h-40 w-40 rounded-lg" : "hidden"
                     }
                     src={imageSrc}
                   />
                 </div>
+
+                <div className="py-3 w-full border-b-2 border-gray-400 ">
+                  <input
+                    className=" text-4xl w-full  font-light bg-[#212121]  placeholder:text-gray-400 outline-none  h-full"
+                    placeholder="Enter Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                <div className="py-3 w-full border-b-2 border-gray-400">
+                  <input
+                    className="  text-xl font-sans font-light bg-[#212121] w-[350px]  placeholder:text-gray-400 outline-none"
+                    placeholder="Add Hashtags"
+                    value={category}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                  />
+                  <div className="space-y-3 text-xl  mt-2 p-2">
+                    {filteredCategories.map((item) => (
+                      <h1
+                        key={item.name}
+                        className="cursor-pointer"
+                        onClick={() => handleSuggestionClick(item)}
+                      >
+                        {item.name}
+                      </h1>
+                    ))}
+                  </div>
+                </div>
+                
                 {category.length > 12 && (
                   <div className="flex items-center  mr-9 px-3 w-96 border-l-2 border-l-white/20 mt-5">
                     <input
