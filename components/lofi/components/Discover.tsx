@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { setActiveSong, setIsPlaying } from "../redux/features/playerSlice";
 import Error from "./../components/Error";
-import { selectGenreListId } from "../../../redux/features/playerSlice";
+import { selectGenreListId, setAllSongs } from "../../../redux/features/playerSlice";
 import { useGetSongsByGenreQuery } from "../../../redux/services/shazamCore";
 import { genres } from "../../../assets/constants";
 import Loader from "./../components/Loader";
@@ -13,23 +13,31 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const Discover = () => {
   const dispatch = useDispatch();
-  const { activeSong, isPlaying } = useSelector((state: any) => state.player);
+  const { activeSong, isPlaying, currentSongs } = useSelector((state: any) => state.player);
   const { genreListId } = useSelector((state: any) => state.player);
   const [songClosed, setSongClosed] = useState(true);
-  // const { isPlaying } = useSelector((state: any) => state.player);
+  // const { currentSongs } = useSelector((state: any) => state.player.currentSongs);
+
+  const [loading, setLoading] = useState(true)
 
   const { data, isFetching, error } = useGetSongsByGenreQuery(
     genreListId || "314028736"
   );
 
+  useEffect(() => {
+    const _data = data?.tracks;
+    const filteredSongs = _data?.filter(
+      (song: any) => song.hub?.actions && song.hub?.actions?.length === 2
+    );
+    if (filteredSongs && loading) {
+      dispatch(setAllSongs({ songs: filteredSongs }))
+      setLoading(false)
+    }
+  }, [data])
+
   if (isFetching) return <Loader title="Loading songs..." />;
 
   if (error) return <Error />;
-
-  const _data = data.tracks;
-  const filteredSongs = _data?.filter(
-    (song: any) => song.hub?.actions && song.hub?.actions?.length === 2
-  );
 
   const play = "opacity-100 transition-all duration-2000 btn ease-in-out mr-4";
 
@@ -53,11 +61,10 @@ const Discover = () => {
 
       <Draggable cancel=".btn">
         <div
-          className={`flex left-20 ${
-            songClosed
-              ? "md:h-1/2 h-full pb-2 md:pb-0 transition-all duration-100"
-              : "md:w-fit h-[28%]  md:h-32 transition-all duration-100"
-          }   sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px] scrollbar-none  overflow-x-hidden justify-center gap-8 `}
+          className={`flex left-20 ${songClosed
+            ? "md:h-1/2 h-full pb-2 md:pb-0 transition-all duration-100"
+            : "md:w-fit h-[28%]  md:h-32 transition-all duration-100"
+            }   sm:justify-start w-fit bg-white bg-opacity-30  rounded-[5px] border border-white border-opacity-50 backdrop-blur-[30px] scrollbar-none  overflow-x-hidden justify-center gap-8 `}
         >
           <div className="flex sm:btn h-fit w-fit scrollbar-none scrollbar flex-col items-start overflow-x-hidden">
             <div className="px-4 py-3 cursor-pointer w-full ">
@@ -84,14 +91,14 @@ const Discover = () => {
                 <div className="flex py-3 gap-5">
                   <img
                     className="w-[50px] h-[50px] rounded-lg"
-                    src={activeSong.images?.coverart}
+                    src={activeSong?.images?.coverart}
                   />
                   <div>
                     <h1 className="text-white  text-base  font-[400] font-sans">
-                      {activeSong.title}
+                      {activeSong?.title}
                     </h1>
                     <h2 className="text-neutral-200 text-sm font-[400] font-sans">
-                      {activeSong.subtitle}
+                      {activeSong?.subtitle}
                     </h2>
                   </div>
                 </div>
@@ -117,7 +124,7 @@ const Discover = () => {
                   : " opacity-0 transition-all duration-150"
               }
             >
-              {filteredSongs?.map((song: any, i: any) => (
+              {currentSongs?.map((song: any, i: any) => (
                 <div
                   className={play}
                   key={i}
