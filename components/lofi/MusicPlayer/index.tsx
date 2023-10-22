@@ -77,7 +77,8 @@ const MusicPlayer = ({ sessionStarted }) => {
       /> */}
 
         <div className="flex-1 flex flex-col items-center justify-center">
-          <Controls
+
+          {/* <Controls
             isPlaying={isPlaying}
             isActive={isActive}
             repeat={repeat}
@@ -88,7 +89,7 @@ const MusicPlayer = ({ sessionStarted }) => {
             handlePlayPause={handlePlayPause}
             handlePrevSong={handlePrevSong}
             handleNextSong={handleNextSong}
-          />
+          /> */}
           {/* <Seekbar
           value={appTime}
           min="0"
@@ -97,7 +98,7 @@ const MusicPlayer = ({ sessionStarted }) => {
           setSeekTime={setSeekTime}
           appTime={appTime}
         /> */}
-          <Player
+          {/* <Player
             activeSong={activeSong}
             volume={volume}
             isPlaying={isPlaying}
@@ -107,7 +108,7 @@ const MusicPlayer = ({ sessionStarted }) => {
             onEnded={handleNextSong}
             onTimeUpdate={(event: any) => setAppTime(event.target.currentTime)}
             onLoadedData={(event: any) => setDuration(event.target.duration)}
-          />
+          /> */}
         </div>
         {/* <VolumeBar
         value={volume}
