@@ -15,6 +15,7 @@ interface Props {
   text: string;
   border: string;
   hasBg: Boolean;
+  bgBlur?: boolean;
   setLoading?: (value: boolean) => void;
 }
 
@@ -26,6 +27,7 @@ const Layout = ({
   border,
   hasBg,
   users,
+  bgBlur,
   goals,
   setLoading,
 }: Props) => {
@@ -73,18 +75,17 @@ const Layout = ({
           border={border}
         />
         <div
-          className={`text-[#DDDDDD] ${
-            text == "lofi" ? "overflow-hidden " : "overflow-y-scroll"
-          }  h-full   pt-24 pb-2    ${!showsidebar ? "" : ""}`}
+          className={`text-[#DDDDDD] ${text == "lofi" ? "overflow-hidden " : "overflow-y-scroll"
+            }  h-full   pt-24 pb-2    ${!showsidebar ? "" : ""}`}
         >
           {hasBg && (
-            <div className="fixed top-0 left-0 w-full h-screen overflow-hidden">
-            <video autoPlay loop muted className="object-cover w-full h-full">
-              <source src="/lofi.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          
+            <div className={`fixed ${bgBlur && 'blur-sm'} transition ease-in duration-200 top-0 left-0 w-full h-screen overflow-hidden`}>
+              <video autoPlay loop muted className="object-cover w-full h-full">
+                <source src="/lofi.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
           )}
           {children}
         </div>

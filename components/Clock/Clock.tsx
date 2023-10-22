@@ -68,7 +68,7 @@ const Clock = ({ sessionStarted }: Props) => {
           <div className="text-lg ">{dayOfWeek}</div>
         </div>
       </div>
-      {sessionStarted && <div className="spinner"></div>}
+      {/* {sessionStarted && <div className="spinner"></div>} */}
     </div>
   );
 };
