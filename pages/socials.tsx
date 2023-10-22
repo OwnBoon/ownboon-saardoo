@@ -173,6 +173,8 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
     refreshComments();
   }, []);
   const [showVideo, setShowVideo] = useState(false);
+  const [create,SetCreate] = useState(false);
+
   const [dropdown, setDropdown] = useState(false);
   const [showdropfeed, setshowdropfeed] = useState(false);
   const [videos, setVideos] = useState<Video[]>();
@@ -233,6 +235,18 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
       </div>
     );
   }
+
+
+  const handleCreate = ()=>{
+      SetCreate(!create);
+  }
+
+  const categories = ["Computer", "Science", "Arts", "AI"];
+
+  const categoriesArray = match[0].categories?.split(",");
+
+  const res = categories.filter((item) => !categoriesArray?.includes(item));
+
 
   if (isSignedIn) {
     return (
@@ -674,37 +688,21 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
               <div className="col-span-3 hidden w-full  h-fit lg:inline z-50 text-white mt-14">
                 <div className=" bg-zinc-600 p-3 py-5 mr-3 flex h-fit flex-col items-center gap-5 justify-center w-full bg-opacity-20 rounded-[10px] border border-zinc-700 border-opacity-50">
                   <h1>Top Interests</h1>
-                  <div className="flex flex-col gap-3 items-start">
-                    {
-                      //@ts-ignore
-                      filteredPosts?.length > 0
-                        ? filteredPosts?.map((blogs) => (
-                            <Link
-                              href={`/user/${blogs.author}`}
-                              className="gap-3 flex items-center"
-                            >
-                              <img
-                                className="h-10 w-10 rounded-full object-cover"
-                                src={blogs.profileImage}
-                              />
-                              <h1>{blogs.author}</h1>
-                            </Link>
-                          ))
-                        : posts?.map((blogs) => (
-                            <Link
-                              href={`/user/${blogs.author}`}
-                              className="gap-3 flex items-center"
-                            >
-                              <img
-                                className="h-10 w-10 rounded-full object-cover"
-                                src={blogs.profileImage}
-                              />
-                              <h1>{blogs.author}</h1>
-                            </Link>
-                          ))
-                    }
+
+                  <div className="flex flex-col gap-10 items-center">
+                    {res.map((r)=>{return <h1>{r}</h1>})}
                   </div>
                 </div>
+              </div>
+
+              <div className=" w-30 h-30 flex-col fixed bottom-10 right-10 flex justify-center ">
+
+                {create && <div className="bottom-10 right-28 mb-10 flex gap-2 flex-col ">
+                <div className="bg-white bg-opacity-25 rounded-md w-40 flex justify-center hover:text-gray-400"><Link href="/publish-blog">Create a blog</Link></div>
+                <div className="bg-white bg-opacity-25 rounded-md w-40 flex justify-center hover:text-gray-400"><Link href="/publishpost">Create a post</Link></div>
+                </div>}
+                
+                <button className="bg-white bg-opacity-25 h-9 rounded-[5px] flex justify-center hover:text-gray-400 border border-white" onClick={handleCreate}>create +</button>
               </div>
             </div>
           </div>
