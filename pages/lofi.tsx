@@ -278,7 +278,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               <div className="relative hidden md:inline-flex  items-center justify-center md:top-0">
 
                 <div
-                  className={`w-[212px] ${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-150 duration-300 h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
+                  className={`w-[212px] ${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-[2000] duration-300 h-[212px] z-20 bg-white bg-opacity-30 backdrop-blur-3xl border-opacity-50 border-white border text-white rounded-full flex items-center justify-center gap-5 ${poppins.className}`}
                 >
                   {resume ? (
                     <div className="absolute z-50">
@@ -301,7 +301,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                   )}
                 </div>
 
-                {sessionStarted && <div className={`spinner ${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-150 duration-300`}></div>}
+                {sessionStarted && <div className={`spinner ${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-[2000] duration-300`}></div>}
               </div>
             ) : (
               <>
@@ -315,7 +315,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               </>
             )}
 
-            <div className={`${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-150 duration-300 flex justify-center mb-40 w-full`}
+            <div className={`${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-[1000] duration-300 flex justify-center mb-40 w-full`}
               onClick={
                 sessionStarted
                   && !resume
@@ -342,7 +342,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
               <div
                 className={
                   showTodo
-                    ? "top-36 right-10 absolute inline transition-opacity   opacity-100 duration-150 "
+                    ? "top-36 right-10 absolute inline transition-opacity opacity-100 duration-150 "
                     : "top-36 right-10 absolute opacity-0 "
                 }
               >
