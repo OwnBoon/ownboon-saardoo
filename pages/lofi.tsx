@@ -254,6 +254,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
     <Layout
       hasBg={true}
       bgColor={"#121212"}
+      bgBlur={!sessionStarted || !resume}
       icon="workspace.svg"
       goals={goals}
       text="lofi"
