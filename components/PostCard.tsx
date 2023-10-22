@@ -67,7 +67,7 @@ const PostCard = ({ post, match, users }: Props) => {
   const random2 = generateString(9);
 
   useEffect(() => {
-    console.log(post)
+    
     refreshComments();
   }, []);
 

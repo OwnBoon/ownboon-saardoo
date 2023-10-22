@@ -22,6 +22,7 @@ import {
   FaInfoCircle,
   FaShareAlt,
   FaThumbsUp,
+  FaRegLaughBeam
 } from "react-icons/fa";
 
 interface Props {
@@ -41,7 +42,7 @@ const FeedCard = ({ feeds }: Props) => {
   };
 
   useEffect(() => {
-    console.log(feeds)
+    
     refreshComments();
   }, []);
 
@@ -112,10 +113,8 @@ const FeedCard = ({ feeds }: Props) => {
               </>
             )}
             <div className="space-y-5 pl-2 pt-4">
-              <h1 className="text-neutral-200 text-base font-semibold">
-                {feeds.title}
-              </h1>
-
+              <p className="feedcardtitle">Lorem ipsum dolor sit </p>
+              <p className="feedcardbody">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Molestie nunc non blandit massa enim nec dui nunc. Scelerisque varius morbi enim nunc faucibus a pellentesque sit. Habitant morbi tristique senectbibendum</p>
             </div>
           </div>
 
@@ -125,7 +124,7 @@ const FeedCard = ({ feeds }: Props) => {
             href={`javascript:void(0)`}
             className="flex h-fit w-full  cursor-pointer hover:backdrop-blur-md mt-4 px-4 py-3 justify-center items-center bg-zinc-700 bg-opacity-50 rounded-[5px] border border-zinc-700"
           >
-            <h1>Read Article</h1>
+            <h1>Read Full Article</h1>
           </Link>
         </div>
       </div>
@@ -143,6 +142,8 @@ const FeedCard = ({ feeds }: Props) => {
               {feeds.author}
             </p>
           </Link>
+
+          <button className="feedbutton">Follow</button>
 
 
 
@@ -189,8 +190,8 @@ const FeedCard = ({ feeds }: Props) => {
             </Grid>
           ))}
         </div>
-        <div className="p-2 outline-none border-none w-full">
-          <div className="flex justify-between items-center p-2 pb-0 mt-1">
+        <div className="p-1 pt-2 pb-2 outline-none border-none w-full">
+          <div className="flex justify-between items-center  pb-1 ">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <div className="text-gray-500 hover:text-pink-500 cursor-pointer">
@@ -214,15 +215,19 @@ const FeedCard = ({ feeds }: Props) => {
           </div>
 
           <div className=" flex justify-center gap-1 items-center w-full mt-0 py-3 px-0 mx-1">
+            
             <div className="w-full md:w-[50vw] lg:w-[60vw] flex justify-center bg-zinc-700  h-fit py-2 bg-opacity-20 rounded-[5px] border border-zinc-700 border-opacity-50 items-center">
+            <div className="text-gray-500 hover:text-pink-500 cursor-pointer md:ml-2">
+              <FaRegLaughBeam size={22} />
+            </div>
               <input
                 placeholder="Write your comment.."
                 value={input}
                 // aria-placeholder="looks good"
                 onChange={(e) => setInput(e.target.value)}
-                className="bg-transparent focus:outline-none ml-2 md:ml-6 lg:px-0 px-2 focus:border-white/0 focus:ring-0 text-neutral-200 "
+                className="feedcardinput bg-transparent focus:outline-none  ml-2  focus:border-white/0 focus:ring-0 text-neutral-200 "
               />
-              <div className="rotate-45 cursor-pointer text-neutral-300 md:mr-10">
+              <div className="rotate-45 cursor-pointer text-neutral-300 md:mr-2">
                 <SendIcon onClick={() => handleSubmit(feeds._id!)} />
               </div>
             </div>
