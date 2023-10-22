@@ -17,8 +17,7 @@ import { useRouter } from "next/router";
 import Router from "next/router";
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css";
-import MusicPlayer from "../components/lofi/MusicPlayer";
-import MusicPlayerContainer from "../components/lofi/MusicPlayerContainer";
+import SpotifyEmbed from "../components/lofi/Spotify/SpotifyEmbed";
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
@@ -61,7 +60,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
               <Component setLoading={setLoading} {...pageProps} />
               <Analytics />
 
-              <MusicPlayerContainer />
+
+              <SpotifyEmbed />
             </div>
           )}
         </ClerkProvider>

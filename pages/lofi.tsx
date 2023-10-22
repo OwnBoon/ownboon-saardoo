@@ -263,7 +263,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
             {/* {hideElements ? 'Mouse stopped moving' : 'Mouse is moving'} */}
             {sessionStarted && (
               <>
-                <Discover />
+                {/* <Discover /> */}
                 {seconds > 0 && (
                   <div className="md:absolute hidden md:inline-flex md:right-16 md:top-[15vh] items-center justify-end">
                     <Clock sessionStarted={sessionStarted} />
@@ -332,6 +332,8 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                     : "Resume Session"
                   : "Start Session"}{" "}
               </button>
+              {/* <SpotifyEmbed /> */}
+
             </div>
 
             {/* <Clock /> */}
