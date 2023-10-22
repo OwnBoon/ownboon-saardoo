@@ -367,6 +367,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     }
   }, [showPromptModal]);
   const handleNoteChange = async (id: string) => {
+    setEdittitle(false)
+    setEditcategory(false)
     const mutations = {
       _id: id,
       note: text,
@@ -427,7 +429,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
   const [showdeleteicon, setShowdeleteicon] = useState(false);
-
+  const [edittitle, setEdittitle] = useState(false)
+  const [editcategory, setEditcategory] = useState(false)
   return (
     <div className=" ">
       {!match[0].categories && !categoryslide ? (
@@ -595,17 +598,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         <div className="flex justify-center items-center">
                           <div className="flex flex-col gap-5">
                             <input
-                              className="bg-transparent text-[7vw] md:text-[2.5vw] text-white  border-b border-white/40 flex justify-center  outline-none "
+                              className={`bg-transparent text-[7vw] md:text-[2.5vw] text-white placeholder-white ${edittitle ? "border-b border-white/40":""}  flex justify-center  outline-none`}
                               placeholder={note.topic}
                               minLength={3}
-                              // onChange={(e) => setTopic(e.target.value)}
+                              // onChange={(e) => setEdittitle(true);...}
                             />
                             <input
-                              className="bg-transparent text-[6vw] md:text-[2vw] text-white border-b flex border-white/40 justify-center  outline-none "
-                              placeholder="Category"
+                              className={`bg-transparent text-[6vw] md:text-[2vw] text-white placeholder-white ${editcategory ? "border-b border-white/40":""}  flex justify-center  outline-none`}
+                              placeholder={note.category}
                               minLength={2}
                               // type="text"
-                              // onChange={(e) => setCategory(e.target.value)}
+                              // onChange={(e) => setEditcategory(true); ...}
                             />
                           </div>
                         </div>

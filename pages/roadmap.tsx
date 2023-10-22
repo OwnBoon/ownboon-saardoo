@@ -14,6 +14,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import RoadComp from "../components/Roadmap/roadmaps";
 import ReactTimeago from "react-timeago";
+import Image from "next/image";
 interface datatype {
   message: {
     choices: [
@@ -426,73 +427,67 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 )}
               </Modal.Footer>
             </Modal>
-            <div
-              className="first w-1/2  bg-[#191919]  inline-block md:inline-flex items-center justify-between p-4 rounded-md"
-              style={{
-                border: "1px solid #585858",
-              }}
-            >
-              <div className="flex text-sm md:text-base flex-col gap-1">
-                <span className="font-light font-sans md:font-medium">
-                  Self Improvement Roadmap
-                </span>
-                <span
-                  className="w-1/2"
-                  style={{
-                    borderBottom: "1px solid #585858",
-                  }}
-                ></span>
-              </div>
-              <button
-                className="bg-[#474747] md:py-2 font-sans md:px-3 mt-2 md:mt-0 text-sm px-2  md:font-semibold hover:bg-[#555555] transition-all duration-75 !hover:border-[#505050] font-extralight rounded-md"
+            <div className="flex flex-row justify-between   p-4 fixed  md:max-w-[95vw] w-full gap-5 items-center">
+              <div
+                className="first w-1/2  bg-[#191919]  inline-block md:inline-flex items-center justify-between p-4 rounded-md"
                 style={{
                   border: "1px solid #585858",
                 }}
-                onClick={() => handleOpen("self")}
               >
-                Generate Now
-              </button>
-            </div>
+                <div className="flex text-sm md:text-base flex-col gap-1">
+                  <span className="font-light font-sans md:font-medium">
+                    Self Improvement Roadmap
+                  </span>
+                  <span
+                    className="w-1/2"
+                    style={{
+                      borderBottom: "1px solid #585858",
+                    }}
+                  ></span>
+                </div>
+                <button
+                  className="bg-[#474747] md:py-2 font-sans md:px-3 mt-2 md:mt-0 text-sm px-2  md:font-semibold hover:bg-[#555555] transition-all duration-75 !hover:border-[#505050] font-extralight rounded-md"
+                  style={{
+                    border: "1px solid #585858",
+                  }}
+                  onClick={() => handleOpen("self")}
+                >
+                  Generate Now
+                </button>
+              </div>
 
-            <div
-              className="first w-1/2 bg-[#191919] inline-block md:inline-flex items-center justify-between p-4 rounded-md"
-              style={{
-                border: "1px solid #585858",
-              }}
-            >
-              <div className="flex flex-col text-sm md:text-base gap-1">
-                <span className="font-light font-sans md:font-medium">
-                  Skill Improvement Roadmap
-                </span>
-                <span
-                  className="w-1/2"
-                  style={{
-                    borderBottom: "1px solid #585858",
-                  }}
-                ></span>
-              </div>
-              <button
-                className="bg-[#474747] font-sans md:py-2 md:px-3 mt-2 md:mt-0 text-sm px-2 md:font-semibold hover:bg-[#555555] transition-all duration-75 !hover:border-[#505050] font-extralight rounded-md"
+              <div
+                className="first w-1/2 bg-[#191919] inline-block md:inline-flex items-center justify-between p-4 rounded-md"
                 style={{
                   border: "1px solid #585858",
                 }}
-                onClick={() => handleOpen("self")}
               >
-                Generate Now
-              </button>
+                <div className="flex flex-col text-sm md:text-base gap-1">
+                  <span className="font-light font-sans md:font-medium">
+                    Skill Improvement Roadmap
+                  </span>
+                  <span
+                    className="w-1/2"
+                    style={{
+                      borderBottom: "1px solid #585858",
+                    }}
+                  ></span>
+                </div>
+                <button
+                  className="bg-[#474747] font-sans md:py-2 md:px-3 mt-2 md:mt-0 text-sm px-2 md:font-semibold hover:bg-[#555555] transition-all duration-75 !hover:border-[#505050] font-extralight rounded-md"
+                  style={{
+                    border: "1px solid #585858",
+                  }}
+                  onClick={() => handleOpen("self")}
+                >
+                  Generate Now
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* road map data */}
-
-          {!userroadmap && (
-            <div className="flex items-center justify-center my-10 text-[#2CD3E1]">
-              <span>
-                Haven't yet generated any -- plz chose category and continue!
-              </span>
-            </div>
-          )}
-          {userroadmap && (
+         
+          {userroadmap ? (
             <div className="w-full min-h-screen pb-10 mt-8 flex flex-col gap-8">
               {userroadmap.map((roadmap: Roadmaps) => (
                 <div className="flex relative bg-gradient-to-r overflow-hidden from-[#585858] via-[#2b2b2b] md:via-[#121212]  to-[#121212] rounded-tl-[10px] rounded-bl-[10px]     rounded-lg   ">
@@ -569,7 +564,9 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
                 </div>
               ))}
             </div>
-          )}
+          ):<div className="flex flex-col w-full h-full">
+          <Image alt={"Create a roadmap to see it here!"} src={"/empty.svg"} width={400} height={400} />
+        </div>}
         </div>
       }
     />
