@@ -18,7 +18,7 @@ const SpotifyEmbed = (props: Props) => {
                     className={`absolute justify-center w-[300px] h-[400px] z-40 mr-[45vw] top-[100px] left-[100px] flex animate-slideup bg-gradient-to-br ${currentPage == '/lofi' && !hideElements ? 'block' : 'hidden'}`}>
                     {/* <MusicPlayer sessionStarted={sessionStarted} /> */}
                     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
-                    <iframe style={{ borderRadius: "12px" }} src="https://open.spotify.com/embed/artist/6XyY86QOPPrYVGvF9ch6wz?utm_source=generator" width="100%" height="352" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe style={{ borderRadius: "12px" }} src="https://open.spotify.com/embed/playlist/0vvXsWCC9xrXsKd4FyS8kM?si=f591446ddebe4669" width="100%" height="352" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             )}
         </div>
