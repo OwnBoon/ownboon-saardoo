@@ -217,6 +217,7 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
     // setSessionStarted(true);
     dispatch(playPause(true));
     dispatch(setSessionStartedState(true));
+    setResume(true)
     // @ts-ignore
 
     setStartTime(new Date());
@@ -316,9 +317,8 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
             <div className={`${!hideElements ? "opacity-100" : "opacity-0"} transition-opacity ease-in-out delay-150 duration-300 flex justify-center mb-40 w-full`}
               onClick={
                 sessionStarted
-                  ? resume
-                    ? handleStop
-                    : () => setResume(true)
+                  && !resume
+                  ? handleStop
                   : handleStart
               }>
               {(!sessionStarted || !resume) && <button
