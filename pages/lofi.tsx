@@ -321,17 +321,16 @@ const lofi = ({ users, goals, notes, setLoading }: Props) => {
                     : () => setResume(true)
                   : handleStart
               }>
-              <button
+              {(!sessionStarted || !resume) && <button
                 className="bg-[#D9D9D9]  inline-flex justify-center items-center w-fit   z-0  active:scale-105 transition-all  h-fit select-none duration-100 bg-opacity-10 border-opacity-50 backdrop-blur-lg border-white border text-white  rounded p-4 cursor-pointer"
               // @ts-ignore
 
               >
+
                 {sessionStarted
-                  ? resume
-                    ? "Stop Session"
-                    : "Resume Session"
-                  : "Start Session"}{" "}
-              </button>
+                  ? "Stop Session"
+                  : "Start Session"}
+              </button>}
               {/* <SpotifyEmbed /> */}
 
             </div>
