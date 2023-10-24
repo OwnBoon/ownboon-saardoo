@@ -38,6 +38,9 @@ export default async function handler(
     },
     body: JSON.stringify(info),
     method: "POST",
+    next: {
+      revalidate: 60
+    }
   });
   const json = await result.json();
 
