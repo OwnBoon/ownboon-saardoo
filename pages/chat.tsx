@@ -29,12 +29,12 @@ const categories = [
   {
     name: "Computer Science",
     value:
-      "sendbird_group_channel_196366427_00ef971c0f88f6dd06389fd19a2871818c2954c1",
+      "sendbird_group_channel_196293859_75bae9fbe0514d598c2cc8838911152d497d754b",
   },
   {
     name: "Nature",
     value:
-      "sendbird_group_channel_196293859_8f660b9965e1b1b7c4c2e329b853c9664f1edb9a",
+      "sendbird_group_channel_196464273_0781c5cb5b13fa67eb5bacc1f9d89e8c10b635be",
   },
   {
     name: "AI",

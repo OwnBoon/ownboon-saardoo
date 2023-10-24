@@ -2,7 +2,8 @@ import React, { useState } from "react";
 // import SendbirdApp from "@sendbird/uikit-react/App";
 import { User } from "../../typings";
 import "../../styles/chat.css";
-
+// @ts-ignore
+import App from "@sendbird/uikit-react/App";
 const APP_ID = "7FB154A3-C967-45D0-90B7-6A63E5F0E3EB";
 // @ts-ignore
 import SBConversation from "@sendbird/uikit-react/Channel";
@@ -30,45 +31,7 @@ const Chat = ({ user }: Props) => {
   return (
     <div className="md:h-[86vh] overflow-y-hidden hidden lg:inline-flex overflow-hidden ml-1 px-0 top-0 py-0 w-full scrollbar-none scrollbar">
       {" "}
-      <SBProvider
-        // ColorSet={myColorSet}
-        theme="dark"
-        appId={APP_ID}
-        // userId="ownboon"
-        userId={user[0].chatid}
-      >
-        <div className="flex justify-between h-full w-full">
-          <div className="w-fit">
-            <SBChannelList
-              allowProfileEdit
-              onChannelSelect={(channel: any) => {
-                if (channel && channel.url) {
-                  setCurrentChannelUrl(channel.url);
-                  setCategory(channel.url);
-                }
-              }}
-            />
-          </div>
-          <div className="w-full">
-            <SBConversation
-              channelUrl={currentChannelUrl}
-              onChatHeaderActionClick={() => {
-                setShowSettings(true);
-              }}
-            />
-          </div>
-          {showSettings && (
-            <div className="">
-              <SBChannelSettings
-                channelUrl={currentChannelUrl}
-                onCloseClick={() => {
-                  setShowSettings(false);
-                }}
-              />
-            </div>
-          )}
-        </div>
-      </SBProvider>
+      <App userId={user[0].chatid} appId={APP_ID} theme="dark" />
     </div>
   );
 };
