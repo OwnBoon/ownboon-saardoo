@@ -22,10 +22,16 @@ export default function Notification({
 
   useEffect(() => {
     if (match) {
-      if (Number(match[0].focus) < 250) {
+      if (Number(match[0].focus) <= 250) {
         if (Number(match[0].focus) > 200) {
           setBoonNoti("You are 50 points from level 5");
         }
+        if (Number(match[0].focus) == 250) {
+          setBoonNoti("Congratulations you are level 5!");
+        }
+      }
+      if (Number(match[0].focus) > 10240) {
+        setBoonNoti("you are saardoo");
       }
     }
   }, [match]);

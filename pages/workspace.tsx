@@ -107,6 +107,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   const [notesList, setNotesList] = useState<any[]>([]);
 
+  const notesez = notes.filter(
+    (notess) => notess.email == user?.emailAddresses[0].emailAddress
+  );
   useEffect(() => {
     setTodos(
       goals
@@ -117,9 +120,6 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             : 0
         )
     );
-    const notesez = notes.filter(
-      (notess) => notess.email == user?.emailAddresses[0].emailAddress
-    );
     setNote(notesez);
 
     if (user && !match[0]?.categories) {
@@ -129,7 +129,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     }
     setLoading ? setLoading(false) : "";
     setNotesList(notes);
-  }, []);
+  }, [notes]);
 
   const refreshGoals = async () => {
     const goals: Goals[] = await fetchGoals();
@@ -331,6 +331,9 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
       fetch(`/api/deleteNote`, {
         body: JSON.stringify(noteInfo),
         method: "POST",
+        next: {
+          revalidate: 60,
+        },
       }).then(async (res) => {
         const json = await res.json();
         router.replace(router.pathname);
@@ -367,8 +370,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
     }
   }, [showPromptModal]);
   const handleNoteChange = async (id: string) => {
-    setEdittitle(false)
-    setEditcategory(false)
+    setEdittitle(false);
+    setEditcategory(false);
     const mutations = {
       _id: id,
       note: text,
@@ -429,8 +432,8 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
 
   // const notes = [1,2,2,3,3,3,3,3,3,3,3,3]
   const [showdeleteicon, setShowdeleteicon] = useState(false);
-  const [edittitle, setEdittitle] = useState(false)
-  const [editcategory, setEditcategory] = useState(false)
+  const [edittitle, setEdittitle] = useState(false);
+  const [editcategory, setEditcategory] = useState(false);
   return (
     <div className=" ">
       {!match[0].categories && !categoryslide ? (
@@ -598,13 +601,17 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         <div className="flex justify-center items-center">
                           <div className="flex flex-col gap-5">
                             <input
-                              className={`bg-transparent text-[7vw] md:text-[2.5vw] text-white placeholder-white ${edittitle ? "border-b border-white/40":""}  flex justify-center  outline-none`}
+                              className={`bg-transparent text-[7vw] md:text-[2.5vw] text-white placeholder-white ${
+                                edittitle ? "border-b border-white/40" : ""
+                              }  flex justify-center  outline-none`}
                               placeholder={note.topic}
                               minLength={3}
                               // onChange={(e) => setEdittitle(true);...}
                             />
                             <input
-                              className={`bg-transparent text-[6vw] md:text-[2vw] text-white placeholder-white ${editcategory ? "border-b border-white/40":""}  flex justify-center  outline-none`}
+                              className={`bg-transparent text-[6vw] md:text-[2vw] text-white placeholder-white ${
+                                editcategory ? "border-b border-white/40" : ""
+                              }  flex justify-center  outline-none`}
                               placeholder={note.category}
                               minLength={2}
                               // type="text"
@@ -639,9 +646,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         setSelectedNote(note.topic);
                         setSelectedNoteData(note.note);
                       }}
-                      onMouseEnter={() => setShowdeleteicon(true)}
-                      onMouseLeave={() => setShowdeleteicon(false)}
-                      className="bg-[#212121]  cursor-pointer w-full h-40 flex flex-col overflow-hidden p-4 space-y-5  rounded-lg"
+                      className="bg-[#212121] group  cursor-pointer w-full h-40 flex flex-col overflow-hidden p-4 space-y-5  rounded-lg"
                     >
                       <div className="flex flex-row justify-between ">
                         <div className="flex ">
@@ -651,9 +656,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                         </div>
                         <div className="flex  flex-col">
                           <Tooltip content="delete the note">
-                            {showdeleteicon && (
-                              <DeleteIcon className="text-sm deleteicon text-red-200" />
-                            )}
+                            <DeleteIcon
+                              onClick={() => addDeleted(note._id)}
+                              className="text-sm hidden group-hover:inline deleteicon text-red-200"
+                            />
                           </Tooltip>
                         </div>
                       </div>
@@ -669,7 +675,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
               </div>
             ) : (
               <div className="  flex  justify-center items-center w-full h-full p-7">
-                <img src="/empty.svg" className="w-full h-[40vw] md:h-[8vw] " />
+                <img
+                  src="/empty.svg"
+                  className="w-full h-[50vw] md:h-[10vw] "
+                />
               </div>
             )}
 

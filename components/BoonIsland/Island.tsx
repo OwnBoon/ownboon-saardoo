@@ -41,7 +41,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
           {level < 5 ? (
             <Spline
               className="sm:w-full w-full z-50"
-              scene="https://prod.spline.design/TuCXoIsBkIk0WZMV/scene.splinecode"
+              scene="https://prod.spline.design/Mar8ZKgCHnjbjOVp/scene.splinecode"
             />
           ) : level < 10 ? (
             <div>
@@ -324,7 +324,7 @@ const Island = ({ users, setLoading, setShowBoonIslandModal }: Props) => {
                       </li>
                       <li className="text-xl text-white font-poppins">
                         You're becoming a Greek God because you've solved more
-                        than problems 100 on ownboon      
+                        than problems 100 on ownboon
                       </li>
                       <li className="text-xl text-white font-poppins">
                         You're in one of the top 0.1% users

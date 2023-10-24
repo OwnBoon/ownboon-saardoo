@@ -15,6 +15,14 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
   const [text, setText] = useState("");
   const router = useRouter();
   const [note, setNote] = useState({ text: "", topic: "", note: "", _id: "" });
+  const [showcat, setShowCat] = useState(true);
+  const propernote = notes.filter(
+    (notee: any) => (notee.email = user?.emailAddresses[0].emailAddress)
+  );
+
+  const filteredCategories = propernote?.filter((nootee: any) =>
+    nootee.category?.toLowerCase().includes(category.toLowerCase())
+  );
 
   const handleSubmit = async (e: any) => {
     // e.preventDefault();
@@ -71,48 +79,73 @@ const Notes = ({ setNotes, setDummyNote, notes, close, categories }: any) => {
       {" "}
       <div className="md:min-h-[35vw] min-h-[80vw] w-full flex items-left flex-col p-3  !bg-[#101010]      overflow-hidden  space-y-5   rounded-xl">
         <div className="flex justify-center items-center">
-          <div className="flex flex-col gap-5">
-          
+          <div
+            onMouseEnter={() => setShowCat(true)}
+            className="flex flex-col gap-5"
+          >
             <input
               className="bg-transparent text-[7vw] md:text-[2.5vw]  border-b border-white/40 flex justify-center  outline-none "
               placeholder="Topic"
               minLength={3}
               onChange={(e) => setTopic(e.target.value)}
             />
-              <input
+            <input
               className="bg-transparent text-[6vw] md:text-[2vw]  border-b flex border-white/40 justify-center  outline-none "
-              placeholder={"Category"}
+              placeholder={notes[0]?.category}
               minLength={2}
+              value={category}
               // type="text"
               onChange={(e) => setCategory(e.target.value)}
             />
+            {category.length > 2 && showcat && (
+              <div
+                onMouseLeave={() => setShowCat(false)}
+                onMouseEnter={() => setShowCat(true)}
+                className=" absolute top-52 mt-2 w-56 rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5"
+              >
+                <div className="py-2 gap-4 flex flex-col">
+                  {/* @ts-ignore */}
+                  {filteredCategories.map((note, index) => (
+                    <h1
+                      key={index}
+                      onClick={() => {
+                        setCategory(note.category);
+                        setShowCat(false);
+                      }}
+                      className="block px-4  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200"
+                    >
+                      {note.category}
+                    </h1>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="space-y-12 flex  w-full flex-col items-start">
           {user ? (
-            
-              <div>
-                <ReactQuill
-                  theme="snow"
-                  className="md:h-[30vw] h-[60vw] md:w-[30vw] w-[70vw]     "
-                  value={text || note?.note}
-                  onChange={setText}
-                />
-                {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
-                <div
-                  onClick={(e) => {
-                    if (topic.length > 1 && category.length > 1) {
-                      handleSubmit(e);
-                      close();
-                    }
-                  }}
-                  className=" mt-14 bg-opacity-30  w-full  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
-                >
-                  <button className=" text-sm select-none  text-[#dddddd] relative px-5">
-                    Done
-                  </button>
-                </div>
+            <div>
+              <ReactQuill
+                theme="snow"
+                className="md:h-[30vw] h-[60vw] md:w-[30vw] w-[70vw]     "
+                value={text || note?.note}
+                onChange={setText}
+              />
+              {/* <TextArea notes={notess[0]?.note} text={text} setText={setText} /> */}
+              <div
+                onClick={(e) => {
+                  if (topic.length > 1 && category.length > 1) {
+                    handleSubmit(e);
+                    close();
+                  }
+                }}
+                className=" mt-14 bg-opacity-30  w-full  rounded-lg active:scale-105 bg-white flex p-2 justify-center items-center"
+              >
+                <button className=" text-sm select-none  text-[#dddddd] relative px-5">
+                  Done
+                </button>
               </div>
+            </div>
           ) : null}
         </div>
       </div>
