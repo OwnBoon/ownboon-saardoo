@@ -264,7 +264,10 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   console.log("selected", selectedCategory);
 
   const filteredNotes = note.filter(
-    (note) => selectedCategory === "" || note.category === selectedCategory
+    (note) => note.category === selectedCategory
+  );
+  const filteredNotes2 = notesez.filter(
+    (note) => note.category === selectedCategory
   );
   const [desc, setDesc] = useState("");
   const [data, setData] = useState<datatype>();
@@ -511,7 +514,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                   onClick={() => setShowPromptModal(true)}
                   className="cursor-pointer border-gray-500 bg-[#363636] from-gray-300 w-10/12 flex flex-col justify-start relative h-12 shrink-0 items-center py-3 border rounded"
                 >
-                  <h1 className="rounded-xl cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
+                  <h1 className="rounded-xl  cursor-pointer whitespace-nowrap text-[15px] font-sans text-[#dddddd] relative mx-24">
                     Generate Now
                   </h1>
                 </button>
@@ -594,9 +597,13 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
             {/* <div className="flex justify-center items-center       flex-shrink-0 " /> */}
             {categories.size !== 0 ? (
               <div className="grid grid-cols-1 pl-5 px-3 md:grid-cols-2 md:px-5 md:py-2  lg:grid-cols-3 justify-center items-center w-full h-full gap-3">
-                {filteredNotes.map((note) => (
+                {filteredNotes.map((note, index) => (
                   <>
-                    <Dialog isOpen={showModal} onClose={setShowModal}>
+                    <Dialog
+                      key={index}
+                      isOpen={showModal}
+                      onClose={setShowModal}
+                    >
                       <div className="md:min-h-[35vw] min-h-[80vw] w-full flex items-left flex-col p-3  !bg-[#101010]      overflow-hidden  space-y-5   rounded-xl">
                         <div className="flex justify-center items-center">
                           <div className="flex flex-col gap-5">
@@ -604,7 +611,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                               className={`bg-transparent text-[7vw] md:text-[2.5vw] text-white placeholder-white ${
                                 edittitle ? "border-b border-white/40" : ""
                               }  flex justify-center  outline-none`}
-                              placeholder={note.topic}
+                              placeholder={notesez[index].topic}
                               minLength={3}
                               // onChange={(e) => setEdittitle(true);...}
                             />
@@ -612,7 +619,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                               className={`bg-transparent text-[6vw] md:text-[2vw] text-white placeholder-white ${
                                 editcategory ? "border-b border-white/40" : ""
                               }  flex justify-center  outline-none`}
-                              placeholder={note.category}
+                              placeholder={notesez[index].category}
                               minLength={2}
                               // type="text"
                               // onChange={(e) => setEditcategory(true); ...}
@@ -624,7 +631,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             <ReactQuill
                               theme="snow"
                               className="md:h-[30vw] h-[60vw] md:w-[30vw] w-[70vw]     "
-                              value={text || note?.note}
+                              value={text || notesez[index]?.note}
                               onChange={setText}
                             />
 
@@ -641,12 +648,13 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                       </div>
                     </Dialog>
                     <div
+                      key={index}
                       onClick={() => {
                         setShowModal(true);
-                        setSelectedNote(note.topic);
-                        setSelectedNoteData(note.note);
+                        setSelectedNote(notesez[index].topic);
+                        setSelectedNoteData(notesez[index].note);
                       }}
-                      className="bg-[#212121] group  cursor-pointer w-full h-40 flex flex-col overflow-hidden p-4 space-y-5  rounded-lg"
+                      className="bg-[#212121]   cursor-pointer w-full h-40 flex flex-col overflow-hidden p-4 space-y-5  rounded-lg"
                     >
                       <div className="flex flex-row justify-between ">
                         <div className="flex ">
@@ -658,7 +666,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                           <Tooltip content="delete the note">
                             <DeleteIcon
                               onClick={() => addDeleted(note._id)}
-                              className="text-sm hidden group-hover:inline deleteicon text-red-200"
+                              className="text-sm z-50 hidden group-hover:inline deleteicon text-red-200"
                             />
                           </Tooltip>
                         </div>
@@ -687,7 +695,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                 <Notes
                   setNotes={setNote}
                   setDummyNote={setDummyNote}
-                  notes={notes}
+                  notes={notesez}
                   categories={categories}
                   close={setShowAddNotesModal}
                 />
