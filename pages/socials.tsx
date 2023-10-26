@@ -77,7 +77,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
-
+  const [selectedTool, setSelectedTool] = useState("All");
   const id = posts.map((post) => post._id);
   const [comments, setComments] = useState<Comment[]>([]);
   const [categoryselected, setcategoryselected] = useState("");
@@ -173,14 +173,11 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
     refreshComments();
   }, []);
   const [showVideo, setShowVideo] = useState(false);
-  const [create,SetCreate] = useState(false);
+  const [create, SetCreate] = useState(false);
 
   const [dropdown, setDropdown] = useState(false);
   const [showdropfeed, setshowdropfeed] = useState(false);
   const [videos, setVideos] = useState<Video[]>();
-  const [showpost, setShowPost] = useState(false);
-  const [showAll, setShowAll] = useState(true);
-  const [showBlog, setShowBlog] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const [videoName, setVideoName] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -236,10 +233,9 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
     );
   }
 
-
-  const handleCreate = ()=>{
-      SetCreate(!create);
-  }
+  const handleCreate = () => {
+    SetCreate(!create);
+  };
 
   const categories = ["Computer", "Science", "Arts", "AI"];
 
@@ -247,6 +243,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
 
   const res = categories.filter((item) => !categoriesArray?.includes(item));
 
+  const selected =
+    "bg-white bg-opacity-30 self-stretch flex w-20 max-w-full  items-center cursor-pointer shine-button justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-white border-opacity-50";
+  const normal =
+    "bg-zinc-600 bg-opacity-10  shine-button self-stretch flex w-20 max-w-full items-center justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50";
 
   if (isSignedIn) {
     return (
@@ -258,451 +258,169 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         goals={goals}
         border="gray-500"
         children={
-          <div className="container overflow-y-hidden mx-auto col-span-11  w-full py-8">
-            <div className="grid grid-cols-1 w-full lg:grid-cols-12 overflow-y-scroll h-screen  rounded-lg  gap-12">
-              {dropdown && (
-                <div
-                  onMouseEnter={() => setDropdown(true)}
-                  onMouseLeave={() => setDropdown(false)}
-                  className=" absolute  z-50 top-36 mt-2 w-56 rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5"
-                >
-                  <div className="py-2 gap-4 flex items-start w-full flex-col">
-                    {/* @ts-ignore */}
-
-                    <div
-                      onClick={() => {
-                        setcategoryselected("Computer Science");
-                        setshowdropfeed(true);
-                      }}
-                      className="z-50 cursor-pointer "
-                    >
-                      <h1 className=" gap-2 items-center justify-center px-4 flex  w-full py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
-                        <img
-                          className="h-7 w-7 rounded-full object-contain"
-                          loading="lazy"
-                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                        />
-                        Computers
-                        <span className="font-sans">-</span>{" "}
-                        <span className="text-white/20 font-light">
-                          science
-                        </span>
-                      </h1>
+          <div className="flex justify-between p-5 w-full">
+            {/* right part */}
+            <div className="px-10 w-full">
+              {/* top bar */}
+              <div>
+                <div className="self-stretch flex w-full items-start justify-between gap-5 max-md:flex-wrap">
+                  <div className="self-stretch flex items-start justify-between gap-5 max-md:max-w-full max-md:flex-wrap max-md:justify-center">
+                    <div className="flex gap-1 bg-white justify-center items-center bg-opacity-30 rounded-md shine-button text-zinc-300 text-sm font-medium self-stretch  overflow-hidden aspect-[4.5] w-36 max-w-full px-5 py-3 max-md:pl-2.5">
+                      <HomeIcon className="h-4 w-4" />
+                      <h1>Home</h1>
                     </div>
                     <div
-                      onClick={() => {
-                        setcategoryselected("Finance");
-                        setshowdropfeed(true);
-                      }}
-                      className="z-50 cursor-pointer "
+                      onClick={() => setSelectedTool("All")}
+                      className={selectedTool == "All" ? selected : normal}
                     >
-                      <h1 className=" gap-2 items-center justify-center px-4 flex w-full py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
-                        <img
-                          className="h-7 w-7 rounded-full object-contain"
-                          loading="lazy"
-                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                        />
-                        Finance
-                        <span className="font-sans">-</span>{" "}
-                        <span className="text-white/20 font-light">
-                          economy
-                        </span>
-                      </h1>
-                    </div>
-                    <div
-                      onClick={() => {
-                        setcategoryselected("Art");
-                        setshowdropfeed(true);
-                      }}
-                      className="z-50 cursor-pointer "
-                    >
-                      <h1 className=" gap-2 items-center justify-center px-4 flex  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
-                        <img
-                          className="h-7 w-7 rounded-full object-contain"
-                          loading="lazy"
-                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                        />
-                        Arts
-                        <span className="font-sans">-</span>{" "}
-                        <span className="text-white/20 font-light">
-                          creativity
-                        </span>
-                      </h1>
-                    </div>
-                    <div
-                      onClick={() => {
-                        setcategoryselected("Artificial Intelligence");
-                        setshowdropfeed(true);
-                      }}
-                      className="z-50 cursor-pointer "
-                    >
-                      <h1 className=" gap-2 items-center justify-center px-4 flex  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200">
-                        <img
-                          className="h-7 w-7 rounded-full object-contain"
-                          loading="lazy"
-                          src="https://s3-alpha-sig.figma.com/img/2908/cde5/81f997a886d8d28ce717453947292db6?Expires=1698019200&Signature=cLiWHu0AYaGBhA9m2D5d3araaP7~ce7JAP8mqwoHQ8tOC4vH5nnIuBNtMn85tu7kdqavSeJmr7-wLrOznIyySHNUm~9ag1imCOiYL31liU93D5Et41-1Xoe06dM9RJAbw21mytNgHLUg1lagLUs3LJ6Ol8yTWqmi7m-TFjRDx887SQpVEg95CaDD-cba0Wsk~1CTwIgpUJpz7oS5Kxi3fEaXpe4iaYT7v7I-vo4ZboKialyxUpxInuhvvMDB05MXxGIYEwaVkSMXB~RPlcqZBzUYXwPP8kohRIltiKBUS9dfodLlBkEpCAm0aWXuTBOvCjUk-TKf9gIwir6pLJQ1pw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                        />
-                        AI
-                        <span className="font-sans">-</span>{" "}
-                        <span className="text-white/20 font-light">
-                          comp.sci
-                        </span>
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div className="lg:col-span-8 col-span-1  ">
-                <div className="flex lg:text-md gap-10  justify-between w-[100vw] items-center">
-                  <div className="flex justify-between overflow-x-scroll  w-full lg:overflow-hidden scrollbar-thin  mt-4 pt-5 pb-5 fixed  gap-10 items-center bg-[#121212] ">
-                    <div className="flex justify-between    items-center gap-10">
-                      <button
-                        onMouseLeave={() => setDropdown(false)}
-                        onClick={() => setDropdown(true)}
-                        className={`bg-white bg-opacity-25 hover:text-gray-400  flex items-center justify-center w-32 h-8 rounded-[5px] border border-white border-opacity-50 
-                        
-                        `}
-                      >
-                        <HomeIcon className="w-4 mr-2 h-4" />
-                        Home
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          setShowVideo(false);
-                          setShowPost(false);
-                          setshowdropfeed(false);
-                          setShowAll(true);
-                        }}
-                        className={`bg-white bg-opacity-25  flex items-center w-20 h-8 justify-center  rounded-[5px] border border-white border-opacity-50
-                          hover:text-gray-400 ${
-                            showAll
-                              ? "bg-zinc-600 bg-opacity-10 rounded-[5px] border !border-zinc-700 border-opacity-50"
-                              : "bg-white bg-opacity-25"
-                          }`}
-                      >
-                        <CheckBadgeIcon className="w-5 h-5 mr-2" />
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-4 h-4  overflow-hidden "
+                      />
+                      <div className="text-white text-sm font-medium self-center my-auto">
                         All
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowPost(false);
-                          setShowVideo(false);
-                          setShowBlog(true);
-                          setShowAll(false);
-                        }}
-                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${
-                          showBlog
-                            ? "!bg-white !bg-opacity-25 !border-white !border-opacity-50"
-                            : ""
-                        } hover:text-gray-400 `}
-                      >
-                        {showBlog ? (
-                          <DocumentIcon2 className="mr-2 h-4 w-4" />
-                        ) : (
-                          <DocumentIcon className="mr-2 h-4 w-4" />
-                        )}
-                        Blogs
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowVideo(true);
-                          setShowBlog(false);
-                          setShowAll(false);
-                          setShowPost(false);
-                        }}
-                        className={`cursor-pointer  flex items-center  w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50${
-                          showVideo
-                            ? "!bg-white !bg-opacity-50 !border-white !border-opacity-50"
-                            : ""
-                        } hover:text-gray-400`}
-                      >
-                        <VideoCameraIcon className="mr-2 h-4 w-4" />
-                        Videos
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowVideo(false);
-                          setShowPost(true);
-                          setShowAll(false);
-                          setShowBlog(false);
-                        }}
-                        className={`cursor-pointer  flex items-center p-2 w-20 h-8 bg-zinc-600 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50 ${
-                          showpost && !showVideo
-                            ? "!bg-white !bg-opacity-25 !border-white !border-opacity-50"
-                            : ""
-                        } hover:text-gray-400 `}
-                      >
-                        <FaEdit className="mr-2" />
-                        Posts
-                      </button>
-                      <div className="flex-grow"></div>
-                      {showpost ? (
-                        <div className="z-50 mr-20 right-8">
-                          <Link href="/publishpost">
-                            <Tooltip content="Publish a post">
-                              <button className="bg-zinc-600 px-2 py-1 bg-opacity-10 rounded-[5px] border border-zinc-700 border-opacity-50">
-                                Create
-                              </button>
-                            </Tooltip>
-                          </Link>
-                        </div>
-                      ) : (
-                        <div className="ml-[50vw] z-50 md:flex md:-ml-10 md:w-1 ">
-                          <Link href="/publish-blog">
-                            <Tooltip content="Publish a blog">
-                              <div className=""></div>
-                              <button className=" sm:bg-zinc-600 sm:px-2 sm:py-1 sm:bg-opacity-10 sm:rounded-[5px] sm:border sm:border-zinc-700 sm:border-opacity-50">
-                                Create
-                              </button>
-                            </Tooltip>
-                          </Link>
-                        </div>
-                      )}
+                      </div>
+                    </div>
+                    <div
+                      onClick={() => setSelectedTool("Post")}
+                      className={selectedTool == "Post" ? selected : normal}
+                    >
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center h-4 w-4 overflow-hidden "
+                      />
+                      <div className="text-zinc-300 text-sm font-medium self-center my-auto">
+                        Post
+                      </div>
+                    </div>
+                    <div
+                      onClick={() => setSelectedTool("Blog")}
+                      className={selectedTool == "Blog" ? selected : normal}
+                    >
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/57c3ad86-6ed0-4f9e-b582-88843bff8240?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-4 h-4 overflow-hidden "
+                      />
+                      <div className="text-zinc-300 text-sm font-medium mt-1">
+                        Blog
+                      </div>
+                    </div>
+                    <div
+                      onClick={() => setSelectedTool("Video")}
+                      className={selectedTool == "Video" ? selected : normal}
+                    >
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0e0c6d-5099-4f58-9b95-e657148b1d80?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-4 h-4 overflow-hidden "
+                      />
+                      <div className="text-zinc-300 text-sm font-medium self-center my-auto">
+                        Video
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-zinc-600 bg-opacity-10 self-stretch flex w-20 max-w-full items-center justify-between gap-1 pl-1.5 pr-4 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50">
+                    <img
+                      loading="lazy"
+                      srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                      className="aspect-square object-cover object-center w-4 h-4 overflow-hidden "
+                    />
+                    <Link
+                      href={"/publishpost"}
+                      className="text-zinc-300 text-sm self-center my-auto"
+                    >
+                      Create
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              {/* posts */}
+              <div>
+                {feed.map((feeds) => (
+                  <FeedCard feeds={feeds} match={match} users={users} />
+                ))}
+              </div>
+            </div>
+            <div className="p-5">
+              {/* below part */}
+              <div className="bg-zinc-600 bg-opacity-10 flex w-full px-10 max-w-full flex-col  mx-auto pt-7 pb-16 mr-20 rounded-xl border-[0.75px] border-solid border-zinc-700 border-opacity-50 ">
+                <div className="flex w-[137px] max-w-full flex-col ml-3 max-md:ml-2.5">
+                  <div className="text-zinc-300 text-center text-base max-md:mr-px">
+                    Top Interests
+                  </div>
+                  <div className="items-start flex w-full gap-2.5 mt-4">
+                    <div className="self-stretch flex flex-col">
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch"
+                      />
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch mt-6"
+                      />
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch mt-6"
+                      />
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch mt-6"
+                      />
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow mt-6"
+                      />
+                    </div>
+                    <div className="self-stretch flex flex-col mt-1">
+                      <div className="text-zinc-300 text-sm">Community </div>
+                      <div className="text-stone-300 text-xs mt-2">
+                        123k Posts
+                        <br />
+                        50k followers
+                      </div>
+                      <div className="text-zinc-300 text-sm mt-9">
+                        Community{" "}
+                      </div>
+                      <div className="text-stone-300 text-xs mt-2">
+                        123k Posts
+                        <br />
+                        50k followers
+                      </div>
+                      <div className="text-zinc-300 text-sm mt-9">
+                        Community{" "}
+                      </div>
+                      <div className="text-stone-300 text-xs mt-2">
+                        123k Posts
+                        <br />
+                        50k followers
+                      </div>
+                      <div className="text-zinc-300 text-sm mt-9">
+                        Community{" "}
+                      </div>
+                      <div className="text-stone-300 text-xs mt-2">
+                        123k Posts
+                        <br />
+                        50k followers
+                      </div>
+                      <div className="text-zinc-300 text-sm mt-9">
+                        Community{" "}
+                      </div>
+                      <div className="text-stone-300 text-xs mt-2">
+                        123k Posts
+                        <br />
+                        50k followers
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="lg:col-span-8 sm:col-span-12 transition-all w-auto duration-500 flex flex-col-reverse mt-12 col-span-1 z-5">
-                  {showVideo ? (
-                    <>
-                      <div className="justify-center flex flex-col items-center gap-5 ">
-                        {/* @ts-ignore */}
-                        {videos.map((video: Video) => (
-                          <div className="bg-black/5 border-b p-5 px-10 rounded-lg">
-                            {/* <Link
-                          href={
-                            video.id.videoId
-                            ? `/video/${video.id.videoId}`
-                            : `/video/cV2gBU6hKfY`
-                          }
-                        > */}
-                            <div
-                              onClick={() => {
-                                setShowModal(true);
-
-                                setVideoName(video.snippet.title);
-                                setVideoId(video.id.videoId);
-                              }}
-                            >
-                              <div className="space-y-2 flex flex-col items-start  ">
-                                <img
-                                  className=" rounded-xl"
-                                  src={
-                                    video.snippet.thumbnails.high.url ||
-                                    "https://images5.alphacoders.com/587/thumbbig-587597.webp"
-                                  }
-                                />
-                                <div className="pl-3">
-                                  <h1 className="font-semibold">
-                                    {video.snippet?.title.slice(0, 60)}
-                                  </h1>
-                                  {/* </Link> */}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <Modal
-                        closeButton
-                        aria-labelledby="modal-title"
-                        className="!bg-[#191919]/40 z-50 h-[70vh] flex justify-center items-center ml-10 backdrop-blur-md fixed top-0 left-0 right-0  w-full overflow-x-hidden overflow-y-auto md:inset-0"
-                        width="80%"
-                        // onClose={}
-                        open={showModal}
-                      >
-                        <Modal.Header className="text-neutral-400">
-                          <p className="text-neutral-400">{videoName}</p>
-                        </Modal.Header>
-                        <Modal.Body className="flex justify-center items-center h-full w-full">
-                          {" "}
-                          <ReactPlayer
-                            url={`https://www.youtube.com/watch?v=${videoId}`}
-                            className="mr-20"
-                            controls
-                            width={960}
-                            height={540}
-                          />
-                        </Modal.Body>
-                      </Modal>
-                    </>
-                  ) : (
-                    <>
-                      {showAll && (
-                        <>
-                          {" "}
-                          {
-                            //@ts-ignore
-                            filteredPosts?.length > 0
-                              ? filteredPosts!.map((post, index) => (
-                                  <div className="z-10">
-                                    <PostCard
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                    {/* @ts-ignore */}
-
-                                    <PostCardMobile
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                  </div>
-                                ))
-                              : posts!.map((post, index) => (
-                                  <div className="z-10">
-                                    <PostCard
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                    {/* @ts-ignore */}
-
-                                    <PostCardMobile
-                                      match={match}
-                                      users={users}
-                                      key={index}
-                                      post={post}
-                                    />
-                                  </div>
-                                ))
-                          }
-                        </>
-                      )}
-                      {showpost ? (
-                        <div className="p-5  space-y-4">
-                          {feed.map((feeds, index) => (
-                            <div className="z-10">
-                              {/* <>
-                              <div className="grid bg-white shadow-lg h-full  rounded-lg gap-2 p-0 lg:p-8 pb-12 mb-8 grid-cols-6">
-                              <div className="flex items-center justify-between w-full  gap-10">
-                              <div className="flex items-center ">
-                              <Users
-                              src={feeds.profileImage}
-                              name={feeds.author}
-                              />
-                              
-                                    <Text>
-                                    -{" "}
-                                    <TimeAgo
-                                    // @ts-ignore
-                                    date={feeds._createdAt}
-                                    />{" "}
-                                    ago
-                                    </Text>
-                                    </div>
-                                  <Text h1 size={20} className="font-semibold">
-                                    {feeds.title}
-                                  </Text>
-                                </div>
-                                <div className="flex rounded-lg justify-center p-5">
-                                  {feeds.video ? (
-                                    <ReactPlayer controls url={feeds.video} />
-                                  ) : (
-                                    <>
-                                    <img src={feeds.image} />
-                                    </>
-                                    )}
-                                    </div>
-                              </div>
-                            </> */}
-                              <FeedCard feeds={feeds} key={index} />
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="">
-                          {!showdropfeed ? (
-                            <div>
-                              {
-                                //@ts-ignore
-                                filteredPosts?.length > 0
-                                  ? filteredPosts!.map((post, index) => (
-                                      <div className="z-10">
-                                        <PostCard
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                        {/* @ts-ignore */}
-                                        <PostCardMobile
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                      </div>
-                                    ))
-                                  : posts!.map((post, index) => (
-                                      <div className="z-10">
-                                        <PostCard
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                        {/* @ts-ignore */}
-                                        <PostCardMobile
-                                          match={match}
-                                          users={users}
-                                          key={index}
-                                          post={post}
-                                        />
-                                      </div>
-                                    ))
-                              }
-                            </div>
-                          ) : (
-                            <div>
-                              {dropDownBlogs!.map((post, index) => (
-                                <div className="z-10">
-                                  <PostCard
-                                    match={match}
-                                    users={users}
-                                    key={index}
-                                    post={post}
-                                  />
-                                  {/* @ts-ignore */}
-
-                                  <PostCardMobile
-                                    match={match}
-                                    users={users}
-                                    key={index}
-                                    post={post}
-                                  />
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="col-span-3 hidden w-full  h-fit lg:inline z-50 text-white mt-14">
-                <div className=" bg-zinc-600 p-3 py-5 mr-3 flex h-fit flex-col items-center gap-5 justify-center w-full bg-opacity-20 rounded-[10px] border border-zinc-700 border-opacity-50">
-                  <h1>Top Interests</h1>
-
-                  <div className="flex flex-col gap-10 items-center">
-                    {res.map((r)=>{return <h1>{r}</h1>})}
-                  </div>
-                </div>
-              </div>
-
-              <div className=" w-30 h-30 flex-col fixed bottom-10 right-10 flex justify-center ">
-
-                {create && <div className="bottom-10 right-28 mb-10 flex gap-2 flex-col ">
-                <div className="bg-white bg-opacity-25 rounded-md w-40 flex justify-center hover:text-gray-400"><Link href="/publish-blog">Create a blog</Link></div>
-                <div className="bg-white bg-opacity-25 rounded-md w-40 flex justify-center hover:text-gray-400"><Link href="/publishpost">Create a post</Link></div>
-                </div>}
-                
-                <button className="bg-white bg-opacity-25 h-9 rounded-[5px] flex justify-center hover:text-gray-400 border border-white" onClick={handleCreate}>create +</button>
               </div>
             </div>
           </div>

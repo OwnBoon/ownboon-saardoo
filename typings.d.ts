@@ -156,6 +156,7 @@ export interface Videos extends SanityBody {
     image: string
     video: string
     categories: string
+    liked: User[]
     desc: string
 
 }
