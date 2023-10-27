@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { fetchUsers } from "../utils/fetchUsers";
 import { fetchFromAPI } from "../utils/fetchVideo";
 import ReactPlayer from "react-player";
+import { FiFilter } from "react-icons/fi";
 import {
   Button,
   Container,
@@ -172,11 +173,11 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   useEffect(() => {
     refreshComments();
   }, []);
-  const [showVideo, setShowVideo] = useState(false);
+
   const [create, SetCreate] = useState(false);
 
   const [dropdown, setDropdown] = useState(false);
-  const [showdropfeed, setshowdropfeed] = useState(false);
+  const [filter, setFilter] = useState(false);
   const [videos, setVideos] = useState<Video[]>();
   const [showFilter, setShowFilter] = useState(false);
   const [videoName, setVideoName] = useState("");
@@ -240,13 +241,15 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const categories = ["Computer", "Science", "Arts", "AI"];
 
   const categoriesArray = match[0].categories?.split(",");
-
+  const filteredArr = categoriesArray!.filter((item) => item !== "undefined");
+  // @ts-ignore
+  const uniqueArr = [...new Set(filteredArr)];
   const res = categories.filter((item) => !categoriesArray?.includes(item));
 
   const selected =
-    "bg-white bg-opacity-30 self-stretch flex w-20 max-w-full  items-center cursor-pointer shine-button justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-white border-opacity-50";
+    "bg-white bg-opacity-30 self-stretch hidden  md:flex w-fit max-w-full  items-center cursor-pointer shine-button justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-white border-opacity-50";
   const normal =
-    "bg-zinc-600 bg-opacity-10  shine-button self-stretch flex w-20 max-w-full items-center justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50";
+    "bg-zinc-600 bg-opacity-10 hidden  shine-button self-stretch md:flex w-fit max-w-full items-center justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50";
 
   if (isSignedIn) {
     return (
@@ -258,17 +261,13 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
         goals={goals}
         border="gray-500"
         children={
-          <div className="flex justify-between p-5 w-full">
+          <div className="flex justify-start md:justify-between p-5 w-full">
             {/* right part */}
-            <div className="px-10 w-full">
+            <div className="md:px-10  w-full">
               {/* top bar */}
               <div>
-                <div className="self-stretch flex w-full items-start justify-between gap-5 max-md:flex-wrap">
-                  <div className="self-stretch flex items-start justify-between gap-5 max-md:max-w-full max-md:flex-wrap max-md:justify-center">
-                    <div className="flex gap-1 bg-white justify-center items-center bg-opacity-30 rounded-md shine-button text-zinc-300 text-sm font-medium self-stretch  overflow-hidden aspect-[4.5] w-36 max-w-full px-5 py-3 max-md:pl-2.5">
-                      <HomeIcon className="h-4 w-4" />
-                      <h1>Home</h1>
-                    </div>
+                <div className="md:self-stretch flex w-full items-start justify-between gap-5 ">
+                  <div className="md:self-stretch hidden md:flex items-start justify-between gap-5 max-md:max-w-full  max-md:justify-center">
                     <div
                       onClick={() => setSelectedTool("All")}
                       className={selectedTool == "All" ? selected : normal}
@@ -276,26 +275,31 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                       <img
                         loading="lazy"
                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/22d570a0-c3d6-4f60-aae7-202eb8950e53?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                        className="aspect-square object-cover object-center w-4 h-4  overflow-hidden "
+                        className="   w-4 h-4  overflow-hidden "
                       />
-                      <div className="text-white text-sm font-medium self-center my-auto">
+                      <div className="text-white font-sans text-sm font-medium  my-auto">
                         All
                       </div>
                     </div>
-                    <div
-                      onClick={() => setSelectedTool("Post")}
-                      className={selectedTool == "Post" ? selected : normal}
-                    >
-                      <img
-                        loading="lazy"
-                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                        className="aspect-square object-cover object-center h-4 w-4 overflow-hidden "
-                      />
-                      <div className="text-zinc-300 text-sm font-medium self-center my-auto">
-                        Post
+                    {uniqueArr?.map((categories) => (
+                      <div
+                        onClick={() => setSelectedTool(categories)}
+                        className={
+                          selectedTool == categories ? selected : normal
+                        }
+                      >
+                        {/* <img
+                          loading="lazy"
+                          srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/39d9d9f4-feff-4084-ab5b-072fbad19ab0?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                          className="aspect-square object-cover object-center h-4 w-4 overflow-hidden "
+                        /> */}
+                        <div className="text-zinc-300 text-sm font-medium self-center my-auto">
+                          {categories}
+                        </div>
                       </div>
-                    </div>
-                    <div
+                    ))}
+
+                    {/* <div
                       onClick={() => setSelectedTool("Blog")}
                       className={selectedTool == "Blog" ? selected : normal}
                     >
@@ -307,8 +311,8 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                       <div className="text-zinc-300 text-sm font-medium mt-1">
                         Blog
                       </div>
-                    </div>
-                    <div
+                    </div> */}
+                    {/* <div
                       onClick={() => setSelectedTool("Video")}
                       className={selectedTool == "Video" ? selected : normal}
                     >
@@ -320,13 +324,43 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                       <div className="text-zinc-300 text-sm font-medium self-center my-auto">
                         Video
                       </div>
+                    </div> */}
+                  </div>
+                  <div
+                    onClick={() => {
+                      showFilter ? setShowFilter(false) : setShowFilter(true);
+                    }}
+                    className="bg-zinc-600 md:hidden bg-opacity-10   shine-button  flex w-fit  items-center justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50"
+                  >
+                    <FiFilter />
+                    <h1>Filter</h1>
+                  </div>
+                  <div
+                    className={` absolute ${
+                      showFilter
+                        ? "absolute h-fit transition-all duration-100"
+                        : "hidden h-0 transition-all duration-100"
+                    } md:hidden top-[9.5rem] z-50 mt-2 w-56 rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5`}
+                  >
+                    <div className="py-2 gap-4 flex flex-col">
+                      {/* @ts-ignore */}
+                      {uniqueArr.map((categories, index) => (
+                        <div>
+                          <h1
+                            key={index}
+                            className="block px-4  py-2 text-sm text-neutral-300 p-1 backdrop-blur-lg hover:bg-[#101010]/20 hover:border hover:border-white/10 rounded-md hover:text-neutral-200"
+                          >
+                            {categories}
+                          </h1>
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div className="bg-zinc-600 bg-opacity-10 self-stretch flex w-20 max-w-full items-center justify-between gap-1 pl-1.5 pr-4 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50">
                     <img
                       loading="lazy"
                       srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0bbaafe2-c126-4056-b171-3b54bd7051a8?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                      className="aspect-square object-cover object-center w-4 h-4 overflow-hidden "
+                      className=" w-4 h-4 "
                     />
                     <Link
                       href={"/publishpost"}
@@ -344,7 +378,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                 ))}
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 hidden lg:inline">
               {/* below part */}
               <div className="bg-zinc-600 bg-opacity-10 flex w-full px-10 max-w-full flex-col  mx-auto pt-7 pb-16 mr-20 rounded-xl border-[0.75px] border-solid border-zinc-700 border-opacity-50 ">
                 <div className="flex w-[137px] max-w-full flex-col ml-3 max-md:ml-2.5">

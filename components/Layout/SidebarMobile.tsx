@@ -12,7 +12,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-const drawerBleeding = 56;
+const drawerBleeding = 42;
 
 interface Props {
   /**

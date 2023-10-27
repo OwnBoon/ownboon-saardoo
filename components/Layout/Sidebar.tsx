@@ -114,8 +114,8 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
               </span>
             )}
           </div>
-          <div
-            onClick={() => router.push("/workspace")}
+          <Link
+            href={"/roadmap"}
             className={router.pathname == "/workspace" ? selected : normal}
           >
             <Image
@@ -130,9 +130,9 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
                 Workspace
               </span>
             )}
-          </div>
-          <div
-            onClick={() => router.push("/roadmap")}
+          </Link>
+          <Link
+            href={"/roadmap"}
             className={router.pathname == "/roadmap" ? selected : normal}
           >
             <Image
@@ -147,7 +147,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
                 Roadmaps
               </span>
             )}
-          </div>
+          </Link>
           <div
             onClick={() => router.push("/lofi")}
             className={router.pathname == "/lofi" ? selected : normal}

@@ -69,11 +69,6 @@ const FeedCard = ({ feeds, match, users }: Props) => {
     (userss) => userss.slug!.current === feeds.author
   );
 
-  const follows = match[0].follow!.map((follows) => ({
-    _key: random,
-    _ref: follows._id,
-    _type: "reference",
-  }));
   const likeIfFollowMoreThan0 = async (id: string) => {
     const liked = feeds.liked!.map((follows) => ({
       _key: random,
@@ -129,6 +124,11 @@ const FeedCard = ({ feeds, match, users }: Props) => {
   };
   const isfollowing = match[0].follow?.map((followers) => followers.name);
   const addFollowIfFollowMoreThan1 = async (e: any) => {
+    const follows = match[0].follow!.map((follows) => ({
+      _key: random,
+      _ref: follows._id,
+      _type: "reference",
+    }));
     e.preventDefault();
     try {
       const postInfo: UserBody = {
@@ -182,6 +182,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
       console.error(err);
     } finally {
       // window.location.reload();
+      router.replace(router.pathname);
     }
     router.replace(router.pathname);
   };
@@ -216,12 +217,12 @@ const FeedCard = ({ feeds, match, users }: Props) => {
             <img
               loading="lazy"
               src={feeds.image}
-              className="absolute   h-full w-full object-cover object-center inset-0"
+              className="absolute  z-10 h-full w-full object-cover rounded-md object-center inset-0"
             />
           </div>
         </div>
-        <div className="flex flex-col items-stretch w-[10%] ml-5 h-full max-md:w-full max-md:ml-0">
-          <div className="flex flex-col w-[22rem] max-md:mt-6">
+        <div className="flex flex-col items-stretch lg:w-[10%] ml-5 h-full  max-md:ml-0">
+          <div className="flex flex-col w-full lg:w-[22rem]  max-md:mt-6">
             <div className="self-stretch flex w-full items-start justify-between gap-5">
               <div className="flex items-start gap-2.5 max-md:justify-center">
                 <img
@@ -232,20 +233,54 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                 <div className="text-zinc-300 text-base font-semibold self-center my-auto">
                   {feeds.author}
                 </div>
-                <div
-                  onClick={(e) => {
-                    {
-                      match[0].follow
-                        ? match[0].follow.length > 0
-                          ? addFollowIfFollowMoreThan1(e)
-                          : addFollowIfFollowLessThan1(e)
-                        : addFollowIfFollowLessThan1(e);
-                    }
-                  }}
-                  className="text-zinc-300 shine-button cursor-pointer text-center text-xs font-semibold self-center border bg-white bg-opacity-30 w-fit justify-center max-w-full my-auto pl-4 pr-4 py-2 rounded border-solid border-white border-opacity-40"
-                >
-                  Follow
-                </div>
+                {match[0].follow ? (
+                  isfollowing!.includes(blogauthor[0].name) ? (
+                    <div
+                      onClick={(e) => {
+                        {
+                          match[0].follow
+                            ? match[0].follow.length > 0
+                              ? addFollowIfFollowMoreThan1(e)
+                              : addFollowIfFollowLessThan1(e)
+                            : addFollowIfFollowLessThan1(e);
+                        }
+                      }}
+                      className="text-neutral-500 shine-button cursor-pointer text-start text-xs font-semibold flex border bg-white bg-opacity-5 w-fit justify-center   px-4 py-2 rounded border-solid border-white border-opacity-10"
+                    >
+                      Following
+                    </div>
+                  ) : (
+                    <div
+                      onClick={(e) => {
+                        {
+                          match[0].follow
+                            ? match[0].follow.length > 0
+                              ? addFollowIfFollowMoreThan1(e)
+                              : addFollowIfFollowLessThan1(e)
+                            : addFollowIfFollowLessThan1(e);
+                        }
+                      }}
+                      className="text-zinc-300 flex shine-button cursor-pointer text-center text-xs font-semibold self-center border bg-white bg-opacity-20 w-fit justify-center max-w-full my-auto pl-4 pr-4 py-2 rounded border-solid border-white border-opacity-30"
+                    >
+                      Follow
+                    </div>
+                  )
+                ) : (
+                  <div
+                    onClick={(e) => {
+                      {
+                        match[0].follow
+                          ? match[0].follow.length > 0
+                            ? addFollowIfFollowMoreThan1(e)
+                            : addFollowIfFollowLessThan1(e)
+                          : addFollowIfFollowLessThan1(e);
+                      }
+                    }}
+                    className="text-zinc-300 flex shine-button cursor-pointer text-center text-xs font-semibold self-center border bg-white bg-opacity-20 w-fit justify-center max-w-full my-auto pl-4 pr-4 py-2 rounded border-solid border-white border-opacity-30"
+                  >
+                    Follow
+                  </div>
+                )}
               </div>
               <img
                 loading="lazy"
@@ -284,7 +319,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                   onClick={(e) => {
                     {
                       feeds.liked
-                        ? feeds.liked.length > 0
+                        ? feeds.liked.length > 1
                           ? likeIfFollowMoreThan0(feeds._id!)
                           : likeIfFollowLessThan0(feeds._id!)
                         : likeIfFollowLessThan0(feeds._id!);
@@ -292,9 +327,13 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                   }}
                   loading="lazy"
                   src="https://cdn.discordapp.com/attachments/1018558539947585596/1167111169270620170/d1567390-3379-41d2-babd-6b498aa16668.png?ex=654ceffa&is=653a7afa&hm=afd7c302b6aabe3652afd62784cdf468b22b9e157f25bc2d642b56f38a50e6b8&"
-                  className={`h-6 w-6 ${isfollowing!.includes(
-                    feeds.author
-                  )} ? "text-pink-600" : "text-white" `}
+                  className={`h-6 w-6 select-none ${
+                    match[0].follow
+                      ? isfollowing!.includes(blogauthor[0].name)
+                        ? "!text-pink-500"
+                        : "text-neutal-200"
+                      : "text-neutal-200"
+                  }`}
                 />
               </Tooltip>
               <img
