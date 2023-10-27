@@ -26,6 +26,15 @@ import {
   FaThumbsUp,
 } from "react-icons/fa";
 import { useRouter } from "next/router";
+import {
+  Divider,
+  Menu,
+  MenuItem,
+  MenuProps,
+  alpha,
+  styled,
+} from "@mui/material";
+import { DeleteIcon } from "lucide-react";
 
 interface Props {
   feeds: Videos;
@@ -33,10 +42,62 @@ interface Props {
   users: Users[];
 }
 
+const StyledMenu = styled((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+
+    color:
+      theme.palette.mode === "light"
+        ? "theme.palette.grey[300]"
+        : theme.palette.grey[300],
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        ),
+      },
+    },
+  },
+}));
+
 const FeedCard = ({ feeds, match, users }: Props) => {
   const [comments, setComments] = useState<FeedComment[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -235,18 +296,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                 </div>
                 {match[0].follow ? (
                   isfollowing!.includes(blogauthor[0].name) ? (
-                    <div
-                      onClick={(e) => {
-                        {
-                          match[0].follow
-                            ? match[0].follow.length > 0
-                              ? addFollowIfFollowMoreThan1(e)
-                              : addFollowIfFollowLessThan1(e)
-                            : addFollowIfFollowLessThan1(e);
-                        }
-                      }}
-                      className="text-neutral-500 shine-button cursor-pointer text-start text-xs font-semibold flex border bg-white bg-opacity-5 w-fit justify-center   px-4 py-2 rounded border-solid border-white border-opacity-10"
-                    >
+                    <div className="text-neutral-500 shine-button cursor-pointer text-start text-xs font-semibold flex border bg-white bg-opacity-5 w-fit justify-center   px-4 py-2 rounded border-solid border-white border-opacity-10">
                       Following
                     </div>
                   ) : (
@@ -283,10 +333,33 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                 )}
               </div>
               <img
+                // @ts-ignore
+                onClick={handleClick}
                 loading="lazy"
                 srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
                 className="aspect-square object-cover object-center w-[30px] overflow-hidden max-w-full"
               />
+              <StyledMenu
+                id="demo-customized-menu"
+                MenuListProps={{
+                  "aria-labelledby": "demo-customized-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose} disableRipple>
+                  Report
+                </MenuItem>
+
+                <Divider sx={{ my: 0.5 }} />
+                {blogauthor[0].name == match[0].name && (
+                  <MenuItem onClick={handleClose} disableRipple>
+                    <DeleteIcon />
+                    Delete
+                  </MenuItem>
+                )}
+              </StyledMenu>
             </div>
             <div className="bg-zinc-700 bg-opacity-50 self-stretch w-full h-px mt-3" />
             <div className="text-zinc-300 text-base mt-5">
@@ -315,7 +388,73 @@ const FeedCard = ({ feeds, match, users }: Props) => {
             <div className="bg-zinc-700 bg-opacity-50 self-stretch w-full h-px mt-3.5" />
             <div className="py-2 flex gap-4 mt-2">
               <Tooltip content={feeds.liked ? feeds.liked.length : 0}>
-                <img
+                {match[0].follow ? (
+                  isfollowing!.includes(blogauthor[0].name) ? (
+                    <img
+                      onClick={(e) => {
+                        {
+                          feeds.liked
+                            ? feeds.liked.length > 1
+                              ? likeIfFollowMoreThan0(feeds._id!)
+                              : likeIfFollowLessThan0(feeds._id!)
+                            : likeIfFollowLessThan0(feeds._id!);
+                        }
+                      }}
+                      loading="lazy"
+                      src="https://cdn.discordapp.com/attachments/1018558539947585596/1167502249883349102/New_Project.png?ex=654e5c33&is=653be733&hm=f572aa28044141d5286d43bd7bfd892b5f9fbf4bc091ae6b9bff2fac200be80b&"
+                      className={`h-6 w-6 select-none ${
+                        match[0].follow
+                          ? isfollowing!.includes(blogauthor[0].name)
+                            ? "!text-pink-500"
+                            : "text-neutal-200"
+                          : "text-neutal-200"
+                      }`}
+                    />
+                  ) : (
+                    <img
+                      onClick={(e) => {
+                        {
+                          feeds.liked
+                            ? feeds.liked.length > 1
+                              ? likeIfFollowMoreThan0(feeds._id!)
+                              : likeIfFollowLessThan0(feeds._id!)
+                            : likeIfFollowLessThan0(feeds._id!);
+                        }
+                      }}
+                      loading="lazy"
+                      src="https://cdn.discordapp.com/attachments/1018558539947585596/1167111169270620170/d1567390-3379-41d2-babd-6b498aa16668.png?ex=654ceffa&is=653a7afa&hm=afd7c302b6aabe3652afd62784cdf468b22b9e157f25bc2d642b56f38a50e6b8&"
+                      className={`h-6 w-6 select-none ${
+                        match[0].follow
+                          ? isfollowing!.includes(blogauthor[0].name)
+                            ? "!text-pink-500"
+                            : "text-neutal-200"
+                          : "text-neutal-200"
+                      }`}
+                    />
+                  )
+                ) : (
+                  <img
+                    onClick={(e) => {
+                      {
+                        feeds.liked
+                          ? feeds.liked.length > 1
+                            ? likeIfFollowMoreThan0(feeds._id!)
+                            : likeIfFollowLessThan0(feeds._id!)
+                          : likeIfFollowLessThan0(feeds._id!);
+                      }
+                    }}
+                    loading="lazy"
+                    src="https://cdn.discordapp.com/attachments/1018558539947585596/1167111169270620170/d1567390-3379-41d2-babd-6b498aa16668.png?ex=654ceffa&is=653a7afa&hm=afd7c302b6aabe3652afd62784cdf468b22b9e157f25bc2d642b56f38a50e6b8&"
+                    className={`h-6 w-6 select-none ${
+                      match[0].follow
+                        ? isfollowing!.includes(blogauthor[0].name)
+                          ? "!text-pink-500"
+                          : "text-neutal-200"
+                        : "text-neutal-200"
+                    }`}
+                  />
+                )}
+                {/* <img
                   onClick={(e) => {
                     {
                       feeds.liked
@@ -334,7 +473,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                         : "text-neutal-200"
                       : "text-neutal-200"
                   }`}
-                />
+                /> */}
               </Tooltip>
               <img
                 loading="lazy"

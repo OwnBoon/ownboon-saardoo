@@ -611,7 +611,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                               className={`bg-transparent text-[7vw] md:text-[2.5vw] text-white placeholder-white ${
                                 edittitle ? "border-b border-white/40" : ""
                               }  flex justify-center  outline-none`}
-                              placeholder={notesez[index].topic}
+                              placeholder={selectedNote}
                               minLength={3}
                               // onChange={(e) => setEdittitle(true);...}
                             />
@@ -631,7 +631,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
                             <ReactQuill
                               theme="snow"
                               className="md:h-[30vw] h-[60vw] md:w-[30vw] w-[70vw]     "
-                              value={text || notesez[index]?.note}
+                              value={text || selectedNoteData}
                               onChange={setText}
                             />
 

@@ -22,6 +22,7 @@ export default async function handler(
           image: data.image,
           profileImage: data.profileImage,
           desc: data.desc,
+          liked: null,
           categories: data.categories,
           video: data.video
 
