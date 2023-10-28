@@ -4,7 +4,7 @@ import groq from "groq";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import { sanityClient } from "../../sanity";
-import { Category, Goals, Posts, User, UserBody } from "../../typings";
+import { Category, Goals, Posts, User, UserBody, Videos } from "../../typings";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Progress from "../../components/dashboard/Progress";
 import dynamic from "next/dynamic";
@@ -17,10 +17,11 @@ import { useUser } from "@clerk/nextjs";
 import { fetchUsers } from "../../utils/fetchUsers";
 import Layout from "../../components/Layout/Layout";
 import { fetchGoals } from "../../utils/fetchGoals";
+import { fetchVideos } from "../../utils/fetchPosts";
 
 interface Props {
   user: User;
-  posts: Posts[];
+  posts: Videos[];
   users: User[];
   goals: Goals[];
 }
@@ -44,7 +45,7 @@ interface Props {
 
 const User = ({ user, posts, users, goals }: Props) => {
   const userss = useUser();
-  const blog = posts.filter((post) => post.author === userss.user?.username);
+  const blog = posts.filter((post) => post.author === user.slug!.current);
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   function generateString(length: number) {
@@ -59,6 +60,13 @@ const User = ({ user, posts, users, goals }: Props) => {
 
   const random = generateString(8);
   const random2 = generateString(9);
+
+  const categoriesArray = user.categories!.split(",");
+  const filteredArr = categoriesArray!.filter((item) => item !== "undefined");
+  // @ts-ignore
+  const uniqueArr = [...new Set(filteredArr)];
+  console.log(uniqueArr);
+  const level = Number(user.focus) * 0.02;
 
   const matchuser = userss.user;
   if (userss.user) {
@@ -102,111 +110,156 @@ const User = ({ user, posts, users, goals }: Props) => {
         goals={goals}
         border="gray-500"
         children={
-          <div className="w-full h-screen  ">
-            <div className="">
-              <Head>
-                <title> {user.name} </title>
-                <meta name="description" content="" />
-                <link rel="icon" href="/logo.png" />
-              </Head>
-
-              <link
-                rel="stylesheet"
-                href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"
-              />
-              <link
-                rel="stylesheet"
-                href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-              ></link>
-
-              <main className="profile-page">
-                <section className="relative block h-[300px]"></section>
-                <section className="relative py-16 bg-blueGray-200">
-                  <div className="container mx-auto px-4">
-                    <div className="relative flex flex-col min-w-0 break-words bg-[#212121]/80 backdrop-blur-2xl w-full mb-6 shadow-xl rounded-lg -mt-64">
-                      <div className="px-6">
-                        <div className="flex flex-wrap justify-center">
-                          <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                            <div className="relative">
-                              <img
-                                alt="..."
-                                src={user?.profileImage}
-                                className="shadow-xl  brightness-105 border-2 border-white/40 cursor-pointer select-none rounded-full h-auto align-middle  absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
-                              />
-                            </div>
-                          </div>
-                          <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                            <div className="py-6 px-3 mt-32 sm:mt-0"></div>
-                          </div>
-                          <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                            <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                              <div className="mr-4 p-3 text-center">
-                                <span className="text-xl font-bold cursor-pointer text-neutral-400 block uppercase tracking-wide ">
-                                  {user.follow?.length || 0}
-                                </span>
-                                <span className="text-sm cursor-pointer text-neutral-300">
-                                  Following
-                                </span>
-                              </div>
-                              <div className="mr-4 p-3 text-center">
-                                <span className="text-xl font-sans font-bold block uppercase tracking-wide text-neutral-400">
-                                  {blog.length}
-                                </span>
-                                <span className="text-sm text-neutral-300 cursor-pointer">
-                                  Blogs
-                                </span>
-                              </div>
-                            </div>
+          <div>
+            <section className="flex flex-col w-full  ">
+              <div className="self-center w-full max-w-[1055px] mt-7 max-md:max-w-full">
+                <div className="gap-5 flex max-md:flex-col max-md:items-stretch max-md:gap-0">
+                  <div className="flex flex-col items-stretch w-[22%] max-md:w-full max-md:ml-0">
+                    <img
+                      src={user.profileImage}
+                      className="bg-zinc-300 flex w-[190px] h-[190px] flex-col mx-auto rounded-[200px] max-md:mt-8"
+                    />
+                  </div>
+                  <div className="flex flex-col items-stretch w-[42%] ml-5 max-md:w-full max-md:ml-0">
+                    <div className="flex flex-col my-auto max-md:mt-10">
+                      <div className="flex w-[319px] max-w-full items-start justify-between gap-5 self-start">
+                        <h2 className="text-white text-xl font-semibold flex-1 my-auto">
+                          {user.name}
+                        </h2>
+                        <div className="bg-zinc-800 bg-opacity-40 backdrop-blur-sm border border-white/30 flex flex-col flex-1 cursor-pointer px-4 py-2.5 rounded">
+                          <div className="text-white text-md font-medium self-center whitespace-nowrap">
+                            Edit Profile
                           </div>
                         </div>
-                        <div className="text-center    mt-5">
-                          <h3 className="text-4xl text-neutral-300 flex flex-col font-semibold leading-normal   mb-2">
-                            {user.name}
-                          </h3>
-                          <div className="text-sm  leading-normal mt-0 mb-2 text-neutral-200 font-bold uppercase">
-                            <span className="font-sans">{level}</span> Points
+                      </div>
+                      <div className="flex w-[344px] max-w-full items-start justify-between gap-5 mt-6 self-start max-md:justify-center">
+                        <div className="flex items-center  gap-1.5 self-center">
+                          <h1 className="text-white text-2xl font-semibold self-center">
+                            {blog.length}
+                          </h1>
+                          <h2 className="text-white text-xl font-medium self-center whitespace-nowrap">
+                            Posts
+                          </h2>
+                        </div>
+                        <div className="flex items-center  gap-1.5 self-center">
+                          <h1 className="text-white text-2xl font-semibold self-center">
+                            {user.follow?.length}
+                          </h1>
+                          <h2 className="text-white text-xl font-medium self-center whitespace-nowrap">
+                            Followers
+                          </h2>
+                        </div>
+                        <div className="flex items-start gap-2.5 self-start">
+                          <div className="text-white text-2xl font-semibold self-start">
+                            {user.follow?.length}
                           </div>
-                          <div className="flex flex-col">
-                            <h1 className="">Categories followed:</h1>
-                            <div className="">
-                              <p>{user.categories}</p>
-                            </div>
+                          <div className="text-white text-xl font-medium self-start whitespace-nowrap">
+                            Following
                           </div>
                         </div>
-                        <div className="mt-10 py-10 border-t border-blueGray-200 overflow-y-scroll h-[30rem] text-center">
-                          <div className="max-w-5xl mx-auto w-full flex   justify-start">
-                            <div className="flex flex-col">
-                              {blog.map((post, index) => (
-                                <div className="">
-                                  {/* @ts-ignore */}
-                                  <PostCard
-                                    match={match}
-                                    users={users}
-                                    key={index}
-                                    post={post}
-                                  />
-                                </div>
-                              ))}
+                      </div>
+                      <div className="text-white w-full   flex font-medium mt-7">
+                        <div className="flex gap-3">
+                          {uniqueArr.map((category) => (
+                            <div className="bg-zinc-600 bg-opacity-10   shine-button self-stretch text-sm flex w-fit  items-center justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50">
+                              <h1>{category}</h1>
                             </div>
-                          </div>
+                          ))}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <footer className="relative bg-blueGray-200 pt-8 pb-6 mt-8">
-                    <div className="container mx-auto px-4">
-                      <div className="flex flex-wrap items-center md:justify-between justify-center">
-                        <div className="w-full md:w-6/12 px-4 mx-auto text-center">
-                          <div className="text-sm font-sans text-blueGray-500 font-semibold py-1">
-                            @ownboon
-                          </div>
-                        </div>
+                  <div className="flex flex-col items-stretch w-[36%] ml-5 max-md:w-full max-md:ml-0">
+                    {level < 5 ? (
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                        <h1 className=" px-2 flex justify-between w-full py-1 self-center">
+                          <span></span>Boon Island{" "}
+                          <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
+                            {level}
+                          </span>
+                        </h1>
+
+                        <img
+                          className="group-hover:brightness-110   transition-all duration-150"
+                          src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
+                        />
                       </div>
-                    </div>
-                  </footer>
-                </section>
-              </main>
-            </div>
+                    ) : level < 10 ? (
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                        <h1 className=" px-2 flex justify-between w-full py-1 self-center">
+                          <span></span>Boon Island{" "}
+                          <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
+                            {level}
+                          </span>
+                        </h1>
+
+                        <img
+                          className="group-hover:brightness-110 transition-all duration-150"
+                          src="https://cdn.sanity.io/images/mrfd4see/production/d1bd6eff25b845c90126df595c24663cffcd9acf-3072x1414.png?w=2000&fit=max&auto=format"
+                        />
+                      </div>
+                    ) : level < 21 ? (
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                        <h1 className=" px-2 flex justify-between w-full py-1 self-center">
+                          <span></span>Boon Island{" "}
+                          <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
+                            {level}
+                          </span>
+                        </h1>
+
+                        <img
+                          className="group-hover:brightness-110 transition-all duration-150"
+                          src="https://cdn.sanity.io/images/mrfd4see/production/996a064b91c927a0fceec73bc265112d1207822f-3072x1414.png?w=2000&fit=max&auto=format"
+                        />
+                      </div>
+                    ) : level < 31 ? (
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                        <h1 className=" px-2 flex justify-between w-full py-1 self-center">
+                          <span></span>Boon Island{" "}
+                          <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
+                            {level}
+                          </span>
+                        </h1>
+
+                        <img
+                          className="group-hover:brightness-110 transition-all duration-150"
+                          src="https://cdn.sanity.io/images/mrfd4see/production/f8cf6a118ab5c937763289890beb462071486665-3072x1414.png?w=2000&fit=max&auto=format"
+                        />
+                      </div>
+                    ) : level < 41 ? (
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                        <h1 className=" px-2 flex justify-between w-full py-1 self-center">
+                          <span></span>Boon Island{" "}
+                          <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
+                            {level}
+                          </span>
+                        </h1>
+
+                        <img
+                          className="group-hover:brightness-110 transition-all duration-150"
+                          src="https://cdn.sanity.io/images/mrfd4see/production/914f72baf217a69b15346c9ae10db7057b1d4d12-3072x1414.png?w=2000&fit=max&auto=format"
+                        />
+                      </div>
+                    ) : level > 51 ? (
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                        <h1 className=" px-2 flex justify-between w-full py-1 self-center">
+                          <span></span>Boon Island{" "}
+                          <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
+                            {level}
+                          </span>
+                        </h1>
+
+                        <img
+                          className="group-hover:brightness-110 transition-all duration-150"
+                          src="https://cdn.sanity.io/images/mrfd4see/production/e600fb45845244fdce46b6e1bec2bff7d8631f5f-3360x1786.png?w=2000&fit=max&auto=format"
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+              <div className="bg-zinc-700 bg-opacity-50 self-center w-[1055px] h-px mt-20 max-md:max-w-full max-md:mt-10" />
+            </section>
           </div>
         }
       />
@@ -235,7 +288,8 @@ export async function getStaticProps(context: any) {
   const { slug = "" } = context.params;
   const user = await sanityClient.fetch(query, { slug });
   const users = await fetchUsers();
-  const posts = await fecthBlogs();
+  const posts = await fetchVideos();
+  // const feed = await fetchVideos();
   const goals = await fetchGoals();
   return {
     props: {

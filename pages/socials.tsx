@@ -47,6 +47,7 @@ import { Dropdown } from "@nextui-org/react";
 
 import { AiOutlineStar } from "react-icons/ai";
 import PostCardMobile from "../components/PostCardMobile";
+import { Skeleton, Stack } from "@mui/material";
 
 interface Video {
   id: {
@@ -225,6 +226,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
       console.log("not feetched");
     }
   }, [isLoaded]);
+  // @ts-ignore
 
   if (!isSignedIn) {
     return (
@@ -237,6 +239,10 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const handleCreate = () => {
     SetCreate(!create);
   };
+
+  const filterFeed = feed.filter((feeds) =>
+    feeds.categories.split(",").includes(selectedTool)
+  );
 
   const categories = ["Computer", "Science", "Arts", "AI"];
 
@@ -373,9 +379,32 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
               </div>
               {/* posts */}
               <div>
-                {feed.map((feeds) => (
-                  <FeedCard feeds={feeds} match={match} users={users} />
-                ))}
+                {selectedTool !== "All" ? (
+                  <>
+                    {filterFeed.map((feeds) => (
+                      <section id={feeds.title}>
+                        <FeedCard feeds={feeds} match={match} users={users} />
+                      </section>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {feed.map((feeds) => (
+                      <FeedCard feeds={feeds} match={match} users={users} />
+                    ))}
+                  </>
+                )}
+                {!feed ? (
+                  <Stack spacing={1}>
+                    {/* For variant="text", adjust the height via font-size */}
+                    <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+
+                    {/* For other variants, adjust the size with `width` and `height` */}
+                    <Skeleton variant="circular" width={40} height={40} />
+                    <Skeleton variant="rectangular" width={210} height={60} />
+                    <Skeleton variant="rounded" width={210} height={60} />
+                  </Stack>
+                ) : null}
               </div>
             </div>
             <div className="p-5 hidden lg:inline">

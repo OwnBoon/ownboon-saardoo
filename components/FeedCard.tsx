@@ -249,6 +249,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
   };
 
   const [input, setInput] = useState("");
+  const [showInput, setShowInput] = useState(false);
 
   const handleSubmit = async (id: string) => {
     setLoading(true);
@@ -271,7 +272,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
     setLoading(false);
   };
   return (
-    <div className="bg-zinc-600 bg-opacity-10 self-stretch mt-5 w-full p-3 rounded-xl border-[0.75px] border-solid border-zinc-700 border-opacity-50 max-md:max-w-full">
+    <div className="bg-zinc-600 fade bg-opacity-10 self-stretch mt-5 w-full p-3 rounded-xl border-[0.75px] border-solid border-zinc-700 border-opacity-50 max-md:max-w-full">
       <div className="gap-5 flex max-md:flex-col max-md:items-stretch max-md:gap-0">
         <div className="flex flex-col items-stretch w-[58%] max-md:w-full max-md:ml-0">
           <div className="flex-col shine-button2 overflow-hidden relative flex min-h-[429px] pl-5 pr-2 pt-2 pb-96 max-md:max-w-full max-md:mt-6">
@@ -283,7 +284,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
           </div>
         </div>
         <div className="flex flex-col items-stretch lg:w-[10%] ml-5 h-full  max-md:ml-0">
-          <div className="flex flex-col w-full lg:w-[22rem]  max-md:mt-6">
+          <div className="flex flex-col w-full lg:w-[22rem]   max-md:mt-6">
             <div className="self-stretch flex w-full items-start justify-between gap-5">
               <div className="flex items-start gap-2.5 max-md:justify-center">
                 <img
@@ -291,9 +292,13 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                   src={feeds.profileImage}
                   className="aspect-square shine-button object-cover object-center w-[33px] overflow-hidden self-stretch max-w-full rounded-[50%]"
                 />
-                <div className="text-zinc-300 text-base font-semibold self-center my-auto">
+                <Link
+                  // @ts-ignore
+                  href={`/user/${blogauthor[0].slug!.current}`}
+                  className="text-zinc-300 text-base font-semibold self-center my-auto"
+                >
                   {feeds.author}
-                </div>
+                </Link>
                 {match[0].follow ? (
                   isfollowing!.includes(blogauthor[0].name) ? (
                     <div className="text-neutral-500 shine-button cursor-pointer text-start text-xs font-semibold flex border bg-white bg-opacity-5 w-fit justify-center   px-4 py-2 rounded border-solid border-white border-opacity-10">
@@ -337,7 +342,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                 onClick={handleClick}
                 loading="lazy"
                 srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/ee68cff6-5213-4f0a-bc26-e39fb42df07c?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                className="aspect-square object-cover object-center w-[30px] overflow-hidden max-w-full"
+                className="aspect-square cursor-pointer object-cover object-center w-[30px] overflow-hidden max-w-full"
               />
               <StyledMenu
                 id="demo-customized-menu"
@@ -476,14 +481,17 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                 /> */}
               </Tooltip>
               <img
+                onClick={() => {
+                  showInput ? setShowInput(false) : setShowInput(true);
+                }}
                 loading="lazy"
                 src="https://cdn.discordapp.com/attachments/1018558539947585596/1167111660796923994/8c272588-6472-4826-a64b-a0f519036dce.png?ex=654cf06f&is=653a7b6f&hm=ccbebd184604575c240073226a68df30bc14f83af055f9ed73788207b3e830af&"
-                className="h-6 w-6"
+                className="h-6 w-6 active:scale-105 cursor-pointer "
               />
               <img
                 loading="lazy"
                 src="https://cdn.discordapp.com/attachments/1018558539947585596/1167111697740337202/71494566-81c8-402d-ad47-e34437d23e81.png?ex=654cf078&is=653a7b78&hm=a7788e1baa91c04e11eb627dfd88801b8bb75b6ddd6e72a306100491c8d671f4&"
-                className="h-6 w-6"
+                className="h-6 w-6 cursor-pointer"
               />
             </div>
             {/* <img
@@ -491,26 +499,28 @@ const FeedCard = ({ feeds, match, users }: Props) => {
         className="aspect-[12.32] object-cover object-center w-full overflow-hidden self-stretch mt-4"
         alt="Description of the other image"
       /> */}
-            <div className="bg-zinc-700  bg-opacity-10 backdrop-blur-md self-stretch h-fit justify-center  flex w-full items-center gap-2 mt-4 p-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50 max-md:justify-center">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key == "Enter" && input.length > 0) {
-                    handleSubmit(feeds._id!);
-                  }
-                }}
-                placeholder="write your comment"
-                className="text-zinc-300 text-sm bg-transparent outline-none focus:outline-none focus:ring-0 font-semibold self-stretch w-full max-w-full pl-3 pr-5 py-1.5   "
-              />
+            {showInput && (
+              <div className="bg-zinc-700 fade2  bg-opacity-10 backdrop-blur-md self-stretch h-fit   flex w-full items-center gap-2 mt-4 p-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50 justify-center">
+                <input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter" && input.length > 0) {
+                      handleSubmit(feeds._id!);
+                    }
+                  }}
+                  placeholder="write your comment"
+                  className="text-zinc-300 text-sm bg-transparent outline-none focus:outline-none focus:ring-0 font-semibold self-stretch w-full max-w-full pl-3 pr-5 py-1.5   "
+                />
 
-              <img
-                onClick={() => handleSubmit(feeds._id!)}
-                loading="lazy"
-                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                className="aspect-square object-cover object-center w-4 h-4 overflow-hidden self-stretch max-w-full"
-              />
-            </div>
+                <img
+                  onClick={() => handleSubmit(feeds._id!)}
+                  loading="lazy"
+                  srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/5dbc9a54-5238-46f5-b5e8-0c265974538a?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                  className=" w-4 h-4 md:w-5 md:h-5 cursor-pointer active:scale-105 "
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

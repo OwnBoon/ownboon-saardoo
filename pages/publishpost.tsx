@@ -302,15 +302,16 @@ function Home({ users, goals }: Props) {
 
                   <form
                     method="post"
+                    className="border border-white/20 bg-white/5 rounded-lg w-full flex flex-col justify-center items-center py-2"
                     onChange={handleOnChange}
                     onSubmit={videos ? handleOnSubmit : handleOnSubmitVideo}
                   >
                     <label htmlFor="file-input">
-                      <div className="p-2 mt-5 bg-white/10 w-fit rounded-full">
-                        <PlusIcon className="text-gray-400 hover:text-gray-600  w-10 h-10 transition-all duration-150 cursor-pointer" />
+                      <div className="p-2 mt-10 bg-white/10 w-fit rounded-full">
+                        <PlusIcon className="text-gray-400 hover:text-gray-200  w-10 h-10 transition-all duration-150 cursor-pointer" />
                       </div>
-                      <p className="mr-5">add images or videos</p>
                     </label>
+                    <p className=" text-white/30 mt-3">add images or videos</p>
                     <div className="flex items-center justify-center">
                       <input
                         id="file-input"
