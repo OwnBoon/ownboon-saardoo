@@ -190,7 +190,7 @@ const LofiTodo = ({ todos, user, setTodos }: Props) => {
         method: "POST",
       });
       const json = await result.json();
-      console.log(json);
+      // console.log(json);
       toast.custom((t) => (
         <div
           className={`${

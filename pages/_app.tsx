@@ -2,6 +2,7 @@ import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import "../styles/react-quill.css";
+// import { dark } from "@clerk/themes";
 import "../styles/prism.css";
 import { Provider, useSelector } from "react-redux";
 import { store } from "../redux/store";
@@ -25,8 +26,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const { isBrowser } = useSSR();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-
 
   // useEffect(() => {
   //   const handleRouteChangeStart = () => {
@@ -52,6 +51,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
     <Provider store={store}>
       <RecoilRoot>
         <ClerkProvider
+          // appearance={dark}
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
           {isBrowser && (
@@ -59,7 +59,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
               {loading && <CustomLoader />}
               <Component setLoading={setLoading} {...pageProps} />
               <Analytics />
-
 
               <SpotifyEmbed />
             </div>

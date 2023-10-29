@@ -218,6 +218,19 @@ const FeedCard = ({ feeds, match, users }: Props) => {
       router.replace(router.pathname);
     }
   };
+  const addDelete = async (id: string) => {
+    const postInfo = {
+      // @ts-ignore
+      _id: id,
+    };
+
+    const result = await fetch(`/api/deleteGoals`, {
+      body: JSON.stringify(postInfo),
+      method: "POST",
+    });
+    const json = await result.json();
+    return json;
+  };
   console.log(blogauthor);
   const addFollowIfFollowLessThan1 = async (e: any) => {
     e.preventDefault();
@@ -359,7 +372,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
 
                 <Divider sx={{ my: 0.5 }} />
                 {blogauthor[0].name == match[0].name && (
-                  <MenuItem onClick={handleClose} disableRipple>
+                  <MenuItem onClick={() => addDelete(feeds._id!)} disableRipple>
                     <DeleteIcon />
                     Delete
                   </MenuItem>
@@ -374,14 +387,14 @@ const FeedCard = ({ feeds, match, users }: Props) => {
             </div>
             <div className="h-52 overflow-y-scroll scrollbar-none">
               {comments.map((comment) => (
-                <div className="self-stretch flex items-start justify-between gap-2.5 mt-4">
+                <div className="self-stretch flex items-start justify-start gap-2.5 mt-4">
                   <img
                     loading="lazy"
                     src={comment.profileImg}
                     className="aspect-[1.12] object-cover object-center w-7 overflow-hidden max-w-full rounded-[50%]"
                   />
 
-                  <div className="text-zinc-300 text-sm max-w-[271px] grow shrink-0 basis-auto mt-1.5">
+                  <div className="text-zinc-300 text-sm   shrink-0 basis-auto mt-1.5">
                     <span className="font-semibold"> {comment.username}</span>
                     <span className=""> </span>
                     <span className="">{comment.comment}</span>

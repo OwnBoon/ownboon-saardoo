@@ -115,7 +115,7 @@ const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
             )}
           </div>
           <Link
-            href={"/roadmap"}
+            href={"/workspace"}
             className={router.pathname == "/workspace" ? selected : normal}
           >
             <Image

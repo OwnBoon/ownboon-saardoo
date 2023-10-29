@@ -13,11 +13,15 @@ import Link from "next/link";
 import { fecthBlogs } from "../../utils/fetchBlogs";
 import { GetServerSideProps } from "next";
 import PostCard from "../../components/PostCard";
+import Categories from "../select-categories";
 import { useUser } from "@clerk/nextjs";
 import { fetchUsers } from "../../utils/fetchUsers";
 import Layout from "../../components/Layout/Layout";
 import { fetchGoals } from "../../utils/fetchGoals";
 import { fetchVideos } from "../../utils/fetchPosts";
+import FeedCard from "../../components/FeedCard";
+import { Modal } from "@nextui-org/react";
+import { useState } from "react";
 
 interface Props {
   user: User;
@@ -57,6 +61,7 @@ const User = ({ user, posts, users, goals }: Props) => {
 
     return result;
   }
+  const [showProfile, setShowProfile] = useState(false);
 
   const random = generateString(8);
   const random2 = generateString(9);
@@ -110,68 +115,85 @@ const User = ({ user, posts, users, goals }: Props) => {
         goals={goals}
         border="gray-500"
         children={
-          <div>
-            <section className="flex flex-col w-full  ">
-              <div className="self-center w-full max-w-[1055px] mt-7 max-md:max-w-full">
-                <div className="gap-5 flex max-md:flex-col max-md:items-stretch max-md:gap-0">
+          <div className="">
+            {showProfile && (
+              <Modal
+                aria-labelledby="modal-title"
+                className="!bg-[#191919]/40 h-[90%] w-[100vw] flex justify-center items-center backdrop-blur-md fixed top-0 left-0 right-0  overflow-x-scroll md:inset-0"
+                open={true}
+                closeButton
+                onClose={() => setShowProfile(false)}
+                width="100%"
+              >
+                <Categories users={users} />
+              </Modal>
+            )}
+            <section className="flex flex-col h-screen w-full overflow-y-hidden  ">
+              <div className="self-center w-full border-b border-b-white/10 pb-1 px-1 max-w-[1200px] mt-5 max-md:max-w-full">
+                <div className="gap-2 flex max-md:flex-col max-md:items-stretch max-md:gap-0">
                   <div className="flex flex-col items-stretch w-[22%] max-md:w-full max-md:ml-0">
                     <img
                       src={user.profileImage}
                       className="bg-zinc-300 flex w-[190px] h-[190px] flex-col mx-auto rounded-[200px] max-md:mt-8"
                     />
                   </div>
-                  <div className="flex flex-col items-stretch w-[42%] ml-5 max-md:w-full max-md:ml-0">
+                  <div className="flex flex-col items-stretch w-[50%] ml-5 max-md:w-full max-md:ml-0">
                     <div className="flex flex-col my-auto max-md:mt-10">
                       <div className="flex w-[319px] max-w-full items-start justify-between gap-5 self-start">
                         <h2 className="text-white text-xl font-semibold flex-1 my-auto">
                           {user.name}
                         </h2>
-                        <div className="bg-zinc-800 bg-opacity-40 backdrop-blur-sm border border-white/30 flex flex-col flex-1 cursor-pointer px-4 py-2.5 rounded">
-                          <div className="text-white text-md font-medium self-center whitespace-nowrap">
-                            Edit Profile
+                        {user.name == match[0].name ? (
+                          <div
+                            onClick={() => setShowProfile(true)}
+                            className="bg-zinc-800 bg-opacity-40 backdrop-blur-sm border border-white/30 flex flex-col flex-1 cursor-pointer px-4 py-2.5 rounded"
+                          >
+                            <div className="text-white text-md font-medium self-center whitespace-nowrap">
+                              Edit Profile
+                            </div>
                           </div>
-                        </div>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <div className="flex w-[344px] max-w-full items-start justify-between gap-5 mt-6 self-start max-md:justify-center">
                         <div className="flex items-center  gap-1.5 self-center">
-                          <h1 className="text-white text-2xl font-semibold self-center">
+                          <h1 className="text-white text-lg font-semibold self-center">
                             {blog.length}
                           </h1>
-                          <h2 className="text-white text-xl font-medium self-center whitespace-nowrap">
+                          <h2 className="text-white text-lg font-medium self-center whitespace-nowrap">
                             Posts
                           </h2>
                         </div>
                         <div className="flex items-center  gap-1.5 self-center">
-                          <h1 className="text-white text-2xl font-semibold self-center">
+                          <h1 className="text-white text-lg font-semibold self-center">
                             {user.follow?.length}
                           </h1>
-                          <h2 className="text-white text-xl font-medium self-center whitespace-nowrap">
+                          <h2 className="text-white text-lg font-medium self-center whitespace-nowrap">
                             Followers
                           </h2>
                         </div>
                         <div className="flex items-start gap-2.5 self-start">
-                          <div className="text-white text-2xl font-semibold self-start">
+                          <div className="text-white text-lg font-semibold self-start">
                             {user.follow?.length}
                           </div>
-                          <div className="text-white text-xl font-medium self-start whitespace-nowrap">
+                          <div className="text-white text-lg font-medium self-start whitespace-nowrap">
                             Following
                           </div>
                         </div>
                       </div>
-                      <div className="text-white w-full   flex font-medium mt-7">
-                        <div className="flex gap-3">
-                          {uniqueArr.map((category) => (
-                            <div className="bg-zinc-600 bg-opacity-10   shine-button self-stretch text-sm flex w-fit  items-center justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50">
-                              <h1>{category}</h1>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="text-white w-fit h-fit gap-3   flex font-medium mt-7">
+                        {uniqueArr.slice(0, 3).map((category) => (
+                          <div className="bg-zinc-600 bg-opacity-10 w-fit justify-center  shine-button self-stretch text-xs flex   items-center  gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-zinc-700 border-opacity-50">
+                            <h1>{category}</h1>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-stretch w-[36%] ml-5 max-md:w-full max-md:ml-0">
+                  <div className="flex flex-col items-stretch w-[33%]  max-md:w-full max-md:ml-0">
                     {level < 5 ? (
-                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-90 pb-3 pt-1 px-2">
                         <h1 className=" px-2 flex justify-between w-full py-1 self-center">
                           <span></span>Boon Island{" "}
                           <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
@@ -241,7 +263,7 @@ const User = ({ user, posts, users, goals }: Props) => {
                         />
                       </div>
                     ) : level > 51 ? (
-                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-110 pb-3 pt-1 px-2">
+                      <div className=" flex justify-center flex-col items-center  border border-white/30 rounded-lg scale-90 pb-3 pt-1 px-2">
                         <h1 className=" px-2 flex justify-between w-full py-1 self-center">
                           <span></span>Boon Island{" "}
                           <span className="bg-[#212121] px-2   text-sm flex justify-center items-center py-0.5 rounded-full">
@@ -258,7 +280,11 @@ const User = ({ user, posts, users, goals }: Props) => {
                   </div>
                 </div>
               </div>
-              <div className="bg-zinc-700 bg-opacity-50 self-center w-[1055px] h-px mt-20 max-md:max-w-full max-md:mt-10" />
+              <div className="self-center scale-90 w-full border-b border-b-white/10 pb-10 px-5 h-screen overflow-y-scroll max-w-[1200px] mt-5 max-md:max-w-full">
+                {blog.map((feed) => (
+                  <FeedCard feeds={feed} match={match} users={users} />
+                ))}
+              </div>
             </section>
           </div>
         }

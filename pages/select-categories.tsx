@@ -17,13 +17,12 @@ import { Toaster, toast } from "react-hot-toast";
 interface Props {
   users: User[];
 }
-const Home = ({ users, next, setNext }: any) => {
+const Categories = ({ users, next, setNext }: any) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
   const match = users.filter(
     (userss: any) => userss.email == user?.emailAddresses[0].emailAddress
   );
-  const [isNewUser, setIsNewUser] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
   const filteredCategories = categories.filter((category) =>
@@ -89,7 +88,7 @@ const Home = ({ users, next, setNext }: any) => {
       return json;
     } catch (err) {
       console.error(err);
-    } 
+    }
   };
 
   // if (session) {
@@ -97,10 +96,6 @@ const Home = ({ users, next, setNext }: any) => {
   // } else
   return (
     <div className="w-full h-full bg-transparent ">
-      <Head>
-        <title>Categories @ {user?.username || user?.firstName}</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
       <Toaster position="top-right" reverseOrder={false} />
       <div className="h-full w-full p-2">
         <div className="flex justify-between">
@@ -134,7 +129,7 @@ const Home = ({ users, next, setNext }: any) => {
                 )}
               </div> */}
             <div className="flex flex-col mt-20  justify-center items-center gap-10 ">
-              <div className="flex flex-row flex-wrap sm:flex-nowrap justify-center overflow-x-scroll  items-center gap-2 h-fit">
+              <div className="flex flex-row flex-wrap sm:flex-nowrap justify-center overflow-x-scroll scrollbar-none items-center gap-2 h-fit">
                 {fiveCate.map((cateogry) => (
                   <div
                     onClick={(e) =>
@@ -145,7 +140,6 @@ const Home = ({ users, next, setNext }: any) => {
                     <p className="text-sm">{cateogry.name}</p>
                   </div>
                 ))}
-                
               </div>
               <div className="flex flex-col mt-10 items-center">
                 <input
@@ -212,4 +206,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-export default Home;
+export default Categories;

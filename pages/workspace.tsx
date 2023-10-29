@@ -1,36 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Main from "../components/dashboard/Main";
-import Header from "../components/dashboard/Main";
-import Sidebar from "../components/dashboard/Sidebar";
-import Navbar from "../components/Navbar";
 import { GetServerSideProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
 import { GoalBody, Goals, User } from "../typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { fetchGoals } from "../utils/fetchGoals";
 import { fetchNotes } from "../utils/fetchNotes";
 import toast from "react-hot-toast";
-import { UserButton, useUser } from "@clerk/nextjs";
-import Head from "next/head";
+import { useUser } from "@clerk/nextjs";
 
-import {
-  Button,
-  Checkbox,
-  Collapse,
-  Grid,
-  Input,
-  Loading,
-  Modal,
-  Progress,
-  Text,
-  Textarea,
-  Tooltip,
-} from "@nextui-org/react";
-import Planet from "./tracker";
+import { Checkbox, Loading, Modal, Text, Tooltip } from "@nextui-org/react";
 import dynamic from "next/dynamic";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 import Layout from "../components/Layout/Layout";
 import Island from "../components/BoonIsland/Island";
 import Dialog from "../components/ChapterPopup/ChapterPopup";

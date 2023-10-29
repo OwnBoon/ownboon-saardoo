@@ -1,53 +1,36 @@
 import Link from "next/link";
-import groq from "groq";
-import { sanityClient } from "../sanity";
 import { Comment, CommentBody, Goals, Posts, User, Videos } from "../typings";
-import Sidebar from "../components/dashboard/Sidebar";
-import Progress from "../components/dashboard/Progress";
-import { useSession } from "next-auth/react";
-import { FaVideo, FaBlogger, FaEdit, FaList, FaFilter } from "react-icons/fa";
 import { GetServerSideProps } from "next";
-import { fecthBlogs } from "../utils/fetchBlogs";
-import dynamic from "next/dynamic";
-import { UserButton, useUser } from "@clerk/nextjs";
-import { FaSearchengin } from "react-icons/fa";
-import { useEffect, useState } from "react";
+// import { fecthBlogs } from "../utils/fetchBlogs";
+import { useUser } from "@clerk/nextjs";
+import { Suspense, useEffect, useState } from "react";
 import { fetchUsers } from "../utils/fetchUsers";
 import { fetchFromAPI } from "../utils/fetchVideo";
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
 import { FiFilter } from "react-icons/fi";
-import {
-  Button,
-  Container,
-  Grid,
-  Input,
-  Loading,
-  Modal,
-  Spacer,
-  Text,
-  Tooltip,
-  User as Users,
-} from "@nextui-org/react";
+// import {
+//   Button,
+//   Container,
+//   Grid,
+//   Input,
+//   Loading,
+//   Modal,
+//   Spacer,
+//   Text,
+//   Tooltip,
+//   User as Users,
+// } from "@nextui-org/react";
 import { fetchVideos } from "../utils/fetchPosts";
-import TimeAgo from "react-timeago";
+// import TimeAgo from "react-timeago";
 import { fetchComments } from "../utils/fetchComments";
 import FeedCard from "../components/FeedCard";
 import Layout from "../components/Layout/Layout";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { fetchGoals } from "../utils/fetchGoals";
 import { categories } from "../utils/constants";
-import {
-  CheckBadgeIcon,
-  HomeIcon,
-  DocumentIcon as DocumentIcon2,
-} from "@heroicons/react/24/solid";
-import { DocumentIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 
-import { Dropdown } from "@nextui-org/react";
-
-import { AiOutlineStar } from "react-icons/ai";
-import PostCardMobile from "../components/PostCardMobile";
 import { Skeleton, Stack } from "@mui/material";
+import { Loading } from "@nextui-org/react";
 
 interface Video {
   id: {
@@ -65,22 +48,22 @@ interface Video {
   };
 }
 interface Props {
-  posts: Posts[];
   users: User[];
   videoData: Video[];
   feed: Videos[];
   goals: Goals[];
 }
 
-function Socials({ posts, users, videoData, feed, goals }: Props) {
+function Socials({ users, videoData, feed, goals }: Props) {
   const { isLoaded, isSignedIn, user } = useUser();
 
   const today = new Date();
   const match = users.filter(
     (userss) => userss.email == user?.emailAddresses[0].emailAddress
   );
+
   const [selectedTool, setSelectedTool] = useState("All");
-  const id = posts.map((post) => post._id);
+  const id = feed.map((post) => post._id);
   const [comments, setComments] = useState<Comment[]>([]);
   const [categoryselected, setcategoryselected] = useState("");
 
@@ -91,84 +74,84 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
     setComments(comments);
   };
 
-  const logic = () => {
-    if (match[0] && match[0].categories) {
-      const dynamicCategoriesArray = match[0]
-        .categories!.split(",")
-        .map((category) => category.trim().toLowerCase());
+  // const logic = () => {
+  //   if (match[0] && match[0].categories) {
+  //     const dynamicCategoriesArray = match[0]
+  //       .categories!.split(",")
+  //       .map((category) => category.trim().toLowerCase());
 
-      const filteredPosts = posts.filter((post) => {
-        if (!post.categories) return false; // Skip posts with no categories
-        const postCategories = post.categories
-          .split(",")
-          .map((category) => category.trim().toLowerCase());
-        return dynamicCategoriesArray.some((category) =>
-          postCategories.includes(category)
-        );
-      });
+  //     const filteredPosts = posts.filter((post) => {
+  //       if (!post.categories) return false; // Skip posts with no categories
+  //       const postCategories = post.categories
+  //         .split(",")
+  //         .map((category) => category.trim().toLowerCase());
+  //       return dynamicCategoriesArray.some((category) =>
+  //         postCategories.includes(category)
+  //       );
+  //     });
 
-      filteredPosts.sort((a, b) => {
-        const dateA = a._createdAt ? new Date(a._createdAt) : null;
-        const dateB = b._createdAt ? new Date(b._createdAt) : null;
+  //     filteredPosts.sort((a, b) => {
+  //       const dateA = a._createdAt ? new Date(a._createdAt) : null;
+  //       const dateB = b._createdAt ? new Date(b._createdAt) : null;
 
-        if (dateA && dateB) {
-          // @ts-ignore
-          return dateB - dateA; // Sort in descending order
-        } else if (dateA) {
-          return -1; // DateB is undefined or invalid, so dateA should come first
-        } else if (dateB) {
-          return 1; // DateA is undefined or invalid, so dateB should come first
-        } else {
-          return 0; // Both dates are undefined or invalid, no change in order
-        }
-      });
+  //       if (dateA && dateB) {
+  //         // @ts-ignore
+  //         return dateB - dateA; // Sort in descending order
+  //       } else if (dateA) {
+  //         return -1; // DateB is undefined or invalid, so dateA should come first
+  //       } else if (dateB) {
+  //         return 1; // DateA is undefined or invalid, so dateB should come first
+  //       } else {
+  //         return 0; // Both dates are undefined or invalid, no change in order
+  //       }
+  //     });
 
-      return filteredPosts;
-    } else {
-      // Handle the case where match[0] or match[0].categories is undefined
-      console.error("match[0] or match[0].categories is undefined");
-    }
-  };
+  //     return filteredPosts;
+  //   } else {
+  //     // Handle the case where match[0] or match[0].categories is undefined
+  //     console.error("match[0] or match[0].categories is undefined");
+  //   }
+  // };
 
-  const dropdownLogic = (category: string) => {
-    if (match[0] && match[0].categories) {
-      const dynamicCategoriesArray = category;
+  // const dropdownLogic = (category: string) => {
+  //   if (match[0] && match[0].categories) {
+  //     const dynamicCategoriesArray = category;
 
-      const filteredPosts = posts.filter((post) => {
-        const postCategories = post.categories
-          .split(",")
-          .map((category) => category.trim().toLowerCase());
-        return postCategories.includes(category.toLocaleLowerCase());
-      });
+  //     const filteredPosts = posts.filter((post) => {
+  //       const postCategories = post.categories
+  //         .split(",")
+  //         .map((category) => category.trim().toLowerCase());
+  //       return postCategories.includes(category.toLocaleLowerCase());
+  //     });
 
-      console.log("filtered", filteredPosts);
+  //     console.log("filtered", filteredPosts);
 
-      filteredPosts.sort((a, b) => {
-        const dateA = a._createdAt ? new Date(a._createdAt) : null;
-        const dateB = b._createdAt ? new Date(b._createdAt) : null;
+  //     filteredPosts.sort((a, b) => {
+  //       const dateA = a._createdAt ? new Date(a._createdAt) : null;
+  //       const dateB = b._createdAt ? new Date(b._createdAt) : null;
 
-        if (dateA && dateB) {
-          // @ts-ignore
-          return dateB - dateA; // Sort in descending order
-        } else if (dateA) {
-          return -1; // DateB is undefined or invalid, so dateA should come first
-        } else if (dateB) {
-          return 1; // DateA is undefined or invalid, so dateB should come first
-        } else {
-          return 0; // Both dates are undefined or invalid, no change in order
-        }
-      });
+  //       if (dateA && dateB) {
+  //         // @ts-ignore
+  //         return dateB - dateA; // Sort in descending order
+  //       } else if (dateA) {
+  //         return -1; // DateB is undefined or invalid, so dateA should come first
+  //       } else if (dateB) {
+  //         return 1; // DateA is undefined or invalid, so dateB should come first
+  //       } else {
+  //         return 0; // Both dates are undefined or invalid, no change in order
+  //       }
+  //     });
 
-      return filteredPosts;
-    } else {
-      // Handle the case where match[0] or match[0].categories is undefined
-      console.error("match[0] or match[0].categories is undefined");
-    }
-  };
+  //     return filteredPosts;
+  //   } else {
+  //     // Handle the case where match[0] or match[0].categories is undefined
+  //     console.error("match[0] or match[0].categories is undefined");
+  //   }
+  // };
 
-  const filteredPosts = logic();
+  // const filteredPosts = logic();
 
-  const dropDownBlogs = dropdownLogic(categoryselected);
+  // const dropDownBlogs = dropdownLogic(categoryselected);
   // @ts-ignore
 
   useEffect(() => {
@@ -177,8 +160,8 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
 
   const [create, SetCreate] = useState(false);
 
-  const [dropdown, setDropdown] = useState(false);
-  const [filter, setFilter] = useState(false);
+  // const [dropdown, setDropdown] = useState(false);
+  // const [filter, setFilter] = useState(false);
   const [videos, setVideos] = useState<Video[]>();
   const [showFilter, setShowFilter] = useState(false);
   const [videoName, setVideoName] = useState("");
@@ -186,11 +169,11 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const [videoId, setVideoId] = useState("");
   const options = { month: "long", day: "numeric", year: "numeric" };
   // @ts-ignore
-  const formattedDate = today.toLocaleDateString("en-US", options);
+  // const formattedDate = today.toLocaleDateString("en-US", options);
   // @ts-ignore
-  const PostCard = dynamic(() => import("../components/PostCard"), {
-    ssr: false,
-  });
+  // const PostCard = dynamic(() => import("../components/PostCard"), {
+  //   ssr: false,
+  // });
 
   const [input, setInput] = useState("");
 
@@ -213,19 +196,19 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
     refreshComments();
   };
 
-  useEffect(() => {
-    if (isLoaded) {
-      console.log("feetched");
-      const categoriesArray = match[0].about
-        ?.split(",")
-        .map((category) => category.trim());
-      fetchFromAPI(`search?part=snippet&q=${categoriesArray}`).then((data) =>
-        setVideos(data.items)
-      );
-    } else {
-      console.log("not feetched");
-    }
-  }, [isLoaded]);
+  // useEffect(() => {
+  //   if (isLoaded) {
+  //     console.log("feetched");
+  //     const categoriesArray = match[0].about
+  //       ?.split(",")
+  //       .map((category) => category.trim());
+  //     fetchFromAPI(`search?part=snippet&q=${categoriesArray}`).then((data) =>
+  //       setVideos(data.items)
+  //     );
+  //   } else {
+  //     console.log("not feetched");
+  //   }
+  // }, [isLoaded]);
   // @ts-ignore
 
   if (!isSignedIn) {
@@ -240,6 +223,14 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
     SetCreate(!create);
   };
 
+  const interest = [
+    {
+      id: 1,
+      name: "Computer Science",
+      link: "",
+    },
+  ];
+
   const filterFeed = feed.filter((feeds) =>
     feeds.categories.split(",").includes(selectedTool)
   );
@@ -250,7 +241,7 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
   const filteredArr = categoriesArray!.filter((item) => item !== "undefined");
   // @ts-ignore
   const uniqueArr = [...new Set(filteredArr)];
-  const res = categories.filter((item) => !categoriesArray?.includes(item));
+  // const res = categories.filter((item) => !categoriesArray?.includes(item));
 
   const selected =
     "bg-white bg-opacity-30 self-stretch hidden  md:flex w-fit max-w-full  items-center cursor-pointer shine-button justify-between gap-1 pl-3.5 pr-5 py-2 rounded-md border-[0.75px] border-solid border-white border-opacity-50";
@@ -378,34 +369,36 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
                 </div>
               </div>
               {/* posts */}
-              <div>
-                {selectedTool !== "All" ? (
-                  <>
-                    {filterFeed.map((feeds) => (
-                      <section id={feeds.title}>
+              <Suspense>
+                <div className="h-screen overflow-y-scroll mt-2 rounded-lg">
+                  {selectedTool !== "All" ? (
+                    <>
+                      {filterFeed.map((feeds) => (
+                        <section id={feeds.title}>
+                          <FeedCard feeds={feeds} match={match} users={users} />
+                        </section>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {feed.map((feeds) => (
                         <FeedCard feeds={feeds} match={match} users={users} />
-                      </section>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {feed.map((feeds) => (
-                      <FeedCard feeds={feeds} match={match} users={users} />
-                    ))}
-                  </>
-                )}
-                {!feed ? (
-                  <Stack spacing={1}>
-                    {/* For variant="text", adjust the height via font-size */}
-                    <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                      ))}
+                    </>
+                  )}
+                  {!feed ? (
+                    <Stack spacing={1}>
+                      {/* For variant="text", adjust the height via font-size */}
+                      <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
 
-                    {/* For other variants, adjust the size with `width` and `height` */}
-                    <Skeleton variant="circular" width={40} height={40} />
-                    <Skeleton variant="rectangular" width={210} height={60} />
-                    <Skeleton variant="rounded" width={210} height={60} />
-                  </Stack>
-                ) : null}
-              </div>
+                      {/* For other variants, adjust the size with `width` and `height` */}
+                      <Skeleton variant="circular" width={40} height={40} />
+                      <Skeleton variant="rectangular" width={210} height={60} />
+                      <Skeleton variant="rounded" width={210} height={60} />
+                    </Stack>
+                  ) : null}
+                </div>
+              </Suspense>
             </div>
             <div className="p-5 hidden lg:inline">
               {/* below part */}
@@ -494,14 +487,14 @@ function Socials({ posts, users, videoData, feed, goals }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const posts = await fecthBlogs();
+  // const posts = await fecthBlogs();
   const users = await fetchUsers();
   const goals = await fetchGoals();
   const feed = await fetchVideos();
 
   return {
     props: {
-      posts,
+      // posts,
       users,
       feed,
       goals,

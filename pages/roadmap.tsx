@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, Dropdown, Loading, Modal, Text } from "@nextui-org/react";
 
@@ -573,17 +573,17 @@ const Home = ({ users, goals, notes, roadmaps }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const users = await fetchUsers();
   const goals = await fetchGoals();
-  const notes = await fetchNotes();
+  // const notes = await fetchNotes();
   const roadmaps = await fetchRoadmaps();
 
   return {
     props: {
       users,
       goals,
-      notes,
+      // notes,
       roadmaps,
     },
   };

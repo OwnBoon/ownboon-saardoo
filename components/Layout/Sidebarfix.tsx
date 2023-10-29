@@ -12,7 +12,7 @@ interface Props {
   window?: () => Window;
 }
 const drawerBleeding = 56;
-const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
+const Sidebar = ({ border, showsidebar, setShowsidebar, window }: Props) => {
   const [open, setOpen] = React.useState(false);
 
   const container =
@@ -28,6 +28,7 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
   const normal =
     "w-fit cursor-pointer sidebar brightness-[-50] flex items-center text-gray-400 gap-y-8 gap-x-4";
   const [showBuddyModal, setShowBuddyModal] = React.useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
   const [showChatsModal, setShowChatsModal] = useState(false);
   const [showSocialsModal, setShowSocialsModal] = useState(false);
 
@@ -35,11 +36,9 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
     <div
       onMouseEnter={() => setShowsidebar(true)}
       onMouseLeave={() => setShowsidebar(false)}
-      className={`h-screen transition-all  md:inline-flex lg:inline-flex fixed z-50 duration-[2000] bg-[#101010] p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]  ${
-        !showsidebar
-          ? "w-[60px] md:w-[80px] lg:w-[90px]"
-          : "w-[240px] bg-[#101010]"
-      }  text-[#FFFFFF] text-[15px] flex flex-col items-start justify-between  `}
+      className={`h-screen  transition-all group hidden  md:inline-flex lg:inline-flex fixed z-50 duration-[2000]  p-[3px] md:p-2 lg:p-2 border-r-2  border-[#3a3a3b]   w-[60px] md:w-[80px] lg:w-[90px]
+          hover:w-[240px] bg-[#101010]
+       text-[#FFFFFF] text-[15px]  flex-col items-start justify-between  `}
     >
       <div className="logo flex flex-col transition-all   gap-y-8">
         <div className="flex flex-row transition-all gap-4 items-center">
@@ -73,16 +72,11 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
               height={55}
               className=" p-2  rounded  "
             />
-
-            <span
-              className={
-                showsidebar
-                  ? "font-fontspring transition-all opacity-100  "
-                  : "opacity-0"
-              }
-            >
-              Socials
-            </span>
+            {showsidebar && (
+              <span className="font-fontspring inline-flex duration-150 w-0 fade2 text-xs -mx-20 group-hover:-mx-0 group-hover:text-base group-hover:w-fit   transition-all opacity-100  ">
+                Socials
+              </span>
+            )}
           </Link>
           <Link
             href={"/chat"}
@@ -96,15 +90,11 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
               alt={""}
               className=" p-2 rounded  "
             />
-            <span
-              className={
-                showsidebar
-                  ? "font-fontspring transition-all opacity-100  "
-                  : "opacity-0"
-              }
-            >
-              Chats
-            </span>
+            {showsidebar && (
+              <span className="font-fontspring inline-flex duration-150 w-0 fade2 text-xs -mx-20 group-hover:-mx-0 group-hover:text-base group-hover:w-fit   transition-all opacity-100  ">
+                Chats
+              </span>
+            )}
           </Link>
           <div
             onClick={() => setShowBuddyModal(true)}
@@ -118,18 +108,14 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
               alt={""}
               className=" p-2 rounded  "
             />
-            <span
-              className={
-                showsidebar
-                  ? "font-fontspring transition-all opacity-100  "
-                  : "opacity-0"
-              }
-            >
-              Buddies
-            </span>
+            {showsidebar && (
+              <span className="font-fontspring inline-flex duration-150 w-0 fade2 text-xs -mx-20 group-hover:-mx-0 group-hover:text-base group-hover:w-fit   transition-all opacity-100  ">
+                Buddies
+              </span>
+            )}
           </div>
-          <div
-            onClick={() => router.push("/workspace")}
+          <Link
+            href={"/workspace"}
             className={router.pathname == "/workspace" ? selected : normal}
           >
             <Image
@@ -139,18 +125,14 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
               alt={""}
               className=" p-2 rounded  "
             />
-            <span
-              className={
-                showsidebar
-                  ? "font-fontspring transition-all opacity-100  "
-                  : "opacity-0"
-              }
-            >
-              Workspace
-            </span>
-          </div>
-          <div
-            onClick={() => router.push("/roadmap")}
+            {showsidebar && (
+              <span className="font-fontspring inline-flex duration-150 w-0 fade2 text-xs -mx-20 group-hover:-mx-0 group-hover:text-base group-hover:w-fit   transition-all opacity-100  ">
+                Workspace
+              </span>
+            )}
+          </Link>
+          <Link
+            href={"/roadmap"}
             className={router.pathname == "/roadmap" ? selected : normal}
           >
             <Image
@@ -160,16 +142,12 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
               alt={""}
               className=" p-2 rounded  "
             />
-            <span
-              className={
-                showsidebar
-                  ? "font-fontspring transition-all opacity-100  "
-                  : "opacity-0"
-              }
-            >
-              Roadmap
-            </span>
-          </div>
+            {showsidebar && (
+              <span className="font-fontspring inline-flex duration-150 w-0 fade2 text-xs -mx-20 group-hover:-mx-0 group-hover:text-base group-hover:w-fit   transition-all opacity-100  ">
+                Roadmaps
+              </span>
+            )}
+          </Link>
           <div
             onClick={() => router.push("/lofi")}
             className={router.pathname == "/lofi" ? selected : normal}
@@ -181,23 +159,56 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
               alt={""}
               className=" p-2 rounded  "
             />
-            <span
-              className={
-                showsidebar
-                  ? "font-fontspring transition-all opacity-100  "
-                  : "opacity-0"
-              }
-            >
-              Lofi
-            </span>
+            {showsidebar && (
+              <span className="font-fontspring inline-flex duration-150 w-0 fade2 text-xs -mx-20 group-hover:-mx-0 group-hover:text-base group-hover:w-fit   transition-all opacity-100  ">
+                Lofi
+              </span>
+            )}
           </div>
         </div>
+
+        <Dialog isOpen={showFeedbackModal} onClose={setShowFeedbackModal}>
+          <div className="rounded-xl bg-[#101010] p-16">
+            <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
+              <div className="flex flex-col p-5 items-center justify-center">
+                <h1 className="text-[2vw] my-2  text-white text-center ">
+                  Your Feedback Matters!
+                </h1>
+                <div className="w-44 h-[0px] border border-neutral-400"></div>
+                <div className="flex flex-row space-x-4 p-4 justify-between">
+                  <div className="flex flex-col">
+                    <iframe
+                      src="https://discord.com/widget?id=1100319628984598548&theme=dark"
+                      width="350"
+                      height="500"
+                      allowTransparency={true}
+                      frameBorder={0}
+                      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                    ></iframe>
+                  </div>
+                  <div className="flex flex-col  ">
+                    <p className="md:text-[1.6vw] text-[2vw]">
+                      Join our discord community to get latest updates and
+                      announcements
+                    </p>
+                    <a
+                      href="https://discord.gg/Aje9uqBMvr"
+                      className="py-2 px-4 text-center  bg-[#7289da] text-black rounded-3xl text-[2vw] md:text-[0.9vw]"
+                    >
+                      Join Discord
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Dialog>
 
         <Dialog isOpen={showBuddyModal} onClose={setShowBuddyModal}>
           <div className="rounded-xl bg-[#101010] p-16">
             <div className="flex items-center w-[30vw] h-full justify-center flex-col ">
               <div className="flex flex-col p-5 items-center justify-center">
-                <h1 className="text-[3vw] my-2  text-white text-center ">
+                <h1 className="text-[2vw] my-2  text-white text-center ">
                   Empowering Buddies
                 </h1>
                 <div className="w-44 h-[0px] border border-neutral-400"></div>
@@ -213,6 +224,7 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
         </Dialog>
       </div>
       <div
+        onClick={() => setShowFeedbackModal(true)}
         className={
           router.pathname == "/feedback"
             ? `${selected}  pb-3`
@@ -226,18 +238,14 @@ const Sidebarfix = ({ border, showsidebar, setShowsidebar, window }: Props) => {
           alt={""}
           className=" p-2 rounded  "
         />
-        <span
-          className={
-            showsidebar
-              ? "font-fontspring transition-all opacity-100  "
-              : "opacity-0"
-          }
-        >
-          Feedback
-        </span>
+        {showsidebar && (
+          <span className="font-fontspring inline-flex duration-150 w-0 fade2 text-xs -mx-20 group-hover:-mx-0 group-hover:text-base group-hover:w-fit   transition-all opacity-100  ">
+            Feedback
+          </span>
+        )}
       </div>
     </div>
   );
 };
 
-export default Sidebarfix;
+export default Sidebar;
