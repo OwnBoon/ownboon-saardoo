@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Hero from "../components/Hero";
 import Body from "../components/Home/Body";
@@ -158,7 +158,7 @@ const Home = ({ users }: Props) => {
     </>
   );
 };
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const users = await fetchUsers();
 
   return {

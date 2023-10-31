@@ -136,7 +136,7 @@ function Home({ users, goals }: Props) {
 
     setImageSrc(data.secure_url);
     setUploadData(data);
-    handleSubmit(event);
+    handleSubmit(event, data.secure_url);
     router.replace(router.pathname);
   }
   async function handleOnSubmitVideo(event: any) {
@@ -165,7 +165,7 @@ function Home({ users, goals }: Props) {
 
     setImageSrc(data.secure_url);
     setUploadData(data);
-    handleSubmit(event);
+    handleSubmit(event, data.secure_url);
     router.replace(router.pathname);
   }
 
@@ -181,16 +181,17 @@ function Home({ users, goals }: Props) {
 
   // @ts-ignore
   // const text = editorRef.current.getContent() || "null";
-  const handleSubmit = async (e: any) => {
+  // console.log(imageSrc);
+  const handleSubmit = async (e: any, image: string) => {
     e.preventDefault();
     const mutations = {
-      _type: "post",
+      _type: "videos",
       title: title,
       author: user?.username,
       profileImage: user?.profileImageUrl,
-      image: imageSrc,
+      image: image,
       categories: category,
-      liked: null,
+      liked: [],
       video: imageSrc,
     };
 
@@ -232,14 +233,14 @@ function Home({ users, goals }: Props) {
             <p>Add New Goal</p>
           </div> */}
                 <div className="flex gap-5 items-center ">
-                  <button
+                  {/* <button
                     disabled={title ? false : true}
-                    onClick={handleSubmit}
+                    // onClick={() =>handleSubmit}
                     className="bg-[#494949]/40 active:scale-105 transition-all duration-100  px-4 py-2  rounded-md text-white text-sm
              cursor-pointer"
                   >
                     <p>Publish</p>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -338,7 +339,10 @@ function Home({ users, goals }: Props) {
                               </div>
                             </div>
 
-                            <button className="bg-white bg-opacity-30 mt-5 py-2 flex items-start gap-1 px-10 rounded-md border-[0.75px] border-solid border-white border-opacity-50">
+                            <button
+                              type="submit"
+                              className="bg-white bg-opacity-30 mt-5 py-2 flex items-start gap-1 px-10 rounded-md border-[0.75px] border-solid border-white border-opacity-50"
+                            >
                               <h1 className="text-white text-sm font-medium self-center my-auto">
                                 Upload
                               </h1>
@@ -358,7 +362,7 @@ function Home({ users, goals }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const users = await fetchUsers();
   const goals = await fetchGoals();
 

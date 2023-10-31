@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { fetchUsers } from "../utils/fetchUsers";
 import { GoalBody, Goals, User } from "../typings";
 import { useSession } from "next-auth/react";
@@ -968,7 +968,7 @@ const Home = ({ users, goals, notes, setLoading }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const users = await fetchUsers();
   const goals = await fetchGoals();
   const notes = await fetchNotes();

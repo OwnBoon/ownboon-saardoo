@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Comment, CommentBody, Goals, Posts, User, Videos } from "../typings";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 // import { fecthBlogs } from "../utils/fetchBlogs";
 import { useUser } from "@clerk/nextjs";
 import { Suspense, useEffect, useState } from "react";
@@ -486,7 +486,7 @@ function Socials({ users, videoData, feed, goals }: Props) {
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   // const posts = await fecthBlogs();
   const users = await fetchUsers();
   const goals = await fetchGoals();
@@ -499,6 +499,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       feed,
       goals,
     },
+    revalidate: 40,
   };
 };
 export default Socials;
