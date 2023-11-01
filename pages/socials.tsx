@@ -333,11 +333,10 @@ function Socials({ users, videoData, feed, goals }: Props) {
                     <h1>Filter</h1>
                   </div>
                   <div
-                    className={` absolute ${
-                      showFilter
+                    className={` absolute ${showFilter
                         ? "absolute h-fit transition-all duration-100"
                         : "hidden h-0 transition-all duration-100"
-                    } md:hidden top-[9.5rem] z-50 mt-2 w-56 rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5`}
+                      } md:hidden top-[9.5rem] z-50 mt-2 w-56 rounded-md shadow-lg bg-[#303030]/10 backdrop-blur-lg text-white ring-1 ring-black ring-opacity-5`}
                   >
                     <div className="py-2 gap-4 flex flex-col">
                       {/* @ts-ignore */}
@@ -402,79 +401,89 @@ function Socials({ users, videoData, feed, goals }: Props) {
             </div>
             <div className="p-5 hidden lg:inline">
               {/* below part */}
-              <div className="bg-zinc-600 bg-opacity-10 flex w-full px-10 max-w-full flex-col  mx-auto pt-7 pb-16 mr-20 rounded-xl border-[0.75px] border-solid border-zinc-700 border-opacity-50 ">
-                <div className="flex w-[137px] max-w-full flex-col ml-3 max-md:ml-2.5">
+              <div className="bg-zinc-600 bg-opacity-10 flex w-full pl-9 pr-3 max-w-full flex-col  mx-auto mt-11 pt-7 pb-16 mr-20 ml-1 rounded-xl border-[0.75px] border-solid border-zinc-700 border-opacity-50 ">
+                <div className="flex w-[137px] max-w-full flex-col ml-6 max-md:ml-2.5">
                   <div className="text-zinc-300 text-center text-base max-md:mr-px">
                     Top Interests
                   </div>
-                  <div className="items-start flex w-full gap-2.5 mt-4">
-                    <div className="self-stretch flex flex-col">
+                  <div className="items-start flex w-full gap-2.5 mt-6">
+                    <div className="self-stretch flex">
                       <img
                         loading="lazy"
                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
                         className="aspect-square object-cover object-center w-full overflow-hidden self-stretch"
                       />
-                      <img
-                        loading="lazy"
-                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/256fa5e7-4e25-4c5c-bfca-999a7d9e1283?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch mt-6"
-                      />
-                      <img
-                        loading="lazy"
-                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0baef88a-2018-4482-9691-3ba9e651e217?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch mt-6"
-                      />
-                      <img
-                        loading="lazy"
-                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/1aa3ba88-fc77-4a63-8038-bb8d6443bbd1?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch mt-6"
-                      />
-                      <img
-                        loading="lazy"
-                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/4c5aa522-4978-46d0-a81e-6606501867d1?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
-                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow mt-6"
-                      />
+                      <div className="ml-2">
+                        <div className="text-zinc-300 text-sm">Community </div>
+                        <div className="text-stone-300 text-xs mt-1">
+                          123k Posts
+                          <br />
+                          50k followers
+                        </div>
+                      </div>
+                      
                     </div>
-                    <div className="self-stretch flex flex-col mt-1">
-                      <div className="text-zinc-300 text-sm">Community </div>
-                      <div className="text-stone-300 text-xs mt-2">
-                        123k Posts
-                        <br />
-                        50k followers
+                    
+                    
+                  </div>
+                  <div className="items-start flex w-full gap-2.5 mt-6">
+                    <div className="self-stretch flex">
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch"
+                      />
+                      <div className="ml-2">
+                        <div className="text-zinc-300 text-sm">Community </div>
+                        <div className="text-stone-300 text-xs mt-1">
+                          123k Posts
+                          <br />
+                          50k followers
+                        </div>
                       </div>
-                      <div className="text-zinc-300 text-sm mt-9">
-                        Community{" "}
-                      </div>
-                      <div className="text-stone-300 text-xs mt-2">
-                        123k Posts
-                        <br />
-                        50k followers
-                      </div>
-                      <div className="text-zinc-300 text-sm mt-9">
-                        Community{" "}
-                      </div>
-                      <div className="text-stone-300 text-xs mt-2">
-                        123k Posts
-                        <br />
-                        50k followers
-                      </div>
-                      <div className="text-zinc-300 text-sm mt-9">
-                        Community{" "}
-                      </div>
-                      <div className="text-stone-300 text-xs mt-2">
-                        123k Posts
-                        <br />
-                        50k followers
-                      </div>
-                      <div className="text-zinc-300 text-sm mt-9">
-                        Community{" "}
-                      </div>
-                      <div className="text-stone-300 text-xs mt-2">
-                        123k Posts
-                        <br />
-                        50k followers
-                      </div>
+                      
                     </div>
+                    
+                    
+                  </div><div className="items-start flex w-full gap-2.5 mt-6">
+                    <div className="self-stretch flex">
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch"
+                      />
+                      <div className="ml-2">
+                        <div className="text-zinc-300 text-sm">Community </div>
+                        <div className="text-stone-300 text-xs mt-1">
+                          123k Posts
+                          <br />
+                          50k followers
+                        </div>
+                      </div>
+                      
+                    </div>
+                    
+                    
+                  </div>
+                  <div className="items-start flex w-full gap-2.5 mt-6">
+                    <div className="self-stretch flex">
+                      <img
+                        loading="lazy"
+                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/cd676620-55f7-42c5-8a12-8710abc528f8?apiKey=8d19dab166a647fb9eff6738dee1ce62&"
+                        className="aspect-square object-cover object-center w-full overflow-hidden self-stretch"
+                      />
+                      <div className="ml-2">
+                        <div className="text-zinc-300 text-sm">Community </div>
+                        <div className="text-stone-300 text-xs mt-1">
+                          123k Posts
+                          <br />
+                          50k followers
+                        </div>
+                      </div>
+                      
+                    </div>
+                    
+                    
                   </div>
                 </div>
               </div>
