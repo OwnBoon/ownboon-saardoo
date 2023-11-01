@@ -328,7 +328,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                             : addFollowIfFollowLessThan1(e);
                         }
                       }}
-                      className="text-zinc-300 flex shine-button cursor-pointer text-center text-xs font-semibold self-center border bg-white bg-opacity-20 w-fit justify-center max-w-full my-auto pl-4 pr-4 py-2 rounded border-solid border-white border-opacity-30"
+                      className="text-zinc-300 flex shine-button cursor-pointer text-center text-xs font-semibold self-center border bg-white bg-opacity-20 w-fit justify-center max-w-full my-auto pl-4 pr-4 py-1 rounded border-solid border-white border-opacity-30"
                     >
                       Follow
                     </div>
@@ -344,7 +344,7 @@ const FeedCard = ({ feeds, match, users }: Props) => {
                           : addFollowIfFollowLessThan1(e);
                       }
                     }}
-                    className="text-zinc-300 flex shine-button cursor-pointer text-center text-xs font-semibold self-center border bg-white bg-opacity-20 w-fit justify-center max-w-full my-auto pl-4 pr-4 py-2 rounded border-solid border-white border-opacity-30"
+                    className="text-zinc-300 flex shine-button cursor-pointer text-center text-xs font-semibold self-center border bg-white bg-opacity-20 w-fit justify-center max-w-full my-auto pl-4 pr-4 py-1 rounded border-solid border-white border-opacity-30"
                   >
                     Follow
                   </div>
