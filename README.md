@@ -1,4 +1,4 @@
-![Logo](https://ownboon.com/_next/image?url=%2Flogo.png&w=48&q=75)
+![Logo](https://ownboon.com/_next/image?url=%2Flogo.png&w=48&q=74)
 
 
 # OwnBoon Documentaation
